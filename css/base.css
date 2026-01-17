@@ -1449,16 +1449,14 @@ header {
 /* ===== 通知喇叭样式 (红/蓝) ===== */
 /* ===== 通知区域 (位于挂件组下方) ===== */
 .notice-container {
+    position: fixed;
+    top: 75px;
+    /* 在视听设置按钮下方 */
+    left: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 5px;
+    flex-direction: column;
+    gap: 5px;
     z-index: 1005;
-    /* 略高于普通内容 */
-    pointer-events: none;
-    /* 容器透传点击 */
 }
 
 /* 通知小部件 (小型胶囊样式) */
