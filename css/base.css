@@ -1447,54 +1447,57 @@ header {
 }
 
 /* ===== 通知喇叭样式 (红/蓝) ===== */
-.update-notice {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    /* 默认隐藏，JS控制显示 */
+/* ===== 通知区域 (位于挂件组下方) ===== */
+.notice-container {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    gap: 10px;
+    width: 100%;
+    margin-top: 5px;
+    z-index: 1005;
+    /* 略高于普通内容 */
+    pointer-events: none;
+    /* 容器透传点击 */
+}
+
+/* 通知小部件 (小型胶囊样式) */
+.widget-notice {
+    display: none;
+    /* JS控制显示 */
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
     background: linear-gradient(135deg, #c91f37 0%, #e85a6b 100%);
     color: #fff;
-    border-radius: 2rem;
-    box-shadow: 0 4px 15px rgba(201, 31, 55, 0.4);
-    z-index: 2000;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    font-size: 0.9rem;
-    max-width: 90vw;
-    text-align: center;
-    animation: notice-bounce 0.5s ease-out;
+    pointer-events: auto;
+    /* 自身可点击 */
+    animation: simple-fade-in 0.3s ease-out;
+    white-space: nowrap;
 }
 
-.update-notice .notice-icon {
-    font-size: 1.2rem;
-}
-
-.update-notice .notice-text {
-    font-weight: 500;
+.widget-notice .notice-icon {
+    font-size: 1rem;
 }
 
 /* 蓝色修订喇叭 */
 .modification-notice {
     background: linear-gradient(135deg, #1A5599 0%, #4A90E2 100%);
-    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
-    top: 4rem;
-    /* 如果红色喇叭也在，蓝色往下移 */
 }
 
-/* 入场动画 */
-@keyframes notice-bounce {
-    0% {
+@keyframes simple-fade-in {
+    from {
         opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
+        transform: translateY(-5px);
     }
 
-    100% {
+    to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
     }
 }
 
