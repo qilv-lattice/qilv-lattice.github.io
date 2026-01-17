@@ -38,7 +38,17 @@
     <!-- 粒子画布 (仅桌面端显示) -->
     <canvas id="particle-canvas"></canvas>
 
+    <!-- 更新通知喇叭 -->
+    <div class="update-notice" id="update-notice" onclick="this.style.display='none'">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="notice-text">新作上线</span>
+    </div>
 
+    <!-- 修改通知喇叭 (蓝) -->
+    <div class="update-notice modification-notice" id="modification-notice" onclick="this.style.display='none'">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="mod-notice-text">旧作修订</span>
+    </div>
 
     <!-- 挂件控制组 -->
     <div class="music-wrapper">
@@ -174,21 +184,6 @@
             <li data-src="assets/music11-高山流水.mp3">高山流水</li>
             <li data-src="assets/music12-烟雨唱扬州.mp3">烟雨唱扬州</li>
         </ul>
-    </div>
-
-    <!-- 通知区域（位于挂件组下方） -->
-    <div class="notice-container">
-        <!-- 更新通知 (红) -->
-        <div class="widget-notice update-notice" id="update-notice" onclick="this.style.display='none'">
-            <span class="notice-icon">📢</span>
-            <span class="notice-text" id="notice-text">新作上线</span>
-        </div>
-
-        <!-- 修改通知 (蓝) -->
-        <div class="widget-notice modification-notice" id="modification-notice" onclick="this.style.display='none'">
-            <span class="notice-icon">📢</span>
-            <span class="notice-text" id="mod-notice-text">旧作修订</span>
-        </div>
     </div>
 
     <!-- 背景音乐元素（放在wrapper外面，避免折叠影响播放） -->

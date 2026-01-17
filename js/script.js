@@ -299,7 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
             noticeEl.style.display = 'flex';
             // 直接显示具体数量
             const count = updateInfo.latestWorks.length;
-            textEl.innerHTML = `有新作 ${count} 首上线`;
+            const worksList = updateInfo.latestWorks.join('、');
+            textEl.innerHTML = `新作 ${count} 首：${worksList}`;
 
             // 10秒后自动隐藏
             setTimeout(() => {
@@ -340,9 +341,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isValid) {
             noticeEl.style.display = 'flex';
-            // 直接显示修订数量
-            const count = updateInfo.modifiedWorks.length;
-            textEl.innerHTML = `有 ${count} 首旧作翻新`;
+            // 直接显示修订列表
+            const list = updateInfo.modifiedWorks.join('、');
+            textEl.innerHTML = `修订：${list}`;
 
             // 10秒后自动隐藏
             setTimeout(() => {
@@ -1086,9 +1087,6 @@ function getShuffleAudio() {
 
 // 发牌音效（仅播放前800ms）
 function playShuffleSound() {
-    // 移动端禁用音效，避免抢占背景音乐焦点
-    if (window.innerWidth <= 768) return;
-
     const audio = getShuffleAudio();
     clearTimeout(shuffleTimeout);
     audio.currentTime = 0;
@@ -1100,9 +1098,6 @@ function playShuffleSound() {
 
 // 收回音效（复用同一音频，播放600ms）
 function playCollapseSound() {
-    // 移动端禁用音效，避免抢占背景音乐焦点
-    if (window.innerWidth <= 768) return;
-
     const audio = getShuffleAudio();
     clearTimeout(shuffleTimeout);
     audio.currentTime = 0;
