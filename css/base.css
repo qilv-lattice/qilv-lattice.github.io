@@ -1183,7 +1183,6 @@ header {
 
 /* 黄色公告喇叭 */
 .announcement-notice {
-    top: 200px;
     /* 蓝喇叭下方 */
     border-color: #D4A017;
     /* 金黄色边框 */
@@ -1638,6 +1637,12 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     top: 140px;
     /* 红色喇叭下方 (95 + 35 + 10间距) */
+}
+
+/* 黄色公告喇叭 - 在蓝色喇叭下方 */
+.announcement-notice {
+    top: 185px;
+    /* 蓝色喇叭下方 (140 + 35 + 10间距) */
 }
 
 /* 入场动画 - 从右侧滑入 */
