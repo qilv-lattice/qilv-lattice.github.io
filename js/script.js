@@ -314,8 +314,26 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleUpdateNotice = toggleUpdateNotice;
 
 
+
     // 蓝喇叭隐藏定时器（防止多个定时器叠加）
     let modificationNoticeTimer = null;
+
+    // 黄喇叭（公告）显示逻辑
+    function showAnnouncementNotice() {
+        const noticeEl = document.getElementById('announcement-notice');
+        if (!noticeEl) return;
+
+        // 显示公告
+        noticeEl.style.display = 'flex';
+
+        // 30秒后自动隐藏
+        setTimeout(() => {
+            if (noticeEl) {
+                noticeEl.style.display = 'none';
+            }
+        }, 30000);
+    }
+
 
     // 检查是否显示修改通知（蓝喇叭）
     function checkModificationNotice() {
@@ -404,6 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 检查并显示修改通知（蓝喇叭）
             checkModificationNotice();
+
+            // 显示公告通知（黄喇叭，30秒后隐藏）
+            showAnnouncementNotice();
 
             // 设置零点自动隐藏：计算距离下一个北京时间零点的毫秒数
             scheduleMidnightCheck();

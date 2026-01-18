@@ -1181,6 +1181,28 @@ header {
     color: #2c5282;
 }
 
+/* 黄色公告喇叭 */
+.announcement-notice {
+    top: 200px;
+    /* 蓝喇叭下方 */
+    border-color: #D4A017;
+    /* 金黄色边框 */
+    max-width: 280px;
+    white-space: normal;
+    /* 允许换行 */
+    line-height: 1.4;
+}
+
+.announcement-notice .notice-icon {
+    filter: hue-rotate(45deg) saturate(1.5);
+    /* 黄色 */
+}
+
+.announcement-notice .notice-text {
+    color: #8B6914;
+    /* 深金色文字 */
+}
+
 @keyframes notice-pulse {
 
     0%,
