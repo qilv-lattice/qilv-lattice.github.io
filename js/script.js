@@ -289,13 +289,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 清除旧定时器，确保只有一个隐藏定时器
             if (updateNoticeTimer) clearTimeout(updateNoticeTimer);
-            // 10秒后自动隐藏
+            // 30秒后自动隐藏 (效仿黄喇叭)
             updateNoticeTimer = setTimeout(() => {
                 if (noticeEl) {
                     noticeEl.style.display = 'none';
                     noticeEl.dataset.dismissed = 'true';
                 }
-            }, 10000);
+            }, 30000);
         } else {
             noticeEl.style.display = 'none';
         }
@@ -364,13 +364,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 清除旧定时器，确保只有一个隐藏定时器
             if (modificationNoticeTimer) clearTimeout(modificationNoticeTimer);
-            // 10秒后自动隐藏
+            // 30秒后自动隐藏 (效仿黄喇叭)
             modificationNoticeTimer = setTimeout(() => {
                 if (noticeEl) {
                     noticeEl.style.display = 'none';
                     noticeEl.dataset.dismissed = 'true';
                 }
-            }, 10000);
+            }, 30000);
         } else {
             noticeEl.style.display = 'none';
         }
