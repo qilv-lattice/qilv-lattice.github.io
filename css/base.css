@@ -1182,13 +1182,13 @@ header {
 }
 
 /* 黄色公告喇叭 */
-.announcement-notice {
+#announcement-notice {
     /* 蓝喇叭下方 */
     border-color: #D4A017;
     /* 金黄色边框 */
     max-width: 180px;
-    white-space: normal;
-    /* 允许换行 */
+    white-space: normal !important;
+    /* 强制换行 */
     line-height: 1.4;
 }
 
@@ -1256,7 +1256,7 @@ header {
         animation: none !important;
         /* 强制换行：约10个字宽度 */
         max-width: 180px;
-        white-space: normal;
+        white-space: normal !important;
         text-align: left;
     }
 
@@ -1646,7 +1646,7 @@ header {
 }
 
 /* 黄色公告喇叭 - 在蓝色喇叭下方 */
-.announcement-notice {
+#announcement-notice {
     top: 185px;
     /* 蓝色喇叭下方 (140 + 35 + 10间距) */
 }
