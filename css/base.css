@@ -1240,18 +1240,8 @@ header {
     }
 
     .update-notice {
-        /* 移动端显示喇叭 */
-        top: 60px;
-        right: 10px;
-        padding: 6px 12px;
-        border-radius: 15px;
-        animation: none !important;
-        /* 禁止闪烁 */
-    }
-
-    .modification-notice {
-        top: 110px;
-        /* 移动端：红喇叭下方 */
+        display: none !important;
+        /* 移动端直接隐藏所有喇叭 */
     }
 
     .notice-icon {
