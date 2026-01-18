@@ -268,6 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkUpdateNotice() {
         const noticeEl = document.getElementById('update-notice');
         const textEl = document.getElementById('notice-text');
+        // 如果已被隐藏过，不再重复显示
+        if (noticeEl && noticeEl.dataset.dismissed === 'true') {
+            return;
+        }
         // 使用统一的北京时间判断
         const beijingDate = getBeijingDateString();
 
@@ -282,7 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 10秒后自动隐藏
             setTimeout(() => {
-                if (noticeEl) noticeEl.style.display = 'none';
+                if (noticeEl) {
+                    noticeEl.style.display = 'none';
+                    noticeEl.dataset.dismissed = 'true';
+                }
             }, 10000);
         } else {
             noticeEl.style.display = 'none';
@@ -305,6 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkModificationNotice() {
         const noticeEl = document.getElementById('modification-notice');
         const textEl = document.getElementById('mod-notice-text');
+        // 如果已被隐藏过，不再重复显示
+        if (noticeEl && noticeEl.dataset.dismissed === 'true') {
+            return;
+        }
         // 如果没有修改作品，或者不在更新时间窗口内，隐藏
         if (!updateInfo.modifiedWorks || updateInfo.modifiedWorks.length === 0) {
             noticeEl.style.display = 'none';
@@ -325,7 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 10秒后自动隐藏
             setTimeout(() => {
-                if (noticeEl) noticeEl.style.display = 'none';
+                if (noticeEl) {
+                    noticeEl.style.display = 'none';
+                    noticeEl.dataset.dismissed = 'true';
+                }
             }, 10000);
         } else {
             noticeEl.style.display = 'none';
