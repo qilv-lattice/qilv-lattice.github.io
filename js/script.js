@@ -264,6 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${year}-${month}-${day}`;
     }
 
+    // 红喇叭隐藏定时器（防止多个定时器叠加）
+    let updateNoticeTimer = null;
+
     // 检查是否显示通知（匹配北京时间 或 本地时间）
     function checkUpdateNotice() {
         const noticeEl = document.getElementById('update-notice');
@@ -284,8 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = updateInfo.latestWorks.length;
             textEl.innerHTML = `有新作 ${count} 首上线`;
 
+            // 清除旧定时器，确保只有一个隐藏定时器
+            if (updateNoticeTimer) clearTimeout(updateNoticeTimer);
             // 10秒后自动隐藏
-            setTimeout(() => {
+            updateNoticeTimer = setTimeout(() => {
                 if (noticeEl) {
                     noticeEl.style.display = 'none';
                     noticeEl.dataset.dismissed = 'true';
@@ -307,6 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     window.toggleUpdateNotice = toggleUpdateNotice;
+
+
+    // 蓝喇叭隐藏定时器（防止多个定时器叠加）
+    let modificationNoticeTimer = null;
 
     // 检查是否显示修改通知（蓝喇叭）
     function checkModificationNotice() {
@@ -334,8 +343,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = updateInfo.modifiedWorks.length;
             textEl.innerHTML = `有 ${count} 首旧作翻新`;
 
+
+            // 清除旧定时器，确保只有一个隐藏定时器
+            if (modificationNoticeTimer) clearTimeout(modificationNoticeTimer);
             // 10秒后自动隐藏
-            setTimeout(() => {
+            modificationNoticeTimer = setTimeout(() => {
                 if (noticeEl) {
                     noticeEl.style.display = 'none';
                     noticeEl.dataset.dismissed = 'true';
