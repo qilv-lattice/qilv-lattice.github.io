@@ -1219,8 +1219,7 @@ header {
     }
 
     .update-notice {
-        display: none !important;
-        /* 回滚：手机端直接隐藏 */
+        /* 移动端显示喇叭 */
         top: 60px;
         right: 10px;
         padding: 6px 12px;
