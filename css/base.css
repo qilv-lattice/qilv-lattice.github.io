@@ -1307,28 +1307,28 @@ header {
     /* 为装饰线留空间 */
 }
 
-/* 蓝线：从顶部到"工"字结束（约4个字的高度） */
+/* 蓝线：从卡片顶部边缘到"工"字结束 */
 .tech-romance-tag::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -15px;
     right: 4px;
     width: 2px;
-    height: 56px;
-    /* 约4个字 * 14px */
+    height: 71px;
+    /* 15px + 约4个字 * 14px */
     background: var(--accent-blue);
     opacity: 0.7;
 }
 
-/* 红线：从顶部到"浪漫"结束（约9个字的高度） */
+/* 红线：从卡片顶部边缘到"浪漫"结束 */
 .tech-romance-tag::after {
     content: '';
     position: absolute;
-    top: 0;
+    top: -15px;
     right: 0;
     width: 2px;
-    height: 126px;
-    /* 约9个字 * 14px */
+    height: 141px;
+    /* 15px + 约9个字 * 14px */
     background: var(--accent-color);
     opacity: 0.7;
 }
