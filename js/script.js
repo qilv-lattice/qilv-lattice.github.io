@@ -594,41 +594,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // ===== 智能注释提醒：首次阅读有注释的作品时自动展开菜单 =====
-            // 使用 Set 追踪本次会话中已提醒过的作品（刷新页面后重置）
-            if (!window._notifiedPoemsWithNotes) {
-                window._notifiedPoemsWithNotes = new Set();
-            }
+            // 智能注释提醒逻辑已移除
 
-            // 如果作品有注释，且本次会话中尚未提醒过
-            if (hasNotes && !window._notifiedPoemsWithNotes.has(poem.title)) {
-                // 标记为已提醒
-                window._notifiedPoemsWithNotes.add(poem.title);
-
-                // 自动展开菜单（仅在当前是折叠状态时）
-                if (menuCollapsed) {
-                    const wrapper = document.querySelector('.music-wrapper');
-                    const settingsBtn = document.getElementById('settings-btn');
-
-                    menuCollapsed = false;
-                    wrapper.classList.remove('collapsed');
-                    wrapper.classList.add('expanded');
-                    playShuffleSound();
-
-                    // 10秒后自动收起（比普通操作更长）
-                    clearTimeout(collapseTimer);
-                    collapseTimer = setTimeout(() => {
-                        // 双重检查悬停状态
-                        if (window.matchMedia('(hover: hover)').matches && wrapper.matches(':hover')) {
-                            return;
-                        }
-                        menuCollapsed = true;
-                        wrapper.classList.remove('expanded');
-                        wrapper.classList.add('collapsed');
-                        if (settingsBtn) settingsBtn.classList.add('settings-used');
-                    }, 10000); // 10秒
-                }
-            }
 
             // 3D 翻页淡入动画
             textContainer.classList.remove('page-flip-out');

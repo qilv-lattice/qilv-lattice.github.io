@@ -1563,9 +1563,7 @@ header {
     background: var(--accent-color);
     color: #fff;
     border-color: var(--accent-color);
-    animation: note-shake 0.6s ease-in-out infinite;
-    animation-delay: 2s;
-    /* 每次切换诗词后延迟2秒开始抖动 */
+    /* 移除抖动动画：只保留高亮 */
 }
 
 /* 折叠状态下的设置按钮：不抖动，但保持红色高亮 */
