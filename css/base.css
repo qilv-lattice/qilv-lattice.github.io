@@ -1536,9 +1536,9 @@ header {
     }
 }
 
-/* ===== 桌面断点预备 (1024px+) ===== */
+/* ===== 桌面断点预备 (iPad 810px+) ===== */
 /* 核心布局调整，美学层由 desktop.css 提供 */
-@media (min-width: 1024px) {
+@media (min-width: 810px) {
     body {
         display: flex;
         justify-content: center;
