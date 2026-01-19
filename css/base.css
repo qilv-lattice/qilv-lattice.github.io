@@ -466,7 +466,8 @@ header {
 }
 
 .widget-btn.blue-mode,
-#mode-btn.blue-mode {
+#mode-btn.blue-mode,
+.music-control.blue-mode {
     color: var(--accent-blue);
     border-color: var(--accent-blue);
 }

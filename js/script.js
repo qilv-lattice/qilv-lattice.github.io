@@ -674,6 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (playmodeBtn) playmodeBtn.classList.toggle('blue-mode');
         if (bgBtn) bgBtn.classList.toggle('blue-mode');
 
+        // 新增：遗漏的按钮颜色切换
+        const voiceBtn = document.getElementById('voice-btn');
+        const noteBtn = document.getElementById('note-btn');
+        const musicControl = document.getElementById('music-control');
+
+        if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
+        if (noteBtn) noteBtn.classList.toggle('blue-mode');
+        if (musicControl) musicControl.classList.toggle('blue-mode');
+
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
         if (footerEl) footerEl.classList.toggle('horizontal-width');
