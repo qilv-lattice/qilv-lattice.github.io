@@ -1294,6 +1294,8 @@ header {
     position: absolute;
     top: 15px;
     right: 15px;
+    z-index: 10;
+    /* 确保显示在花笺上方 */
     writing-mode: vertical-rl;
     font-size: 11px;
     color: var(--accent-blue);
