@@ -594,6 +594,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // 理工浪漫标签显示逻辑
+            const techRomanceTag = document.getElementById('tech-romance-tag');
+            if (techRomanceTag) {
+                techRomanceTag.style.display = poem.techRomance ? 'block' : 'none';
+            }
+
             // 智能注释提醒逻辑已移除
 
 

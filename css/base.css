@@ -1289,6 +1289,22 @@ header {
     display: none;
 }
 
+/* 理工浪漫标签 - 竖排文字 */
+.tech-romance-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    color: var(--accent-blue);
+    opacity: 0.7;
+    letter-spacing: 3px;
+    font-family: 'Noto Serif SC', serif;
+    display: none;
+    /* 默认隐藏，通过JS控制显示 */
+    pointer-events: none;
+}
+
 /* 印章在移动端显示 - 位置与桌面端一致 */
 .stamps-container {
     display: grid;
