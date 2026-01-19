@@ -332,8 +332,8 @@ header {
     /* 文字纵向居中 */
 }
 
-/* 仅移动端：横排模式宽度扣除容器 padding */
-@media (max-width: 1023px) {
+/* 仅手机端：横排模式宽度扣除容器 padding */
+@media (max-width: 809px) {
     .poem-content.horizontal-mode {
         width: calc(100vw - 32px);
         max-width: calc(100vw - 32px);
@@ -374,8 +374,8 @@ header {
     text-align: center;
 }
 
-/* 仅移动端：横排模式下 header/footer 宽度对齐卡片 */
-@media (max-width: 1023px) {
+/* 仅手机端：横排模式下 header/footer 宽度对齐卡片 */
+@media (max-width: 809px) {
 
     header.horizontal-width,
     .site-footer.horizontal-width {
@@ -1536,9 +1536,9 @@ header {
     }
 }
 
-/* ===== 桌面断点预备 (iPad 810px+) ===== */
+/* ===== 桌面断点预备 (1024px+) ===== */
 /* 核心布局调整，美学层由 desktop.css 提供 */
-@media (min-width: 810px) {
+@media (min-width: 1024px) {
     body {
         display: flex;
         justify-content: center;
