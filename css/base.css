@@ -340,7 +340,7 @@ header {
 
 .poem-content.horizontal-mode #poem-text-container {
     writing-mode: horizontal-tb;
-    min-height: auto;
+    /* 保持与竖排一致的高度，继承 clamp(350px, 60vw, 480px) */
 }
 
 .poem-content.horizontal-mode #poem-title {
