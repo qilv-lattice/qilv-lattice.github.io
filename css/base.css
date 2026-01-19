@@ -324,8 +324,6 @@ header {
     /* 横排模式通用样式 */
     padding: 1rem 0.5rem;
     /* 减小左右内边距 */
-    min-height: 400px;
-    /* 保持与竖排一致的卡片长度 */
     display: flex;
     flex-direction: column;
     justify-content: center;
