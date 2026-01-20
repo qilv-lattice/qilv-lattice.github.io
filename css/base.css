@@ -1294,7 +1294,7 @@ header {
 /* 理工浪漫标签 - 竖排文字 */
 .tech-romance-tag {
     position: absolute;
-    top: 15px;
+    top: 25px;
     right: 15px;
     z-index: 10;
     /* 确保显示在花笺上方 */
@@ -1315,11 +1315,11 @@ header {
 .tech-romance-tag::before {
     content: '';
     position: absolute;
-    top: -15px;
+    top: -25px;
     right: 4px;
     width: 2px;
-    height: 113px;
-    /* 15px + 约7个字 * 14px (到达"极致") */
+    height: 155px;
+    /* 25px (tag offset) + 7个字到达"致" */
     background: var(--accent-blue);
     opacity: 0.7;
 }
@@ -1328,14 +1328,65 @@ header {
 .tech-romance-tag::after {
     content: '';
     position: absolute;
-    top: -15px;
+    top: -25px;
     right: 0;
     width: 2px;
-    height: 141px;
-    /* 15px + 约9个字 * 14px */
+    height: 185px;
+    /* 25px (tag offset) + 9个字到达"漫" */
     background: var(--accent-color);
     opacity: 0.7;
 }
+
+/* ===== 水平红蓝装饰线（专字头顶，贯穿卡片） ===== */
+.horizontal-decoration-lines {
+    position: absolute;
+    /* 位置：与 .tech-romance-tag 的 top 对齐 (15px)，这样蓝线刚好贴着"专"字头 */
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    /* 容纳两条2px的线 + 4px间距 */
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* 红线：上方 */
+.horizontal-decoration-lines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-color);
+    opacity: 0.7;
+}
+
+/* 蓝线：下方，间距4px */
+.horizontal-decoration-lines::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    /* 2px line + 2px gap? No, 4px total gap from top of red line */
+    /* 重新计算：红线高2px，间距4px，蓝线top = 2 + 4 = 6? 但容器只有6px */
+    /* 实际：红线 top:0, 蓝线 top: 2+4 = 6? 不对 */
+    /* 间距4px means gap between lines = 4px */
+    /* 红线 bottom edge = 2px, 蓝线 top edge should be at 2+4 = 6px */
+    /* 但是蓝线height=2px, 所以蓝线占 6-8px, 容器需要8px高 */
+    /* 简化：top: 6px for blue line */
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-blue);
+    opacity: 0.7;
+}
+
+/* 修正：调整容器高度 */
+.horizontal-decoration-lines {
+    height: 8px;
+    /* 2px + 4px gap + 2px = 8px */
+}
+
 
 /* 梅花装饰 - 悬挂在红线末端 */
 .decoration-plum {
