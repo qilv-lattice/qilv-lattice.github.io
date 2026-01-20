@@ -1,0 +1,564 @@
+/*
+ * desktop.css - 桌面端美学层
+ * 仅在 1024px+ 加载
+ * 包含：粒子背景、印章、动画、固定挂件
+ */
+
+/* ===== 背景增强 ===== */
+body::before {
+    background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        url('../assets/background01.jpg');
+    background-size: 30px 30px, 30px 30px, cover;
+    background-position: center;
+    background-repeat: repeat, repeat, no-repeat;
+    /* 滤镜已移除，背景原色显示 */
+}
+
+/* ===== 粒子画布 ===== */
+#particle-canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ===== 诗词卡片增强 ===== */
+.poem-card {
+    position: relative;
+}
+
+.poem-content {
+    /* 宣纸纹理 */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+
+    /* 3D 悬浮阴影 */
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 8px 16px rgba(0, 0, 0, 0.05),
+        0 16px 32px rgba(0, 0, 0, 0.05);
+
+    /* 入场动画 */
+    animation: float-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition: box-shadow 0.4s ease;
+
+    /* 防止玫瑰溢出 */
+    overflow: hidden;
+}
+
+/* 桌面端：诗词居中对齐（覆盖移动端的靠右） */
+#poem-text-container {
+    justify-content: center;
+}
+
+.poem-content:hover {
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.06),
+        0 12px 24px rgba(0, 0, 0, 0.06),
+        0 24px 48px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes float-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== 竖排模式装饰：Seal1 ===== */
+/* 默认状态：印章可见（首次加载静态显示） */
+.poem-content::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 66px;
+    height: 66px;
+    background-image: url('../assets/Seal1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.8;
+    /* 默认可见 */
+    z-index: 0;
+    pointer-events: none;
+    transform: scale(1);
+    /* 默认正常大小 */
+    transition: none;
+}
+
+/* 动画准备中：隐藏大印章（等三小印章完成后再出场） */
+.poem-content.seal-preparing::before {
+    opacity: 0 !important;
+    transform: scale(2.5) !important;
+}
+
+/* 印章重锤落下动画 */
+.poem-content.seal-landing::before {
+    animation: seal-hammer 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes seal-hammer {
+    0% {
+        opacity: 0;
+        transform: scale(2.5) rotate(-10deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(0.9) rotate(3deg);
+    }
+
+    80% {
+        transform: scale(1.1) rotate(-2deg);
+    }
+
+    100% {
+        opacity: 0.8;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* ===== 横排模式装饰：Seal4（霁蓝） ===== */
+/* 默认状态：隐藏，等待 seal-landing 触发动画 */
+.poem-content.horizontal-mode::before {
+    background-image: url('../assets/Seal4.png');
+    bottom: 20px;
+    right: 20px;
+    width: 66px;
+    height: 66px;
+    /* 不覆盖 opacity 和 transform，保持与竖排一致的动画行为 */
+}
+
+/* ===== 云笺模式：动态背景布 ===== */
+.poem-content.yunjian-mode::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--yunjian-bg, url('../assets/card01.jpg'));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 云笺模式下确保正文和印章在card01之上 */
+.poem-content.yunjian-mode #poem-text-container {
+    z-index: 2;
+}
+
+.poem-content.yunjian-mode::before {
+    z-index: 1;
+}
+
+.poem-content.yunjian-mode .stamps-container {
+    z-index: 2;
+}
+
+/* ===== 桌面端诗词文字排版 ===== */
+#poem-text-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+#poem-title {
+    font-size: 2.4rem;
+    margin: 0 0 0 3rem;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.body-text {
+    font-size: 1.5rem;
+    line-height: 3rem;
+    letter-spacing: 5px;
+    text-align: justify;
+}
+
+.body-text p {
+    margin: 0 0.5rem;
+}
+
+/* ===== 装饰枝条 ===== */
+.decoration-branch {
+    display: none;
+    /* 隐藏装饰枝条 */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===== 印章容器 ===== */
+.stamps-container {
+    display: grid;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    grid-template-columns: 30px 30px;
+    grid-template-rows: 30px 30px;
+    gap: 5px;
+    pointer-events: none;
+    writing-mode: horizontal-tb;
+
+    /* 入场动画 */
+    animation: fade-in-up 1s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.seal {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
+    font-family: var(--font-title);
+    opacity: 0.8;
+    line-height: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), inset 0 0 5px rgba(212, 175, 55, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.seal:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+.seal:nth-child(1),
+.seal:nth-child(2) {
+    font-size: 9px;
+    letter-spacing: -1px;
+}
+
+/* Grid 定位 */
+.seal:nth-child(2) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.seal:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.seal:nth-child(1) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* ===== 控制面板 - 底部右侧固定 ===== */
+.control-panel {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    z-index: 10;
+    align-items: center;
+    /* 入场动画 */
+    animation: fade-in-up 1s ease-out 0.5s forwards;
+    opacity: 0;
+    width: auto;
+    margin-top: 0;
+}
+
+#prev-btn,
+#next-btn {
+    writing-mode: horizontal-tb;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--accent-color);
+    padding: 8px 16px;
+    font-family: var(--font-title);
+    color: var(--accent-color);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 2px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: auto;
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+#prev-btn.blue-mode,
+#next-btn.blue-mode {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+#prev-btn.blue-mode:hover,
+#next-btn.blue-mode:hover {
+    background: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-blue);
+}
+
+/* ===== 挂件组 - 固定定位 ===== */
+.music-wrapper,
+.music-wrapper.collapsed {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 1000;
+    flex-direction: row;
+    gap: 15px;
+    /* 为双螺旋背景留出空间 */
+    padding: 10px 0;
+    justify-content: flex-end;
+    /* 确保折叠时靠右 */
+}
+
+/* 双螺旋晶格链背景 */
+/* 双螺旋晶格链 - 包络线风格 */
+.music-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    /* 修正对齐：让波峰正好在按钮中心 */
+    right: -8px;
+    height: 70px;
+    transform: translateY(-50%);
+    z-index: -1;
+    /* 
+       ViewBox: 0 0 100 100
+       使用三次贝塞尔曲线 (C) 替代二次 (Q)，使曲线更饱满，类似人眼/纺锤形包络
+    */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,50 C25,-10 75,-10 100,50' vector-effect='non-scaling-stroke' stroke='%23d4af37' stroke-width='2' fill='none' opacity='0.8'/%3E%3Cpath d='M0,50 C25,110 75,110 100,50' vector-effect='non-scaling-stroke' stroke='%23C0C0C0' stroke-width='2' fill='none' opacity='0.8'/%3E%3C/svg%3E");
+    background-size: 63px 100%;
+    /* 波长匹配按钮间距 */
+    background-repeat: repeat-x;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* 晶格节点原子 - 位于双螺旋交点 */
+.music-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -11px;
+    /* 调整位置，使其正好覆盖在SVG的交点上 */
+    right: -11px;
+    height: 8px;
+    /* 略微增大原子 */
+    transform: translateY(-50%);
+    z-index: -1;
+    /* 使用径向渐变模拟原子，颜色跟随主题色 (accent-color) */
+    background-image: radial-gradient(circle, var(--accent-color) 35%, rgba(212, 175, 55, 0.3) 50%, transparent 60%);
+    background-size: 63px 100%;
+    /* 间距与螺旋一致 */
+    background-position: 0 center;
+    /* 对齐交点 */
+    background-repeat: repeat-x;
+    opacity: 1;
+    pointer-events: none;
+    /* 微发光效果 */
+    filter: drop-shadow(0 0 3px var(--accent-color));
+    /* 脉冲呼吸动画 */
+    animation: atom-pulse 2s ease-in-out infinite;
+}
+
+/* 原子脉冲呼吸效果 */
+@keyframes atom-pulse {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 2px var(--accent-color));
+        opacity: 0.9;
+    }
+
+    50% {
+        filter: drop-shadow(0 0 6px var(--accent-color));
+        opacity: 1;
+    }
+}
+
+
+.widget-btn,
+#mode-btn,
+.music-label {
+    width: 48px;
+    height: 48px;
+    font-size: 13.5px;
+}
+
+.widget-btn:hover,
+#mode-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.widget-btn.blue-mode:hover,
+#mode-btn.blue-mode:hover {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.music-label:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.music-label.blue-mode:hover {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.music-control {
+    width: 48px;
+    height: 48px;
+}
+
+.music-wrapper:hover .music-control {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+/* 歌单悬停显示 - 仅音乐控制图标触发 */
+/* 使用 ~ (通用兄弟选择器) 而非 + (相邻兄弟选择器)，以兼容中间有其他元素的情况 */
+.music-control:hover~.music-list,
+.music-list:hover {
+    display: block;
+}
+
+/* 点击选择后强制隐藏 */
+.music-list.force-hide {
+    display: none !important;
+}
+
+.music-list {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    max-height: 320px;
+    /* 约8项高度，超出滚动 */
+    overflow-y: auto;
+}
+
+/* ===== 页头增强 ===== */
+.site-title {
+    opacity: 1;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6),
+        -1px -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.subtitle {
+    font-weight: bold;
+    color: #1a1a1a;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    margin-bottom: -1rem;
+    /* 减少与卡片的间距 */
+}
+
+/* ===== 页脚增强 ===== */
+.site-footer {
+    font-weight: bold;
+    color: #1a1a1a;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-50px);
+    margin-bottom: 60px;
+
+    /* 严格对齐卡片宽度 */
+    width: 500px;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.footer-info {
+    text-align: center;
+    display: block;
+    line-height: 2;
+}
+
+.footer-stars {
+    letter-spacing: 5px;
+}
+
+/* ===== 横排模式调整 ===== */
+.poem-content.horizontal-mode #poem-title {
+    font-size: 2rem;
+    transform: translateY(-30px);
+}
+
+.poem-content.horizontal-mode .body-text {
+    font-size: 1.2rem;
+    line-height: 2.2rem;
+    letter-spacing: 3px;
+    transform: translateY(-30px);
+}
+
+/* ===== 网站指南石章（右侧，HCP镜像位置） ===== */
+.guide-seal {
+    display: block;
+    /* 覆盖移动端隐藏 */
+    position: fixed;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 66px;
+    /* 放大 1.1 倍 (60 * 1.1) */
+    height: auto;
+    opacity: 0.85;
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.guide-seal:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}

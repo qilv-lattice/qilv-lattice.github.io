@@ -1,0 +1,1734 @@
+/*
+ * base.css - 移动优先基础样式
+ * 核心原则：可读、可滚动、不卡顿
+ * 无 position:fixed、无复杂动画
+ */
+
+/* ===== CSS Reset & Variables ===== */
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #2c2c2c;
+    --accent-color: #c91f37;
+    /* 中国红 - 明亮正气 */
+    --accent-blue: #1A5599;
+    /* 霁蓝 - 更深邃典雅 */
+    --card-bg: #ffffff;
+    --font-title: 'Ma Shan Zheng', cursive;
+    --font-body: 'Noto Serif SC', serif;
+    --overlay-bg: rgba(0, 0, 0, 0.7);
+    --gradient-start: #e8f0e8;
+    --gradient-end: #f5f0e8;
+    --highlight-color: #c91f37;
+    /* 与强调色保持一致 */
+}
+
+/* 深色模式变量 */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e8e4dc;
+    --accent-color: #e85a6b;
+    --accent-blue: #7CA5D6;
+    /* 稍亮的蓝，提高深色背景对比度 */
+    --card-bg: #2a2a2a;
+    --overlay-bg: rgba(0, 0, 0, 0.85);
+    --gradient-start: #1a1a1a;
+    --gradient-end: #252520;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== 选区颜色 ===== */
+::selection {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+::-moz-selection {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+/* ===== 自定义滚动条（桌面端） ===== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a01830;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    line-height: 1.6;
+    /* 移动端：允许自然滚动 */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== 背景 - 简化版 ===== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+/* ===== 主容器 ===== */
+.container {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    padding-top: env(safe-area-inset-top, 1rem);
+    padding-bottom: env(safe-area-inset-bottom, 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ===== 页头 ===== */
+header {
+    text-align: center;
+    padding: 0.8rem 1rem;
+    background-color: rgba(255, 255, 255, 0.65);
+    /* 遮光罩效果 */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 8px;
+    /* 与页脚一致 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    /* 宽度与下方卡片对齐 */
+    width: 95%;
+    max-width: clamp(320px, 75vw, 600px);
+
+    /* 内部留白 */
+    margin-bottom: 0.5rem;
+    /* 顶部留白，防止与上方按钮重叠 */
+    margin-top: 0.5rem;
+}
+
+.site-title {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+/* 标题石章装饰 - 不影响标题居中 */
+.title-seal {
+    height: 1.1em;
+    width: auto;
+    vertical-align: middle;
+    margin-left: 0.3em;
+    margin-right: -1.4em;
+    /* 抵消石章宽度对居中的影响 */
+    opacity: 0.9;
+    /* 微光效果 */
+    filter: drop-shadow(0 0 8px rgba(200, 50, 50, 0.4));
+    animation: seal-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes seal-glow {
+    from {
+        filter: drop-shadow(0 0 6px rgba(200, 50, 50, 0.3));
+    }
+
+    to {
+        filter: drop-shadow(0 0 12px rgba(200, 50, 50, 0.6));
+    }
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: #555;
+    letter-spacing: 1px;
+}
+
+.header-stars {
+    letter-spacing: 5px;
+    font-size: 0.8rem;
+    color: #999;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+/* ===== 诗词卡片 ===== */
+.poem-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.poem-content {
+    width: 95%;
+    /* 响应式宽度: 手机350px → iPad500px → 桌面600px */
+    max-width: clamp(320px, 75vw, 600px);
+    background-color: var(--card-bg);
+    border-radius: 4px;
+    /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
+    padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 2rem);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    position: relative;
+    /* 3D 翻页效果透视 */
+    perspective: 1000px;
+}
+
+/* 诗词文字容器 - 默认竖排 */
+#poem-text-container {
+    writing-mode: vertical-rl;
+    display: flex;
+    flex-direction: column;
+    /* 恢复居中对齐，配合父容器的flex实现完美居中 */
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    /* 响应式最小高度 */
+    min-height: clamp(350px, 60vw, 480px);
+    transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+/* 水墨晕染动画状态（保留备用） */
+/*
+#poem-text-container.ink-fade-out {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(0.95);
+}
+
+#poem-text-container.ink-fade-in {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+}
+*/
+
+/* ===== 3D 翻页动画 ===== */
+@keyframes page-flip-out {
+    0% {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotateY(-90deg);
+        opacity: 0;
+    }
+}
+
+@keyframes page-flip-in {
+    0% {
+        transform: rotateY(90deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+#poem-text-container.page-flip-out {
+    animation: page-flip-out 0.4s ease-in forwards;
+    transform-origin: left center;
+}
+
+#poem-text-container.page-flip-in {
+    animation: page-flip-in 0.4s ease-out forwards;
+    transform-origin: right center;
+}
+
+/* 诗词标题 - 响应式字体 */
+#poem-title {
+    font-family: var(--font-title);
+    /* 手机1.6rem → iPad1.9rem → 桌面2.4rem */
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin: 0 0 0 clamp(1rem, 3vw, 2rem);
+    letter-spacing: 2px;
+}
+
+/* 诗词正文 - 响应式字体 */
+.body-text {
+    /* 手机1.2rem → iPad1.35rem → 桌面1.5rem */
+    font-size: clamp(1.2rem, 2.8vw, 1.5rem);
+    line-height: clamp(2.2rem, 5vw, 3rem);
+    letter-spacing: clamp(2px, 0.8vw, 5px);
+}
+
+.body-text p {
+    margin: 0 clamp(0.3rem, 1vw, 0.5rem);
+}
+
+/* 诗词备注 - 竖排时移到底部 */
+.poem-note {
+    font-size: 0.85rem;
+    color: #888;
+    writing-mode: horizontal-tb;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+/* ===== 遮光罩模式 (Mask Mode) ===== */
+.poem-content.mask-mode {
+    /* 去除纹理，使用与标题一致的磨砂玻璃效果 */
+    background-image: none !important;
+    /* 降低不透明度，让背景更通透 */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* 强力模糊，营造遮光罩质感 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* 遮光罩模式下的深色适配 */
+[data-theme="dark"] .poem-content.mask-mode {
+    background-color: rgba(30, 30, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ===== 横排模式 ===== */
+.poem-content.horizontal-mode {
+    /* 横排模式通用样式 */
+    padding: 1rem 0.5rem;
+    /* 减小左右内边距 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* 文字纵向居中 */
+}
+
+/* 仅手机端：横排模式宽度扣除容器 padding */
+@media (max-width: 809px) {
+    .poem-content.horizontal-mode {
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+    }
+}
+
+.poem-content.horizontal-mode #poem-text-container {
+    writing-mode: horizontal-tb;
+    /* 保持与竖排一致的高度，继承 clamp(350px, 60vw, 480px) */
+}
+
+.poem-content.horizontal-mode #poem-title {
+    font-size: 1.4rem;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.poem-content.horizontal-mode .body-text {
+    font-size: 1rem;
+    /* 稍微减小字号 */
+    line-height: 2rem;
+    letter-spacing: 1px;
+    /* 减小字间距 */
+}
+
+.poem-content.horizontal-mode .body-text p {
+    margin: 0.5rem 0;
+    text-align: center;
+    white-space: nowrap;
+    /* 强制不换行 */
+}
+
+/* 横排模式下的注释 - 显示在正文下方 */
+.poem-content.horizontal-mode .poem-note {
+    position: static;
+    transform: none;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* 仅手机端：横排模式下 header/footer 宽度对齐卡片 */
+@media (max-width: 809px) {
+
+    header.horizontal-width,
+    .site-footer.horizontal-width {
+        max-width: calc(100vw - 32px);
+        width: calc(100vw - 32px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ===== 控制按钮 ===== */
+.control-panel {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+#prev-btn,
+#next-btn {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#prev-btn:active,
+#next-btn:active {
+    background: var(--accent-color);
+    color: #fff;
+    transform: scale(0.95);
+}
+
+/* 蓝色模式按钮 */
+#prev-btn.blue-mode,
+#next-btn.blue-mode {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+#prev-btn.blue-mode:active,
+#next-btn.blue-mode:active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+/* ===== 挂件组 - 移动端简化 ===== */
+.music-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    position: relative;
+    /* 让子元素绝对定位生效 */
+}
+
+/* 通用挂件按钮样式 */
+.widget-btn,
+#mode-btn {
+    font-family: var(--font-title);
+    font-size: 0.85rem;
+    /* 加大字号，便于阅读 */
+    font-weight: bold;
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    width: 50px;
+    /* 加大点击区域 */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.1;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.widget-btn.blue-mode,
+#mode-btn.blue-mode,
+.music-control.blue-mode {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+
+/* 音乐标签 */
+.music-label {
+    font-family: var(--font-title);
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.music-label.blue-mode {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+/* ===== 移动端按钮折叠菜单 ===== */
+/* 仅在手机端生效 (base.css 本身就是移动优先) */
+
+/* 独立的设置按钮：默认隐藏（仅在折叠时显示） */
+.settings-btn {
+    display: none;
+    font-family: var(--font-title);
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #fff;
+    background: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* 展开过一次后：白底红字 */
+.settings-btn.settings-used {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-color);
+}
+
+/* 折叠状态 */
+.music-wrapper.collapsed {
+    position: relative;
+    justify-content: flex-end;
+    /* 关键：让设置按钮靠右显示（音乐图标位置） */
+    min-height: 60px;
+    /* 保持高度防止跳变 */
+}
+
+/* 折叠时：显示独立设置按钮 */
+.music-wrapper.collapsed .settings-btn {
+    display: flex;
+    /* 确保按钮本身不需要额外的定位，由 flex-end 控制 */
+}
+
+/* 折叠时：隐藏所有7个按钮（叠在右上角音乐图标位置） */
+.music-wrapper.collapsed .widget-btn,
+.music-wrapper.collapsed #mode-btn,
+.music-wrapper.collapsed .music-control {
+    position: absolute;
+    right: 0.5rem;
+    /* 对应 padding-right */
+    top: 0.5rem;
+    /* 对应 padding-top */
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 展开状态：隐藏设置按钮 */
+.music-wrapper.expanded .settings-btn {
+    display: none;
+}
+
+/* 展开状态：按钮散开到各自位置 */
+.music-wrapper.expanded .widget-btn,
+.music-wrapper.expanded #mode-btn,
+.music-wrapper.expanded .music-control {
+    position: relative;
+    right: auto;
+    top: auto;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 音乐控制图标 - 方形边框+圆形内切 */
+.music-control {
+    width: 50px;
+    /* 与 widget-btn 保持一致 */
+    height: 50px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+/* 内切圆背景 */
+.music-control::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    /* 内切圆，留边5px边距 */
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.music-icon {
+    width: 22px;
+    /* 稍微加大图标 */
+    height: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes rotate-music {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.music-playing .music-icon {
+    animation: rotate-music 3s linear infinite;
+}
+
+/* 歌单列表 */
+.music-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    list-style: none;
+    min-width: 120px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.music-list.show {
+    display: block;
+}
+
+.music-list li {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.music-list li:last-child {
+    border-bottom: none;
+}
+
+.music-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* 背景按钮容器 - 用于子菜单相对定位 */
+.bg-btn-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* 背景选择列表 (水平分叉印章菜单样式) */
+.bg-branch-group {
+    display: none;
+    position: absolute;
+    /* 相对于父容器（bg-btn-wrapper）居中 */
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+
+    /* 横向排列 */
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    /* 更紧凑的间距 */
+
+    z-index: 101;
+    padding: 5px;
+
+    /* 防止窄屏溢出 */
+    max-width: 95vw;
+    overflow-x: auto;
+}
+
+/* 激活状态：显示 */
+.bg-branch-group.show {
+    display: flex;
+}
+
+/* 所有的分支项初始透明 */
+.bg-branch-group .branch-item {
+    opacity: 0;
+}
+
+/* 显示时的溅射动画 */
+/* 溅射动画：左边项 (需要向右偏移初始位置以重叠到中心) */
+@keyframes splatterLeft {
+    0% {
+        opacity: 0;
+        transform: translate(calc(100% + 15px), -20px) scale(0.3) rotate(30deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate(-10px, 5px) scale(1.1) rotate(-5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+}
+
+/* 溅射动画：中间项 (垂直下落) */
+@keyframes splatterCenter {
+    0% {
+        opacity: 0;
+        transform: translate(0, -20px) scale(0.3) rotate(0deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate(0, 5px) scale(1.1) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+}
+
+/* 溅射动画：右边项 (需要向左偏移初始位置以重叠到中心) */
+@keyframes splatterRight {
+    0% {
+        opacity: 0;
+        transform: translate(calc(-100% - 15px), -20px) scale(0.3) rotate(-30deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate(10px, 5px) scale(1.1) rotate(5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+}
+
+/* 应用不同的动画 */
+.bg-branch-group.show .branch-item:nth-child(1) {
+    animation: splatterLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0ms;
+}
+
+.bg-branch-group.show .branch-item:nth-child(2) {
+    animation: splatterCenter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 60ms;
+}
+
+.bg-branch-group.show .branch-item:nth-child(3) {
+    animation: splatterRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 120ms;
+}
+
+/* ===== 音乐分类菜单样式 ===== */
+/* 音乐按钮容器 - 用于子菜单相对定位 */
+.music-btn-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* 音乐分类列表 (水平分叉印章菜单样式) */
+.music-branch-group {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+
+    z-index: 101;
+    padding: 5px;
+}
+
+/* 激活状态：显示 */
+.music-branch-group.show {
+    display: flex;
+}
+
+/* 所有的分支项初始透明 */
+.music-branch-group .branch-item {
+    opacity: 0;
+}
+
+/* 应用溅射动画 */
+.music-branch-group.show .branch-item:nth-child(1) {
+    animation: splatterLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0ms;
+}
+
+.music-branch-group.show .branch-item:nth-child(2) {
+    animation: splatterCenter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 60ms;
+}
+
+.music-branch-group.show .branch-item:nth-child(3) {
+    animation: splatterRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 120ms;
+}
+
+/* 分支项容器 (按钮+列表) */
+.branch-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+/* 印章按钮样式 (Seal Style) - 与父级 widget-btn 同尺寸 */
+.branch-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    /* 红色边框/文字 */
+    border: 2px solid #d93a49;
+    border-radius: 4px;
+    /* 与父级一致 */
+    color: #d93a49;
+
+    /* 竖排文字 */
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: var(--font-title);
+    font-size: 0.7rem;
+    /* 稍小以适应40px */
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    user-select: none;
+}
+
+.branch-btn:hover,
+.branch-item.active .branch-btn {
+    transform: scale(1.05);
+    /* 悬浮微放大 */
+    background: #fff;
+    box-shadow: 0 6px 15px rgba(217, 58, 73, 0.25);
+    /* 红色光晕 */
+}
+
+.branch-btn:active {
+    transform: scale(0.95);
+}
+
+/* 三级子菜单 (具体背景列表) */
+.sub-list {
+    position: absolute;
+    top: 100%;
+    /* 在印章下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 10px;
+
+    /* 默认隐藏，不占空间 */
+    display: none;
+
+    /* 样式复用 selector-list */
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    min-width: 100px;
+    /* 略宽一点 */
+    padding: 5px 0;
+    z-index: 102;
+    overflow: hidden;
+    max-height: 250px;
+    /* 限制高度 */
+    overflow-y: auto;
+}
+
+/* 显示子菜单 */
+.branch-item.active .sub-list {
+    display: block;
+    animation: fadeInSlideDown 0.3s ease forwards;
+}
+
+@keyframes fadeInSlideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.sub-list li {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    transition: background 0.2s;
+}
+
+.sub-list li:last-child {
+    border-bottom: none;
+}
+
+.sub-list li:hover {
+    background: rgba(217, 58, 73, 0.05);
+    /* 淡淡的红 */
+    color: #d93a49;
+}
+
+.sub-list li.active {
+    color: #d93a49;
+    font-weight: bold;
+    background: rgba(217, 58, 73, 0.08);
+}
+
+/* 通用选择列表 (原 bg-list 样式已独立) */
+.selector-list {
+    display: none;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    list-style: none;
+    min-width: 90px;
+    max-height: 320px;
+    /* 约8项高度，超出滚动 */
+    overflow-y: auto;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+}
+
+.selector-list.show {
+    display: block;
+}
+
+/* 清理旧的 bg-list 选择器，只保留 selector-list */
+.selector-list li {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.selector-list li:last-child {
+    border-bottom: none;
+}
+
+.selector-list li:hover,
+.selector-list li:active {
+    background: rgba(168, 63, 63, 0.1);
+    color: var(--accent-color);
+}
+
+.bg-list li.active,
+.selector-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* ===== 名录弹窗 ===== */
+.toc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.toc-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.toc-card {
+    background: var(--card-bg);
+    width: 85%;
+    max-width: 300px;
+    max-height: 70vh;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toc-title {
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(168, 63, 63, 0.2);
+    width: 100%;
+    text-align: center;
+}
+
+.toc-list {
+    list-style: none;
+    width: 100%;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.toc-list li {
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.toc-list li.new-work-highlight {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.toc-list li:active {
+    background: rgba(168, 63, 63, 0.1);
+    color: var(--accent-color);
+}
+
+/* 目录列表新作高亮 */
+#toc-list li.new-work-highlight {
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+
+#toc-list li.new-work-highlight::after {
+    content: " (新)";
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+/* 目录列表修订高亮 */
+#toc-list li.modified-work-highlight {
+    color: #4A90E2;
+    /* 蓝色 */
+    font-weight: bold;
+}
+
+#toc-list li.modified-work-highlight::after {
+    content: " (修)";
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+/* 高亮样式下hover */
+#toc-list li.new-work-highlight:hover,
+#toc-list li.modified-work-highlight:hover {
+    color: #fff;
+}
+
+.toc-close {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* 作品注释内容 */
+.notes-content {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.notes-content p {
+    margin: 0.5rem 0;
+}
+
+/* ===== 页脚 ===== */
+.site-footer {
+    text-align: center;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 2rem;
+    /* 半透明遮罩背景 */
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    /* 统一宽度与卡片一致 */
+    width: 95%;
+    max-width: clamp(320px, 75vw, 600px);
+    /* 防止与内容重叠 */
+    position: relative;
+    z-index: 10;
+}
+
+/* ===== 更新通知喇叭 ===== */
+.update-notice {
+    display: none !important;
+    /* 隐藏所有喇叭 */
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    flex-direction: row-reverse;
+    /* 文字在左，喇叭在右 */
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--accent-color);
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* animation 已移至第二套规则，避免冲突 */
+    transition: transform 0.3s ease;
+}
+
+.update-notice:hover {
+    transform: scale(1.05);
+}
+
+.notice-icon {
+    font-size: 1.2rem;
+    /* 移除无限抖动动画 */
+    transform: scaleX(-1);
+    /* 镜像喇叭，口朝左 */
+}
+
+.notice-text {
+    font-family: var(--font-title);
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* 蓝色修改通知喇叭（放在此处以覆盖默认样式） */
+.modification-notice {
+    top: 160px;
+    border-color: #4A90E2;
+}
+
+/* 蓝色变色滤镜 */
+.modification-notice .notice-icon {
+    filter: hue-rotate(210deg);
+}
+
+.modification-notice .notice-text {
+    color: #2c5282;
+}
+
+/* 黄色公告喇叭 */
+#announcement-notice {
+    display: flex !important;
+    /* 强制显示公告喇叭 */
+    /* 蓝喇叭下方 */
+    border-color: #D4A017;
+    /* 金黄色边框 */
+    max-width: 220px;
+    /* 略微加宽以容纳更多文字 */
+    white-space: normal !important;
+    /* 强制换行 */
+    line-height: 1.4;
+}
+
+.announcement-notice .notice-icon {
+    filter: hue-rotate(45deg) saturate(1.5);
+    /* 黄色 */
+}
+
+.announcement-notice .notice-text {
+    color: #8B6914;
+    /* 深金色文字 */
+}
+
+@keyframes notice-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 10px rgba(168, 63, 63, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 2px 20px rgba(168, 63, 63, 0.4);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: scaleX(-1) rotate(0deg);
+    }
+
+    25% {
+        transform: scaleX(-1) rotate(-10deg);
+    }
+
+    75% {
+        transform: scaleX(-1) rotate(10deg);
+    }
+}
+
+/* 移动端喇叭适配 */
+@media (max-width: 768px) {
+
+    /* 横排模式：手机端需要更宽以防止换行 */
+    .poem-content.horizontal-mode {
+        width: 92vw;
+        max-width: 600px;
+    }
+
+    /* 移动端隐藏红蓝喇叭（因自动隐藏逻辑问题） */
+    #update-notice,
+    #modification-notice {
+        display: none !important;
+    }
+
+    /* 保留黄色公告喇叭 */
+    #announcement-notice {
+        display: flex !important;
+        top: 60px;
+        /* 位置上移 */
+        right: 10px;
+        padding: 6px 12px;
+        border-radius: 15px;
+        animation: none !important;
+        /* 强制换行：约10个字宽度 */
+        max-width: 180px;
+        white-space: normal !important;
+        text-align: left;
+    }
+
+    .notice-icon {
+        font-size: 1rem;
+        animation: none !important;
+        /* 禁止抖动 */
+    }
+
+    .notice-text {
+        font-size: 0.75rem;
+    }
+}
+
+.footer-info p {
+    margin: 0.25rem 0;
+}
+
+.footer-stars {
+    letter-spacing: 3px;
+    opacity: 0.6;
+    margin-top: 0.5rem;
+}
+
+/* ===== 装饰元素 - 移动端隐藏 ===== */
+.decoration-branch,
+#particle-canvas,
+.guide-seal {
+    display: none;
+}
+
+/* 理工浪漫标签 - 竖排文字 */
+.tech-romance-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    /* 确保显示在花笺上方 */
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    color: var(--accent-blue);
+    opacity: 0.8;
+    letter-spacing: 3px;
+    font-family: 'Noto Serif SC', serif;
+    display: none;
+    /* 默认隐藏，通过JS控制显示 */
+    pointer-events: none;
+    padding-right: 12px;
+    /* 为装饰线留空间 */
+}
+
+/* 蓝线：从卡片顶部边缘到"工"字结束 */
+.tech-romance-tag::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    right: 4px;
+    width: 2px;
+    height: 113px;
+    /* 15px + 约7个字 * 14px (到达"极致") */
+    background: var(--accent-blue);
+    opacity: 0.7;
+}
+
+/* 红线：从卡片顶部边缘到"浪漫"结束 */
+.tech-romance-tag::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    right: 0;
+    width: 2px;
+    height: 141px;
+    /* 15px + 约9个字 * 14px */
+    background: var(--accent-color);
+    opacity: 0.7;
+}
+
+/* 印章在移动端显示 - 位置与桌面端一致 */
+.stamps-container {
+    display: grid;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    grid-template-columns: 26px 26px;
+    grid-template-rows: 26px 26px;
+    gap: 4px;
+    pointer-events: none;
+    writing-mode: horizontal-tb;
+}
+
+/* 移动端印章样式 */
+.seal {
+    width: 26px;
+    height: 26px;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 3px;
+    font-family: var(--font-title);
+    opacity: 0.85;
+    line-height: 1;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* Grid 定位 */
+.seal:nth-child(2) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.seal:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.seal:nth-child(1) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* 玫瑰背景 - 移动端简化 */
+/* 右下角大印章 - 移动端静态展示 */
+.poem-content::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    /* 移动端缩小尺寸 */
+    height: 50px;
+    background-image: url('../assets/Seal1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.8;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 横排模式使用蓝色印章 Seal4 */
+.poem-content.horizontal-mode::before {
+    background-image: url('../assets/Seal4.png');
+}
+
+/* ===== 云笺模式（花笺背景） - 移动端支持 ===== */
+.poem-content.yunjian-mode::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--yunjian-bg, url('../assets/card01.jpg'));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 云笺模式下确保正文和印章在背景之上 */
+.poem-content.yunjian-mode #poem-text-container {
+    z-index: 2;
+    position: relative;
+}
+
+.poem-content.yunjian-mode::before {
+    z-index: 1;
+}
+
+.poem-content.yunjian-mode .stamps-container {
+    z-index: 2;
+}
+
+/* ===== iPad 断点 (768px+) ===== */
+@media (min-width: 768px) {
+    /* iPad/平板特别优化：隐藏所有3D特效和装饰，防止卡顿 */
+    @media (max-width: 1024px) {
+
+        /* 隐藏所有晶格 canvas */
+        #sc-lattice-canvas,
+        #bcc-lattice-canvas,
+        #hcp-lattice-canvas,
+        #fcc-lattice-canvas,
+        /* 隐藏所有位错 3D 容器 */
+        #sc-dislocation-3d,
+        #bcc-dislocation-3d,
+        #hcp-dislocation-3d,
+        #dislocation-3d,
+        /* 隐藏装饰石章 */
+        .stamps-container,
+        .guide-seal {
+            display: none !important;
+        }
+    }
+
+    .container {
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+
+    .site-title {
+        font-size: 2.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    header {
+        width: 85%;
+        max-width: 500px;
+        padding: 1.5rem;
+        /* 增加内边距适配大屏 */
+    }
+
+    .poem-content {
+        width: 85%;
+        max-width: 500px;
+        padding: 2.5rem;
+        /* 移动端垂直居中修正：确保内容整体居中 */
+        display: flex;
+        justify-content: center;
+    }
+
+    #poem-text-container {
+        min-height: 480px;
+        /* 竖排文本靠右对齐（减少右侧留白） */
+        justify-content: flex-start;
+    }
+
+    #poem-title {
+        font-size: 2rem;
+        margin: 0 0 0 2rem;
+    }
+
+    .body-text {
+        font-size: 1.4rem;
+        line-height: 2.8rem;
+        letter-spacing: 4px;
+    }
+
+    .body-text p {
+        margin: 0 0.5rem;
+    }
+
+    .control-panel {
+        gap: 3rem;
+    }
+
+    #prev-btn,
+    #next-btn {
+        font-size: 1.1rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .music-wrapper {
+        gap: 1rem;
+    }
+
+    .widget-btn,
+    #mode-btn,
+    .music-label,
+    .music-control {
+        width: 45px;
+        height: 45px;
+    }
+
+    .site-footer {
+        font-size: 1rem;
+    }
+}
+
+/* ===== 桌面断点预备 (1024px+) ===== */
+/* 核心布局调整，美学层由 desktop.css 提供 */
+@media (min-width: 1024px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-y: auto;
+        /* 允许垂直滚动，页脚可见 */
+    }
+
+    .container {
+        height: 90vh;
+        max-width: 800px;
+        justify-content: space-between;
+        padding: 2rem;
+    }
+
+    .site-title {
+        font-size: 3.5rem;
+    }
+
+    .poem-content {
+        width: 500px;
+        height: 600px;
+        max-width: none;
+    }
+
+    #poem-text-container {
+        min-height: 100%;
+    }
+
+    #poem-title {
+        font-size: 2.4rem;
+        margin: 0 0 0 3rem;
+    }
+
+    .body-text {
+        font-size: 1.5rem;
+        line-height: 3rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* ===== 注释按钮有备注时高亮+抖动 ===== */
+@keyframes note-shake {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: rotate(-5deg);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: rotate(5deg);
+    }
+}
+
+#note-btn.has-notes {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    /* 移除抖动动画：只保留高亮 */
+}
+
+/* 折叠状态下的设置按钮：不抖动，但保持红色高亮 */
+.music-wrapper.collapsed #note-btn {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    animation: none !important;
+    /* 禁用抖动 */
+}
+
+/* 展开过一次后的设置按钮：恢复默认样式 */
+.music-wrapper.collapsed #note-btn.settings-used {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* ===== 背景固定模式样式 ===== */
+#bg-btn.active-mode,
+#playmode-btn.active-mode {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+/* ===== 键盘导航焦点样式 ===== */
+.widget-btn:focus-visible,
+#mode-btn:focus-visible,
+.music-label:focus-visible,
+.music-control:focus-visible,
+#prev-btn:focus-visible,
+#next-btn:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* ===== 通知喇叭样式 (小巧胶囊，右侧竖排) ===== */
+.update-notice {
+    position: fixed;
+    top: 95px;
+    /* 视听设置按钮行下方 (50px按钮 + 10px顶距 + 35px间距) */
+    right: 10px;
+    display: none;
+    /* 默认隐藏，JS控制显示 */
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #fff;
+    color: #c91f37;
+    /* 红色文字 */
+    border: 2px solid #c91f37;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    animation: notice-slide-in 0.4s ease-out;
+}
+
+.update-notice .notice-icon {
+    font-size: 1rem;
+}
+
+.update-notice .notice-text {
+    font-weight: 500;
+}
+
+/* 蓝色修订喇叭 - 在红色喇叭下方 */
+.modification-notice {
+    background: #fff;
+    color: #1A5599;
+    /* 蓝色文字 */
+    border: 2px solid #1A5599;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    top: 140px;
+    /* 红色喇叭下方 (95 + 35 + 10间距) */
+}
+
+/* 黄色公告喇叭 - 在蓝色喇叭下方 */
+#announcement-notice {
+    top: 185px;
+    /* 蓝色喇叭下方 (140 + 35 + 10间距) */
+}
+
+/* 入场动画 - 从右侧滑入 */
+@keyframes notice-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 朗读按钮激活状态 */
+#voice-btn.active {
+    background: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-blue);
+    animation: voice-pulse 2s infinite;
+}
+
+@keyframes voice-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(74, 144, 226, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+    }
+}
