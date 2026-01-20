@@ -1128,6 +1128,8 @@ header {
 
 /* ===== 更新通知喇叭 ===== */
 .update-notice {
+    display: none;
+    /* 隐藏黄色小喇叭 */
     display: none !important;
     /* 隐藏所有喇叭 */
     position: fixed;

@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isValid = isWithin24Hours(updateInfo.date, beijingDate);
 
         if (isValid) {
-            noticeEl.style.display = 'flex';
+            // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示具体数量
             const count = updateInfo.latestWorks.length;
             textEl.innerHTML = `有新作 ${count} 首上线`;
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isValid = isWithin24Hours(updateInfo.date, beijingDate);
 
         if (isValid) {
-            noticeEl.style.display = 'flex';
+            // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示修订数量
             const count = updateInfo.modifiedWorks.length;
             textEl.innerHTML = `有 ${count} 首旧作翻新`;
