@@ -1318,8 +1318,8 @@ header {
     top: -15px;
     right: 4px;
     width: 2px;
-    height: 71px;
-    /* 15px + 约4个字 * 14px */
+    height: 113px;
+    /* 15px + 约7个字 * 14px (到达"极致") */
     background: var(--accent-blue);
     opacity: 0.7;
 }
