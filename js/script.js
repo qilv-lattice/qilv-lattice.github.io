@@ -47,35 +47,56 @@ function applyBackground(index) {
     analyzeBackground(currentBg);
 }
 
+// 缓存背景分析结果，避免重复计算
+const bgAnalysisCache = new Map();
+// 复用 Canvas 对象，避免频繁创建销毁
+let sharedAnalysisCanvas = null;
+let sharedAnalysisCtx = null;
+
 // 分析背景图片亮度
 function analyzeBackground(url) {
+    // 1. 检查缓存
+    if (bgAnalysisCache.has(url)) {
+        const result = bgAnalysisCache.get(url);
+        console.log(`Background (Cached): ${url}, Brightness: ${result.brightness.toFixed(1)}, Mode: ${result.isDark ? 'Dark' : 'Light'}`);
+        window.dispatchEvent(new CustomEvent('lattice-theme-change', {
+            detail: result
+        }));
+        return;
+    }
+
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = url;
 
     img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 1;
-        canvas.height = 1;
+        // 2. 初始化共享 Canvas (懒加载)
+        if (!sharedAnalysisCanvas) {
+            sharedAnalysisCanvas = document.createElement('canvas');
+            sharedAnalysisCanvas.width = 1;
+            sharedAnalysisCanvas.height = 1;
+            //以此优化频繁读取操作
+            sharedAnalysisCtx = sharedAnalysisCanvas.getContext('2d', { willReadFrequently: true });
+        }
 
-        // 绘制图片到 1x1 画布以获取平均色
-        ctx.drawImage(img, 0, 0, 1, 1);
-        const p = ctx.getImageData(0, 0, 1, 1).data;
+        // 3. 绘制并分析
+        sharedAnalysisCtx.clearRect(0, 0, 1, 1);
+        sharedAnalysisCtx.drawImage(img, 0, 0, 1, 1);
+        const p = sharedAnalysisCtx.getImageData(0, 0, 1, 1).data;
 
-        // 计算亮度 (Luminance)
-        // Formula: 0.299*R + 0.587*G + 0.114*B
+        // 计算亮度 (Luminance) Formula: 0.299*R + 0.587*G + 0.114*B
         const brightness = 0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2];
         const isDark = brightness < 128;
+
+        // 4. 存入缓存
+        const result = { isDark, brightness };
+        bgAnalysisCache.set(url, result);
 
         console.log(`Background: ${url}, Brightness: ${brightness.toFixed(1)}, Mode: ${isDark ? 'Dark' : 'Light'}`);
 
         // 触发自定义事件
         const event = new CustomEvent('lattice-theme-change', {
-            detail: {
-                isDark: isDark,
-                brightness: brightness
-            }
+            detail: result
         });
         window.dispatchEvent(event);
     };
