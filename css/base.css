@@ -1342,8 +1342,9 @@ header {
 /* ===== 水平红蓝装饰线（专字头顶，贯穿卡片） ===== */
 .horizontal-decoration-lines {
     position: absolute;
-    /* 位置：与 .tech-romance-tag 的 top 对齐 (15px)，这样蓝线刚好贴着"专"字头 */
-    top: 15px;
+    /* 位置：向上平移2个单位(2*4px=8px)，防止切字 */
+    /* 原 15px -> 现 7px */
+    top: 7px;
     left: 0;
     right: 0;
     height: 6px;
