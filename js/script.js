@@ -659,10 +659,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const voiceBtn = document.getElementById('voice-btn');
         const noteBtn = document.getElementById('note-btn');
         const musicControl = document.getElementById('music-control');
+        const sealBtn = document.getElementById('seal-btn');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
         if (musicControl) musicControl.classList.toggle('blue-mode');
+        if (sealBtn) sealBtn.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
@@ -926,12 +928,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isEnabled) {
                 btn.classList.add('active');
                 btn.innerHTML = '印章<br>特效'; // 开启状态
-                btn.style.color = 'var(--accent-color)';
                 btn.style.fontWeight = 'bold';
+                btn.style.removeProperty('color'); // 移除行内样式，让CSS类控制颜色(红/蓝)
             } else {
                 btn.classList.remove('active');
                 btn.innerHTML = '特效<br>关闭'; // 关闭状态
-                btn.style.color = '#999';
+                btn.style.color = '#999'; // 关闭状态保持灰色
                 btn.style.fontWeight = 'normal';
             }
         }
