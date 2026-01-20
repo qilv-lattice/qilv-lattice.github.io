@@ -1183,10 +1183,13 @@ header {
 
 /* 黄色公告喇叭 */
 #announcement-notice {
+    display: flex !important;
+    /* 强制显示公告喇叭 */
     /* 蓝喇叭下方 */
     border-color: #D4A017;
     /* 金黄色边框 */
-    max-width: 180px;
+    max-width: 220px;
+    /* 略微加宽以容纳更多文字 */
     white-space: normal !important;
     /* 强制换行 */
     line-height: 1.4;
@@ -1247,7 +1250,7 @@ header {
 
     /* 保留黄色公告喇叭 */
     #announcement-notice {
-        display: flex;
+        display: flex !important;
         top: 60px;
         /* 位置上移 */
         right: 10px;

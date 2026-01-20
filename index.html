@@ -51,9 +51,10 @@
     </div>
 
     <!-- 公告喇叭 (黄) -->
-    <div class="update-notice announcement-notice" id="announcement-notice" onclick="this.style.display='none'">
+    <div class="update-notice announcement-notice" id="announcement-notice"
+        onclick="this.style.setProperty('display', 'none', 'important')">
         <span class="notice-icon">📢</span>
-        <span class="notice-text">《纠缠》是作者最中意系列作品之一，借量子纠缠书自己情怀，由于颈联无法回避技术难题，故只能采用通韵，所幸，海森堡有中文译名海森伯，此对物理学领域再无对句。</span>
+        <span class="notice-text">今天大寒，祝读者大寒安康！<br>视听设置增加一枚按钮：盖章特效/关闭特效。更加便于电脑端快速阅览，不被特效干扰。感谢读者默默支持！</span>
     </div>
 
     <!-- 挂件控制组 -->
@@ -153,6 +154,9 @@
 
         <!-- 音乐播放模式切换 -->
         <button id="playmode-btn" class="widget-btn" onclick="togglePlayMode()">单曲<br>循环</button>
+
+        <!-- 印章特效开关 -->
+        <button id="seal-btn" class="widget-btn" onclick="toggleSealEffect()">印章<br>特效</button>
 
         <!-- 移动端折叠菜单：独立的设置按钮 -->
         <div id="settings-btn" class="settings-btn" onclick="toggleSettingsMenu()">视听<br>设置</div>
@@ -304,27 +308,7 @@
             document.body.appendChild(scScript);
 
             // ===== 右列：对应位错滑移面 (暂时关闭) =====
-            // SC 位错滑移面（与SC晶格对应）
-            /*
-            const scDislocScript = document.createElement('script');
-            scDislocScript.src = 'js/sc-dislocation.js';
-            document.body.appendChild(scDislocScript);
- 
-            // BCC 位错滑移面（与BCC晶格对应）
-            const bccDislocScript = document.createElement('script');
-            bccDislocScript.src = 'js/bcc-dislocation.js';
-            document.body.appendChild(bccDislocScript);
- 
-            // HCP 位错滑移面（与HCP晶格对应）
-            const hcpDislocScript = document.createElement('script');
-            hcpDislocScript.src = 'js/hcp-dislocation.js';
-            document.body.appendChild(hcpDislocScript);
- 
-            // FCC 位错滑移面（与FCC晶格对应）
-            const fccDislocScript = document.createElement('script');
-            fccDislocScript.src = 'js/dislocation.js';
-            document.body.appendChild(fccDislocScript);
-            */
+            // SC 位错滑移面（与SC晶格对                              const scDislocScript = document.createElement('script'               scDislocScript.src = 'js/sc-dislocation.js               document.body.appendChild(scDislocScript);               // BCC 位错滑移面（与BCC晶格对               const bccDislocScript = document.createElement('script'               bccDislocScript.src = 'js/bcc-dislocation.js               document.body.appendChild(bccDislocScript);               // HCP 位错滑移面（与HCP晶格对               const hcpDislocScript = document.createElement('script'               hcpDislocScript.src = 'js/hcp-dislocation.js               document.body.appendChild(hcpDislocScript);               // FCC 位错滑移面（与FCC晶格对               const fccDislocScript = document.createElement('script'               fccDislocScript.src = 'js/dislocation.js               document.body.appendChild(fccDislocScript               */
 
             // GSAP 诗句工业装配动画
             const poemAnimScript = document.createElement('script');

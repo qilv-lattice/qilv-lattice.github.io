@@ -323,13 +323,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const noticeEl = document.getElementById('announcement-notice');
         if (!noticeEl) return;
 
-        // 显示公告
-        noticeEl.style.display = 'flex';
+        // 显示公告 (CSS中有 !important，这里不需要额外操作，但为了保险可以写)
+        // noticeEl.style.display = 'flex'; 
 
-        // 30秒后自动隐藏
+        // 绑定点击隐藏事件 (覆盖 CSS !important)
+        noticeEl.onclick = function () {
+            this.style.setProperty('display', 'none', 'important');
+        };
+
+        // 30秒后自动隐藏 (覆盖 CSS !important)
         setTimeout(() => {
             if (noticeEl) {
-                noticeEl.style.display = 'none';
+                noticeEl.style.setProperty('display', 'none', 'important');
             }
         }, 30000);
     }
@@ -890,6 +895,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化播放模式（后设置loop属性）
     initPlayMode();
 
+    // ===== 印章特效控制 =====
+    function initSealEffect() {
+        // 默认开启 ('true' or null -> true)
+        const isEnabled = localStorage.getItem('sealEffectEnabled') !== 'false';
+        updateSealBtnState(isEnabled);
+    }
+
+    function toggleSealEffect() {
+        const isEnabled = localStorage.getItem('sealEffectEnabled') !== 'false';
+        const newState = !isEnabled;
+        localStorage.setItem('sealEffectEnabled', newState);
+        updateSealBtnState(newState);
+
+        // 如果关闭了特效，立即重置大印章状态（如果正在显示）
+        if (!newState) {
+            const container = document.querySelector('.poem-content');
+            if (container) {
+                container.classList.remove('seal-preparing', 'seal-landing');
+            }
+        }
+    }
+
+    function updateSealBtnState(isEnabled) {
+        const btn = document.getElementById('seal-btn');
+        if (btn) {
+            if (isEnabled) {
+                btn.classList.add('active');
+                btn.innerHTML = '印章<br>特效'; // 开启状态
+                btn.style.color = 'var(--accent-color)';
+                btn.style.fontWeight = 'bold';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '特效<br>关闭'; // 关闭状态
+                btn.style.color = '#999';
+                btn.style.fontWeight = 'normal';
+            }
+        }
+    }
+
+    // 初始化印章特效设置
+    initSealEffect();
+
     // 键盘快捷键
     document.addEventListener('keydown', (e) => {
         // 如果焦点在输入框则不处理
@@ -1019,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleNotes = toggleNotes;
     window.toggleMode = toggleMode;
     window.togglePlayMode = togglePlayMode;
+    window.toggleSealEffect = toggleSealEffect;
     window.prevPoem = prevPoem;
     window.nextPoem = nextPoem;
     window.toggleUpdateNotice = toggleUpdateNotice;

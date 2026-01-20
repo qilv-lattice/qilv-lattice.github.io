@@ -81,11 +81,29 @@
 
         if (!poemLines.length || !container) return;
 
+        // 检查用户设置：是否启用印章特效 (默认为 true)
+        const isSealEffectEnabled = localStorage.getItem('sealEffectEnabled') !== 'false';
+
+        // 如果特效关闭，确保大印章静态显示，退出动画逻辑
+        if (!isSealEffectEnabled) {
+            container.classList.remove('seal-preparing');
+            container.classList.remove('seal-landing');
+
+            // 确保存储中印章可见（通过移除可能的隐藏类或重置样式）
+            // CSS中默认是大印章可见，小印章不可见
+            // 我们需要让小印章也显示出来（如果设计需要）或者保持现状
+            // 这里简单处理：让GSAP进场动画只播放文字部分，甚至连文字部分也可以简化
+            // 但用户只要求关掉“盖章特效”，所以文字动画保留，只跳过印章部分
+        }
+
 
         // 重置印章动画类
         container.classList.remove('seal-landing');
-        // 添加准备类，立即隐藏大印章（等三小印章完成后再动画显示）
-        container.classList.add('seal-preparing');
+
+        // 只有开启特效时，才添加准备类（隐藏大印章）等待动画
+        if (isSealEffectEnabled) {
+            container.classList.add('seal-preparing');
+        }
 
         // 为容器添加 3D 透视
         gsap.set(container, {
@@ -139,38 +157,47 @@
         // 使用标签强制控制顺序：每个印章间隔 800ms
         tl.addLabel('stamps-start');
 
-        stamps.forEach((stamp, index) => {
-            gsap.set(stamp, {
-                opacity: 0,
-                scale: 2.5,
-                rotation: -15 + Math.random() * 30
+        if (isSealEffectEnabled) {
+            stamps.forEach((stamp, index) => {
+                gsap.set(stamp, {
+                    opacity: 0,
+                    scale: 2.5,
+                    rotation: -15 + Math.random() * 30
+                });
+
+                // 计算每个印章的开始时间：第0个在标签处，第1个在+0.8s，第2个在+1.6s
+                const stampStartTime = `stamps-start+=${index * 0.8}`;
+
+                // 小印章下落动画（800ms）
+                tl.to(stamp, {
+                    opacity: 1,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                }, stampStartTime);
+
+                // 音效与下落同时开始
+                tl.add(() => {
+                    playSealSound(0.35 + index * 0.1, 1500);
+                }, stampStartTime);
             });
 
-            // 计算每个印章的开始时间：第0个在标签处，第1个在+0.8s，第2个在+1.6s
-            const stampStartTime = `stamps-start+=${index * 0.8}`;
-
-            // 小印章下落动画（800ms）
-            tl.to(stamp, {
-                opacity: 1,
-                scale: 1,
-                rotation: 0,
-                duration: 0.8,
-                ease: 'power2.out'
-            }, stampStartTime);
-
-            // 音效与下落同时开始
-            tl.add(() => {
-                playSealSound(0.35 + index * 0.1, 1500);
-            }, stampStartTime);
-        });
-
-        // 标记三个小印章全部结束的时间点
-        tl.addLabel('stamps-done', `stamps-start+=${stamps.length * 0.8}`);
+            // 标记三个小印章全部结束的时间点
+            tl.addLabel('stamps-done', `stamps-start+=${stamps.length * 0.8}`);
+        } else {
+            // 特效关闭：小印章直接显示（无动画，无声音）
+            stamps.forEach(stamp => {
+                gsap.set(stamp, { opacity: 1, scale: 1, rotation: 0 });
+            });
+            // 时间轴无缝衔接
+            tl.addLabel('stamps-done', 'stamps-start');
+        }
 
         // ===== 第三阶段：主印章重锤落下（仅桌面端） =====
         // 注意：::before 伪元素无法直接用 GSAP 操控
         // 我们通过为容器添加一个动画类来触发
-        if (!isMobile) {
+        if (!isMobile && isSealEffectEnabled) {
             tl.add(() => {
                 // 移除准备类，添加动画类
                 container.classList.remove('seal-preparing');
