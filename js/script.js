@@ -1,23 +1,8 @@
 let poems = [];
 let currentIndex = 0;
 
-// 背景图随机切换（14张）
-const backgrounds = [
-    'assets/background01.jpg',
-    'assets/background02.jpg',
-    'assets/background03.jpg',
-    'assets/background04.png',
-    'assets/background05.jpeg',
-    'assets/background06.jpg',
-    'assets/background07.jpg',
-    'assets/background08.jpg',
-    'assets/background09.png',
-    'assets/background10.jpg',
-    'assets/background11.jpg',
-    'assets/background12.jpg',
-    'assets/background13.jpg',
-    'assets/background14.jpg'
-];
+// 背景图列表（将从 config.json 加载）
+let backgrounds = [];
 
 let bgIndex = 0; // 当前背景索引
 const cacheBuster = Date.now(); // 时间戳破缓存
@@ -146,11 +131,28 @@ function selectBackground(index) {
     btn.classList.add('active-mode');
 }
 
-// 页面加载时初始化背景
-document.addEventListener('DOMContentLoaded', () => {
-    // 初始随机背景
-    bgIndex = Math.floor(Math.random() * backgrounds.length);
-    applyBackground(bgIndex);
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // 1. 加载配置
+        const configResp = await fetch('data/config.json');
+        const config = await configResp.json();
+        backgrounds = config.backgrounds || [];
+
+        // 2. 初始随机背景
+        if (backgrounds.length > 0) {
+            bgIndex = Math.floor(Math.random() * backgrounds.length);
+            applyBackground(bgIndex);
+        }
+
+        // 3. 加载诗词数据 (移到这里确保顺序)
+        loadPoems();
+
+    } catch (e) {
+        console.error("Failed to load config:", e);
+        // Fallback or alert? 可根据需求处理
+    }
+
 
     // 每5分钟切换一次
     bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
@@ -910,7 +912,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 初始化 (直接调用，不再嵌套 DOMContentLoaded)
-    loadPoems();
+    // loadPoems(); -> 已移动到 DOMContentLoaded
 
     // 初始化主题
     initTheme();
