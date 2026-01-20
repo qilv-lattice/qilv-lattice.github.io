@@ -1409,7 +1409,7 @@ header {
 .stamps-container {
     display: grid;
     position: absolute;
-    bottom: 15px;
+    bottom: 20px;
     left: 15px;
     grid-template-columns: 26px 26px;
     grid-template-rows: 26px 26px;
@@ -1458,7 +1458,7 @@ header {
     content: "";
     display: block;
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     right: 10px;
     width: 50px;
     /* 移动端缩小尺寸 */
