@@ -214,6 +214,9 @@ header {
     /* 响应式最小高度 */
     min-height: clamp(350px, 60vw, 480px);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+
+    /* 整体下移 2个红蓝线距离 (8px) */
+    padding-top: 8px;
 }
 
 /* 水墨晕染动画状态（保留备用） */
@@ -271,7 +274,8 @@ header {
     font-family: var(--font-title);
     /* 手机1.6rem → iPad1.9rem → 桌面2.4rem */
     font-size: clamp(1.6rem, 4vw, 2.4rem);
-    margin: 0 0 0 clamp(1rem, 3vw, 2rem);
+    margin: 0 0 0 0.5rem;
+    /* 强制缩小间距测试 */
     letter-spacing: 2px;
 }
 
@@ -1342,9 +1346,8 @@ header {
 /* ===== 水平红蓝装饰线（专字头顶，贯穿卡片） ===== */
 .horizontal-decoration-lines {
     position: absolute;
-    /* 位置：向上平移2个单位(2*4px=8px)，防止切字 */
-    /* 原 15px -> 现 7px */
-    top: 7px;
+    /* 位置：恢复到 15px (原7px + 8px下移量)，跟随正文整体下移 */
+    top: 15px;
     left: 0;
     right: 0;
     height: 6px;
