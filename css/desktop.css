@@ -201,7 +201,8 @@ body::before {
 
 /* ===== 装饰枝条 ===== */
 .decoration-branch {
-    display: block;
+    display: none;
+    /* 隐藏装饰枝条 */
     position: absolute;
     top: 0;
     right: 0;

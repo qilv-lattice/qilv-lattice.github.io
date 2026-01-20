@@ -1128,11 +1128,12 @@ header {
 
 /* ===== 更新通知喇叭 ===== */
 .update-notice {
+    display: none !important;
+    /* 隐藏所有喇叭 */
     position: fixed;
     top: 100px;
     right: 20px;
     z-index: 1000;
-    display: flex;
     flex-direction: row-reverse;
     /* 文字在左，喇叭在右 */
     align-items: center;
