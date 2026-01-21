@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const techRomanceTag = document.getElementById('tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
-                techRomanceTag.innerText = poem.techRomance ? '专属理工的极致浪漫' : '专属传统的时代浪漫';
+                techRomanceTag.innerText = poem.techRomance ? '专属理工的极致浪漫' : '专属斯人的心灵浪漫';
             }
 
             // 智能注释提醒逻辑已移除
