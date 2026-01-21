@@ -623,12 +623,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // 理工浪漫标签显示逻辑: 
-            // 每一个作品都显示装饰线（标签始终 display: block）
-            // 只有 techRomance 为 true 时才显示文字
+            // 每一个作品都显示装饰线
+            // techRomance 为 true 显示 "专属理工的极致浪漫"，否则显示 "专属传统的时代浪漫"
             const techRomanceTag = document.getElementById('tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
-                techRomanceTag.innerText = poem.techRomance ? '专属理工的极致浪漫' : '';
+                techRomanceTag.innerText = poem.techRomance ? '专属理工的极致浪漫' : '专属传统的时代浪漫';
             }
 
             // 智能注释提醒逻辑已移除
