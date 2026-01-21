@@ -1317,6 +1317,21 @@ header {
     /* 为装饰线留空间 */
 }
 
+/* 梅花小图标 */
+.plum-icon {
+    display: inline-block;
+    /* 像一个字一样排列 */
+    width: 13.5px;
+    height: auto;
+    margin-top: 1px;
+    /* 向下回调3px (原-2px -> 1px) */
+    /* 作为一个“字”，和上一个字的间距 */
+    /* 竖排模式下，inline元素默认居中对齐于行内 */
+    opacity: 0.9;
+    transform: translateX(0.4px) rotate(45deg);
+    /* 位移+旋转 */
+}
+
 /* 蓝线：从卡片顶部边缘到"工"字结束 */
 .tech-romance-tag::before {
     content: '';
