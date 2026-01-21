@@ -28,7 +28,7 @@
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260120-forced-plum-v2">
+    <link rel="stylesheet" href="css/base.css?v=20260121-plum-fix">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
     <link rel="stylesheet" href="css/desktop.css?v=20260119-revert" media="(min-width: 1024px)">
@@ -208,6 +208,10 @@
 
                 <!-- 水平红蓝装饰线 (贯穿卡片，位于"专"字头顶) -->
                 <div class="horizontal-decoration-lines"></div>
+
+                <!-- 独立梅花图标 (左上角) -->
+                <img src="assets/plum.png?v=force" class="plum-icon-fixed" width="20"
+                    style="width: 20px; position: absolute; top: 24px; left: 10px; z-index: 10; opacity: 0.9; transform: rotate(15deg);">
 
                 <div id="poem-text-container">
                     <h2 id="poem-title">七律 · 自况</h2>

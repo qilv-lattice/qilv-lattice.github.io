@@ -1318,9 +1318,25 @@ header {
     /* 为装饰线留空间 */
 }
 
-/* 梅花小图标 */
+/* 梅花小图标 (独立定位版) */
+.plum-icon-fixed {
+    position: absolute;
+    top: 24px;
+    /* 紧挨着红蓝线下发 (Decor lines top is ~20px, height ~3px) */
+    left: 10px;
+    /* 左侧边距 */
+    width: 20px;
+    /* 1.5倍大小 (原13.5px * 1.5 ≈ 20px) */
+    height: auto;
+    z-index: 10;
+    opacity: 0.9;
+    transform: rotate(15deg);
+    /* 微微旋转更有韵味 */
+}
+
+/* 旧版梅花小图标 (保留以防回退，但不再使用) */
 .plum-icon {
-    display: inline-block;
+    display: none;
     /* 像一个字一样排列 */
     width: 13.5px;
     height: auto;
