@@ -1819,3 +1819,18 @@ header {
         box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
     }
 }
+
+/* ===== 雪花特效 (Safe Re-implementation) ===== */
+.snowflake {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    /* 点击穿透 */
+    z-index: 9999;
+    /* 覆盖在最上层 */
+    will-change: transform;
+    user-select: none;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+    font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
+}
