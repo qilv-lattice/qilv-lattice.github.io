@@ -1082,9 +1082,22 @@ header {
     opacity: 0.8;
 }
 
+/* 目录列表新作+修订高亮 (红) */
+#toc-list li.new-modified-highlight {
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+
+#toc-list li.new-modified-highlight::after {
+    content: " (新)(修)";
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
 /* 高亮样式下hover */
 #toc-list li.new-work-highlight:hover,
-#toc-list li.modified-work-highlight:hover {
+#toc-list li.modified-work-highlight:hover,
+#toc-list li.new-modified-highlight:hover {
     color: #fff;
 }
 

@@ -525,7 +525,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (isUpdateDay) {
-                if (isNewWork) {
+                if (isNewWork && isModifiedWork) {
+                    li.classList.add('new-modified-highlight');
+                } else if (isNewWork) {
                     li.classList.add('new-work-highlight');
                 } else if (isModifiedWork) {
                     li.classList.add('modified-work-highlight');
