@@ -134,6 +134,13 @@ function selectBackground(index) {
 // 页面加载时初始化
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        const isTouchDevice = () => (navigator.maxTouchPoints || 0) > 0;
+        const applyDeviceClasses = () => {
+            document.body.classList.toggle('is-touch', isTouchDevice());
+        };
+
+        applyDeviceClasses();
+
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
         const config = await configResp.json();
@@ -744,7 +751,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = document.getElementById('viewmode-btn');
         const isSingle = mode === 'single';
 
-        if (window.innerWidth < 1024) {
+        const isTouch = (navigator.maxTouchPoints || 0) > 0;
+        if (isTouch || window.innerWidth < 1024) {
             document.body.classList.remove('view-mode-single');
             return;
         }
