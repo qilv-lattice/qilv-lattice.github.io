@@ -213,14 +213,18 @@ header {
     }
 
     .screen-grid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: block;
     }
 
     .screen-grid .poem-content {
+        width: 95%;
+        max-width: clamp(320px, 75vw, 600px);
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #viewmode-btn {
+        display: none;
     }
 }
 

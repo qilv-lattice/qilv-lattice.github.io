@@ -744,6 +744,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = document.getElementById('viewmode-btn');
         const isSingle = mode === 'single';
 
+        if (window.innerWidth < 1024) {
+            document.body.classList.remove('view-mode-single');
+            return;
+        }
+
         document.body.classList.toggle('view-mode-single', isSingle);
 
         if (btn) {
