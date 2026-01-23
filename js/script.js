@@ -747,6 +747,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const themeBtn = document.getElementById('theme-btn');
         const playmodeBtn = document.getElementById('playmode-btn');
         const bgBtn = document.getElementById('bg-btn');
+        const viewModeBtn = document.getElementById('viewmode-btn');
         const headerEl = document.querySelector('header');
         const footerEl = document.querySelector('.site-footer');
 
@@ -762,6 +763,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (themeBtn) themeBtn.classList.toggle('blue-mode');
         if (playmodeBtn) playmodeBtn.classList.toggle('blue-mode');
         if (bgBtn) bgBtn.classList.toggle('blue-mode');
+        if (viewModeBtn) viewModeBtn.classList.toggle('blue-mode');
 
         // 新增：遗漏的按钮颜色切换
         const voiceBtn = document.getElementById('voice-btn');
