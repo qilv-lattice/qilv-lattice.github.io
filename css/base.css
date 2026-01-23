@@ -1862,3 +1862,45 @@ header {
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
     font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
 }
+
+/* 公告通知栏 (修复) */
+.notice-bar {
+    position: fixed;
+    top: 60px;
+    /* 位于顶部标题下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    animation: slideDown 0.5s ease-out;
+}
+
+/* 黄色公告 */
+.yellow-notice {
+    background: rgba(255, 248, 225, 0.95);
+    border: 1px solid #FFD54F;
+    color: #F57F17;
+}
+
+.notice-icon {
+    font-size: 1.1em;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
