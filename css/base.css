@@ -1809,8 +1809,23 @@ header {
 
 /* 黄色公告喇叭 - 在蓝色喇叭下方 */
 #announcement-notice {
-    top: 185px;
-    /* 蓝色喇叭下方 (140 + 35 + 10间距) */
+    top: 240px;
+    /* 视听按钮大概位置下方 */
+    left: auto;
+    right: 0;
+    transform: none;
+    border-radius: 20px 0 0 20px;
+    /* 贴边样式 */
+    padding-right: 8px;
+    border-right: none;
+    /* 去掉右边框 */
+}
+
+#announcement-notice .notice-icon {
+    display: inline-block;
+    transform: scaleX(-1);
+    /* 翻转图标，让喇叭口对着左边的文字 */
+    margin-left: 4px;
 }
 
 /* 入场动画 - 从右侧滑入 */
@@ -1879,7 +1894,7 @@ header {
     font-size: 0.9rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     white-space: nowrap;
-    animation: slideDown 0.5s ease-out;
+    /* animation: slideDown 0.5s ease-out; */
 }
 
 /* 黄色公告 */
