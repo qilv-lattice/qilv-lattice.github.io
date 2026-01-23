@@ -207,6 +207,12 @@ header {
     display: none;
 }
 
+@media (max-width: 1023px) {
+    .screen-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* 诗词文字容器 - 默认竖排 */
 #poem-text-container {
     writing-mode: vertical-rl;
