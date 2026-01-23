@@ -230,6 +230,31 @@ body.is-touch #viewmode-btn {
     display: none !important;
 }
 
+@media (hover: none) and (pointer: coarse) {
+    .screen-wrapper {
+        width: 100%;
+    }
+
+    .screen-grid {
+        display: block !important;
+    }
+
+    .screen-grid .poem-content {
+        width: 95% !important;
+        max-width: clamp(320px, 75vw, 600px) !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .poem-content.wing {
+        display: none !important;
+    }
+
+    #viewmode-btn {
+        display: none !important;
+    }
+}
+
 @media (max-width: 1023px) {
     .screen-wrapper {
         width: 100%;

@@ -10,6 +10,12 @@ let bgMode = 'random'; // 背景模式：random（随机）或 fixed（固定）
 let bgIntervalId = null; // 背景切换定时器ID
 let fixedBgIndex = 0; // 固定模式下的背景索引
 
+function isTouchDevice() {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints || 0) > 0 ||
+        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+}
+
 // 应用指定索引的背景
 function applyBackground(index) {
     const currentBg = backgrounds[index];
@@ -134,7 +140,6 @@ function selectBackground(index) {
 // 页面加载时初始化
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const isTouchDevice = () => (navigator.maxTouchPoints || 0) > 0;
         const applyDeviceClasses = () => {
             document.body.classList.toggle('is-touch', isTouchDevice());
         };
@@ -751,8 +756,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = document.getElementById('viewmode-btn');
         const isSingle = mode === 'single';
 
-        const isTouch = (navigator.maxTouchPoints || 0) > 0;
-        if (isTouch || window.innerWidth < 1024) {
+        if (isTouchDevice() || window.innerWidth < 1024) {
             document.body.classList.remove('view-mode-single');
             return;
         }
