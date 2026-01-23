@@ -1,68 +1,54 @@
 # 七律空间 · 工作交接文档
 
-**更新日期**: 2026-01-14
-**提交ID**: `v1.2-lattice-interaction`
-**状态**: ✅ 已同步到 GitHub (稳定版)
+**更新日期**: 2026-01-23
+**当前版本**: `v1.4-desktop-layout-optimization`
+**状态**: 🛠️ 开发中 (Desktop Layout Tuning)
 
 ---
 
-## 一、本次更新内容 (v1.2)
+## 📅 最新更新 (v1.4)
 
-### 🚀 核心功能：全交互式晶格模型 (v1.2)
-1.  **交互支持**：左侧四个晶格模型 (SC, BCC, HCP, FCC) 全部支持鼠标/触控拖拽旋转。
-2.  **自动恢复**：拖拽松手 2 秒后，模型自动恢复原本的慢速自转，无缝衔接。
+### 🖥️ 桌面端布局重构 (Desktop Layout)
+1.  **Grid Areas 布局**: 
+    - 采用 CSS Grid Areas (`.grid-head`, `.grid-left`, `.main`, `.grid-right`, `.grid-tail`)。
+    - 关键容器: `.layout-wrapper` (仅在 Desktop 生效, Mobile 为 `display: block`)。
+    - CSS 文件: `css/desktop.css` (重写了 Grid 相关逻辑, 包含 `gap: 10px`, `margin: 0 !important` 重置)。
+2.  **幽灵分身 (Side Wings)**:
+    - 左右两侧 `.wing` 元素通过 JS (`script.js` -> `updateWings()`) 实时克隆主卡片内容。
+    - 样式: 透明度 0.5, 缩放 95%, 灰度 50%。
+3.  **字体优化**:
+    - 全局按钮 (控制面板、挂件) 字体已从 "马山正" (Title Font) 修改为 **"宋体" (Noto Serif SC)** 以提升可读性。
 
-### 📂 二级分类菜单 (v1.3)
-1.  **嵌套结构**：背景设置升级为折叠式二级菜单，分类更清晰。
-    - **⛰️ 山水诗意**：千里江山、残阳如血...
-    - **🎨 艺术诗魂**：观音大士、庄生蝴蝶...
-    - **🍃 自然诗境**：蓝星一角、星空垂野...
-2.  **流畅交互**：支持一级分类展开/收起（带箭头动画），点击子项自动应用并关闭菜单。
-
-### ✨ 体验优化 (v1.1)
-1.  **3D 诗词翻页**：使用 CSS 3D Transform 实现书页翻转效果，替代原有的水墨淡入淡出，性能更优且更具沉浸感。
-2.  **音效全平台适配**：利用预加载+复用 Audio 对象策略，完美解决移动端 (iOS/Android) 无法自动播放音效的问题。
-    - 展开菜单：洗牌音效 (800ms)
-    - 收起菜单：短促音效 (400ms)
-3.  **细节修复**：
-    - 音乐列表悬停判定修复。
-    - 超长下拉菜单自动滚动条。
-    - 通知喇叭严格按北京时间零点消失。
+### 🚨 已知问题 / 注意事项 (Critical Context)
+1.  **卡片宽度一致性**:
+    - `base.css`: 卡片最大宽度 `max-width: 600px` (clamp设置)。
+    - `desktop.css`: 页脚宽度目前硬编码为 `500px`。
+    - **TODO**: 需要确认最终宽度标准 (建议统一为 500px 或 600px)。
+2.  **移动端兼容**:
+    - `.layout-wrapper` 在移动端必须回退为普通流。
+    - `.wing` 元素在移动端必须 `display: none`。
 
 ---
 
-## 二、当前文件结构
+## 📂 文件结构说明
 
 ```
 qilv-lattice-mobile-first/
-├── index.html          # 主页面 (加载 v1.2 脚本)
+├── index.html          # 主页面 (包含 .layout-wrapper 结构)
 ├── css/
-│   ├── base.css        # 基础样式 (含 3D 翻页 Keyframes)
-│   └── desktop.css     # 桌面端样式
+│   ├── base.css        # 核心样式 (移动优先, 字体变量 var(--font-body))
+│   └── desktop.css     # 桌面端覆盖 (Grid布局, 粒子背景, 挂件)
 ├── js/
-│   ├── script.js       # 核心逻辑 (音效/翻页/通知)
-│   ├── sc-lattice.js   # 简单立方 (可交互)
-│   ├── bcc-lattice.js  # 体心立方 (可交互)
-│   ├── hcp-lattice.js  # 密排六方 (可交互)
-│   └── fcc-lattice.js  # 面心立方 (可交互)
+│   ├── script.js       # 核心逻辑 (含 updateWings() 克隆函数)
+│   └── snow.js         # 雪花特效
 └── ...
 ```
 
-## 三、版本记录
+## 🛠️ 常用指令
 
-| 标签 | 说明 |
-|---|---|
-| `v1.2-lattice-interaction` | **当前稳定版**：全晶格模型交互 + 自动恢复 |
-| `v1.1-page-flip-complete`| 3D 翻页特效 + 移动端音效修复 |
-| `v1.0-stable-collapse-menu` | 折叠菜单基础版 |
+- **启动服务**: `python -m http.server 8081`
+- **Git 同步**: 确保 `git pull` 获取最新 `desktop.css` 和 `index.html` 结构变动。
 
 ---
 
-## 四、后续建议
-
-1.  **更多晶格**：目前的交互框架通用性强，可轻松扩展到更多晶体结构（如金刚石结构）。
-2.  **点击事件**：目前仅实现了拖拽，未来可给晶格添加点击事件（如点击弹出详细晶体学参数）。
-
----
-
-*Created by Antigravity for 七律空间*
+*Updated by Antigravity for Collaboration*

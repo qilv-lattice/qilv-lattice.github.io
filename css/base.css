@@ -399,7 +399,7 @@ header {
 
 #prev-btn,
 #next-btn {
-    font-family: var(--font-title);
+    font-family: var(--font-body);
     font-size: 1rem;
     color: var(--accent-color);
     background: rgba(255, 255, 255, 0.95);
@@ -445,7 +445,7 @@ header {
 /* 通用挂件按钮样式 */
 .widget-btn,
 #mode-btn {
-    font-family: var(--font-title);
+    font-family: var(--font-body);
     font-size: 0.85rem;
     /* 加大字号，便于阅读 */
     font-weight: bold;

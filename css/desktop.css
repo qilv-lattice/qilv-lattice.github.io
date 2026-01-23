@@ -311,7 +311,7 @@ body::before {
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid var(--accent-color);
     padding: 8px 16px;
-    font-family: var(--font-title);
+    font-family: var(--font-body);
     color: var(--accent-color);
     cursor: pointer;
     transition: all 0.3s;
