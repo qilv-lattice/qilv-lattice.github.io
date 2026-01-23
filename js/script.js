@@ -16,6 +16,11 @@ function isTouchDevice() {
         (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 }
 
+function isDesktopLayout() {
+    return window.matchMedia &&
+        window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches;
+}
+
 // 应用指定索引的背景
 function applyBackground(index) {
     const currentBg = backgrounds[index];
@@ -145,6 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         applyDeviceClasses();
+        initThreeCardLayout();
 
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
@@ -610,6 +616,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    function initThreeCardLayout() {
+        if (!isDesktopLayout()) return;
+
+        const mainCard = getMainCard();
+        if (!mainCard) return;
+
+        if (mainCard.closest('.screen-grid')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'screen-wrapper';
+
+        const grid = document.createElement('div');
+        grid.className = 'screen-grid';
+
+        const left = document.createElement('div');
+        left.className = 'poem-content wing';
+        left.setAttribute('aria-hidden', 'true');
+
+        const right = document.createElement('div');
+        right.className = 'poem-content wing';
+        right.setAttribute('aria-hidden', 'true');
+
+        const parent = mainCard.parentElement;
+        const nextSibling = mainCard.nextSibling;
+
+        grid.appendChild(left);
+        grid.appendChild(mainCard);
+        grid.appendChild(right);
+        wrapper.appendChild(grid);
+
+        parent.insertBefore(wrapper, nextSibling);
+    }
+
     function renderPoem(index) {
         // 切换诗词时停止朗读
         if (window.speechSynthesis) {
@@ -756,11 +795,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = document.getElementById('viewmode-btn');
         const isSingle = mode === 'single';
 
-        if (isTouchDevice() || window.innerWidth < 1024) {
+        if (!isDesktopLayout()) {
             document.body.classList.remove('view-mode-single');
+            if (btn) btn.style.display = 'none';
             return;
         }
 
+        if (btn) btn.style.display = '';
+        initThreeCardLayout();
         document.body.classList.toggle('view-mode-single', isSingle);
 
         if (btn) {
