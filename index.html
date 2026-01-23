@@ -91,6 +91,9 @@
         <!-- 排版模式切换 -->
         <button id="mode-btn" onclick="toggleMode()">竖排<br>观赏</button>
 
+        <!-- 三卡/单卡展示切换 -->
+        <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">三卡<br>展示</button>
+
         <!-- 深色/浅色模式切换 -->
         <!-- 云笺模式选择（带下拉列表） -->
         <div class="widget-group" style="position: relative;">
@@ -190,7 +193,10 @@
         </header>
 
         <main id="poem-card" class="poem-card">
-            <div class="poem-content">
+            <div class="screen-wrapper">
+                <div class="screen-grid">
+                    <div class="poem-content wing" aria-hidden="true"></div>
+                    <div class="poem-content main-card">
                 <!-- 右上角装饰枝条 SVG -->
                 <svg class="decoration-branch" viewBox="0 0 100 100" width="100" height="100">
                     <path d="M100,0 Q60,20 30,50" fill="none" stroke="#a8bba8" stroke-width="2"
@@ -232,6 +238,9 @@
                     <div class="seal">理工<br>直男</div>
                     <div class="seal">当代<br>作品</div>
                     <div class="seal">钢铁<br>曲男</div>
+                </div>
+                    </div>
+                    <div class="poem-content wing" aria-hidden="true"></div>
                 </div>
             </div>
 

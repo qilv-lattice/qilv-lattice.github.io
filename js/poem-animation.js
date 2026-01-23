@@ -30,7 +30,7 @@
     }
 
     function observePoemChanges() {
-        const poemContent = document.querySelector('.poem-content');
+        const poemContent = document.querySelector('.poem-content.main-card');
         if (!poemContent) {
             // 如果容器还不存在，稍后重试
             setTimeout(observePoemChanges, 100);
@@ -74,10 +74,10 @@
         const isMobile = window.innerWidth <= 768;
 
         // 获取所有诗句行（竖排模式下是每一列，横排模式下是每一行）
-        const poemLines = document.querySelectorAll('.body-text p');
-        const stamps = isMobile ? [] : document.querySelectorAll('.stamps-container .seal'); // 移动端不处理印章
-        const mainSeal = document.querySelector('.poem-content::before'); // 主印章
-        const container = document.querySelector('.poem-content');
+        const container = document.querySelector('.poem-content.main-card');
+        const poemLines = container ? container.querySelectorAll('.body-text p') : [];
+        const stamps = (isMobile || !container) ? [] : container.querySelectorAll('.stamps-container .seal'); // 移动端不处理印章
+        const mainSeal = document.querySelector('.poem-content.main-card::before'); // 主印章
 
         if (!poemLines.length || !container) return;
 

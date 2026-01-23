@@ -575,6 +575,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         overlay.classList.toggle('active');
     }
 
+    function getMainCard() {
+        return document.querySelector('.poem-content.main-card');
+    }
+
+    function syncWingCards() {
+        const mainCard = getMainCard();
+        const wingCards = document.querySelectorAll('.poem-content.wing');
+
+        if (!mainCard || wingCards.length === 0) return;
+
+        wingCards.forEach(wing => {
+            const clone = mainCard.cloneNode(true);
+
+            wing.className = '';
+            mainCard.classList.forEach(cls => {
+                if (cls !== 'main-card') wing.classList.add(cls);
+            });
+            wing.classList.add('wing');
+            wing.style.cssText = mainCard.style.cssText;
+            wing.innerHTML = clone.innerHTML;
+        });
+    }
+
     function renderPoem(index) {
         // 切换诗词时停止朗读
         if (window.speechSynthesis) {
@@ -589,7 +612,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (poems.length === 0) return;
         const poem = poems[index];
-        const textContainer = document.getElementById('poem-text-container');
+        const mainCard = getMainCard();
+        if (!mainCard) return;
+        const textContainer = mainCard.querySelector('#poem-text-container');
 
         // 3D 翻页淡出动画
         textContainer.classList.remove('page-flip-in');
@@ -603,10 +628,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 displayTitle = displayTitle.replace(tongYunRegex, "");
             }
 
-            document.getElementById('poem-title').innerText = displayTitle;
+            const titleEl = mainCard.querySelector('#poem-title');
+            if (titleEl) titleEl.innerText = displayTitle;
 
             // 渲染正文（不渲染备注，备注通过弹窗单独显示）
-            const bodyDiv = document.getElementById('poem-body');
+            const bodyDiv = mainCard.querySelector('#poem-body');
             bodyDiv.innerHTML = '';
             poem.content.forEach(line => {
                 const p = document.createElement('p');
@@ -629,7 +655,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 理工浪漫标签显示逻辑: 
             // 每一个作品都显示装饰线
             // techRomance 为 true 显示 "专属理工的极致浪漫"，否则显示 "专属传统的时代浪漫"
-            const techRomanceTag = document.getElementById('tech-romance-tag');
+            const techRomanceTag = mainCard.querySelector('#tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
                 const tagText = poem.techRomance ? '专属理工的极致浪漫' : '专属斯人的心灵浪漫';
@@ -642,6 +668,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 3D 翻页淡入动画
             textContainer.classList.remove('page-flip-out');
             textContainer.classList.add('page-flip-in');
+
+            syncWingCards();
         }, 400);
     }
 
@@ -658,7 +686,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 切换横竖排版
     function toggleMode() {
-        const card = document.querySelector('.poem-content');
+        const card = getMainCard();
+        if (!card) return;
         const btn = document.getElementById('mode-btn');
         const tocBtn = document.getElementById('toc-btn');
         const prevBtn = document.getElementById('prev-btn');
@@ -704,6 +733,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             btn.innerHTML = "竖排<br>观赏"; // 当前是竖排
         }
+
+        syncWingCards();
+    }
+
+    // 三卡/单卡展示切换
+    let viewMode = localStorage.getItem('viewMode') || 'triple';
+
+    function applyViewMode(mode) {
+        const btn = document.getElementById('viewmode-btn');
+        const isSingle = mode === 'single';
+
+        document.body.classList.toggle('view-mode-single', isSingle);
+
+        if (btn) {
+            btn.innerHTML = isSingle ? '单卡<br>展示' : '三卡<br>展示';
+        }
+
+        localStorage.setItem('viewMode', mode);
+        syncWingCards();
+    }
+
+    function toggleViewMode() {
+        viewMode = viewMode === 'triple' ? 'single' : 'triple';
+        applyViewMode(viewMode);
     }
 
     // 音乐控制逻辑
@@ -771,7 +824,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ===== 云笺模式切换（下拉列表） =====
     function selectTheme(mode) {
-        const card = document.querySelector('.poem-content');
+        const card = getMainCard();
+        if (!card) return;
         const list = document.getElementById('theme-list');
 
         if (mode === 'default') {
@@ -802,6 +856,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (li.dataset.value === mode) li.classList.add('active');
             });
         }
+
+        syncWingCards();
     }
 
     // 初始化云笺模式交互
@@ -922,6 +978,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 初始化主题
     initTheme();
 
+    // 初始化三卡/单卡展示状态
+    applyViewMode(viewMode);
+
     // 初始化音乐（先设置音频源）
     initMusic();
 
@@ -943,11 +1002,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // 如果关闭了特效，立即重置大印章状态（如果正在显示）
         if (!newState) {
-            const container = document.querySelector('.poem-content');
+            const container = getMainCard();
             if (container) {
                 container.classList.remove('seal-preparing', 'seal-landing');
             }
         }
+
+        syncWingCards();
     }
 
     function updateSealBtnState(isEnabled) {
@@ -1098,6 +1159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.toggleTOC = toggleTOC;
     window.toggleNotes = toggleNotes;
     window.toggleMode = toggleMode;
+    window.toggleViewMode = toggleViewMode;
     window.togglePlayMode = togglePlayMode;
     window.toggleSealEffect = toggleSealEffect;
     window.prevPoem = prevPoem;
