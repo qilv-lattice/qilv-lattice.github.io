@@ -527,6 +527,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (isUpdateDay) {
                 if (isNewWork && isModifiedWork) {
                     li.classList.add('new-modified-highlight');
+                    // 使用 innerHTML 手动添加不同颜色的标签
+                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(新)</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(修)</span>`;
                 } else if (isNewWork) {
                     li.classList.add('new-work-highlight');
                 } else if (isModifiedWork) {

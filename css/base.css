@@ -1089,9 +1089,8 @@ header {
 }
 
 #toc-list li.new-modified-highlight::after {
-    content: " (新)(修)";
-    font-size: 0.8em;
-    opacity: 0.8;
+    content: "";
+    /* JS手动处理双色标签 */
 }
 
 /* 高亮样式下hover */
