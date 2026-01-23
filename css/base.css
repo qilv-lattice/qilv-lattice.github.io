@@ -202,6 +202,11 @@ header {
     perspective: 1000px;
 }
 
+/* 鎵嬫満/榛樿: 闅愯棌宸﹀彸鍓崱 */
+.poem-content.wing {
+    display: none;
+}
+
 /* 诗词文字容器 - 默认竖排 */
 #poem-text-container {
     writing-mode: vertical-rl;

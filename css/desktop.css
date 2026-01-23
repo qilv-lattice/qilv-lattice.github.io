@@ -33,6 +33,46 @@ body::before {
     position: relative;
 }
 
+:root {
+    --card-width: 480px;
+}
+
+.screen-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.screen-grid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--card-width));
+    gap: 10px;
+    align-items: stretch;
+}
+
+.screen-grid .poem-content {
+    width: var(--card-width);
+    max-width: none;
+}
+
+body.view-mode-single .screen-grid {
+    grid-template-columns: var(--card-width);
+}
+
+body.view-mode-single .poem-content.wing {
+    display: none;
+}
+
+header {
+    width: var(--card-width);
+    max-width: none;
+}
+
+.poem-content.wing {
+    display: block;
+    pointer-events: none;
+}
+
 .poem-content {
     /* 宣纸纹理 */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
@@ -509,8 +549,8 @@ body::before {
     transform: translateY(-50px);
     margin-bottom: 60px;
 
-    /* 严格对齐卡片宽度 */
-    width: 500px;
+    /* 严格对齐主卡宽度 */
+    width: var(--card-width);
     max-width: none;
     margin-left: auto;
     margin-right: auto;
