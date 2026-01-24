@@ -1418,7 +1418,12 @@ function toggleVoice() {
 window.toggleVoice = toggleVoice;
 
 // 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', initCollapseMenu);
+document.addEventListener('DOMContentLoaded', () => {
+    initCollapseMenu();
+    // 强制隐藏公告小喇叭 (Fix: 确保缓存更新前也能隐藏)
+    const notice = document.getElementById('announcement-notice');
+    if (notice) notice.style.display = 'none';
+});
 
 // 窗口大小变化时重新初始化
 window.addEventListener('resize', () => {
