@@ -351,8 +351,8 @@ header {
 /* 仅手机端：横排模式宽度扣除容器 padding */
 @media (max-width: 809px) {
     .poem-content.horizontal-mode {
-        width: calc(100vw - 32px);
-        max-width: calc(100vw - 32px);
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -395,8 +395,8 @@ header {
 
     header.horizontal-width,
     .site-footer.horizontal-width {
-        max-width: calc(100vw - 32px);
-        width: calc(100vw - 32px);
+        max-width: 100%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
