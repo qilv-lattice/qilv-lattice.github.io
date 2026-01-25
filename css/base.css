@@ -196,7 +196,10 @@ header {
     border-radius: 4px;
     /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
     padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 2rem);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.04);
     position: relative;
     /* 3D 翻页效果透视 */
     perspective: 1000px;
@@ -420,6 +423,7 @@ header {
     cursor: pointer;
     transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 #prev-btn:active,
@@ -476,6 +480,8 @@ header {
     cursor: pointer;
     line-height: 1.1;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .widget-btn.blue-mode,
@@ -590,6 +596,8 @@ header {
     align-items: center;
     cursor: pointer;
     position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* 内切圆背景 */
@@ -1048,6 +1056,51 @@ header {
     width: 100%;
     overflow-y: auto;
     flex-grow: 1;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 31, 55, 0.55) rgba(0, 0, 0, 0.05);
+}
+
+.toc-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.toc-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 999px;
+}
+
+.toc-list::-webkit-scrollbar-thumb {
+    background: rgba(201, 31, 55, 0.55);
+    border-radius: 999px;
+}
+
+.toc-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 31, 55, 0.75);
+}
+
+@media (hover: hover) {
+
+    #prev-btn:hover,
+    #next-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .widget-btn:hover,
+    #mode-btn:hover,
+    .music-control:hover {
+        background: rgba(255, 255, 255, 0.95);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+}
+
+.widget-btn:active,
+#mode-btn:active,
+.music-control:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .toc-list li {
