@@ -318,10 +318,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         // 使用统一的北京时间判断
-        const beijingDate = getBeijingDateString();
+        
 
         // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
-        const isValid = isWithin24Hours(updateInfo.date, beijingDate);
+        const isValid = isWithin24Hours(updateInfo.date);
 
         if (isValid) {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
@@ -397,10 +397,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // 使用统一的北京时间判断
-        const beijingDate = getBeijingDateString();
+        
 
         // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
-        const isValid = isWithin24Hours(updateInfo.date, beijingDate);
+        const isValid = isWithin24Hours(updateInfo.date);
 
         if (isValid) {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
@@ -424,20 +424,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 辅助函数：判断日期是否在有效期内（今天或昨天）
-    function isWithin24Hours(targetDate, currentDate) {
-        if (!targetDate) return false;
-        // 1. 完全匹配
-        if (targetDate === currentDate) return true;
+    // ??????????UTC???????
+    function parseBeijingDateTimeToUtcMs(value) {
+        if (!value) return null;
+        if (typeof value === 'number') return value;
 
-        // 2. 也是为了防止时区计算微差，转为时间戳比较
-        const tDate = Date.parse(targetDate);
-        const cDate = Date.parse(currentDate);
+        const str = String(value).trim();
+        if (!str) return null;
 
-        // 如果 targetDate 是未来的（比如手动改了明天的日期），也显示
-        if (tDate > cDate) return true;
+        // ?? YYYY-MM-DD ? YYYY-MM-DD HH:mm[:ss]
+        const match = str.match(/^(\d{4})[-\/](\d{2})[-\/](\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
+        if (!match) return null;
 
-        // 如果差距在 24小时 (86400000毫秒) 以内，也显示
-        return (cDate - tDate) <= 86400000;
+        const year = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10) - 1;
+        const day = parseInt(match[3], 10);
+        const hour = match[4] ? parseInt(match[4], 10) : 0;
+        const minute = match[5] ? parseInt(match[5], 10) : 0;
+        const second = match[6] ? parseInt(match[6], 10) : 0;
+
+        const beijingOffsetMs = 8 * 3600000;
+        return Date.UTC(year, month, day, hour, minute, second) - beijingOffsetMs;
+    }
+
+    // ??????????24?????????????????
+    function isWithin24Hours(targetDateTime) {
+        const targetMs = parseBeijingDateTimeToUtcMs(targetDateTime);
+        if (targetMs === null) return false;
+
+        const nowMs = Date.now();
+        if (targetMs > nowMs) return true;
+        return (nowMs - targetMs) <= 24 * 60 * 60 * 1000;
     }
 
     // 点击蓝喇叭：直接消失
@@ -524,15 +541,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderTOC() {
         const tocList = document.getElementById('toc-list');
-        const beijingDate = getBeijingDateString();
-        const localDate = getLocalDateString();
+        
         tocList.innerHTML = '';
         poems.forEach((poem, index) => {
             const li = document.createElement('li');
             li.innerText = poem.title;
 
             // 如果是最新作品且在通知有效期内（宽容模式：今天或昨天），添加高亮类
-            const isUpdateDay = isWithin24Hours(updateInfo.date, beijingDate);
+            const isUpdateDay = isWithin24Hours(updateInfo.date);
 
             // 归一化处理
             const cleanTitle = poem.title.replace(/[《》\s]/g, '');
