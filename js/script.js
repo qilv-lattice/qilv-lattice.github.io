@@ -578,7 +578,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         tocList.innerHTML = '';
         poems.forEach((poem, index) => {
             const li = document.createElement('li');
-            li.innerText = poem.title;
+            const displayTitle = String(poem.title || '').replace(/·/g, '•');
+            li.innerText = displayTitle;
 
             const latestEntry = findLatestWorkEntry(poem.title);
             const isNewWork = !!latestEntry;
@@ -597,7 +598,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (isNewWorkActive && isModifiedWorkActive) {
                     li.classList.add('new-modified-highlight');
                     // ?? innerHTML ???????????
-                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee</span>`;
+                    li.innerHTML = `${displayTitle} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee</span>`;
                 } else if (isNewWorkActive) {
                     li.classList.add('new-work-highlight');
                 } else if (isModifiedWorkActive) {
