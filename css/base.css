@@ -1209,9 +1209,6 @@ header {
 /* ===== 更新通知喇叭 ===== */
 .update-notice {
     display: none;
-    /* 隐藏黄色小喇叭 */
-    display: none !important;
-    /* 隐藏所有喇叭 */
     position: fixed;
     top: 100px;
     right: 20px;
@@ -1832,9 +1829,9 @@ header {
 /* ===== 通知喇叭样式 (小巧胶囊，右侧竖排) ===== */
 .update-notice {
     position: fixed;
-    top: 95px;
+    top: 120px;
     /* 视听设置按钮行下方 (50px按钮 + 10px顶距 + 35px间距) */
-    right: 10px;
+    right: 0;
     display: none;
     /* 默认隐藏，JS控制显示 */
     align-items: center;
@@ -1870,6 +1867,19 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     top: 140px;
     /* 红色喇叭下方 (95 + 35 + 10间距) */
+}
+
+/* 作者祝福喇叭 - 在蓝色喇叭下方 */
+.blessing-notice {
+    background: #fff;
+    color: #2f855a;
+    border: 2px solid #2f855a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    top: 185px;
+}
+
+.blessing-notice .notice-text {
+    color: #2f855a;
 }
 
 /* 黄色公告喇叭 - 在蓝色喇叭下方 */
