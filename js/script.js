@@ -108,6 +108,7 @@ function analyzeBackground(url) {
 
 // 随机切换背景
 function changeBackground() {
+    if (!backgrounds.length) return;
     if (bgMode === 'fixed') return; // 固定模式不切换
     bgIndex = Math.floor(Math.random() * backgrounds.length);
     applyBackground(bgIndex);
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (backgrounds.length > 0) {
             bgIndex = Math.floor(Math.random() * backgrounds.length);
             applyBackground(bgIndex);
+            bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
         }
 
         // 3. 加载诗词数据 (移到这里确保顺序)
@@ -173,8 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // 每5分钟切换一次
-    bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
-
+    
     // 绑定背景按钮点击事件 (简化版下拉列表)
     const bgBtn = document.getElementById('bg-btn');
     const bgList = document.getElementById('bg-list');
@@ -492,16 +493,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     function scheduleMidnightCheck() {
         const now = new Date();
         // 计算北京时间 (UTC+8)
-        const beijingNow = new Date(now.getTime() + 8 * 3600000);
+        const beijingOffsetMs = 8 * 3600000;
+        const beijingNow = new Date(now.getTime() + beijingOffsetMs);
         // 计算北京时间明天零点
-        const beijingMidnight = new Date(
+        const nextBeijingMidnightUtc = Date.UTC(
             beijingNow.getUTCFullYear(),
             beijingNow.getUTCMonth(),
             beijingNow.getUTCDate() + 1,
             0, 0, 0, 0
-        );
+        ) - beijingOffsetMs;
         // 转换回本地时间计算差值
-        const msUntilMidnight = beijingMidnight.getTime() - 8 * 3600000 - now.getTime();
+        let msUntilMidnight = nextBeijingMidnightUtc - now.getTime();
+        if (msUntilMidnight < 0) {
+            msUntilMidnight += 24 * 3600000;
+        }
 
         console.log(`下次通知检查：${Math.round(msUntilMidnight / 60000)} 分钟后（北京时间零点）`);
 
@@ -565,6 +570,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function toggleTOC() {
         const overlay = document.getElementById('toc-overlay');
+        if (!overlay) return;
         overlay.classList.toggle('active');
     }
 
@@ -573,6 +579,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const overlay = document.getElementById('notes-overlay');
         const notesContent = document.getElementById('notes-content');
         const noteBtn = document.getElementById('note-btn');
+        if (!overlay || !notesContent) return;
 
         // 如果弹窗将要打开，先填充内容
         if (!overlay.classList.contains('active')) {
@@ -666,6 +673,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const mainCard = getMainCard();
         if (!mainCard) return;
         const textContainer = mainCard.querySelector('#poem-text-container');
+        const bodyDiv = mainCard.querySelector('#poem-body');
+        if (!textContainer || !bodyDiv) return;
 
         // 3D 翻页淡出动画
         textContainer.classList.remove('page-flip-in');
@@ -683,7 +692,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (titleEl) titleEl.innerText = displayTitle;
 
             // 渲染正文（不渲染备注，备注通过弹窗单独显示）
-            const bodyDiv = mainCard.querySelector('#poem-body');
             bodyDiv.innerHTML = '';
             poem.content.forEach(line => {
                 const p = document.createElement('p');
@@ -824,6 +832,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function initMusic() {
         const musicCtrl = document.getElementById('music-control');
         const audio = document.getElementById('bg-music');
+        if (!musicCtrl || !audio) return;
         const playlistItems = document.querySelectorAll('.music-list li');
         let isPlaying = false;
 
