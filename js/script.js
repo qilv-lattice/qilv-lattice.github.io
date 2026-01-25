@@ -1,5 +1,9 @@
 let poems = [];
 let currentIndex = 0;
+let wingDisplayMode = localStorage.getItem('wingDisplayMode') || 'sync';
+let lastWingIndices = { left: null, right: null };
+let lastFireworkAt = 0;
+let wingRandomizeOnNextSync = true;
 
 // 背景图列表（将从 config.json 加载）
 let backgrounds = [];
@@ -152,6 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         applyDeviceClasses();
         initThreeCardLayout();
+        updateWingDisplayButton();
 
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
@@ -646,13 +651,159 @@ document.addEventListener('DOMContentLoaded', async () => {
         return document.querySelector('.poem-content.main-card');
     }
 
+    function updateWingDisplayButton() {
+        const btn = document.getElementById('voice-btn');
+        if (!btn) return;
+        btn.innerHTML = wingDisplayMode === 'random' ? '随机<br>展示' : '同步<br>展示';
+        btn.classList.toggle('active-mode', wingDisplayMode === 'random');
+    }
+
+    function setWingDisplayMode(mode, options = {}) {
+        const { persist = true } = options;
+        wingDisplayMode = mode === 'random' ? 'random' : 'sync';
+        if (wingDisplayMode === 'random') {
+            wingRandomizeOnNextSync = true;
+        }
+        if (persist) localStorage.setItem('wingDisplayMode', wingDisplayMode);
+        updateWingDisplayButton();
+        syncWingCards();
+    }
+
+    function selectRandomWingIndices() {
+        if (!poems.length) return { left: null, right: null };
+        return {
+            left: Math.floor(Math.random() * poems.length),
+            right: Math.floor(Math.random() * poems.length)
+        };
+    }
+
+    function renderPoemIntoCard(card, poem) {
+        if (!card || !poem) return;
+        const titleEl = card.querySelector('#poem-title');
+        const bodyDiv = card.querySelector('#poem-body');
+        if (titleEl) {
+            let displayTitle = poem.title;
+            const tongYunRegex = /[\(（]通韵[\)）]/;
+            if (tongYunRegex.test(displayTitle)) {
+                displayTitle = displayTitle.replace(tongYunRegex, "");
+            }
+            titleEl.innerText = displayTitle;
+        }
+        if (bodyDiv) {
+            bodyDiv.innerHTML = '';
+            poem.content.forEach(line => {
+                const p = document.createElement('p');
+                p.innerText = line;
+                bodyDiv.appendChild(p);
+            });
+        }
+        const techRomanceTag = card.querySelector('#tech-romance-tag');
+        if (techRomanceTag) {
+            techRomanceTag.style.display = 'block';
+            const tagText = poem.techRomance ? '专属理工的极致浪漫' : '专属斯人的心灵浪漫';
+            techRomanceTag.innerHTML = tagText;
+        }
+    }
+
+    function triggerFireworks() {
+        const now = Date.now();
+        if (now - lastFireworkAt < 1200) return;
+        lastFireworkAt = now;
+
+        const existing = document.getElementById('fireworks-canvas');
+        if (existing) existing.remove();
+
+        const canvas = document.createElement('canvas');
+        canvas.id = 'fireworks-canvas';
+        canvas.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:5;';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        const particles = [];
+        const burst = (x, y, color) => {
+            const count = 28;
+            for (let i = 0; i < count; i += 1) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1.5 + Math.random() * 2.5;
+                particles.push({
+                    x,
+                    y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    life: 1,
+                    decay: 0.015 + Math.random() * 0.02,
+                    color
+                });
+            }
+        };
+
+        burst(width * 0.3, height * 0.25, 'rgba(201,31,55,0.9)');
+        burst(width * 0.7, height * 0.22, 'rgba(26,85,153,0.9)');
+
+        const start = performance.now();
+        const duration = 900;
+
+        const tick = (time) => {
+            const elapsed = time - start;
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy + 0.02;
+                p.life -= p.decay;
+                if (p.life > 0) {
+                    const alpha = Math.max(0, p.life).toFixed(2);
+                    ctx.fillStyle = p.color.replace('0.9', alpha);
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            if (elapsed < duration) {
+                requestAnimationFrame(tick);
+            } else {
+                canvas.remove();
+            }
+        };
+
+        requestAnimationFrame(tick);
+    }
+
+    function maybeTriggerFireworks() {
+        if (wingDisplayMode !== 'random') return;
+        if (!isDesktopLayout()) return;
+        if (document.body.classList.contains('view-mode-single')) return;
+        if (lastWingIndices.left === null || lastWingIndices.right === null) return;
+        if (lastWingIndices.left === currentIndex && lastWingIndices.right === currentIndex) {
+            triggerFireworks();
+        }
+    }
+
     function syncWingCards() {
         const mainCard = getMainCard();
         const wingCards = document.querySelectorAll('.poem-content.wing');
 
         if (!mainCard || wingCards.length === 0) return;
 
-        wingCards.forEach(wing => {
+        let randomIndices = null;
+        let didRandomize = false;
+        if (wingDisplayMode === 'random' && poems.length > 0) {
+            const needsRandom = wingRandomizeOnNextSync || lastWingIndices.left === null || lastWingIndices.right === null;
+            if (needsRandom) {
+                randomIndices = selectRandomWingIndices();
+                didRandomize = true;
+                wingRandomizeOnNextSync = false;
+            } else {
+                randomIndices = lastWingIndices;
+            }
+        }
+
+        wingCards.forEach((wing, idx) => {
             const clone = mainCard.cloneNode(true);
 
             wing.className = '';
@@ -662,7 +813,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             wing.classList.add('wing');
             wing.style.cssText = mainCard.style.cssText;
             wing.innerHTML = clone.innerHTML;
+
+            if (randomIndices) {
+                const useIndex = idx === 0 ? randomIndices.left : randomIndices.right;
+                const poem = poems[useIndex];
+                renderPoemIntoCard(wing, poem);
+            }
         });
+
+        if (randomIndices) {
+            lastWingIndices = randomIndices;
+        } else {
+            lastWingIndices = { left: null, right: null };
+        }
+        if (didRandomize) {
+            maybeTriggerFireworks();
+        }
     }
 
     function initThreeCardLayout() {
@@ -699,17 +865,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderPoem(index) {
-        // 切换诗词时停止朗读
-        if (window.speechSynthesis) {
-            window.speechSynthesis.cancel();
-        }
-        isSpeaking = false;
-        const voiceBtn = document.getElementById('voice-btn');
-        if (voiceBtn) {
-            voiceBtn.classList.remove('active');
-            voiceBtn.innerHTML = '语音<br>朗读';
-        }
-
         if (poems.length === 0) return;
         const poem = poems[index];
         const mainCard = getMainCard();
@@ -770,6 +925,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             textContainer.classList.remove('page-flip-out');
             textContainer.classList.add('page-flip-in');
 
+            wingRandomizeOnNextSync = true;
             syncWingCards();
         }, 400);
     }
@@ -868,6 +1024,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     function toggleViewMode() {
         viewMode = viewMode === 'triple' ? 'single' : 'triple';
         applyViewMode(viewMode);
+    }
+
+    // 随机/同步展示切换
+    function toggleVoice() {
+        const nextMode = wingDisplayMode === 'random' ? 'sync' : 'random';
+        setWingDisplayMode(nextMode);
     }
 
     // 音乐控制逻辑
@@ -1271,6 +1433,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.toggleTOC = toggleTOC;
     window.toggleNotes = toggleNotes;
     window.toggleMode = toggleMode;
+    window.toggleVoice = toggleVoice;
     window.toggleViewMode = toggleViewMode;
     window.togglePlayMode = togglePlayMode;
     window.toggleSealEffect = toggleSealEffect;
@@ -1403,70 +1566,6 @@ function resetCollapseTimer() {
         }, 10000); // 10秒
     }
 }
-
-// ===== 语音朗读功能 (TTS) =====
-let isSpeaking = false;
-let synthesisVoice = null;
-
-// 初始化语音引擎（尝试获取中文语音）
-function initSpeech() {
-    if ('speechSynthesis' in window) {
-        // 某些浏览器需要 onvoiceschanged 事件才能加载语音列表
-        window.speechSynthesis.onvoiceschanged = () => {
-            const voices = window.speechSynthesis.getVoices();
-            // 优先找中文女声/男声
-            synthesisVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('zh'));
-        };
-    }
-}
-initSpeech();
-
-function toggleVoice() {
-    const btn = document.getElementById('voice-btn');
-
-    if (isSpeaking) {
-        // 停止朗读
-        window.speechSynthesis.cancel();
-        isSpeaking = false;
-        btn.classList.remove('active');
-        btn.innerHTML = '语音<br>朗读';
-    } else {
-        // 开始朗读
-        const poem = poems[currentIndex];
-        if (!poem) return;
-
-        // 拼接朗读文本：标题 -> 作者 -> 正文
-        // 稍微加点停顿（用逗号或句号）
-        const text = `${poem.title.replace('·', ' ')}。${poem.author.split('|')[1] || poem.author}。。${poem.content.join('。')}`;
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.85; // 稍慢语速，更有韵味
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-
-        if (synthesisVoice) {
-            utterance.voice = synthesisVoice;
-        } else {
-            // 再次尝试获取语音
-            const voices = window.speechSynthesis.getVoices();
-            synthesisVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('zh'));
-            if (synthesisVoice) utterance.voice = synthesisVoice;
-        }
-
-        utterance.onend = () => {
-            isSpeaking = false;
-            btn.classList.remove('active');
-            btn.innerHTML = '语音<br>朗读';
-        };
-
-        window.speechSynthesis.speak(utterance);
-        isSpeaking = true;
-        btn.classList.add('active');
-        btn.innerHTML = '正在<br>朗读';
-    }
-}
-
-window.toggleVoice = toggleVoice;
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
