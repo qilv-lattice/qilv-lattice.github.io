@@ -290,6 +290,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         modifiedWorks: [] // 修改的作品
     };
 
+    function normalizeTitleText(value) {
+        return String(value || '').replace(/[^\u4e00-\u9fff0-9A-Za-z]/g, '');
+    }
+
+    function normalizeLatestWorks(list) {
+        if (!Array.isArray(list)) return [];
+        return list.map(item => {
+            if (typeof item === 'string') {
+                return { title: item, receivedAt: updateInfo.date || '' };
+            }
+            if (item && typeof item === 'object') {
+                return {
+                    title: item.title || '',
+                    receivedAt: item.receivedAt || item.date || ''
+                };
+            }
+            return null;
+        }).filter(Boolean);
+    }
+
+    function findLatestWorkEntry(poemTitle) {
+        const cleanTitle = normalizeTitleText(poemTitle);
+        const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
+        return latestEntries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+    }
+
 
     function getBeijingDateString() {
         const now = new Date();
@@ -321,12 +347,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         
 
         // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
-        const isValid = isWithin24Hours(updateInfo.date);
+        const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
+        const activeLatest = latestEntries.filter(entry => isWithin24Hours(entry.receivedAt || updateInfo.date));
+        const isValid = activeLatest.length > 0;
 
         if (isValid) {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示具体数量
-            const count = updateInfo.latestWorks.length;
+            const count = activeLatest.length;
             textEl.innerHTML = `有新作 ${count} 首上线`;
 
             // 清除旧定时器，确保只有一个隐藏定时器
@@ -547,33 +575,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             const li = document.createElement('li');
             li.innerText = poem.title;
 
-            // 如果是最新作品且在通知有效期内（宽容模式：今天或昨天），添加高亮类
-            const isUpdateDay = isWithin24Hours(updateInfo.date);
+            const latestEntry = findLatestWorkEntry(poem.title);
+            const isNewWork = !!latestEntry;
+            const isNewWorkActive = latestEntry && isWithin24Hours(latestEntry.receivedAt || updateInfo.date);
 
-            // 归一化处理
-            const cleanTitle = poem.title.replace(/[《》\s]/g, '');
+            const cleanTitle = normalizeTitleText(poem.title);
 
-            // 1. 检查是否为最新作品 (红色高亮)
-            const isNewWork = updateInfo.latestWorks.some(work => {
-                return cleanTitle.includes(work.replace(/[《》\s]/g, ''));
-            });
-
-            // 2. 检查是否为修订作品 (蓝色高亮)
+            // 2. ????????? (????)
             const isModifiedWork = updateInfo.modifiedWorks.some(work => {
-                return cleanTitle.includes(work.replace(/[《》\s]/g, ''));
+                return cleanTitle.includes(normalizeTitleText(work));
             });
 
-            if (isUpdateDay) {
-                if (isNewWork && isModifiedWork) {
+            const isModifiedWorkActive = isModifiedWork && isWithin24Hours(updateInfo.date);
+
+            if (isNewWorkActive || isModifiedWorkActive) {
+                if (isNewWorkActive && isModifiedWorkActive) {
                     li.classList.add('new-modified-highlight');
-                    // 使用 innerHTML 手动添加不同颜色的标签
-                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(新)</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(修)</span>`;
-                } else if (isNewWork) {
+                    // ?? innerHTML ???????????
+                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee</span>`;
+                } else if (isNewWorkActive) {
                     li.classList.add('new-work-highlight');
-                } else if (isModifiedWork) {
+                } else if (isModifiedWorkActive) {
                     li.classList.add('modified-work-highlight');
                 }
             }
+
 
             li.onclick = () => {
                 currentIndex = index;

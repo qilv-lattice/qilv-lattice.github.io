@@ -1,7 +1,14 @@
 {
     "lastUpdate": "2026-01-25 14:15",
     "latestWorks": [
-        "《七律•读书》"
+        {
+            "title": "《七律•读书》",
+            "receivedAt": "2026-01-25 14:15"
+        },
+        {
+            "title": "《七律·自述》",
+            "receivedAt": "2026-01-25 13:22"
+        }
     ],
     "modifiedWorks": [],
     "poems": [
