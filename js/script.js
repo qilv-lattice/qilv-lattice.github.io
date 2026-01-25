@@ -651,6 +651,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return document.querySelector('.poem-content.main-card');
     }
 
+
     function updateWingDisplayButton() {
         const btn = document.getElementById('voice-btn');
         if (!btn) return;
@@ -700,7 +701,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
             techRomanceTag.style.display = 'block';
-            const tagText = poem.techRomance ? '专属理工的极致浪漫' : '专属斯人的心灵浪漫';
+            const tagText = poem.techRomance ? '专属理工极致浪漫' : '专属斯人心灵浪漫';
             techRomanceTag.innerHTML = tagText;
         }
     }
@@ -910,11 +911,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 理工浪漫标签显示逻辑: 
             // 每一个作品都显示装饰线
-            // techRomance 为 true 显示 "专属理工的极致浪漫"，否则显示 "专属传统的时代浪漫"
+            // techRomance 为 true 显示 "专属理工极致浪漫"，否则显示 "专属传统时代浪漫"
             const techRomanceTag = mainCard.querySelector('#tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
-                const tagText = poem.techRomance ? '专属理工的极致浪漫' : '专属斯人的心灵浪漫';
+                const tagText = poem.techRomance ? '专属理工极致浪漫' : '专属斯人心灵浪漫';
                 techRomanceTag.innerHTML = tagText;
             }
 
