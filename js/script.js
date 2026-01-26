@@ -581,11 +581,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
-    function renderTOC() {
+    let currentTocFilter = 'all';
+
+    function setActiveTocTab(filter) {
+        const tabs = document.querySelectorAll('.toc-tab');
+        tabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.filter === filter);
+        });
+    }
+
+    // 目录分类切换
+    const tocTabs = document.querySelectorAll('.toc-tab');
+    if (tocTabs.length) {
+        tocTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentTocFilter = tab.dataset.filter || 'all';
+                setActiveTocTab(currentTocFilter);
+                renderTOC(currentTocFilter);
+            });
+        });
+    }
+
+    function renderTOC(filter = currentTocFilter) {
         const tocList = document.getElementById('toc-list');
         
         tocList.innerHTML = '';
-        poems.forEach((poem, index) => {
+        const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
+        const activeLatest = latestEntries.filter(entry => isWithin24Hours(entry.receivedAt || updateInfo.date));
+        const activeLatestKeys = activeLatest.map(entry => normalizeTitleText(entry.title));
+
+        const activeModifiedKeys = (updateInfo.modifiedWorks || [])
+            .filter(() => isWithin24Hours(updateInfo.date))
+            .map(title => normalizeTitleText(title));
+
+        const filteredPoems = poems.filter(poem => {
+            if (filter === 'all') return true;
+            const cleanTitle = normalizeTitleText(poem.title);
+            if (filter === 'new') {
+                return activeLatestKeys.some(key => cleanTitle.includes(key));
+            }
+            if (filter === 'modified') {
+                return activeModifiedKeys.some(key => cleanTitle.includes(key));
+            }
+            return true;
+        });
+
+        if (filteredPoems.length === 0) {
+            const li = document.createElement('li');
+            li.innerText = filter === 'new' ? '暂无新作' : '暂无修订';
+            tocList.appendChild(li);
+            return;
+        }
+
+        filteredPoems.forEach((poem, index) => {
             const li = document.createElement('li');
             li.innerText = poem.title;
 
@@ -616,8 +665,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
             li.onclick = () => {
-                currentIndex = index;
-                renderPoem(index);
+                const realIndex = poems.findIndex(p => p.title === poem.title);
+                currentIndex = realIndex >= 0 ? realIndex : index;
+                renderPoem(currentIndex);
                 toggleTOC();
             };
             tocList.appendChild(li);
@@ -627,7 +677,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     function toggleTOC() {
         const overlay = document.getElementById('toc-overlay');
         if (!overlay) return;
+        const opening = !overlay.classList.contains('active');
         overlay.classList.toggle('active');
+        if (opening) {
+            currentTocFilter = 'all';
+            setActiveTocTab(currentTocFilter);
+            renderTOC(currentTocFilter);
+        }
     }
 
     // 切换作品注释弹窗

@@ -1343,6 +1343,32 @@ header.char-game-active {
     text-align: center;
 }
 
+.toc-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.toc-tab {
+    border: 2px solid var(--accent-color);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--accent-color);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1.2;
+}
+
+.toc-tab.active {
+    background: var(--accent-color);
+    color: #fff;
+}
+
 .toc-list {
     list-style: none;
     width: 100%;
