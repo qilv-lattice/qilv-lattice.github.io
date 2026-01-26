@@ -101,6 +101,10 @@ body::before {
 }
 
 /* ===== 文字游戏 ===== */
+:root {
+    --char-cell-size: 24px;
+}
+
 .char-game-btn {
     position: fixed;
     right: 10px;
@@ -122,6 +126,39 @@ body::before {
     z-index: 2100;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+}
+
+.char-game-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+}
+
+.char-game-nav.active {
+    display: flex;
+}
+
+.char-game-nav-cells {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--char-cell-size);
+    gap: 4px;
+}
+
+.char-game-nav-cell {
+    width: var(--char-cell-size);
+    height: var(--char-cell-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(201, 31, 55, 0.35);
+    border-radius: 6px;
 }
 
 .char-game-overlay {
@@ -180,7 +217,7 @@ body::before {
 }
 
 .char-game-cell {
-    height: 24px;
+    height: var(--char-cell-size);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,6 +275,8 @@ body::before {
     overflow: hidden;
     z-index: 2;
     pointer-events: none;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
 }
 
 .char-fall-item {
@@ -260,7 +299,63 @@ body::before {
     touch-action: manipulation;
 }
 
+.char-game-dialog {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.char-game-dialog.active {
+    display: flex;
+}
+
+.char-game-dialog-card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.char-game-dialog-title {
+    font-size: 1rem;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.char-game-dialog-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.char-game-dialog-btn {
+    border: 2px solid var(--accent-color);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.char-game-dialog-btn.secondary {
+    border-color: #999;
+    color: #666;
+}
+
 @media (max-width: 768px) {
+    :root {
+        --char-cell-size: 21px;
+    }
+
     .char-game-btn {
         right: 8px;
         bottom: 80px;
@@ -277,8 +372,12 @@ body::before {
         transform-origin: top center;
     }
 
+    .char-game-nav-cells {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+
     .char-game-cell {
-        height: 21px;
         font-size: 0.8rem;
     }
 }
@@ -321,6 +420,11 @@ header {
     margin-bottom: 0.5rem;
     /* 顶部留白，防止与上方按钮重叠 */
     margin-top: 0.5rem;
+    position: relative;
+}
+
+header.char-game-active {
+    padding-bottom: calc(0.8rem + var(--char-cell-size) + 4px);
 }
 
 .site-title {

@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=20260126-char-game-fix16" as="style">
-    <link rel="preload" href="js/script.js?v=20260126-char-game-fix16" as="script">
+    <link rel="preload" href="css/base.css?v=20260126-char-game-fix19" as="style">
+    <link rel="preload" href="js/script.js?v=20260126-char-game-fix19" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260126-char-game-fix16">
+    <link rel="stylesheet" href="css/base.css?v=20260126-char-game-fix19">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=20260126-char-game-fix16"
+    <link rel="stylesheet" href="css/desktop.css?v=20260126-char-game-fix19"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -207,6 +207,9 @@
         <header>
             <h1 class="site-title">七律空间<img src="assets/七律情.png" alt="石章" class="title-seal"></h1>
             <p class="subtitle">唐宋诗歌抽七律，斯人肺腑建空间</p>
+            <div id="char-game-nav" class="char-game-nav">
+                <div id="char-game-nav-cells" class="char-game-nav-cells"></div>
+            </div>
         </header>
 
         <main id="poem-card" class="poem-card">
@@ -311,6 +314,15 @@
             <div class="char-game-hint">点击飘落文字，拼出任意一首完整作品</div>
         </div>
         <div id="char-fall-layer" class="char-fall-layer"></div>
+        <div id="char-game-dialog" class="char-game-dialog">
+            <div class="char-game-dialog-card">
+                <div class="char-game-dialog-title">再来一局？</div>
+                <div class="char-game-dialog-actions">
+                    <button type="button" class="char-game-dialog-btn" onclick="charGameRetry()">再来一局</button>
+                    <button type="button" class="char-game-dialog-btn secondary" onclick="charGameExit()">退出</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 不蒜子统计 (隐藏) -->
@@ -321,7 +333,7 @@
     </div>
 
     <!-- 核心逻辑 -->
-    <script src="js/script.js?v=20260126-char-game-fix16"></script>
+    <script src="js/script.js?v=20260126-char-game-fix19"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 

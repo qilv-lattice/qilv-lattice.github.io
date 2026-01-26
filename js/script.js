@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         maxFalling: 40,
         maxDrops: 0,
         totalSpawned: 0,
-        maxFill: 6,
+        maxFill: 10,
         spawnArea: null,
         finished: false,
         retryTimer: null
@@ -817,6 +817,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         charGameState.fillIndex = 0;
     }
 
+    function renderCharGameNav() {
+        const nav = document.getElementById('char-game-nav');
+        const cells = document.getElementById('char-game-nav-cells');
+        const header = document.querySelector('header');
+        if (!nav || !cells) return;
+        cells.innerHTML = '';
+        charGameState.remainingCells.forEach(entry => {
+            const cell = document.createElement('div');
+            cell.className = 'char-game-nav-cell';
+            cell.textContent = entry.char;
+            cells.appendChild(cell);
+        });
+        nav.classList.add('active');
+        if (header) header.classList.add('char-game-active');
+    }
+
+    function hideCharGameNav() {
+        const nav = document.getElementById('char-game-nav');
+        const cells = document.getElementById('char-game-nav-cells');
+        const header = document.querySelector('header');
+        if (cells) cells.innerHTML = '';
+        if (nav) nav.classList.remove('active');
+        if (header) header.classList.remove('char-game-active');
+    }
+
+    function showCharGameDialog() {
+        const dialog = document.getElementById('char-game-dialog');
+        if (dialog) dialog.classList.add('active');
+    }
+
+    function hideCharGameDialog() {
+        const dialog = document.getElementById('char-game-dialog');
+        if (dialog) dialog.classList.remove('active');
+    }
+
     function positionCharGamePanel() {
         const panel = document.querySelector('.char-game-panel');
         const overlay = document.getElementById('char-game-overlay');
@@ -853,8 +888,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         panel.style.transform = 'none';
 
         const channelTop = headerRect ? headerRect.bottom : cardRect.bottom;
-        const channelBottom = top + panelRect.height;
-        const channelHeight = Math.max(60, channelBottom - channelTop);
+        const channelHeight = Math.max(120, window.innerHeight - channelTop);
         charGameState.spawnArea = {
             left,
             top: channelTop,
@@ -889,6 +923,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             nextEntry.cell.classList.remove('hit');
         }, 240);
         charGameState.remainingCells.shift();
+        renderCharGameNav();
         checkGameCompletion();
     }
 
@@ -917,6 +952,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (hint) hint.textContent = `已填满 ${charGameState.maxFill} 字，测试结束。`;
         triggerFireworks();
         stopCharGameFall();
+        hideCharGameNav();
+        showCharGameDialog();
     }
 
     function removeFallItem(item) {
@@ -1038,6 +1075,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         buildGameGrid();
         prefillGrid(charGameState.targets[0] || []);
+        renderCharGameNav();
+        hideCharGameDialog();
         requestAnimationFrame(positionCharGamePanel);
         stopCharGameFall();
         charGameState.spawnTimer = setInterval(spawnFallItem, 320);
@@ -1057,6 +1096,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             clearTimeout(charGameState.retryTimer);
             charGameState.retryTimer = null;
         }
+        hideCharGameNav();
+        hideCharGameDialog();
     }
 
     function toggleCharGame(force) {
@@ -1882,6 +1923,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.toggleTOC = toggleTOC;
     window.toggleNotes = toggleNotes;
     window.toggleCharGame = toggleCharGame;
+    window.charGameRetry = () => {
+        hideCharGameDialog();
+        startCharGame();
+    };
+    window.charGameExit = () => {
+        hideCharGameDialog();
+        toggleCharGame(false);
+    };
     window.toggleMode = toggleMode;
     window.toggleVoice = toggleVoice;
     window.toggleViewMode = toggleViewMode;
