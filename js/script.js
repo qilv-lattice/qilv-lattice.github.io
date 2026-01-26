@@ -2183,6 +2183,12 @@ function resetCollapseTimer() {
         collapseTimer = setTimeout(() => {
             const wrapper = document.querySelector('.music-wrapper');
             const settingsBtn = document.getElementById('settings-btn');
+            const overlayActive = document.querySelector('.toc-overlay.active, #char-game-overlay.active');
+
+            if (overlayActive) {
+                resetCollapseTimer();
+                return;
+            }
             // 双重检查：如果鼠标此时还在 wrapper 内（防止边缘case），则不收起 (仅限桌面端)
             if (window.matchMedia('(hover: hover)').matches && wrapper.matches(':hover')) {
                 return;
