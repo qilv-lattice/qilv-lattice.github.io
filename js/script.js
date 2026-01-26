@@ -686,10 +686,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getCharGamePoems() {
-        const testKey = normalizeTitleText('自述');
-        const testPoem = poems.find(p => normalizeTitleText(p.title).includes(testKey));
-        if (testPoem) return [testPoem];
-        return poems.length ? [poems[0]] : [];
+        if (!poems.length) return [];
+        const index = Math.floor(Math.random() * poems.length);
+        return [poems[index]];
     }
 
     function buildTargetLines(poem) {
@@ -1071,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         charGameState.pool = buildCharPool(selectedPoems);
         charGameState.startedAt = Date.now();
         charGameState.totalSpawned = 0;
-        if (hint) hint.textContent = `测试：已预填 ${56 - charGameState.maxFill} 字，补齐剩余 ${charGameState.maxFill} 字`;
+        if (hint) hint.textContent = `随机选诗：已预填 ${56 - charGameState.maxFill} 字，补齐剩余 ${charGameState.maxFill} 字`;
 
         buildGameGrid();
         prefillGrid(charGameState.targets[0] || []);
