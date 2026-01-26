@@ -1317,8 +1317,8 @@ header {
 
     /* 横排模式：手机端需要更宽以防止换行 */
     .poem-content.horizontal-mode {
-        width: 92vw;
-        max-width: 600px;
+        width: 100%;
+        max-width: 100%;
     }
 
     /* 移动端隐藏红蓝喇叭（因自动隐藏逻辑问题） */
