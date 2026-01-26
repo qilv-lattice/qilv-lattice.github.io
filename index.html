@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css" as="style">
-    <link rel="preload" href="js/script.js" as="script">
+    <link rel="preload" href="css/base.css?v=20260126-char-game-fix9" as="style">
+    <link rel="preload" href="js/script.js?v=20260126-char-game-fix9" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260123-notice-fix-final">
+    <link rel="stylesheet" href="css/base.css?v=20260126-char-game-fix9">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=20260119-revert"
+    <link rel="stylesheet" href="css/desktop.css?v=20260126-char-game-fix9"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -252,10 +252,13 @@
                 </div>
             </div>
 
+            <!-- 填字游戏石章（左侧中间，对称位置） -->
+            <img src="assets/填字游戏.png" alt="填字游戏" id="game-seal" class="game-seal"
+                onclick="toggleCharGame()">
+
             <!-- 网站指南石章（右侧中间） -->
             <img src="assets/网站指南.png" alt="网站指南" id="guide-seal" class="guide-seal"
                 onclick="alert('网站指南：\n1、网页左边旋转装饰模型为四种典型晶体结构，观察模型可发生有趣现象；\n2、中间为作品展示区，分为三卡/单卡两种展示作品模式；\n3、三卡展示分为同步/随机展示两种，具体情况，读者不妨一试；\n4、视听设置按钮为折叠菜单设计，点击可见二级菜单按钮，各按钮具体功能顾名思义，读者设置完，离开按钮区域后可实现自动折叠；\n5、对于有疑问的作品可参见作品注释，如没有，可通过下方邮箱联系作品添加；\n6、新上线作品会有小喇叭公告，而且作品名录中会同步高亮；\n7、无论您是否观看网站指南，作者都希望七律空间能给您生活的轻松和心灵的愉悦，如果您有任何问题，欢迎随时通过网站下方邮箱和作者联系。\n\n您的喜关注、喜欢和支持是对作者付出的最大鼓励也是作者持续创作的动力。\n祝君身体健康，工作顺利，生活幸福！')">
-
             <!-- 控制按钮 -->
             <div class="control-panel">
                 <button id="prev-btn" onclick="prevPoem()">上一首</button>
@@ -294,6 +297,19 @@
         </div>
     </div>
 
+    <!-- 文字游戏入口与面板 -->
+    <div id="char-game-overlay" class="char-game-overlay">
+        <div class="char-game-panel" onclick="event.stopPropagation()">
+            <div class="char-game-header">
+                <span>文字游戏</span>
+                <button class="char-game-close" onclick="toggleCharGame(false)">[ 关闭 ]</button>
+            </div>
+            <div id="char-game-grid" class="char-game-grid"></div>
+            <div class="char-game-hint">点击飘落文字，拼出任意一首完整作品</div>
+        </div>
+        <div id="char-fall-layer" class="char-fall-layer"></div>
+    </div>
+
     <!-- 不蒜子统计 (隐藏) -->
     <!-- 脚本移至 script.js 动态加载，以排除管理员访问 -->
     <div style="display: none;">
@@ -302,8 +318,8 @@
     </div>
 
     <!-- 核心逻辑 -->
-    <script src="js/script.js?v=20260124-v2-force"></script>
-    <script src="js/snow.js?v=snow-force"></script>
+    <script src="js/script.js?v=20260126-char-game-fix9"></script>
+    <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 
     <!-- 粒子效果 - 仅桌面端加载 -->

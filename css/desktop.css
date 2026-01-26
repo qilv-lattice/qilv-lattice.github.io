@@ -606,3 +606,23 @@ header {
     opacity: 1;
     transform: translateY(-50%) scale(1.1);
 }
+
+/* 填字游戏石章：置于网站指南对面 */
+.game-seal {
+    display: block;
+    position: fixed;
+    left: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 66px;
+    height: auto;
+    opacity: 0.85;
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.game-seal:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}

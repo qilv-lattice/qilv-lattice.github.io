@@ -3,6 +3,9 @@
  * 使用 Emoji ❄️ 作为雪花粒子
  */
 
+if (window && window.disableSnow) {
+    // 关闭雪花特效（全局开关）
+} else {
 class Snowflake {
     constructor() {
         this.x = 0;
@@ -110,3 +113,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const snow = new SnowEffect();
     snow.init();
 });
+}

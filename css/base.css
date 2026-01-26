@@ -100,6 +100,170 @@ body::before {
     transition: background 0.3s ease;
 }
 
+/* ===== 文字游戏 ===== */
+.char-game-btn {
+    position: fixed;
+    right: 10px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+    border-radius: 6px;
+    border: 2px solid var(--accent-color);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--accent-color);
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 2100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.char-game-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 2200;
+}
+
+.char-game-overlay.active {
+    display: block;
+}
+
+.char-game-panel {
+    position: absolute;
+    width: min(92vw, 640px);
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 10px;
+    padding: 12px 12px 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    z-index: 4;
+}
+
+.char-game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 6;
+}
+
+.char-game-close {
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 0.85rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 6;
+}
+
+.char-game-grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 6;
+}
+
+.char-game-cell {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    background: rgba(250, 250, 250, 0.8);
+    border: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.char-game-cell.punct {
+    background: rgba(217, 58, 73, 0.08);
+    border: 1px solid rgba(217, 58, 73, 0.2);
+    color: #c91f37;
+    font-weight: bold;
+}
+
+.char-game-cell.filled {
+    border-style: solid;
+}
+
+.char-game-cell.prefilled {
+    background: rgba(201, 31, 55, 0.06);
+    color: #b32034;
+}
+
+.char-game-hint {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    position: relative;
+    z-index: 6;
+}
+
+.char-fall-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.char-fall-item {
+    position: absolute;
+    font-size: 20px;
+    color: #c91f37;
+    opacity: 0.8;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto;
+    text-shadow: 0 0 6px rgba(217, 58, 73, 0.3);
+    z-index: 5;
+}
+
+@media (max-width: 768px) {
+    .char-game-btn {
+        right: 8px;
+        bottom: 80px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .char-game-panel {
+        width: calc(100vw - 32px);
+    }
+
+    .char-game-grid {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+
+    .char-game-cell {
+        height: 21px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== 雪花特效强制关闭 ===== */
+.snowflake {
+    display: none !important;
+}
+
 /* ===== 主容器 ===== */
 .container {
     width: 100%;
@@ -1366,7 +1530,8 @@ header {
 /* ===== 装饰元素 - 移动端隐藏 ===== */
 .decoration-branch,
 #particle-canvas,
-.guide-seal {
+.guide-seal,
+.game-seal {
     display: none;
 }
 

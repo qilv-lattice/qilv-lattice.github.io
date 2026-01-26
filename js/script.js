@@ -5,6 +5,9 @@ let lastWingIndices = { left: null, right: null };
 let lastFireworkAt = 0;
 let wingRandomizeOnNextSync = true;
 
+// 全局关闭雪花特效
+window.disableSnow = true;
+
 // 背景图列表（将从 config.json 加载）
 let backgrounds = [];
 
@@ -155,6 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         applyDeviceClasses();
+        document.querySelectorAll('.snowflake').forEach(node => node.remove());
         initThreeCardLayout();
         updateWingDisplayButton();
 
@@ -533,6 +537,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 随机开始
             currentIndex = Math.floor(Math.random() * poems.length);
             renderPoem(currentIndex);
+            initCharGame();
+            const gameOverlay = document.getElementById('char-game-overlay');
+            if (gameOverlay && gameOverlay.classList.contains('active')) {
+                startCharGame();
+            }
         } catch (error) {
             console.error("加载诗词数据失败:", error);
             alert("诗词数据加载失败： " + error.message);
@@ -646,6 +655,392 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         overlay.classList.toggle('active');
     }
+
+    // ===== 文字游戏 =====
+    const charGameState = {
+        active: false,
+        pool: [],
+        targets: [],
+        fillOrder: [],
+        fillIndex: 0,
+        remainingCells: [],
+        falling: [],
+        spawnTimer: null,
+        rafId: null,
+        lastFrame: 0,
+        startedAt: 0,
+        maxDurationMs: 5 * 60 * 1000,
+        maxFalling: 40,
+        maxDrops: 0,
+        totalSpawned: 0,
+        maxFill: 6,
+        spawnArea: null,
+        finished: false,
+        retryTimer: null
+    };
+
+    function stripPunctuation(text) {
+        return String(text || '')
+            .replace(/[，。！？；：、,.!?;:\s]/g, '')
+            .replace(/[《》「」『』“”‘’（）()]/g, '');
+    }
+
+    function getCharGamePoems() {
+        const testKey = normalizeTitleText('自述');
+        const testPoem = poems.find(p => normalizeTitleText(p.title).includes(testKey));
+        if (testPoem) return [testPoem];
+        return poems.length ? [poems[0]] : [];
+    }
+
+    function buildTargetLines(poem) {
+        const lines = (poem.content || []).slice(0, 4);
+        return lines.map(line => {
+            const text = stripPunctuation(line);
+            const left = text.slice(0, 7);
+            const right = text.slice(7, 14);
+            return `${left}，${right}。`;
+        });
+    }
+
+    function buildCharPool(list) {
+        const pool = [];
+        list.forEach(poem => {
+            (poem.content || []).slice(0, 4).forEach(line => {
+                const text = stripPunctuation(line);
+                Array.from(text).forEach(ch => pool.push(ch));
+            });
+        });
+        return pool;
+    }
+
+    function buildGameGrid() {
+        const grid = document.getElementById('char-game-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        charGameState.fillOrder = [];
+        charGameState.fillIndex = 0;
+
+        for (let row = 0; row < 4; row += 1) {
+            for (let col = 0; col < 16; col += 1) {
+                const cell = document.createElement('div');
+                cell.className = 'char-game-cell';
+                cell.dataset.row = String(row);
+                cell.dataset.col = String(col);
+
+                if (col === 7) {
+                    cell.textContent = '，';
+                    cell.classList.add('punct');
+                } else if (col === 15) {
+                    cell.textContent = '。';
+                    cell.classList.add('punct');
+                } else {
+                    cell.textContent = '';
+                    charGameState.fillOrder.push(cell);
+                }
+
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function shuffleArray(list) {
+        for (let i = list.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [list[i], list[j]] = [list[j], list[i]];
+        }
+        return list;
+    }
+
+    function prefillGrid(targetLines) {
+        const grid = document.getElementById('char-game-grid');
+        if (!grid) return;
+
+        const entries = [];
+        for (let row = 0; row < 4; row += 1) {
+            const line = targetLines[row] || '';
+            for (let col = 0; col < 16; col += 1) {
+                if (col === 7 || col === 15) continue;
+                const cell = grid.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (!cell) continue;
+                const char = line[col] || '';
+                cell.textContent = '';
+                cell.classList.remove('filled', 'prefilled');
+                entries.push({ cell, char });
+            }
+        }
+
+        const total = entries.length;
+        const prefillCount = Math.max(0, total - charGameState.maxFill);
+        shuffleArray(entries);
+        const prefilled = entries.slice(0, prefillCount);
+        const remaining = entries.slice(prefillCount);
+
+        prefilled.forEach(entry => {
+            entry.cell.textContent = entry.char;
+            entry.cell.classList.add('filled', 'prefilled');
+        });
+
+        charGameState.remainingCells = remaining;
+        charGameState.pool = remaining.map(entry => entry.char);
+        charGameState.fillIndex = 0;
+    }
+
+    function positionCharGamePanel() {
+        const panel = document.querySelector('.char-game-panel');
+        const overlay = document.getElementById('char-game-overlay');
+        const layer = document.getElementById('char-fall-layer');
+        if (!panel || !overlay) return;
+
+        const card = getMainCard();
+        if (!card) {
+            panel.style.top = '50%';
+            panel.style.left = '50%';
+            panel.style.transform = 'translate(-50%, -50%)';
+            if (layer) {
+                layer.style.top = panel.style.top;
+                layer.style.left = panel.style.left;
+                layer.style.width = panel.offsetWidth + 'px';
+                layer.style.height = panel.offsetHeight + 'px';
+                layer.style.transform = panel.style.transform;
+            }
+            return;
+        }
+
+        const cardRect = card.getBoundingClientRect();
+        const headerEl = document.querySelector('header');
+        const headerRect = headerEl ? headerEl.getBoundingClientRect() : null;
+        const panelRect = panel.getBoundingClientRect();
+        let top = cardRect.bottom - 40;
+        let left = cardRect.left + (cardRect.width - panelRect.width) / 2;
+
+        left = Math.max(12, Math.min(left, window.innerWidth - panelRect.width - 12));
+        top = Math.max(12, Math.min(top, window.innerHeight - panelRect.height - 12));
+
+        panel.style.top = `${top}px`;
+        panel.style.left = `${left}px`;
+        panel.style.transform = 'none';
+
+        const channelTop = headerRect ? headerRect.bottom : cardRect.bottom;
+        const channelBottom = top + panelRect.height;
+        const channelHeight = Math.max(60, channelBottom - channelTop);
+        charGameState.spawnArea = {
+            left,
+            top: channelTop,
+            width: panelRect.width,
+            height: channelHeight
+        };
+
+        if (layer) {
+            layer.style.position = 'absolute';
+            layer.style.top = `${charGameState.spawnArea.top}px`;
+            layer.style.left = `${charGameState.spawnArea.left}px`;
+            layer.style.width = `${charGameState.spawnArea.width}px`;
+            layer.style.height = `${charGameState.spawnArea.height}px`;
+            layer.style.transform = 'none';
+        }
+    }
+
+    function placeNextChar(char) {
+        if (!charGameState.remainingCells.length) return;
+        const idx = charGameState.remainingCells.findIndex(entry => entry.char === char);
+        const hint = document.querySelector('.char-game-hint');
+        if (idx === -1) {
+            if (hint) hint.textContent = '这个字不需要，换一个。';
+            return;
+        }
+        const entry = charGameState.remainingCells[idx];
+        entry.cell.textContent = char;
+        entry.cell.classList.add('filled');
+        charGameState.remainingCells.splice(idx, 1);
+        checkGameCompletion();
+    }
+
+    function getGridLines() {
+        const grid = document.getElementById('char-game-grid');
+        if (!grid) return [];
+        const lines = [];
+        for (let row = 0; row < 4; row += 1) {
+            let line = '';
+            for (let col = 0; col < 16; col += 1) {
+                const cell = grid.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                line += cell ? cell.textContent : '';
+            }
+            lines.push(line);
+        }
+        return lines;
+    }
+
+    function checkGameCompletion() {
+        if (charGameState.remainingCells.length > 0) return;
+        if (charGameState.finished) return;
+
+        const hint = document.querySelector('.char-game-hint');
+
+        charGameState.finished = true;
+        if (hint) hint.textContent = `已填满 ${charGameState.maxFill} 字，测试结束。`;
+        stopCharGameFall();
+    }
+
+    function removeFallItem(item) {
+        if (!item) return;
+        if (item.el && item.el.parentNode) {
+            item.el.parentNode.removeChild(item.el);
+        }
+        const idx = charGameState.falling.indexOf(item);
+        if (idx >= 0) charGameState.falling.splice(idx, 1);
+    }
+
+    function spawnFallItem() {
+        if (!charGameState.active) return;
+        if (!charGameState.pool.length) return;
+        if (charGameState.falling.length >= charGameState.maxFalling) return;
+        if (charGameState.maxDrops > 0 && charGameState.totalSpawned >= charGameState.maxDrops) return;
+
+        const overlay = document.getElementById('char-game-overlay');
+        if (!overlay) return;
+        if (!charGameState.spawnArea) positionCharGamePanel();
+        if (!charGameState.spawnArea) return;
+
+        const char = charGameState.pool[Math.floor(Math.random() * charGameState.pool.length)];
+        const el = document.createElement('div');
+        el.className = 'char-fall-item';
+        el.textContent = char;
+
+        const size = 16 + Math.random() * 10;
+        const x = charGameState.spawnArea.left + Math.random() * (charGameState.spawnArea.width - size);
+        const y = charGameState.spawnArea.top;
+        const speed = 30 + Math.random() * 40;
+        const drift = (Math.random() - 0.5) * 10;
+
+        el.style.fontSize = `${size}px`;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+
+        const item = { el, x, y, speed, drift };
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            placeNextChar(char);
+            removeFallItem(item);
+        });
+
+        overlay.appendChild(el);
+        charGameState.falling.push(item);
+        charGameState.totalSpawned += 1;
+    }
+
+    function updateFallItems(timestamp) {
+        if (!charGameState.active) return;
+        if (!charGameState.lastFrame) charGameState.lastFrame = timestamp;
+        const delta = (timestamp - charGameState.lastFrame) / 1000;
+        charGameState.lastFrame = timestamp;
+
+        const area = charGameState.spawnArea || { top: 0, height: window.innerHeight };
+
+        charGameState.falling.slice().forEach(item => {
+            item.y += item.speed * delta;
+            item.x += item.drift * delta;
+            if (item.el) {
+                item.el.style.transform = `translate(${item.x}px, ${item.y}px)`;
+            }
+            if (item.y > area.top + area.height + 40) {
+                removeFallItem(item);
+            }
+        });
+
+        charGameState.rafId = requestAnimationFrame(updateFallItems);
+    }
+
+    function stopCharGameFall() {
+        if (charGameState.spawnTimer) {
+            clearInterval(charGameState.spawnTimer);
+            charGameState.spawnTimer = null;
+        }
+        if (charGameState.rafId) {
+            cancelAnimationFrame(charGameState.rafId);
+            charGameState.rafId = null;
+        }
+        charGameState.lastFrame = 0;
+        charGameState.falling.slice().forEach(item => removeFallItem(item));
+        const overlay = document.getElementById('char-game-overlay');
+        if (overlay) {
+            overlay.querySelectorAll('.char-fall-item').forEach(node => node.remove());
+        }
+        charGameState.falling = [];
+    }
+
+    function startCharGame() {
+        const overlay = document.getElementById('char-game-overlay');
+        const hint = document.querySelector('.char-game-hint');
+        if (!overlay) return;
+
+        const selectedPoems = getCharGamePoems();
+        if (!selectedPoems.length) {
+            if (hint) hint.textContent = '诗词数据加载中，稍候自动重试…';
+            if (!charGameState.retryTimer) {
+                charGameState.retryTimer = setTimeout(() => {
+                    charGameState.retryTimer = null;
+                    if (overlay.classList.contains('active')) {
+                        startCharGame();
+                    }
+                }, 800);
+            }
+            return;
+        }
+
+        charGameState.active = true;
+        charGameState.finished = false;
+        charGameState.targets = selectedPoems.map(buildTargetLines);
+        charGameState.pool = buildCharPool(selectedPoems);
+        charGameState.startedAt = Date.now();
+        charGameState.totalSpawned = 0;
+        if (hint) hint.textContent = `测试：已预填 ${56 - charGameState.maxFill} 字，补齐剩余 ${charGameState.maxFill} 字`;
+
+        buildGameGrid();
+        prefillGrid(charGameState.targets[0] || []);
+        requestAnimationFrame(positionCharGamePanel);
+        stopCharGameFall();
+        charGameState.spawnTimer = setInterval(spawnFallItem, 320);
+        charGameState.rafId = requestAnimationFrame(updateFallItems);
+    }
+
+    function stopCharGame() {
+        charGameState.active = false;
+        stopCharGameFall();
+        charGameState.pool = [];
+        charGameState.targets = [];
+        charGameState.fillOrder = [];
+        charGameState.fillIndex = 0;
+        charGameState.remainingCells = [];
+        charGameState.finished = false;
+        if (charGameState.retryTimer) {
+            clearTimeout(charGameState.retryTimer);
+            charGameState.retryTimer = null;
+        }
+    }
+
+    function toggleCharGame(force) {
+        const overlay = document.getElementById('char-game-overlay');
+        if (!overlay) return;
+        const shouldOpen = typeof force === 'boolean' ? force : !overlay.classList.contains('active');
+        if (shouldOpen) {
+            overlay.classList.add('active');
+            startCharGame();
+        } else {
+            overlay.classList.remove('active');
+            stopCharGame();
+        }
+    }
+
+    function initCharGame() {
+        const btn = document.getElementById('char-game-btn');
+        if (!btn) return;
+    }
+
+    window.addEventListener('resize', () => {
+        const overlay = document.getElementById('char-game-overlay');
+        if (overlay && overlay.classList.contains('active')) {
+            positionCharGamePanel();
+        }
+    });
 
     function getMainCard() {
         return document.querySelector('.poem-content.main-card');
@@ -1433,6 +1828,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ===== 暴露函数到全局作用域，供 HTML onclick 使用 =====
     window.toggleTOC = toggleTOC;
     window.toggleNotes = toggleNotes;
+    window.toggleCharGame = toggleCharGame;
     window.toggleMode = toggleMode;
     window.toggleVoice = toggleVoice;
     window.toggleViewMode = toggleViewMode;
