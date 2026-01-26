@@ -581,6 +581,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
+    function ensureTocTabs() {
+        const tocCard = document.querySelector('#toc-overlay .toc-card');
+        if (!tocCard) return;
+
+        let tabs = tocCard.querySelector('.toc-tabs');
+        if (!tabs) {
+            const title = tocCard.querySelector('.toc-title');
+            tabs = document.createElement('div');
+            tabs.className = 'toc-tabs';
+            tabs.innerHTML = `
+                <button class="toc-tab active" data-filter="all">全部作品</button>
+                <button class="toc-tab" data-filter="new">上线新作</button>
+                <button class="toc-tab" data-filter="modified">旧作修改</button>
+            `;
+            if (title) {
+                title.insertAdjacentElement('afterend', tabs);
+            } else {
+                tocCard.prepend(tabs);
+            }
+        }
+
+        if (!document.getElementById('toc-tab-style')) {
+            const style = document.createElement('style');
+            style.id = 'toc-tab-style';
+            style.textContent = `
+                .toc-tabs{display:flex;gap:6px;margin-bottom:.75rem;width:100%;justify-content:center;flex-wrap:wrap}
+                .toc-tab{border:2px solid var(--accent-color);background:rgba(255,255,255,.92);color:var(--accent-color);
+                padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;line-height:1.2}
+                .toc-tab.active{background:var(--accent-color);color:#fff}
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    function bindTocTabs() {
+        const tabs = document.querySelectorAll('.toc-tab');
+        tabs.forEach(tab => {
+            if (tab.dataset.bound === 'true') return;
+            tab.dataset.bound = 'true';
+            tab.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentTocFilter = tab.dataset.filter || 'all';
+                setActiveTocTab(currentTocFilter);
+                renderTOC(currentTocFilter);
+            });
+        });
+    }
+
     let currentTocFilter = 'all';
 
     function setActiveTocTab(filter) {
@@ -590,18 +638,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 目录分类切换
-    const tocTabs = document.querySelectorAll('.toc-tab');
-    if (tocTabs.length) {
-        tocTabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentTocFilter = tab.dataset.filter || 'all';
-                setActiveTocTab(currentTocFilter);
-                renderTOC(currentTocFilter);
-            });
-        });
-    }
+    // 目录分类切换（兼容旧缓存页面）
+    ensureTocTabs();
+    bindTocTabs();
 
     function renderTOC(filter = currentTocFilter) {
         const tocList = document.getElementById('toc-list');
