@@ -607,6 +607,11 @@ header {
     transform: translateY(-50%) scale(1.1);
 }
 
+/* 桌面端隐藏移动专用按钮 */
+.mobile-only {
+    display: none !important;
+}
+
 /* 填字游戏石章：置于网站指南对面 */
 .game-seal {
     display: block;

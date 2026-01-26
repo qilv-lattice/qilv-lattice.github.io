@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=20260126-char-game-fix15" as="style">
-    <link rel="preload" href="js/script.js?v=20260126-char-game-fix15" as="script">
+    <link rel="preload" href="css/base.css?v=20260126-char-game-fix16" as="style">
+    <link rel="preload" href="js/script.js?v=20260126-char-game-fix16" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260126-char-game-fix15">
+    <link rel="stylesheet" href="css/base.css?v=20260126-char-game-fix16">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=20260126-char-game-fix15"
+    <link rel="stylesheet" href="css/desktop.css?v=20260126-char-game-fix16"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -126,6 +126,9 @@
 
         <!-- 作品注释按钮 -->
         <button id="note-btn" class="widget-btn" onclick="toggleNotes()">作品<br>注释</button>
+
+        <!-- 填字游戏（仅移动端显示，桌面端用石章入口） -->
+        <button id="game-mobile-btn" class="widget-btn mobile-only" onclick="toggleCharGame()">填字<br>游戏</button>
 
         <!-- 音乐控制图标容器 (包含按钮和子菜单) - 移到随机播放前面 -->
         <div class="music-btn-wrapper">
@@ -318,7 +321,7 @@
     </div>
 
     <!-- 核心逻辑 -->
-    <script src="js/script.js?v=20260126-char-game-fix15"></script>
+    <script src="js/script.js?v=20260126-char-game-fix16"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 

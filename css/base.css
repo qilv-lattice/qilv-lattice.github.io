@@ -1559,6 +1559,11 @@ header {
     display: none;
 }
 
+/* 仅移动端显示的按钮（桌面端覆盖隐藏） */
+.mobile-only {
+    display: flex;
+}
+
 /* 理工浪漫标签 - 竖排文字 */
 .tech-romance-tag {
     position: absolute;
