@@ -692,7 +692,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (isNewWorkActive || isModifiedWorkActive) {
                 if (isNewWorkActive && isModifiedWorkActive) {
-                    li.classList.add('new-work-highlight'); // 优先显示"新"，不再叠加"修"
+                    li.classList.add('new-modified-highlight');
+                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0)</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee)</span>`;
                 } else if (isNewWorkActive) {
                     li.classList.add('new-work-highlight');
                 } else if (isModifiedWorkActive) {
