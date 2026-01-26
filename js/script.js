@@ -882,6 +882,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         nextEntry.cell.textContent = char;
         nextEntry.cell.classList.add('filled');
+        nextEntry.cell.classList.remove('hit');
+        void nextEntry.cell.offsetWidth;
+        nextEntry.cell.classList.add('hit');
+        setTimeout(() => {
+            nextEntry.cell.classList.remove('hit');
+        }, 240);
         charGameState.remainingCells.shift();
         checkGameCompletion();
     }
@@ -909,6 +915,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         charGameState.finished = true;
         if (hint) hint.textContent = `已填满 ${charGameState.maxFill} 字，测试结束。`;
+        triggerFireworks();
         stopCharGameFall();
     }
 
@@ -1173,14 +1180,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
+        const randomColor = () => {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsla(${hue}, 85%, 60%, 0.9)`;
+        };
+
         burst(width * 0.3, height * 0.25, 'rgba(201,31,55,0.9)');
         burst(width * 0.7, height * 0.22, 'rgba(26,85,153,0.9)');
+        burst(width * 0.5, height * 0.3, randomColor());
 
         const start = performance.now();
-        const duration = 900;
+        const duration = 5000;
+        let lastBurstTime = start;
 
         const tick = (time) => {
             const elapsed = time - start;
+            if (time - lastBurstTime > 650) {
+                burst(width * (0.2 + Math.random() * 0.6), height * (0.18 + Math.random() * 0.35), randomColor());
+                lastBurstTime = time;
+            }
             ctx.clearRect(0, 0, width, height);
             particles.forEach(p => {
                 p.x += p.vx;

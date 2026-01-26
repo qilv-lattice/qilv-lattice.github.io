@@ -207,6 +207,22 @@ body::before {
     color: #b32034;
 }
 
+.char-game-cell.hit {
+    animation: char-hit 0.22s ease-out;
+}
+
+@keyframes char-hit {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.18);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .char-game-hint {
     margin-top: 8px;
     font-size: 0.8rem;
