@@ -722,8 +722,47 @@ document.addEventListener('DOMContentLoaded', async () => {
             currentTocFilter = 'all';
             setActiveTocTab(currentTocFilter);
             renderTOC(currentTocFilter);
+            requestAnimationFrame(() => {
+                positionTOC();
+            });
         }
     }
+
+    function positionTOC() {
+        const overlay = document.getElementById('toc-overlay');
+        const tocCard = overlay ? overlay.querySelector('.toc-card') : null;
+        const tocBtn = document.getElementById('toc-btn');
+        if (!tocCard || !tocBtn) return;
+
+        const rect = tocBtn.getBoundingClientRect();
+        const cardRect = tocCard.getBoundingClientRect();
+        const padding = 8;
+        const gap = 8;
+
+        let left = rect.left + rect.width / 2 - cardRect.width / 2;
+        left = Math.max(padding, Math.min(left, window.innerWidth - cardRect.width - padding));
+
+        let top = rect.bottom + gap;
+        if (top + cardRect.height > window.innerHeight - padding) {
+            const aboveTop = rect.top - cardRect.height - gap;
+            if (aboveTop > padding) {
+                top = aboveTop;
+            } else {
+                top = Math.max(padding, window.innerHeight - cardRect.height - padding);
+            }
+        }
+
+        tocCard.style.left = `${left}px`;
+        tocCard.style.top = `${top}px`;
+        tocCard.style.transform = 'none';
+    }
+
+    window.addEventListener('resize', () => {
+        const overlay = document.getElementById('toc-overlay');
+        if (overlay && overlay.classList.contains('active')) {
+            positionTOC();
+        }
+    });
 
     // 切换作品注释弹窗
     function toggleNotes() {

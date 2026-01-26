@@ -1306,9 +1306,7 @@ header.char-game-active {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -1321,7 +1319,7 @@ header.char-game-active {
 
 .toc-card {
     background: var(--card-bg);
-    width: 85%;
+    width: min(85vw, 320px);
     max-width: 300px;
     max-height: 70vh;
     padding: 1.5rem;
@@ -1330,6 +1328,10 @@ header.char-game-active {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .toc-title {
