@@ -751,6 +751,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         return list;
     }
 
+    function buildCharListFromLines(lines) {
+        const chars = [];
+        lines.forEach(line => {
+            const clean = String(line || '').replace(/[，。！？；：、\s]/g, '');
+            Array.from(clean).forEach(ch => chars.push(ch));
+        });
+        return chars;
+    }
+
+    function removeOnce(list, value) {
+        const idx = list.indexOf(value);
+        if (idx >= 0) list.splice(idx, 1);
+    }
+
     function prefillGrid(targetLines) {
         const grid = document.getElementById('char-game-grid');
         if (!grid) return;
@@ -765,15 +779,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const char = line[col] || '';
                 cell.textContent = '';
                 cell.classList.remove('filled', 'prefilled');
-                entries.push({ cell, char });
+                entries.push({ cell, char, row, col });
             }
         }
 
         const total = entries.length;
         const prefillCount = Math.max(0, total - charGameState.maxFill);
-        shuffleArray(entries);
-        const prefilled = entries.slice(0, prefillCount);
-        const remaining = entries.slice(prefillCount);
+        const indices = shuffleArray(Array.from({ length: total }, (_, idx) => idx));
+        const prefillSet = new Set(indices.slice(0, prefillCount));
+        const prefilled = entries.filter((_, idx) => prefillSet.has(idx));
+        const remaining = entries.filter((_, idx) => !prefillSet.has(idx));
 
         prefilled.forEach(entry => {
             entry.cell.textContent = entry.char;
@@ -781,7 +796,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         charGameState.remainingCells = remaining;
-        charGameState.pool = remaining.map(entry => entry.char);
+        const remainingChars = remaining.map(entry => entry.char);
+        const allChars = buildCharListFromLines(targetLines);
+        const decoyCandidates = allChars.slice();
+        remainingChars.forEach(ch => removeOnce(decoyCandidates, ch));
+
+        let decoys = [];
+        if (decoyCandidates.length >= remainingChars.length) {
+            decoys = shuffleArray(decoyCandidates).slice(0, remainingChars.length);
+        } else {
+            decoys = decoyCandidates.slice();
+            while (decoys.length < remainingChars.length) {
+                const pick = allChars[Math.floor(Math.random() * allChars.length)];
+                decoys.push(pick);
+            }
+        }
+
+        const pool = shuffleArray(remainingChars.concat(decoys));
+        charGameState.pool = pool;
         charGameState.fillIndex = 0;
     }
 
@@ -842,16 +874,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function placeNextChar(char) {
         if (!charGameState.remainingCells.length) return;
-        const idx = charGameState.remainingCells.findIndex(entry => entry.char === char);
         const hint = document.querySelector('.char-game-hint');
-        if (idx === -1) {
-            if (hint) hint.textContent = '这个字不需要，换一个。';
+        const nextEntry = charGameState.remainingCells[0];
+        if (!nextEntry || nextEntry.char !== char) {
+            if (hint) hint.textContent = '请按顺序点击正确汉字。';
             return;
         }
-        const entry = charGameState.remainingCells[idx];
-        entry.cell.textContent = char;
-        entry.cell.classList.add('filled');
-        charGameState.remainingCells.splice(idx, 1);
+        nextEntry.cell.textContent = char;
+        nextEntry.cell.classList.add('filled');
+        charGameState.remainingCells.shift();
         checkGameCompletion();
     }
 
@@ -906,13 +937,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         el.className = 'char-fall-item';
         el.textContent = char;
 
-        const size = 16 + Math.random() * 10;
-        const x = charGameState.spawnArea.left + Math.random() * (charGameState.spawnArea.width - size);
+        const slotWidth = charGameState.spawnArea.width / 16;
+        const size = Math.max(22, Math.min(32, slotWidth * 0.9));
+        const col = Math.floor(Math.random() * 16);
+        const x = charGameState.spawnArea.left + col * slotWidth + (slotWidth - size) / 2;
         const y = charGameState.spawnArea.top;
         const speed = 30 + Math.random() * 40;
-        const drift = (Math.random() - 0.5) * 10;
+        const drift = 0;
 
-        el.style.fontSize = `${size}px`;
+        el.style.fontSize = `${size * 0.7}px`;
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
         el.style.transform = `translate(${x}px, ${y}px)`;
 
         const item = { el, x, y, speed, drift };

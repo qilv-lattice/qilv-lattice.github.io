@@ -228,12 +228,20 @@ body::before {
     position: absolute;
     font-size: 20px;
     color: #c91f37;
-    opacity: 0.8;
+    opacity: 0.95;
     cursor: pointer;
     user-select: none;
     pointer-events: auto;
     text-shadow: 0 0 6px rgba(217, 58, 73, 0.3);
     z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(201, 31, 55, 0.35);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    touch-action: manipulation;
 }
 
 @media (max-width: 768px) {
@@ -2158,4 +2166,12 @@ header {
         opacity: 1;
         transform: translate(-50%, 0);
     }
+}
+
+/* 临时隐藏所有小喇叭通知（保留注释功能） */
+.update-notice,
+.modification-notice,
+.blessing-notice,
+#announcement-notice {
+    display: none !important;
 }
