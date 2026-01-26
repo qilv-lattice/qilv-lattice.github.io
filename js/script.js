@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // 每5分钟切换一次
-    
+
     // 绑定背景按钮点击事件 (简化版下拉列表)
     const bgBtn = document.getElementById('bg-btn');
     const bgList = document.getElementById('bg-list');
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         // 使用统一的北京时间判断
-        
+
 
         // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
         const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // 使用统一的北京时间判断
-        
+
 
         // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
         const isValid = isWithin24Hours(updateInfo.date);
@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderTOC(filter = currentTocFilter) {
         const tocList = document.getElementById('toc-list');
-        
+
         tocList.innerHTML = '';
         const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
         const activeLatest = latestEntries.filter(entry => isWithin24Hours(entry.receivedAt || updateInfo.date));
@@ -692,9 +692,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (isNewWorkActive || isModifiedWorkActive) {
                 if (isNewWorkActive && isModifiedWorkActive) {
-                    li.classList.add('new-modified-highlight');
-                    // ?? innerHTML ???????????
-                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee</span>`;
+                    li.classList.add('new-work-highlight'); // 优先显示"新"，不再叠加"修"
                 } else if (isNewWorkActive) {
                     li.classList.add('new-work-highlight');
                 } else if (isModifiedWorkActive) {
