@@ -533,6 +533,8 @@ header.char-game-active {
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
     /* 整体上移：原3px -> 0px (配合外部-2px 共上移5px) */
+    /* 用户需求：竖排观赏下再向上平移5px */
+    transform: translateY(-5px);
     padding-top: 0;
 }
 
