@@ -45,7 +45,8 @@
             this.vy = Math.sin(angle) * speed;
 
             this.alpha = 1.0;
-            this.size = Math.random() * 2 + 1;
+            // 粒子尺寸增大 (原 2+1 -> 3+1.5)
+            this.size = Math.random() * 3 + 1.5;
             this.decay = Math.random() * 0.015 + 0.01;
 
             // 闪烁效果 (随机)
@@ -185,7 +186,8 @@
 
     // 爆炸生成粒子 (多模式 + 专属配色)
     function createExplosion(x, y, rocketHue, type = 'circle') {
-        const particleCount = type === 'heart' ? 120 : (type === 'ring' ? 100 : 80);
+        // 粒子数量翻倍 (原 120/100/80 -> 250/200/180)
+        const particleCount = type === 'heart' ? 250 : (type === 'ring' ? 200 : 180);
 
         // 确定基础色
         let baseHue = rocketHue;
@@ -295,21 +297,32 @@
 
     window.triggerFireworks = function () {
         initCanvas();
+
+        // 修复：【立即】发射第一枚，防止loop因队列为空而直接停止
         launchRocket();
+
+        // 后续2枚延迟发射，形成连发感
+        for (let i = 1; i < 3; i++) {
+            setTimeout(() => launchRocket(), i * 200);
+        }
 
         if (!rafId) {
             loop();
         }
 
-        const duration = 5000;
-        const interval = 500;
+        const duration = 8000; // 时长延长至 8-10秒
+        const interval = 400;  // 发射间隔加密 (原500)
         const endTime = Date.now() + duration;
 
         const timer = setInterval(() => {
             if (Date.now() > endTime) {
                 clearInterval(timer);
             } else {
-                launchRocket();
+                // 每次随机发射 1-2 枚
+                const count = Math.random() > 0.5 ? 2 : 1;
+                for (let k = 0; k < count; k++) {
+                    launchRocket();
+                }
             }
         }, interval);
     };
