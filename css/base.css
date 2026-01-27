@@ -1746,10 +1746,10 @@ header.char-game-active {
 /* Serendipity 英文装饰 - 旋转90度 */
 .serendipity-text {
     position: absolute;
-    top: 49px;
-    /* 视觉微调：下移3px (46 -> 49), 手机端最终校准 */
-    right: 24px;
-    /* 靠近一半：原32px -> 24px (更紧凑) */
+    top: 51px;
+    /* 视觉微调：下移2px (49 -> 51) */
+    right: 21px;
+    /* 视觉微调：右移3px (24 -> 21, 更贴近标签) */
     font-family: 'Times New Roman', serif;
     font-size: 10px;
     color: var(--accent-color);

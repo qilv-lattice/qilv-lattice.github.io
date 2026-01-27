@@ -634,3 +634,12 @@ header {
     opacity: 1;
     transform: translateY(-50%) scale(1.1);
 }
+
+/* =========================================
+   桌面端布局保护 (Desktop Protection)
+   ========================================= */
+/* 防止手机端微调影响电脑端 */
+.serendipity-text {
+    top: 45px !important;
+    right: 32px !important;
+}
