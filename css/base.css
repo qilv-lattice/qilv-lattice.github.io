@@ -488,8 +488,8 @@ header.char-game-active {
     max-width: clamp(320px, 75vw, 600px);
     background-color: var(--card-bg);
     border-radius: 4px;
-    /* 非对称内边距：手机端顶部加高 (3.5rem) 以容纳竖排星星，其他方向保持原样 */
-    padding: 3.5rem clamp(0.5rem, 2vw, 2rem) clamp(1rem, 3vw, 2rem);
+    /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
+    padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 2rem);
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
@@ -497,13 +497,6 @@ header.char-game-active {
     position: relative;
     /* 3D 翻页效果透视 */
     perspective: 1000px;
-}
-
-/* 桌面端/平板：恢复原有的内边距 */
-@media screen and (min-width: 768px) {
-    .poem-content {
-        padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 2rem);
-    }
 }
 
 /* 鎵嬫満/榛樿: 闅愯棌宸﹀彸鍓崱 */
@@ -1866,10 +1859,9 @@ header.char-game-active {
 /* 五星红旗装饰 - 逆风专用 */
 .five-stars-row {
     position: absolute;
-    /* 移动端默认：竖向排列 (位于梅花下方) */
-    top: 50px;
-    left: 8px;
-    /* 与梅花左对齐(梅花left:10px, 宽度20, 中心约20; 星星宽20, left 8微调视觉居中) */
+    top: 24px;
+    left: 40px;
+    /* Plum width 20 + left 10 + gap 10 */
     display: flex;
     align-items: center;
     gap: 2px;
@@ -1877,14 +1869,6 @@ header.char-game-active {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
-}
-
-/* 桌面端：横向排列 (位于梅花右侧) */
-@media screen and (min-width: 768px) {
-    .five-stars-row {
-        top: 24px;
-        left: 40px;
-    }
 }
 
 .five-stars-row.show-stars {
