@@ -526,9 +526,10 @@ header.char-game-active {
     margin: 0 auto;
     /* 响应式最小高度 */
     /* 响应式最小高度 */
-    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 减5px = 475px) */
+    /* 响应式最小高度 */
+    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 累减10px = 470px) */
     /* 这样无论是横排还是竖排，卡片外框都保持高度一致，不会跳动 */
-    min-height: clamp(475px, 60vw, 515px);
+    min-height: clamp(470px, 60vw, 510px);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
     /* 整体下移 2个红蓝线距离 (8px) */
