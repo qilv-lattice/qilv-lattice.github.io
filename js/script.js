@@ -1461,7 +1461,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
             const targetY = targetMin + Math.random() * (targetMax - targetMin);
-            const startX = width * (0.4 + Math.random() * 0.2);
+            const jitter = width < 520 ? width * 0.04 : width * 0.08;
+            const startX = width * 0.5 + (Math.random() - 0.5) * jitter;
             rockets.push({
                 x: startX,
                 y: height + 20,
@@ -1809,17 +1810,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     function applyViewMode(mode) {
         const btn = document.getElementById('viewmode-btn');
         const viewModeGroup = document.getElementById('viewmode-branch-group');
+        const viewModeWrapper = document.querySelector('.viewmode-btn-wrapper');
         const isSingle = mode === 'single';
 
         if (!isDesktopLayout()) {
             document.body.classList.remove('view-mode-single');
             if (btn) btn.style.display = 'none';
             if (viewModeGroup) viewModeGroup.style.display = 'none';
+            if (viewModeWrapper) viewModeWrapper.style.display = 'none';
             return;
         }
 
         if (btn) btn.style.display = '';
         if (viewModeGroup) viewModeGroup.style.display = '';
+        if (viewModeWrapper) viewModeWrapper.style.display = '';
         initThreeCardLayout();
         document.body.classList.toggle('view-mode-single', isSingle);
 
