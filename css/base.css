@@ -493,8 +493,8 @@ header.char-game-active {
     border-radius: 4px;
     /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
     padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
-    /* 用户需求：顶部额外增加 20px 空间，让梅花/星星更舒展 */
-    padding-top: calc(var(--card-vertical-padding) + 20px);
+    /* 用户需求：顶部额外增加 20px->18px 空间 (配合内部调整共上移正文) */
+    padding-top: calc(var(--card-vertical-padding) + 18px);
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
@@ -527,13 +527,13 @@ header.char-game-active {
     /* 响应式最小高度 */
     /* 响应式最小高度 */
     /* 响应式最小高度 */
-    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 累减15px = 465px) */
+    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 累减20px = 460px) */
     /* 这样无论是横排还是竖排，卡片外框都保持高度一致，不会跳动 */
-    min-height: clamp(465px, 60vw, 505px);
+    min-height: clamp(460px, 60vw, 500px);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
-    /* 整体上移5px：原8px -> 3px (仅平移正文) */
-    padding-top: 3px;
+    /* 整体上移：原3px -> 0px (配合外部-2px 共上移5px) */
+    padding-top: 0;
 }
 
 /* 水墨晕染动画状态（保留备用） */
