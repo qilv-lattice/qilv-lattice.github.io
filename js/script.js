@@ -3,6 +3,7 @@ let currentIndex = 0;
 let wingDisplayMode = localStorage.getItem('wingDisplayMode') || 'sync';
 let lastWingIndices = { left: null, right: null };
 let lastFireworkAt = 0;
+let fireworksState = null;
 let wingRandomizeOnNextSync = true;
 
 // 全局关闭雪花特效
@@ -1404,81 +1405,176 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (now - lastFireworkAt < 1200) return;
         lastFireworkAt = now;
 
-        const existing = document.getElementById('fireworks-canvas');
-        if (existing) existing.remove();
+        if (fireworksState && fireworksState.stop) {
+            fireworksState.stop();
+        }
 
         const canvas = document.createElement('canvas');
         canvas.id = 'fireworks-canvas';
-        canvas.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:5;';
+        canvas.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:6;';
         document.body.appendChild(canvas);
 
         const ctx = canvas.getContext('2d');
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        const dpr = window.devicePixelRatio || 1;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        const resize = () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        };
+        resize();
+
+        const rocketPalette = [
+            { r: 255, g: 80, b: 80 },
+            { r: 255, g: 205, b: 70 },
+            { r: 80, g: 170, b: 255 },
+            { r: 90, g: 230, b: 140 }
+        ];
+        const burstPalette = [
+            { r: 255, g: 80, b: 80 },
+            { r: 255, g: 205, b: 70 },
+            { r: 80, g: 170, b: 255 },
+            { r: 90, g: 230, b: 140 },
+            { r: 255, g: 120, b: 230 },
+            { r: 255, g: 150, b: 70 },
+            { r: 210, g: 230, b: 255 }
+        ];
+        const pickRocketColor = () => rocketPalette[Math.floor(Math.random() * rocketPalette.length)];
+        const pickBurstColor = () => burstPalette[Math.floor(Math.random() * burstPalette.length)];
 
         const particles = [];
-        const burst = (x, y, color) => {
-            const count = 28;
+        const rockets = [];
+
+        const spawnRocket = () => {
+            const header = document.querySelector('header');
+            let targetMin = height * 0.18;
+            let targetMax = height * 0.32;
+            if (header) {
+                const rect = header.getBoundingClientRect();
+                if (rect.height > 10) {
+                    targetMin = Math.max(60, rect.top);
+                    targetMax = Math.max(targetMin + 20, rect.bottom);
+                }
+            }
+            const targetY = targetMin + Math.random() * (targetMax - targetMin);
+            const startX = width * (0.4 + Math.random() * 0.2);
+            rockets.push({
+                x: startX,
+                y: height + 20,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: -(7.6 + Math.random() * 2.2),
+                targetY,
+                color: pickRocketColor()
+            });
+        };
+
+        const explode = (x, y) => {
+            const count = 200;
             for (let i = 0; i < count; i += 1) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = 1.5 + Math.random() * 2.5;
+                const speed = 1.4 + Math.random() * 4.8;
                 particles.push({
                     x,
                     y,
                     vx: Math.cos(angle) * speed,
                     vy: Math.sin(angle) * speed,
                     life: 1,
-                    decay: 0.015 + Math.random() * 0.02,
-                    color
+                    decay: 0.01 + Math.random() * 0.02,
+                    size: 2 + Math.random() * 2,
+                    color: pickBurstColor()
                 });
             }
         };
 
-        const randomColor = () => {
-            const hue = Math.floor(Math.random() * 360);
-            return `hsla(${hue}, 85%, 60%, 0.9)`;
+        const addTrail = (rocket) => {
+            for (let i = 0; i < 4; i += 1) {
+                particles.push({
+                    x: rocket.x + (Math.random() - 0.5) * 2,
+                    y: rocket.y + Math.random() * 12,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: 0.5 + Math.random() * 0.7,
+                    life: 0.7,
+                    decay: 0.05 + Math.random() * 0.05,
+                    size: 1.8 + Math.random() * 1,
+                    color: rocket.color
+                });
+            }
         };
-
-        burst(width * 0.3, height * 0.25, 'rgba(201,31,55,0.9)');
-        burst(width * 0.7, height * 0.22, 'rgba(26,85,153,0.9)');
-        burst(width * 0.5, height * 0.3, randomColor());
 
         const start = performance.now();
-        const duration = 5000;
-        let lastBurstTime = start;
+        const duration = 10000;
+        let lastRocketTime = start - 1200;
 
+        spawnRocket();
+
+        let rafId = null;
         const tick = (time) => {
             const elapsed = time - start;
-            if (time - lastBurstTime > 650) {
-                burst(width * (0.2 + Math.random() * 0.6), height * (0.18 + Math.random() * 0.35), randomColor());
-                lastBurstTime = time;
-            }
             ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy + 0.02;
-                p.life -= p.decay;
-                if (p.life > 0) {
-                    const alpha = Math.max(0, p.life).toFixed(2);
-                    ctx.fillStyle = p.color.replace('0.9', alpha);
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
+            ctx.globalCompositeOperation = 'lighter';
 
-            if (elapsed < duration) {
-                requestAnimationFrame(tick);
+            if (elapsed < duration && time - lastRocketTime > 900) {
+                spawnRocket();
+                lastRocketTime = time;
+            }
+
+            for (let i = rockets.length - 1; i >= 0; i -= 1) {
+                const rocket = rockets[i];
+                rocket.vy += 0.035;
+                rocket.x += rocket.vx;
+                rocket.y += rocket.vy;
+                addTrail(rocket);
+
+                ctx.fillStyle = `rgba(${rocket.color.r},${rocket.color.g},${rocket.color.b},0.95)`;
+                ctx.beginPath();
+                ctx.arc(rocket.x, rocket.y, 3.4, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (rocket.y <= rocket.targetY || rocket.vy > -1) {
+                    explode(rocket.x, rocket.y);
+                    rockets.splice(i, 1);
+                }
+            }
+
+            for (let i = particles.length - 1; i >= 0; i -= 1) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.04;
+                p.life -= p.decay;
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+                const alpha = Math.max(0, p.life);
+                ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${alpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            if (elapsed < duration || particles.length || rockets.length) {
+                rafId = requestAnimationFrame(tick);
             } else {
                 canvas.remove();
+                fireworksState = null;
             }
         };
 
-        requestAnimationFrame(tick);
-    }
+        rafId = requestAnimationFrame(tick);
 
+        fireworksState = {
+            stop() {
+                if (rafId) cancelAnimationFrame(rafId);
+                canvas.remove();
+                fireworksState = null;
+            }
+        };
+    }
     function maybeTriggerFireworks() {
         if (wingDisplayMode !== 'random') return;
         if (!isDesktopLayout()) return;
