@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=20260127-release" as="style">
-    <link rel="preload" href="js/script.js?v=20260127-release" as="script">
+    <link rel="preload" href="css/base.css?v=serendipity-add" as="style">
+    <link rel="preload" href="js/script.js?v=serendipity-add" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260127-release">
+    <link rel="stylesheet" href="css/base.css?v=serendipity-add">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=20260127-release"
+    <link rel="stylesheet" href="css/desktop.css?v=serendipity-add"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -248,6 +248,9 @@
                     <circle cx="60" cy="20" r="2" fill="#d48888" opacity="0.5" />
                 </svg>
 
+                <!-- 新增：Serendipity 英文装饰 -->
+                <div class="serendipity-text">Serendipity</div>
+
                 <!-- 理工浪漫标签 -->
                 <div class="tech-romance-tag" id="tech-romance-tag">专属理工的极致浪漫</div>
 
@@ -377,9 +380,14 @@
         <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
     </div>
 
+    <!-- 调试标志：版本锁 -->
+    <div style="position: fixed; bottom: 5px; right: 5px; font-size: 10px; color: #ccc; opacity: 0.5; z-index: 9999;">
+        v:Serendipity
+    </div>
+
     <!-- 核心逻辑 -->
-    <script src="js/fireworks.js?v=fireworks-ProFix"></script>
-    <script src="js/script.js?v=20260127-release"></script>
+    <script src="js/fireworks.js?v=serendipity-add"></script>
+    <script src="js/script.js?v=serendipity-add"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 

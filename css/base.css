@@ -1743,6 +1743,26 @@ header.char-game-active {
     display: flex;
 }
 
+/* Serendipity 英文装饰 - 旋转90度 */
+.serendipity-text {
+    position: absolute;
+    top: 45px;
+    right: 32px;
+    /* 紧挨着"专属理工..."标签左侧 (标签在 right:15px) */
+    font-family: 'Times New Roman', serif;
+    font-size: 10px;
+    color: var(--accent-color);
+    /* 跟随主题色(红) */
+    opacity: 0.6;
+    transform: rotate(90deg);
+    transform-origin: center;
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 5;
+    font-style: italic;
+    /* 斜体更浪漫 */
+}
+
 /* 理工浪漫标签 - 竖排文字 */
 .tech-romance-tag {
     position: absolute;
