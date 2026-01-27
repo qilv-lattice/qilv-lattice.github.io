@@ -589,7 +589,8 @@ header.char-game-active {
     font-family: var(--font-title);
     /* 手机1.6rem → iPad1.9rem → 桌面2.4rem */
     font-size: clamp(1.6rem, 4vw, 2.4rem);
-    margin: 0 0 0 0.5rem;
+    /* 减少4px间距：原 0.5rem -> 0.25rem */
+    margin: 0 0 0 0.25rem;
     /* 强制缩小间距测试 */
     letter-spacing: 2px;
 }
