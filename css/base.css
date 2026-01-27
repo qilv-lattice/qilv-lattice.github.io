@@ -527,13 +527,13 @@ header.char-game-active {
     /* 响应式最小高度 */
     /* 响应式最小高度 */
     /* 响应式最小高度 */
-    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 累减10px = 470px) */
+    /* 响应式最小高度 - 统一定为竖排模式的大高度 (原480px -> 累减15px = 465px) */
     /* 这样无论是横排还是竖排，卡片外框都保持高度一致，不会跳动 */
-    min-height: clamp(470px, 60vw, 510px);
+    min-height: clamp(465px, 60vw, 505px);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
-    /* 整体下移 2个红蓝线距离 (8px) */
-    padding-top: 8px;
+    /* 整体上移5px：原8px -> 3px (仅平移正文) */
+    padding-top: 3px;
 }
 
 /* 水墨晕染动画状态（保留备用） */
