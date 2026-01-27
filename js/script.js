@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelectorAll('.snowflake').forEach(node => node.remove());
         initThreeCardLayout();
         updateWingDisplayButton();
+        initViewModeMenu();
 
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
@@ -1263,10 +1264,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     function updateWingDisplayButton() {
-        const btn = document.getElementById('voice-btn');
-        if (!btn) return;
-        btn.innerHTML = wingDisplayMode === 'random' ? '随机<br>展示' : '同步<br>展示';
-        btn.classList.toggle('active-mode', wingDisplayMode === 'random');
+        const group = document.getElementById('viewmode-branch-group');
+        if (!group) return;
+        group.querySelectorAll('.branch-item').forEach(item => {
+            item.classList.toggle('active', item.dataset.mode === wingDisplayMode);
+        });
     }
 
     function setWingDisplayMode(mode, options = {}) {
@@ -1278,6 +1280,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (persist) localStorage.setItem('wingDisplayMode', wingDisplayMode);
         updateWingDisplayButton();
         syncWingCards();
+    }
+
+    let viewModeMenuTimer = null;
+
+    function openViewModeMenu() {
+        const group = document.getElementById('viewmode-branch-group');
+        if (!group) return;
+        group.classList.add('show');
+        clearTimeout(viewModeMenuTimer);
+        viewModeMenuTimer = setTimeout(() => {
+            if (!group.classList.contains('show')) return;
+            setWingDisplayMode('random');
+            closeViewModeMenu();
+        }, 5000);
+    }
+
+    function closeViewModeMenu() {
+        const group = document.getElementById('viewmode-branch-group');
+        if (!group) return;
+        group.classList.remove('show');
+        clearTimeout(viewModeMenuTimer);
+    }
+
+    function initViewModeMenu() {
+        const group = document.getElementById('viewmode-branch-group');
+        if (!group) return;
+        group.querySelectorAll('.branch-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const mode = btn.dataset.mode || 'random';
+                setWingDisplayMode(mode);
+                closeViewModeMenu();
+            });
+        });
     }
 
     function selectRandomWingIndices() {
@@ -1598,11 +1634,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const noteBtn = document.getElementById('note-btn');
         const musicControl = document.getElementById('music-control');
         const sealBtn = document.getElementById('seal-btn');
+        const viewModeGroup = document.getElementById('viewmode-branch-group');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
         if (musicControl) musicControl.classList.toggle('blue-mode');
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
+        if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
@@ -1623,15 +1661,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function applyViewMode(mode) {
         const btn = document.getElementById('viewmode-btn');
+        const viewModeGroup = document.getElementById('viewmode-branch-group');
         const isSingle = mode === 'single';
 
         if (!isDesktopLayout()) {
             document.body.classList.remove('view-mode-single');
             if (btn) btn.style.display = 'none';
+            if (viewModeGroup) viewModeGroup.style.display = 'none';
             return;
         }
 
         if (btn) btn.style.display = '';
+        if (viewModeGroup) viewModeGroup.style.display = '';
         initThreeCardLayout();
         document.body.classList.toggle('view-mode-single', isSingle);
 
@@ -1646,9 +1687,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     function toggleViewMode() {
         viewMode = viewMode === 'triple' ? 'single' : 'triple';
         applyViewMode(viewMode);
+        if (viewMode === 'triple') {
+            openViewModeMenu();
+        } else {
+            closeViewModeMenu();
+        }
     }
 
-    // 随机/同步展示切换
+    // 随机/同步展示切换（保留兼容）
     function toggleVoice() {
         const nextMode = wingDisplayMode === 'random' ? 'sync' : 'random';
         setWingDisplayMode(nextMode);
@@ -2104,7 +2150,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);

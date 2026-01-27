@@ -1178,6 +1178,17 @@ header.char-game-active {
     transform: scale(0.95);
 }
 
+/* 三卡/单卡二级菜单的蓝色模式 */
+.viewmode-branch-group.blue-mode .branch-btn {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.viewmode-branch-group.blue-mode .branch-btn:hover,
+.viewmode-branch-group.blue-mode .branch-item.active .branch-btn {
+    box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
+}
+
 /* 三级子菜单 (具体背景列表) */
 .sub-list {
     position: absolute;

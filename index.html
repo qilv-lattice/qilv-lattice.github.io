@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=20260126-settings-hold1" as="style">
-    <link rel="preload" href="js/script.js?v=20260126-settings-hold1" as="script">
+    <link rel="preload" href="css/base.css?v=20260127-viewmode-menu2" as="style">
+    <link rel="preload" href="js/script.js?v=20260127-viewmode-menu2" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=20260126-settings-hold1">
+    <link rel="stylesheet" href="css/base.css?v=20260127-viewmode-menu2">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=20260126-settings-hold1"
+    <link rel="stylesheet" href="css/desktop.css?v=20260127-viewmode-menu2"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -72,9 +72,6 @@
 
     <!-- 挂件控制组 -->
     <div class="music-wrapper">
-        <!-- 随机/同步展示按钮 -->
-        <button id="voice-btn" class="widget-btn" onclick="toggleVoice()">同步<br>展示</button>
-
         <!-- 名录按钮（移到最前面） -->
         <button id="toc-btn" class="widget-btn" onclick="toggleTOC()">作品<br>名录</button>
 
@@ -105,8 +102,18 @@
         <!-- 排版模式切换 -->
         <button id="mode-btn" onclick="toggleMode()">竖排<br>观赏</button>
 
-        <!-- 三卡/单卡展示切换 -->
-        <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">三卡<br>展示</button>
+        <!-- 三卡/单卡展示切换 + 二级随机/同步 -->
+        <div class="music-btn-wrapper viewmode-btn-wrapper">
+            <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">三卡<br>展示</button>
+            <div id="viewmode-branch-group" class="music-branch-group viewmode-branch-group">
+                <div class="branch-item" data-mode="random">
+                    <button class="branch-btn" data-mode="random">随机</button>
+                </div>
+                <div class="branch-item" data-mode="sync">
+                    <button class="branch-btn" data-mode="sync">同步</button>
+                </div>
+            </div>
+        </div>
 
         <!-- 深色/浅色模式切换 -->
         <!-- 云笺模式选择（带下拉列表） -->
@@ -333,7 +340,7 @@
     </div>
 
     <!-- 核心逻辑 -->
-    <script src="js/script.js?v=20260126-settings-hold1"></script>
+    <script src="js/script.js?v=20260127-viewmode-menu2"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 
