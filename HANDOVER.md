@@ -22,7 +22,9 @@
 3.  **技术实现**:
     - HTML: `index.html` 中新增 `.five-stars-row` 容器，内嵌 SVG (使用 `fill="currentColor"` 实现动态变色)。
     - CSS: `css/base.css` 定义定位和过渡效果。
-    - JS: `script.js` 中的 `renderPoem` (主卡) 和 `renderPoemIntoCard` (侧翼) 均集成了变色逻辑。
+4.  **移动端适配优化 (Mobile Optimization)**:
+    - **布局调整**: 在手机端，五星装饰强制改为**竖向排列** (Vertical Stack)，位于梅花图标下方 (`top: 50px`)，避免挤占标题空间。桌面端保持横向并排。
+    - **卡片加高**: 为容纳竖排装饰，手机端卡片顶部内边距 (`padding-top`) 增至 `3.5rem` (约 56px)。
 
 ### 🎆 烟花系统升级 (v1.3 - Previously)
 1.  **物理引擎**: 引入重力与阻力，模拟真实轨迹。
