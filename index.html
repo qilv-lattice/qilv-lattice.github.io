@@ -23,16 +23,16 @@
         rel="stylesheet">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=release-busuanzi-fix" as="style">
-    <link rel="preload" href="js/script.js?v=release-busuanzi-fix" as="script">
+    <link rel="preload" href="css/base.css?v=rollback-clean" as="style">
+    <link rel="preload" href="js/script.js?v=rollback-clean" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=release-busuanzi-fix">
+    <link rel="stylesheet" href="css/base.css?v=rollback-clean">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=release-busuanzi-fix"
+    <link rel="stylesheet" href="css/desktop.css?v=rollback-clean"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
@@ -248,8 +248,7 @@
                     <circle cx="60" cy="20" r="2" fill="#d48888" opacity="0.5" />
                 </svg>
 
-                <!-- 新增：Serendipity 英文装饰 -->
-                <div class="serendipity-text">Serendipity</div>
+
 
                 <!-- 理工浪漫标签 -->
                 <div class="tech-romance-tag" id="tech-romance-tag">专属理工的极致浪漫</div>
@@ -375,9 +374,15 @@
 
     <!-- 不蒜子统计 (隐藏) -->
     <!-- 脚本移至 script.js 动态加载，以排除管理员访问 -->
+    <div id="busuanzi_stats" style="text-align: center; font-size: 12px; color: #999; margin-top: 10px; opacity: 0.8;">
+        <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv"></span> 人</span>
+        <span style="margin: 0 5px;">|</span>
+        <span id="busuanzi_container_site_pv">访问 <span id="busuanzi_value_site_pv"></span> 次</span>
+    </div>
+
     <!-- 核心逻辑 -->
-    <script src="js/fireworks.js?v=release-busuanzi-fix"></script>
-    <script src="js/script.js?v=release-busuanzi-fix"></script>
+    <script src="js/fireworks.js?v=rollback-clean"></script>
+    <script src="js/script.js?v=rollback-clean"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 
