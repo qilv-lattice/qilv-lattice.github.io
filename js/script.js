@@ -1400,9 +1400,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
-            techRomanceTag.style.display = 'block';
             const tagText = poem.techRomance ? '专属理工极致浪漫' : '专属斯人心灵浪漫';
             techRomanceTag.innerHTML = tagText;
+        }
+
+        // 五星装饰显示逻辑
+        const fiveStars = card.querySelector('.five-stars-row');
+        if (fiveStars) {
+            fiveStars.classList.add('show-stars'); // 默认始终显示
+            if (['七律·逆风', '《七律·逆风》'].some(t => poem.title.includes(t)) || poem.title.includes('逆风')) {
+                fiveStars.style.color = '#DE2910'; // China Red
+            } else if (['七律·灵犀', '《七律·灵犀》'].some(t => poem.title.includes(t)) || poem.title.includes('灵犀')) {
+                fiveStars.style.color = '#1E90FF'; // Dodger Blue
+            } else {
+                fiveStars.style.color = '#CCCCCC'; // Default Gray
+            }
         }
     }
 
@@ -1563,14 +1575,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
 
-            // 理工浪漫标签显示逻辑: 
-            // 每一个作品都显示装饰线
-            // techRomance 为 true 显示 "专属理工极致浪漫"，否则显示 "专属传统时代浪漫"
+            // 理工浪漫标签显示逻辑
             const techRomanceTag = mainCard.querySelector('#tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
                 const tagText = poem.techRomance ? '专属理工极致浪漫' : '专属斯人心灵浪漫';
                 techRomanceTag.innerHTML = tagText;
+            }
+
+            // 五星装饰显示逻辑 ("逆风"红星，"灵犀"蓝星，其他默认灰星)
+            const fiveStars = mainCard.querySelector('.five-stars-row');
+            if (fiveStars) {
+                fiveStars.classList.add('show-stars'); // 默认始终显示
+                if (poem.title.includes('逆风')) {
+                    fiveStars.style.color = '#DE2910'; // China Red
+                } else if (poem.title.includes('灵犀')) {
+                    fiveStars.style.color = '#1E90FF'; // Dodger Blue
+                } else {
+                    fiveStars.style.color = '#CCCCCC'; // Default Gray
+                }
             }
 
             // 智能注释提醒逻辑已移除

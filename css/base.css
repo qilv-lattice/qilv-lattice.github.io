@@ -252,9 +252,11 @@ body::before {
     0% {
         transform: scale(1);
     }
+
     60% {
         transform: scale(1.18);
     }
+
     100% {
         transform: scale(1);
     }
@@ -1851,13 +1853,26 @@ header.char-game-active {
     position: absolute;
     top: 125px;
     /* 141px (线长) - 15px (上偏移) - 些许重叠 */
-    right: -6px;
-    /* 居中于红线 (红线宽2px, 图片宽约14px, right 0) -> right: -(14-2)/2 = -6 */
-    width: 14px;
-    height: auto;
-    opacity: 0.9;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.1));
     transform: rotate(15deg);
+}
+
+/* 五星红旗装饰 - 逆风专用 */
+.five-stars-row {
+    position: absolute;
+    top: 24px;
+    left: 40px;
+    /* Plum width 20 + left 10 + gap 10 */
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.five-stars-row.show-stars {
+    opacity: 1;
 }
 
 /* 印章在移动端显示 - 位置与桌面端一致 */
