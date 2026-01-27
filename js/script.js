@@ -1265,6 +1265,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
+
+    function measureVerticalCardHeight(card) {
+        const clone = card.cloneNode(true);
+        clone.classList.remove('horizontal-mode');
+        clone.style.position = 'absolute';
+        clone.style.visibility = 'hidden';
+        clone.style.pointerEvents = 'none';
+        clone.style.left = '-9999px';
+        clone.style.top = '0';
+        clone.style.height = 'auto';
+        clone.style.minHeight = '0';
+        document.body.appendChild(clone);
+        const height = clone.getBoundingClientRect().height;
+        clone.remove();
+        return height;
+    }
+
+    function lockMobileCardHeight() {
+        if (window.innerWidth > 1023) return;
+        const card = getMainCard();
+        if (!card) return;
+        const height = measureVerticalCardHeight(card);
+        if (height > 0) {
+            card.dataset.verticalHeight = String(height);
+            card.style.minHeight = `${height}px`;
+        }
+    }
+
     function updateWingDisplayButton() {
         const group = document.getElementById('viewmode-branch-group');
         if (!group) return;
@@ -1281,6 +1309,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         if (persist) localStorage.setItem('wingDisplayMode', wingDisplayMode);
         updateWingDisplayButton();
+        lockMobileCardHeight();
         syncWingCards();
     }
 
@@ -1603,6 +1632,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             textContainer.classList.remove('page-flip-out');
             textContainer.classList.add('page-flip-in');
 
+            lockMobileCardHeight();
             wingRandomizeOnNextSync = true;
             syncWingCards();
         }, 400);
@@ -1677,6 +1707,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.innerHTML = "竖排<br>观赏"; // 当前是竖排
         }
 
+        lockMobileCardHeight();
         syncWingCards();
     }
 
