@@ -1461,8 +1461,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
             const targetY = targetMin + Math.random() * (targetMax - targetMin);
-            const jitter = width < 520 ? width * 0.04 : width * 0.08;
-            const startX = width * 0.5 + (Math.random() - 0.5) * jitter;
+            const viewport = window.visualViewport;
+            const viewLeft = viewport ? viewport.offsetLeft : 0;
+            const viewWidth = viewport ? viewport.width : width;
+            const baseCenterX = viewLeft + viewWidth * 0.5;
+            const jitter = width < 520 ? 0 : width * 0.06;
+            const startX = baseCenterX + (Math.random() - 0.5) * jitter;
             rockets.push({
                 x: startX,
                 y: height + 20,
