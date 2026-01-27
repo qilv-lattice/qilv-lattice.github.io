@@ -1357,7 +1357,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (window.toggleCharGame) window.toggleCharGame(true);
                 }
                 if (action === 'fireworks') {
-                    triggerFireworks();
+                    console.log("Click: Fireworks button pressed.");
+                    if (typeof window.triggerFireworks === 'function') {
+                        window.triggerFireworks();
+                    } else {
+                        console.error("Error: window.triggerFireworks is not defined!");
+                        alert("烟花组件尚未加载完成，请稍后再试。");
+                    }
                 }
                 closeEntertainmentMenu();
             });
@@ -1400,186 +1406,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Old fireworks implementation removed to avoid conflict with js/fireworks.js
+
+    // Making it a no-op that delegates to the global one if possible, 
+    // but since we are modifying the source, let's just remove the function body 
+    // and let the global one from fireworks.js take over. 
+    // However, if script.js defines `function triggerFireworks() {}` at top level, it might override window.triggerFireworks.
+    // Let's check if script.js is wrapped. 
+    // Looking at the view_file output, it seems to be inside `document.addEventListener('DOMContentLoaded', ...)` or similar?
+    // Actually, looking at line 1 in previous turns, script.js seems to be a big file.
+    // If it's a function declaration `function triggerFireworks()`, it hoists.
+    // If I delete it, the call sites `triggerFireworks()` will look for the global one.
+    // So DELETING it or Commenting it out is the right move.
+
+    // To be safe and clean, I will comment it out by wrapping it in /* */ 
+    // AND I will check if there are other references that need update.
+    // wait, `maybeTriggerFireworks` calls `triggerFireworks()`.
+    // If I comment out the local definition, `triggerFireworks()` will resolve to `window.triggerFireworks`.
+
+    /* 
     function triggerFireworks() {
-        const now = Date.now();
-        if (now - lastFireworkAt < 1200) return;
-        lastFireworkAt = now;
-
-        if (fireworksState && fireworksState.stop) {
-            fireworksState.stop();
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.id = 'fireworks-canvas';
-        canvas.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:6;';
-        document.body.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-        const dpr = window.devicePixelRatio || 1;
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-        const resize = () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = Math.floor(width * dpr);
-            canvas.height = Math.floor(height * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        };
-        resize();
-
-        const rocketPalette = [
-            { r: 255, g: 80, b: 80 },
-            { r: 255, g: 205, b: 70 },
-            { r: 80, g: 170, b: 255 },
-            { r: 90, g: 230, b: 140 }
-        ];
-        const burstPalette = [
-            { r: 255, g: 80, b: 80 },
-            { r: 255, g: 205, b: 70 },
-            { r: 80, g: 170, b: 255 },
-            { r: 90, g: 230, b: 140 },
-            { r: 255, g: 120, b: 230 },
-            { r: 255, g: 150, b: 70 },
-            { r: 210, g: 230, b: 255 }
-        ];
-        const pickRocketColor = () => rocketPalette[Math.floor(Math.random() * rocketPalette.length)];
-        const pickBurstColor = () => burstPalette[Math.floor(Math.random() * burstPalette.length)];
-
-        const particles = [];
-        const rockets = [];
-
-        const spawnRocket = () => {
-            const header = document.querySelector('header');
-            let targetMin = height * 0.18;
-            let targetMax = height * 0.32;
-            if (header) {
-                const rect = header.getBoundingClientRect();
-                if (rect.height > 10) {
-                    targetMin = Math.max(60, rect.top);
-                    targetMax = Math.max(targetMin + 20, rect.bottom);
-                }
-            }
-            const targetY = targetMin + Math.random() * (targetMax - targetMin);
-            const viewport = window.visualViewport;
-            const viewLeft = viewport ? viewport.offsetLeft : 0;
-            const viewWidth = viewport ? viewport.width : width;
-            const baseCenterX = viewLeft + viewWidth * 0.5;
-            const jitter = width < 520 ? 0 : width * 0.06;
-            const startX = baseCenterX + (Math.random() - 0.5) * jitter;
-            rockets.push({
-                x: startX,
-                y: height + 20,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: -(7.6 + Math.random() * 2.2),
-                targetY,
-                color: pickRocketColor()
-            });
-        };
-
-        const explode = (x, y) => {
-            const count = 200;
-            for (let i = 0; i < count; i += 1) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = 1.4 + Math.random() * 4.8;
-                particles.push({
-                    x,
-                    y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed,
-                    life: 1,
-                    decay: 0.01 + Math.random() * 0.02,
-                    size: 2 + Math.random() * 2,
-                    color: pickBurstColor()
-                });
-            }
-        };
-
-        const addTrail = (rocket) => {
-            for (let i = 0; i < 4; i += 1) {
-                particles.push({
-                    x: rocket.x + (Math.random() - 0.5) * 2,
-                    y: rocket.y + Math.random() * 12,
-                    vx: (Math.random() - 0.5) * 0.35,
-                    vy: 0.5 + Math.random() * 0.7,
-                    life: 0.7,
-                    decay: 0.05 + Math.random() * 0.05,
-                    size: 1.8 + Math.random() * 1,
-                    color: rocket.color
-                });
-            }
-        };
-
-        const start = performance.now();
-        const duration = 10000;
-        let lastRocketTime = start - 1200;
-
-        spawnRocket();
-
-        let rafId = null;
-        const tick = (time) => {
-            const elapsed = time - start;
-            ctx.clearRect(0, 0, width, height);
-            ctx.globalCompositeOperation = 'lighter';
-
-            if (elapsed < duration && time - lastRocketTime > 900) {
-                spawnRocket();
-                lastRocketTime = time;
-            }
-
-            for (let i = rockets.length - 1; i >= 0; i -= 1) {
-                const rocket = rockets[i];
-                rocket.vy += 0.035;
-                rocket.x += rocket.vx;
-                rocket.y += rocket.vy;
-                addTrail(rocket);
-
-                ctx.fillStyle = `rgba(${rocket.color.r},${rocket.color.g},${rocket.color.b},0.95)`;
-                ctx.beginPath();
-                ctx.arc(rocket.x, rocket.y, 3.4, 0, Math.PI * 2);
-                ctx.fill();
-
-                if (rocket.y <= rocket.targetY || rocket.vy > -1) {
-                    explode(rocket.x, rocket.y);
-                    rockets.splice(i, 1);
-                }
-            }
-
-            for (let i = particles.length - 1; i >= 0; i -= 1) {
-                const p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.04;
-                p.life -= p.decay;
-                if (p.life <= 0) {
-                    particles.splice(i, 1);
-                    continue;
-                }
-                const alpha = Math.max(0, p.life);
-                ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${alpha})`;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            if (elapsed < duration || particles.length || rockets.length) {
-                rafId = requestAnimationFrame(tick);
-            } else {
-                canvas.remove();
-                fireworksState = null;
-            }
-        };
-
-        rafId = requestAnimationFrame(tick);
-
-        fireworksState = {
-            stop() {
-                if (rafId) cancelAnimationFrame(rafId);
-                canvas.remove();
-                fireworksState = null;
-            }
-        };
-    }
+      // Disabled in favor of js/fireworks.js
+    } 
+    */
     function maybeTriggerFireworks() {
         if (wingDisplayMode !== 'random') return;
         if (!isDesktopLayout()) return;
