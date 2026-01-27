@@ -1189,6 +1189,16 @@ header.char-game-active {
     box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
 }
 
+.entertainment-branch-group.blue-mode .branch-btn {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.entertainment-branch-group.blue-mode .branch-btn:hover,
+.entertainment-branch-group.blue-mode .branch-item.active .branch-btn {
+    box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
+}
+
 /* 三级子菜单 (具体背景列表) */
 .sub-list {
     position: absolute;

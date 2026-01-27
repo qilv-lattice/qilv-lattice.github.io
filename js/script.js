@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         initThreeCardLayout();
         updateWingDisplayButton();
         initViewModeMenu();
+        initEntertainmentMenu();
 
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
@@ -1283,6 +1284,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     let viewModeMenuTimer = null;
+    let entertainmentMenuTimer = null;
 
     function openViewModeMenu() {
         const group = document.getElementById('viewmode-branch-group');
@@ -1312,6 +1314,51 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const mode = btn.dataset.mode || 'random';
                 setWingDisplayMode(mode);
                 closeViewModeMenu();
+            });
+        });
+    }
+
+    function openEntertainmentMenu() {
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.classList.add('show');
+        clearTimeout(entertainmentMenuTimer);
+        entertainmentMenuTimer = setTimeout(() => {
+            closeEntertainmentMenu();
+        }, 5000);
+    }
+
+    function closeEntertainmentMenu() {
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.classList.remove('show');
+        clearTimeout(entertainmentMenuTimer);
+    }
+
+    function toggleEntertainmentMenu() {
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        if (group.classList.contains('show')) {
+            closeEntertainmentMenu();
+        } else {
+            openEntertainmentMenu();
+        }
+    }
+
+    function initEntertainmentMenu() {
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.querySelectorAll('.branch-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const action = btn.dataset.action;
+                if (action === 'char-game') {
+                    if (window.toggleCharGame) window.toggleCharGame(true);
+                }
+                if (action === 'fireworks') {
+                    triggerFireworks();
+                }
+                closeEntertainmentMenu();
             });
         });
     }
@@ -1635,12 +1682,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const musicControl = document.getElementById('music-control');
         const sealBtn = document.getElementById('seal-btn');
         const viewModeGroup = document.getElementById('viewmode-branch-group');
+        const entertainmentGroup = document.getElementById('entertainment-branch-group');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
         if (musicControl) musicControl.classList.toggle('blue-mode');
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
         if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
+        if (entertainmentGroup) entertainmentGroup.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
@@ -2112,6 +2161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.toggleMode = toggleMode;
     window.toggleVoice = toggleVoice;
     window.toggleViewMode = toggleViewMode;
+    window.toggleEntertainmentMenu = toggleEntertainmentMenu;
     window.togglePlayMode = togglePlayMode;
     window.toggleSealEffect = toggleSealEffect;
     window.prevPoem = prevPoem;
@@ -2150,7 +2200,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn, #entertainment-branch-group, #entertainment-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);
