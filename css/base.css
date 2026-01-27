@@ -1902,7 +1902,8 @@ header.char-game-active {
     display: grid;
     position: absolute;
     bottom: 20px;
-    left: 15px;
+    left: 10px;
+    /* 原15px -> 10px，与右侧大印章对称 */
     grid-template-columns: 26px 26px;
     grid-template-rows: 26px 26px;
     gap: 4px;
