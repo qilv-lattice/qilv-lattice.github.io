@@ -1746,8 +1746,8 @@ header.char-game-active {
 /* Serendipity 英文装饰 - 旋转90度 */
 .serendipity-text {
     position: absolute;
-    top: 44px;
-    /* 视觉微调：下移2px (42 -> 44), 最终确认 */
+    top: 46px;
+    /* 视觉微调：下移2px (44 -> 46), 最终确认 */
     right: 24px;
     /* 靠近一半：原32px -> 24px (更紧凑) */
     font-family: 'Times New Roman', serif;
