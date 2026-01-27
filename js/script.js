@@ -1779,6 +1779,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const sealBtn = document.getElementById('seal-btn');
         const viewModeGroup = document.getElementById('viewmode-branch-group');
         const entertainmentGroup = document.getElementById('entertainment-branch-group');
+        const entertainmentBtn = document.getElementById('entertainment-btn');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
@@ -1786,6 +1787,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
         if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
         if (entertainmentGroup) entertainmentGroup.classList.toggle('blue-mode');
+        if (entertainmentBtn) entertainmentBtn.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
