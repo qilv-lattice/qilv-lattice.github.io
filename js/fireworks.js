@@ -295,12 +295,11 @@
 
     window.triggerFireworks = function () {
         initCanvas();
+        launchRocket();
 
         if (!rafId) {
             loop();
         }
-
-        launchRocket();
 
         const duration = 5000;
         const interval = 500;

@@ -1085,7 +1085,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         charGameState.finished = true;
         if (hint) hint.textContent = `已填满 ${charGameState.maxFill} 字，测试结束。`;
-        triggerFireworks();
+        if (typeof window.triggerFireworks === 'function') {
+            window.triggerFireworks();
+        }
         stopCharGameFall();
         hideCharGameNav();
         showCharGameDialog();
@@ -1447,36 +1449,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Old fireworks implementation removed to avoid conflict with js/fireworks.js
-
-    // Making it a no-op that delegates to the global one if possible, 
-    // but since we are modifying the source, let's just remove the function body 
-    // and let the global one from fireworks.js take over. 
-    // However, if script.js defines `function triggerFireworks() {}` at top level, it might override window.triggerFireworks.
-    // Let's check if script.js is wrapped. 
-    // Looking at the view_file output, it seems to be inside `document.addEventListener('DOMContentLoaded', ...)` or similar?
-    // Actually, looking at line 1 in previous turns, script.js seems to be a big file.
-    // If it's a function declaration `function triggerFireworks()`, it hoists.
-    // If I delete it, the call sites `triggerFireworks()` will look for the global one.
-    // So DELETING it or Commenting it out is the right move.
-
-    // To be safe and clean, I will comment it out by wrapping it in /* */ 
-    // AND I will check if there are other references that need update.
-    // wait, `maybeTriggerFireworks` calls `triggerFireworks()`.
-    // If I comment out the local definition, `triggerFireworks()` will resolve to `window.triggerFireworks`.
-
-    /* 
-    function triggerFireworks() {
-      // Disabled in favor of js/fireworks.js
-    } 
-    */
+    // Fireworks are provided by js/fireworks.js via window.triggerFireworks
     function maybeTriggerFireworks() {
         if (wingDisplayMode !== 'random') return;
         if (!isDesktopLayout()) return;
         if (document.body.classList.contains('view-mode-single')) return;
         if (lastWingIndices.left === null || lastWingIndices.right === null) return;
         if (lastWingIndices.left === currentIndex && lastWingIndices.right === currentIndex) {
-            triggerFireworks();
+            if (typeof window.triggerFireworks === 'function') {
+                window.triggerFireworks();
+            }
         }
     }
 
