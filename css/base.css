@@ -19,6 +19,9 @@
     --gradient-start: #e8f0e8;
     --gradient-end: #f5f0e8;
     --highlight-color: #c91f37;
+    --card-text-min-height: clamp(350px, 60vw, 480px);
+    --card-vertical-padding: clamp(1rem, 3vw, 2rem);
+    --card-block-height: calc(var(--card-text-min-height) + (var(--card-vertical-padding) * 2));
     /* 与强调色保持一致 */
 }
 
@@ -489,7 +492,7 @@ header.char-game-active {
     background-color: var(--card-bg);
     border-radius: 4px;
     /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
-    padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 2rem);
+    padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
@@ -520,7 +523,7 @@ header.char-game-active {
     align-items: center;
     margin: 0 auto;
     /* 响应式最小高度 */
-    min-height: clamp(350px, 60vw, 480px);
+    min-height: var(--card-text-min-height);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
     /* 整体下移 2个红蓝线距离 (8px) */
@@ -649,6 +652,20 @@ header.char-game-active {
         max-width: 100%;
     }
 }
+
+@media (max-width: 1023px) {
+    .poem-content {
+        min-height: var(--card-block-height);
+    }
+    .poem-content.horizontal-mode {
+        min-height: var(--card-block-height);
+    }
+}
+
+
+@media (max-width: 1023px) {
+}
+
 
 .poem-content.horizontal-mode #poem-text-container {
     writing-mode: horizontal-tb;
@@ -2363,4 +2380,31 @@ header.char-game-active {
 .blessing-notice,
 #announcement-notice {
     display: none !important;
+}
+
+/* ?? + ??????????/???????? */
+.card-header-group {
+    position: absolute;
+    top: 24px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.card-header-group .plum-icon-fixed {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 20px;
+    opacity: 0.9;
+    transform: rotate(15deg);
+}
+
+.card-header-group .five-stars-row {
+    position: static;
+    top: auto;
+    left: auto;
 }
