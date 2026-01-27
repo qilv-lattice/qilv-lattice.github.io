@@ -523,7 +523,9 @@ header.char-game-active {
     align-items: center;
     margin: 0 auto;
     /* 响应式最小高度 */
-    min-height: var(--card-text-min-height);
+    /* 响应式最小高度 - 统一定为竖排模式的大高度 (约480px) */
+    /* 这样无论是横排还是竖排，卡片外框都保持高度一致，不会跳动 */
+    min-height: clamp(480px, 60vw, 520px);
     transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 
     /* 整体下移 2个红蓝线距离 (8px) */
@@ -657,14 +659,14 @@ header.char-game-active {
     .poem-content {
         min-height: var(--card-block-height);
     }
+
     .poem-content.horizontal-mode {
         min-height: var(--card-block-height);
     }
 }
 
 
-@media (max-width: 1023px) {
-}
+@media (max-width: 1023px) {}
 
 
 .poem-content.horizontal-mode #poem-text-container {
