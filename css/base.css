@@ -1747,8 +1747,8 @@ header.char-game-active {
 .serendipity-text {
     position: absolute;
     top: 45px;
-    right: 32px;
-    /* 紧挨着"专属理工..."标签左侧 (标签在 right:15px) */
+    right: 24px;
+    /* 靠近一半：原32px -> 24px (更紧凑) */
     font-family: 'Times New Roman', serif;
     font-size: 10px;
     color: var(--accent-color);
