@@ -1,6 +1,7 @@
 let poems = [];
 let currentIndex = 0;
 let wingDisplayMode = localStorage.getItem('wingDisplayMode') || 'sync';
+let viewMode = localStorage.getItem('viewMode') || 'triple';
 let lastWingIndices = { left: null, right: null };
 let lastFireworkAt = 0;
 let fireworksState = null;
@@ -1552,10 +1553,11 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function updateWingDisplayButton() {
-        const group = document.getElementById('viewmode-branch-group');
-        if (!group) return;
-        group.querySelectorAll('.branch-item').forEach(item => {
-            item.classList.toggle('active', item.dataset.mode === wingDisplayMode);
+        const list = document.getElementById('viewmode-list');
+        if (!list) return;
+        const activeMode = viewMode === 'single' ? 'single' : wingDisplayMode;
+        list.querySelectorAll('li').forEach(item => {
+            item.classList.toggle('active', item.dataset.mode === activeMode);
         });
     }
 
@@ -1571,38 +1573,53 @@ function applyStickyModifiedTimes(entries) {
         syncWingCards();
     }
 
-    let viewModeMenuTimer = null;
     let entertainmentMenuTimer = null;
 
     function openViewModeMenu() {
-        const group = document.getElementById('viewmode-branch-group');
-        if (!group) return;
-        group.classList.add('show');
-        clearTimeout(viewModeMenuTimer);
-        viewModeMenuTimer = setTimeout(() => {
-            if (!group.classList.contains('show')) return;
-            setWingDisplayMode('random');
-            closeViewModeMenu();
-        }, 5000);
+        const menu = document.getElementById('viewmode-menu');
+        if (!menu) return;
+        menu.classList.add('show');
     }
 
     function closeViewModeMenu() {
-        const group = document.getElementById('viewmode-branch-group');
-        if (!group) return;
-        group.classList.remove('show');
-        clearTimeout(viewModeMenuTimer);
+        const menu = document.getElementById('viewmode-menu');
+        if (!menu) return;
+        menu.classList.remove('show');
+    }
+
+    function selectViewModeOption(mode) {
+        if (mode === 'single') {
+            viewMode = 'single';
+            applyViewMode('single');
+        } else {
+            viewMode = 'triple';
+            applyViewMode('triple');
+            setWingDisplayMode(mode);
+        }
+        updateWingDisplayButton();
+        closeViewModeMenu();
     }
 
     function initViewModeMenu() {
-        const group = document.getElementById('viewmode-branch-group');
-        if (!group) return;
-        group.querySelectorAll('.branch-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        const btn = document.getElementById('viewmode-btn');
+        const menu = document.getElementById('viewmode-menu');
+        const list = document.getElementById('viewmode-list');
+        if (!btn || !menu || !list) return;
+
+        updateWingDisplayButton();
+
+        list.querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const mode = btn.dataset.mode || 'random';
-                setWingDisplayMode(mode);
-                closeViewModeMenu();
+                const mode = item.dataset.mode || 'single';
+                selectViewModeOption(mode);
             });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('show');
+            }
         });
     }
 
@@ -1955,7 +1972,7 @@ function applyStickyModifiedTimes(entries) {
         const noteBtn = document.getElementById('note-btn');
         const musicControl = document.getElementById('music-control');
         const sealBtn = document.getElementById('seal-btn');
-        const viewModeGroup = document.getElementById('viewmode-branch-group');
+        const viewModeMenu = document.getElementById('viewmode-menu');
         const entertainmentMenu = document.getElementById('entertainment-menu');
         const entertainmentBtn = document.getElementById('entertainment-btn');
         const settingsBtn = document.getElementById('settings-btn');
@@ -1967,7 +1984,7 @@ function applyStickyModifiedTimes(entries) {
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
         if (musicControl) musicControl.classList.toggle('blue-mode');
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
-        if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
+        if (viewModeMenu) viewModeMenu.classList.toggle('blue-mode');
         if (entertainmentMenu) entertainmentMenu.classList.toggle('blue-mode');
         if (entertainmentBtn) entertainmentBtn.classList.toggle('blue-mode');
         if (settingsBtn) settingsBtn.classList.toggle('blue-mode');
@@ -1990,45 +2007,40 @@ function applyStickyModifiedTimes(entries) {
         syncWingCards();
     }
 
-    // 三卡/单卡展示切换
-    let viewMode = localStorage.getItem('viewMode') || 'triple';
-
     function applyViewMode(mode) {
         const btn = document.getElementById('viewmode-btn');
-        const viewModeGroup = document.getElementById('viewmode-branch-group');
+        const viewModeMenu = document.getElementById('viewmode-menu');
         const viewModeWrapper = document.querySelector('.viewmode-btn-wrapper');
         const isSingle = mode === 'single';
 
         if (!isDesktopLayout()) {
             document.body.classList.remove('view-mode-single');
             if (btn) btn.style.display = 'none';
-            if (viewModeGroup) viewModeGroup.style.display = 'none';
+            if (viewModeMenu) viewModeMenu.style.display = 'none';
             if (viewModeWrapper) viewModeWrapper.style.display = 'none';
             return;
         }
 
         if (btn) btn.style.display = '';
-        if (viewModeGroup) viewModeGroup.style.display = '';
+        if (viewModeMenu) viewModeMenu.style.display = '';
         if (viewModeWrapper) viewModeWrapper.style.display = '';
         initThreeCardLayout();
         document.body.classList.toggle('view-mode-single', isSingle);
 
         if (btn) {
-            btn.innerHTML = isSingle ? '单卡<br>展示' : '三卡<br>展示';
+            btn.innerHTML = '展示<br>样式';
         }
 
         localStorage.setItem('viewMode', mode);
+        updateWingDisplayButton();
         syncWingCards();
     }
 
     function toggleViewMode() {
-        viewMode = viewMode === 'triple' ? 'single' : 'triple';
-        applyViewMode(viewMode);
-        if (viewMode === 'triple') {
-            openViewModeMenu();
-        } else {
-            closeViewModeMenu();
-        }
+        const menu = document.getElementById('viewmode-menu');
+        if (!isDesktopLayout()) return;
+        if (!menu) return;
+        menu.classList.toggle('show');
     }
 
     // 随机/同步展示切换（保留兼容）
@@ -2448,6 +2460,7 @@ function applyStickyModifiedTimes(entries) {
     window.toggleMode = toggleMode;
     window.toggleVoice = toggleVoice;
     window.toggleViewMode = toggleViewMode;
+    window.selectViewModeOption = selectViewModeOption;
     window.toggleEntertainmentMenu = toggleEntertainmentMenu;
     window.togglePlayMode = togglePlayMode;
     window.toggleSealEffect = toggleSealEffect;
@@ -2487,7 +2500,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-menu, #bg-list, #theme-list li, #music-list li, #bg-list li, .bg-tab, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-menu, #bg-list, #theme-list li, #music-list li, #bg-list li, .bg-tab, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-menu, #viewmode-list, #viewmode-list li').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);

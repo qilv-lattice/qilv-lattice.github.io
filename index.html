@@ -107,16 +107,16 @@
         <!-- 排版模式切换 -->
         <button id="mode-btn" onclick="toggleMode()">竖排<br>观赏</button>
 
-        <!-- 三卡/单卡展示切换 + 二级随机/同步 -->
-        <div class="music-btn-wrapper viewmode-btn-wrapper">
-            <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">三卡<br>展示</button>
-            <div id="viewmode-branch-group" class="music-branch-group viewmode-branch-group">
-                <div class="branch-item" data-mode="random">
-                    <button class="branch-btn" data-mode="random">随机</button>
-                </div>
-                <div class="branch-item" data-mode="sync">
-                    <button class="branch-btn" data-mode="sync">同步</button>
-                </div>
+        <!-- 展示样式（下拉列表） -->
+        <div class="widget-group viewmode-btn-wrapper" style="position: relative;">
+            <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">展示<br>样式</button>
+            <div id="viewmode-menu" class="viewmode-menu">
+                <h3 class="toc-title">展示样式</h3>
+                <ul id="viewmode-list" class="toc-list viewmode-menu-list">
+                    <li data-mode="single" onclick="selectViewModeOption('single')">单卡</li>
+                    <li data-mode="sync" onclick="selectViewModeOption('sync')">同步</li>
+                    <li data-mode="random" onclick="selectViewModeOption('random')">随机</li>
+                </ul>
             </div>
         </div>
 

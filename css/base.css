@@ -1479,6 +1479,31 @@ header.char-game-active {
     z-index: 1000;
 }
 
+@media (max-width: 1023px) {
+    .viewmode-btn-wrapper {
+        display: none;
+    }
+}
+
+.viewmode-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: var(--card-bg);
+    width: min(56vw, 210px);
+    max-width: 210px;
+    max-height: 70vh;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
 .bg-menu {
     display: none;
     position: absolute;
@@ -1522,6 +1547,10 @@ header.char-game-active {
 }
 
 .theme-menu.show {
+    display: flex;
+}
+
+.viewmode-menu.show {
     display: flex;
 }
 
@@ -1585,6 +1614,11 @@ header.char-game-active {
     color: #fff;
 }
 
+.viewmode-menu.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
 .bg-menu.blue-mode .toc-title {
     color: var(--accent-blue);
     border-bottom-color: rgba(18, 104, 204, 0.2);
@@ -1620,6 +1654,15 @@ header.char-game-active {
 }
 
 .theme-menu.blue-mode .theme-menu-list li.active {
+    color: var(--accent-blue);
+}
+
+.viewmode-menu-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.viewmode-menu.blue-mode .viewmode-menu-list li.active {
     color: var(--accent-blue);
 }
 
