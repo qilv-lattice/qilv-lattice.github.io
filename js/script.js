@@ -18,6 +18,34 @@ let bgMode = 'random'; // 背景模式：random（随机）或 fixed（固定）
 let bgIntervalId = null; // 背景切换定时器ID
 let fixedBgIndex = 0; // 固定模式下的背景索引
 
+const bgCatalog = {
+    macro: [
+        { title: '千里江山', index: 0 },
+        { title: '残阳如血', index: 2 },
+        { title: '妩媚青山', index: 3 },
+        { title: '梅花山水', index: 4 },
+        { title: '珠峰银月', index: 7 },
+        { title: '星空垂野', index: 9 },
+        { title: '光影森林', index: 10 },
+        { title: '峰青雪白', index: 12 },
+        { title: '蓝色冰湖', index: 14 },
+        { title: '浪漫星空', index: 16 }
+    ],
+    micro: [
+        { title: '蓝星一角', index: 6 },
+        { title: '五彩斑斓', index: 8 }
+    ],
+    human: [
+        { title: '观音大士', index: 1 },
+        { title: '庄生蝴蝶', index: 5 },
+        { title: '荷花探戈', index: 11 },
+        { title: '风吹蔷薇', index: 13 },
+        { title: '中国航母', index: 15 }
+    ]
+};
+
+let currentBgFilter = 'macro';
+
 function isTouchDevice() {
     return ('ontouchstart' in window) ||
         (navigator.maxTouchPoints || 0) > 0 ||
@@ -140,6 +168,7 @@ function changeBackground() {
     if (bgMode === 'fixed') return; // 固定模式不切换
     bgIndex = Math.floor(Math.random() * backgrounds.length);
     applyBackground(bgIndex);
+    updateBgMenuActive();
 }
 
 // 切换背景模式（随机/固定）
@@ -160,6 +189,101 @@ function toggleBgMode() {
     }
 }
 
+function setActiveBgTab(filter) {
+    const tabs = document.querySelectorAll('.bg-tab');
+    tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.filter === filter);
+    });
+}
+
+function renderBgMenu(filter = currentBgFilter) {
+    const list = document.getElementById('bg-list');
+    if (!list) return;
+    list.innerHTML = '';
+    const items = bgCatalog[filter] || [];
+    if (!items.length) {
+        const li = document.createElement('li');
+        li.innerText = '暂无背景';
+        list.appendChild(li);
+        return;
+    }
+    items.forEach(item => {
+        const li = document.createElement('li');
+        li.innerText = item.title;
+        li.dataset.index = String(item.index);
+        if (item.index === bgIndex) li.classList.add('active');
+        list.appendChild(li);
+    });
+}
+
+function updateBgMenuActive() {
+    const list = document.getElementById('bg-list');
+    if (!list) return;
+    list.querySelectorAll('li[data-index]').forEach(li => {
+        li.classList.toggle('active', Number(li.dataset.index) === bgIndex);
+    });
+}
+
+function toggleBgMenu() {
+    const menu = document.getElementById('bg-menu');
+    if (!menu) return;
+    if (menu.classList.contains('show')) {
+        menu.classList.remove('show');
+    } else {
+        menu.classList.add('show');
+        setActiveBgTab(currentBgFilter);
+        renderBgMenu(currentBgFilter);
+    }
+}
+
+function initBgMenu() {
+    const btn = document.getElementById('bg-btn');
+    const menu = document.getElementById('bg-menu');
+    const list = document.getElementById('bg-list');
+    if (!btn || !menu || !list) return;
+
+    if (btn.dataset.bound !== 'true') {
+        btn.dataset.bound = 'true';
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleBgMenu();
+        });
+    }
+
+    const tabs = document.querySelectorAll('.bg-tab');
+    tabs.forEach(tab => {
+        if (tab.dataset.bound === 'true') return;
+        tab.dataset.bound = 'true';
+        tab.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentBgFilter = tab.dataset.filter || 'macro';
+            setActiveBgTab(currentBgFilter);
+            renderBgMenu(currentBgFilter);
+        });
+    });
+
+    if (list.dataset.bound !== 'true') {
+        list.dataset.bound = 'true';
+        list.addEventListener('click', (e) => {
+            const item = e.target.closest('li[data-index]');
+            if (!item) return;
+            const index = parseInt(item.dataset.index, 10);
+            selectBackground(index);
+            updateBgMenuActive();
+            menu.classList.remove('show');
+        });
+    }
+
+    if (menu.dataset.outsideBound !== 'true') {
+        menu.dataset.outsideBound = 'true';
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+}
+
 // 选择指定背景并固定
 function selectBackground(index) {
     bgMode = 'fixed';
@@ -169,6 +293,7 @@ function selectBackground(index) {
     const btn = document.getElementById('bg-btn');
     btn.innerHTML = '固定<br>背景';
     btn.classList.add('active-mode');
+    updateBgMenuActive();
 }
 
 // 页面加载时初始化
@@ -210,45 +335,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 每5分钟切换一次
 
-    // 绑定背景按钮点击事件 (简化版下拉列表)
-    const bgBtn = document.getElementById('bg-btn');
-    const bgList = document.getElementById('bg-list');
-
-    if (bgBtn && bgList) {
-        // 点击按钮：切换列表显示
-        bgBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            bgList.classList.toggle('show');
-
-            // 定位列表
-            const rect = bgBtn.getBoundingClientRect();
-            bgList.style.top = (rect.bottom + 5) + 'px';
-            bgList.style.left = rect.left + 'px';
-        });
-
-        // 点击列表项：选择背景
-        bgList.addEventListener('click', (e) => {
-            const item = e.target.closest('li[data-index]');
-            if (item) {
-                const index = parseInt(item.dataset.index);
-                selectBackground(index);
-
-                // 更新激活状态
-                bgList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-                item.classList.add('active');
-
-                // 关闭列表
-                bgList.classList.remove('show');
-            }
-        });
-
-        // 点击外部关闭
-        document.addEventListener('click', (e) => {
-            if (!bgBtn.contains(e.target) && !bgList.contains(e.target)) {
-                bgList.classList.remove('show');
-            }
-        });
-    }
+    initBgMenu();
 
     // ===== 音乐名录（作品名录风格） =====
     const musicCatalog = {
@@ -1873,7 +1960,7 @@ function applyStickyModifiedTimes(entries) {
         const entertainmentBtn = document.getElementById('entertainment-btn');
         const settingsBtn = document.getElementById('settings-btn');
         const musicMenu = document.getElementById('music-menu');
-        const bgList = document.getElementById('bg-list');
+        const bgMenu = document.getElementById('bg-menu');
         const themeMenu = document.getElementById('theme-menu');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
@@ -1885,7 +1972,7 @@ function applyStickyModifiedTimes(entries) {
         if (entertainmentBtn) entertainmentBtn.classList.toggle('blue-mode');
         if (settingsBtn) settingsBtn.classList.toggle('blue-mode');
         if (musicMenu) musicMenu.classList.toggle('blue-mode');
-        if (bgList) bgList.classList.toggle('blue-mode');
+        if (bgMenu) bgMenu.classList.toggle('blue-mode');
         if (themeMenu) themeMenu.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
@@ -2397,7 +2484,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-menu, #bg-list, #theme-list li, #music-list li, #bg-list li, .bg-tab, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);

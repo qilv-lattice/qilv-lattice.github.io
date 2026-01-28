@@ -88,28 +88,20 @@
         <!-- 名录按钮（移到最前面） -->
         <button id="toc-btn" class="widget-btn" onclick="toggleTOC()">作品<br>名录</button>
 
-        <!-- 背景控制按钮容器 (简化为下拉列表) -->
+        <!-- 背景控制按钮容器（TOC 风格下拉） -->
         <div class="widget-group" style="position: relative;">
             <button id="bg-btn" class="widget-btn">网页<br>背景</button>
-            <ul id="bg-list" class="selector-list">
-                <li data-index="0" class="active">千里江山</li>
-                <li data-index="1">观音大士</li>
-                <li data-index="2">残阳如血</li>
-                <li data-index="3">妩媚青山</li>
-                <li data-index="4">梅花山水</li>
-                <li data-index="5">庄生蝴蝶</li>
-                <li data-index="6">蓝星一角</li>
-                <li data-index="7">珠峰银月</li>
-                <li data-index="8">五彩斑斓</li>
-                <li data-index="9">星空垂野</li>
-                <li data-index="10">光影森林</li>
-                <li data-index="11">荷花探戈</li>
-                <li data-index="12">峰青雪白</li>
-                <li data-index="13">风吹蔷薇</li>
-                <li data-index="14">蓝色冰湖</li>
-                <li data-index="15">中国航母</li>
-                <li data-index="16">浪漫星空</li>
-            </ul>
+            <div id="bg-menu" class="bg-menu">
+                <h3 class="toc-title">背景名录</h3>
+                <div class="toc-tabs bg-tabs">
+                    <button class="toc-tab bg-tab active" data-filter="macro">宏观山水</button>
+                    <button class="toc-tab bg-tab" data-filter="micro">微观格致</button>
+                    <button class="toc-tab bg-tab" data-filter="human">人文水墨</button>
+                </div>
+                <ul id="bg-list" class="toc-list bg-menu-list">
+                    <!-- 动态渲染内容 -->
+                </ul>
+            </div>
         </div>
 
         <!-- 排版模式切换 -->
