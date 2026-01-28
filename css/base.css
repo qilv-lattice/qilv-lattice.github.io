@@ -1450,6 +1450,53 @@ header.char-game-active {
     color: #fff;
 }
 
+.music-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: var(--card-bg);
+    width: min(85vw, 320px);
+    max-width: 300px;
+    max-height: 70vh;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+.music-menu.show {
+    display: flex;
+}
+
+.music-menu.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+.music-menu.blue-mode .toc-tab {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.music-menu.blue-mode .toc-tab.active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.music-catalog-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.music-menu.blue-mode .music-catalog-list li.active {
+    color: var(--accent-blue);
+}
+
 .toc-list {
     list-style: none;
     width: 100%;
