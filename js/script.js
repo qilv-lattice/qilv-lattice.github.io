@@ -2435,6 +2435,9 @@ function applyStickyModifiedTimes(entries) {
     window.toggleNotes = toggleNotes;
     window.toggleCharGame = toggleCharGame;
     window.charGameRetry = () => {
+        if (typeof window.stopFireworks === 'function') {
+            window.stopFireworks();
+        }
         hideCharGameDialog();
         startCharGame();
     };

@@ -397,9 +397,15 @@
             fwSound.currentTime = 0;
         }
 
-        // 清空画布 (可选，视需求而定，这里保留最后一帧残影慢慢消失比较自然)
-        // particles = [];
-        // rockets = [];
+        rockets = [];
+        particles = [];
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+        if (ctx) {
+            ctx.clearRect(0, 0, width, height);
+        }
     };
 
     console.log("Fireworks Module v1.4 (Stop API) Loaded");
