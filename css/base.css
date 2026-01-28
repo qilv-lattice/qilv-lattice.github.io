@@ -1533,6 +1533,19 @@ header.char-game-active {
     display: flex;
 }
 
+@media (max-width: 768px) {
+    .bg-tabs {
+        flex-wrap: nowrap;
+        gap: 4px;
+    }
+
+    .bg-tabs .toc-tab {
+        font-size: 0.72rem;
+        padding: 3px 6px;
+        white-space: nowrap;
+    }
+}
+
 .music-menu.blue-mode .toc-title {
     color: var(--accent-blue);
     border-bottom-color: rgba(18, 104, 204, 0.2);

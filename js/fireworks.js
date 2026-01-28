@@ -354,14 +354,22 @@
 
         // 音频截止时间：25810ms (25.81s，用户指定最佳截断点)
         const audioCutoff = 25810;
-        setTimeout(() => {
+
+        // 保存定时器ID以便停止
+        window.fwTimers = window.fwTimers || {};
+
+        // 1. 音频截断定时器
+        if (window.fwTimers.audioTimer) clearTimeout(window.fwTimers.audioTimer);
+        window.fwTimers.audioTimer = setTimeout(() => {
             fwSound.pause();
             fwSound.currentTime = 0;
         }, audioCutoff);
 
-        const timer = setInterval(() => {
+        // 2. 烟花发射定时器 (循环)
+        if (window.fwTimers.launchTimer) clearInterval(window.fwTimers.launchTimer);
+        window.fwTimers.launchTimer = setInterval(() => {
             if (Date.now() > endTime) {
-                clearInterval(timer);
+                clearInterval(window.fwTimers.launchTimer);
                 // 视觉结束，音频继续直到 7840ms
             } else {
                 // 每次随机发射 1-2 枚
@@ -373,5 +381,26 @@
         }, interval);
     };
 
-    console.log("Fireworks Module v1.3 (Color Upgrade) Loaded");
+    // 新增：停止烟花函数
+    window.stopFireworks = function () {
+        // 停止发射
+        if (window.fwTimers && window.fwTimers.launchTimer) {
+            clearInterval(window.fwTimers.launchTimer);
+        }
+        if (window.fwTimers && window.fwTimers.audioTimer) {
+            clearTimeout(window.fwTimers.audioTimer);
+        }
+
+        // 停止音频
+        if (fwSound) {
+            fwSound.pause();
+            fwSound.currentTime = 0;
+        }
+
+        // 清空画布 (可选，视需求而定，这里保留最后一帧残影慢慢消失比较自然)
+        // particles = [];
+        // rockets = [];
+    };
+
+    console.log("Fireworks Module v1.4 (Stop API) Loaded");
 })();
