@@ -849,10 +849,20 @@ header.char-game-active {
     cursor: pointer;
 }
 
+.settings-btn.blue-mode {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
 /* 展开过一次后：白底红字 */
 .settings-btn.settings-used {
     background: rgba(255, 255, 255, 0.95);
     color: var(--accent-color);
+}
+
+.settings-btn.blue-mode.settings-used {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
 }
 
 /* 折叠状态 */
@@ -1207,6 +1217,16 @@ header.char-game-active {
 }
 
 /* 三卡/单卡二级菜单的蓝色模式 */
+.music-branch-group.blue-mode .branch-btn {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.music-branch-group.blue-mode .branch-btn:hover,
+.music-branch-group.blue-mode .branch-item.active .branch-btn {
+    box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
+}
+
 .viewmode-branch-group.blue-mode .branch-btn {
     color: var(--accent-blue);
     border-color: var(--accent-blue);
@@ -1340,10 +1360,20 @@ header.char-game-active {
     color: var(--accent-color);
 }
 
+.selector-list.blue-mode li:hover,
+.selector-list.blue-mode li:active {
+    background: rgba(74, 144, 226, 0.12);
+    color: var(--accent-blue);
+}
+
 .bg-list li.active,
 .selector-list li.active {
     color: var(--accent-color);
     font-weight: bold;
+}
+
+.selector-list.blue-mode li.active {
+    color: var(--accent-blue);
 }
 
 /* ===== 名录弹窗 ===== */
