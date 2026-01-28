@@ -164,7 +164,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateWingDisplayButton();
         initViewModeMenu();
         initEntertainmentMenu();
-        initMusicCatalog();
 
         // 1. 加载配置
         const configResp = await fetch('data/config.json');
@@ -229,149 +228,71 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // ===== 音乐名录（作品名录风格） =====
-    const musicCatalog = {
-        guqin: [
-            { title: '阳关三叠', src: 'assets/music01-阳关三叠.mp3' },
-            { title: '高山流水', src: 'assets/music11-高山流水.mp3' },
-            { title: '半山听雨', src: 'assets/music10-半山听雨.mp3' }
-        ],
-        guzheng: [
-            { title: '梁祝', src: 'assets/music02-梁祝.mp3' },
-            { title: '琵琶语', src: 'assets/music03-琵琶语.mp3' },
-            { title: '渔歌唱晚', src: 'assets/music04-渔歌唱晚.mp3' }
-        ],
-        piano: [
-            { title: '致艾丽丝', src: 'assets/music05-致艾丽丝.mp3' },
-            { title: '悲怆奏鸣曲', src: 'assets/music06-悲怆奏鸣曲.mp3' },
-            { title: '克罗地亚狂想曲', src: 'assets/music08-克罗地亚狂想曲.mp3' }
-        ],
-        song: [
-            { title: '神话', src: 'assets/music07-神话.mp3' },
-            { title: '青城山下白素贞', src: 'assets/music09-青城山下白素贞.mp3' },
-            { title: '烟雨唱扬州', src: 'assets/music12-烟雨唱扬州.mp3' }
-        ]
-    };
+    // ===== 音乐分类菜单事件绑定 =====
+    const musicControl = document.getElementById('music-control');
+    const musicBranchGroup = document.getElementById('music-branch-group');
+    const audio = document.getElementById('bg-music');
+    const musicCtrl = document.getElementById('music-control');
 
-    let currentMusicFilter = 'guqin';
-
-    function setActiveMusicTab(filter) {
-        const tabs = document.querySelectorAll('.music-tab');
-        tabs.forEach(tab => {
-            tab.classList.toggle('active', tab.dataset.filter === filter);
-        });
-    }
-
-    function renderMusicCatalog(filter = currentMusicFilter) {
-        const list = document.getElementById('music-catalog-list');
-        if (!list) return;
-        list.innerHTML = '';
-        const items = musicCatalog[filter] || [];
-        if (!items.length) {
-            const li = document.createElement('li');
-            li.innerText = '暂无曲目';
-            list.appendChild(li);
-            return;
-        }
-        items.forEach(item => {
-            const li = document.createElement('li');
-            li.innerText = item.title;
-            li.dataset.src = item.src;
-            list.appendChild(li);
-        });
-    }
-
-    function playMusicBySrc(src) {
-        const audio = document.getElementById('bg-music');
-        const musicCtrl = document.getElementById('music-control');
-        if (!audio || !src) return;
-        if (audio.getAttribute('src') !== src) {
-            audio.src = src;
-        }
-        audio.play().then(() => {
-            if (musicCtrl) musicCtrl.classList.add('music-playing');
-        }).catch(() => { });
-
-        const playlistItems = document.querySelectorAll('.music-list li');
-        playlistItems.forEach(li => {
-            li.classList.toggle('active', li.dataset.src === src);
-        });
-    }
-
-    function bindMusicTabs() {
-        const tabs = document.querySelectorAll('.music-tab');
-        tabs.forEach(tab => {
-            if (tab.dataset.bound === 'true') return;
-            tab.dataset.bound = 'true';
-            tab.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentMusicFilter = tab.dataset.filter || 'guqin';
-                setActiveMusicTab(currentMusicFilter);
-                renderMusicCatalog(currentMusicFilter);
-            });
-        });
-    }
-
-    function bindMusicCatalogList() {
-        const list = document.getElementById('music-catalog-list');
-        if (!list || list.dataset.bound === 'true') return;
-        list.dataset.bound = 'true';
-        list.addEventListener('click', (e) => {
-            const item = e.target.closest('li[data-src]');
-            if (!item) return;
+    if (musicControl && musicBranchGroup) {
+        // 1. 点击音乐图标：切换印章组显示状态
+        musicControl.addEventListener('click', (e) => {
             e.stopPropagation();
-            playMusicBySrc(item.dataset.src);
-            list.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-            item.classList.add('active');
-            closeMusicMenu();
+            musicBranchGroup.classList.toggle('show');
+
+            // 重置所有印章的激活状态
+            if (musicBranchGroup.classList.contains('show')) {
+                musicBranchGroup.querySelectorAll('.branch-item').forEach(item => item.classList.remove('active'));
+            }
         });
-    }
 
-    function toggleMusicMenu() {
-        const menu = document.getElementById('music-menu');
-        if (!menu) return;
-        if (menu.classList.contains('show')) {
-            closeMusicMenu();
-        } else {
-            openMusicMenu();
-        }
-    }
-    window.toggleMusicMenu = toggleMusicMenu;
+        // 2. 点击印章按钮或音乐项
+        musicBranchGroup.addEventListener('click', (e) => {
+            e.stopPropagation();
 
-    function openMusicMenu() {
-        const menu = document.getElementById('music-menu');
-        if (!menu) return;
-        menu.classList.add('show');
-        setActiveMusicTab(currentMusicFilter);
-        renderMusicCatalog(currentMusicFilter);
-    }
+            // 情况A：点击了印章按钮 (.branch-btn)
+            const branchBtn = e.target.closest('.branch-btn');
+            if (branchBtn) {
+                const item = branchBtn.parentElement;
+                const isActive = item.classList.contains('active');
 
-    function closeMusicMenu() {
-        const menu = document.getElementById('music-menu');
-        if (!menu) return;
-        menu.classList.remove('show');
-    }
+                musicBranchGroup.querySelectorAll('.branch-item').forEach(i => i.classList.remove('active'));
 
-    function initMusicCatalog() {
-        bindMusicTabs();
-        bindMusicCatalogList();
-        const musicControl = document.getElementById('music-control');
-        if (musicControl && musicControl.dataset.menuBound !== 'true') {
-            musicControl.dataset.menuBound = 'true';
-            musicControl.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleMusicMenu();
-            });
-        }
-        const menu = document.getElementById('music-menu');
-        if (menu && menu.dataset.outsideBound !== 'true') {
-            menu.dataset.outsideBound = 'true';
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target) && !musicControl.contains(e.target)) {
-                    closeMusicMenu();
+                if (!isActive) {
+                    item.classList.add('active');
                 }
-            });
-        }
+                return;
+            }
+
+            // 情况B：点击了具体音乐项
+            const musicItem = e.target.closest('li[data-src]');
+            if (musicItem) {
+                const src = musicItem.dataset.src;
+
+                // 播放选中的音乐
+                if (audio) {
+                    audio.src = src;
+                    audio.play().then(() => {
+                        if (musicCtrl) musicCtrl.classList.add('music-playing');
+                    }).catch(err => console.log('音乐播放需要用户交互'));
+                }
+
+                // 关闭整个菜单组
+                musicBranchGroup.classList.remove('show');
+
+                // 更新激活状态 UI
+                musicBranchGroup.querySelectorAll('li[data-src]').forEach(li => li.classList.remove('active'));
+                musicItem.classList.add('active');
+                return;
+            }
+        });
+
+        // 3. 点击外部区域关闭音乐菜单
+        document.addEventListener('click', (e) => {
+            if (!musicControl.contains(e.target) && !musicBranchGroup.contains(e.target)) {
+                musicBranchGroup.classList.remove('show');
+            }
+        });
     }
 
     // 更新通知信息（从 poems.json 动态读取）
@@ -1500,9 +1421,9 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function openEntertainmentMenu() {
-        const menu = document.getElementById('entertainment-menu');
-        if (!menu) return;
-        menu.classList.add('show');
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.classList.add('show');
         clearTimeout(entertainmentMenuTimer);
         entertainmentMenuTimer = setTimeout(() => {
             closeEntertainmentMenu();
@@ -1510,16 +1431,16 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function closeEntertainmentMenu() {
-        const menu = document.getElementById('entertainment-menu');
-        if (!menu) return;
-        menu.classList.remove('show');
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.classList.remove('show');
         clearTimeout(entertainmentMenuTimer);
     }
 
     function toggleEntertainmentMenu() {
-        const menu = document.getElementById('entertainment-menu');
-        if (!menu) return;
-        if (menu.classList.contains('show')) {
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        if (group.classList.contains('show')) {
             closeEntertainmentMenu();
         } else {
             openEntertainmentMenu();
@@ -1527,17 +1448,12 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function initEntertainmentMenu() {
-        const menu = document.getElementById('entertainment-menu');
-        const list = document.getElementById('entertainment-menu-list');
-        const btn = document.getElementById('entertainment-btn');
-        if (!menu || !list) return;
-        if (list.dataset.bound !== 'true') {
-            list.dataset.bound = 'true';
-            list.addEventListener('click', (e) => {
-                const item = e.target.closest('li[data-action]');
-                if (!item) return;
+        const group = document.getElementById('entertainment-branch-group');
+        if (!group) return;
+        group.querySelectorAll('.branch-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const action = item.dataset.action;
+                const action = btn.dataset.action;
                 if (action === 'char-game') {
                     if (window.toggleCharGame) window.toggleCharGame(true);
                 }
@@ -1552,16 +1468,7 @@ function applyStickyModifiedTimes(entries) {
                 }
                 closeEntertainmentMenu();
             });
-        }
-
-        if (menu.dataset.outsideBound !== 'true') {
-            menu.dataset.outsideBound = 'true';
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
-                    closeEntertainmentMenu();
-                }
-            });
-        }
+        });
     }
 
     function selectRandomWingIndices() {
@@ -1848,10 +1755,10 @@ function applyStickyModifiedTimes(entries) {
         const musicControl = document.getElementById('music-control');
         const sealBtn = document.getElementById('seal-btn');
         const viewModeGroup = document.getElementById('viewmode-branch-group');
-        const entertainmentMenu = document.getElementById('entertainment-menu');
+        const entertainmentGroup = document.getElementById('entertainment-branch-group');
         const entertainmentBtn = document.getElementById('entertainment-btn');
         const settingsBtn = document.getElementById('settings-btn');
-        const musicMenu = document.getElementById('music-menu');
+        const musicBranchGroup = document.getElementById('music-branch-group');
         const bgList = document.getElementById('bg-list');
         const themeList = document.getElementById('theme-list');
 
@@ -1860,10 +1767,10 @@ function applyStickyModifiedTimes(entries) {
         if (musicControl) musicControl.classList.toggle('blue-mode');
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
         if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
-        if (entertainmentMenu) entertainmentMenu.classList.toggle('blue-mode');
+        if (entertainmentGroup) entertainmentGroup.classList.toggle('blue-mode');
         if (entertainmentBtn) entertainmentBtn.classList.toggle('blue-mode');
         if (settingsBtn) settingsBtn.classList.toggle('blue-mode');
-        if (musicMenu) musicMenu.classList.toggle('blue-mode');
+        if (musicBranchGroup) musicBranchGroup.classList.toggle('blue-mode');
         if (bgList) bgList.classList.toggle('blue-mode');
         if (themeList) themeList.classList.toggle('blue-mode');
 
@@ -2382,7 +2289,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn, #entertainment-branch-group, #entertainment-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);
