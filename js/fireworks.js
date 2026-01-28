@@ -347,13 +347,13 @@
             loop();
         }
 
-        // 恢复 visual duration 为 5秒 (配合用户分析)
-        const duration = 5000;
+        // 视觉时长：24秒 (用户修正：实际时长应为24s)
+        const duration = 24000;
         const interval = 400;
         const endTime = Date.now() + duration;
 
-        // 音频截止时间：7940ms (+100ms)
-        const audioCutoff = 7940;
+        // 音频截止时间：25810ms (25.81s，用户指定最佳截断点)
+        const audioCutoff = 25810;
         setTimeout(() => {
             fwSound.pause();
             fwSound.currentTime = 0;
