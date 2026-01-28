@@ -2092,13 +2092,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ===== 秘密功能：点击标题5次查看访客统计 =====
     // 动态加载不蒜子统计
     function loadBusuanzi() {
-        if (!document.getElementById('busuanzi-script')) {
-            const script = document.createElement('script');
-            script.id = 'busuanzi-script';
-            script.async = true;
-            script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
-            document.body.appendChild(script);
-        }
+        // 防抖：如果已经加载过，不再重复加载
+        if (window.busuanziLoaded || document.getElementById('busuanzi-script')) return;
+
+        window.busuanziLoaded = true; // 标记已加载
+        const script = document.createElement('script');
+        script.id = 'busuanzi-script';
+        script.async = true;
+        script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+        document.body.appendChild(script);
     }
 
     // 普通访客：自动加载统计
