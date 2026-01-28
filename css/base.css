@@ -1527,9 +1527,7 @@ header.char-game-active {
 }
 
 #toc-list li.new-work-highlight::after {
-    content: " (新)";
-    font-size: 0.8em;
-    opacity: 0.8;
+    content: "";
 }
 
 /* 目录列表修订高亮 */
@@ -1540,9 +1538,7 @@ header.char-game-active {
 }
 
 #toc-list li.modified-work-highlight::after {
-    content: " (修)";
-    font-size: 0.8em;
-    opacity: 0.8;
+    content: "";
 }
 
 /* 目录列表新作+修订高亮 (红) */

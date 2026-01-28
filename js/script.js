@@ -296,37 +296,117 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 更新通知信息（从 poems.json 动态读取）
-    let updateInfo = {
-        date: '',
-        latestWorks: [],  // 改为数组，支持多首新作
-        modifiedWorks: [] // 修改的作品
-    };
+let updateInfo = {
+    date: '',
+    latestWorks: [],  // 改为数组，支持多首新作
+    modifiedWorks: [] // 修改的作品
+};
 
-    function normalizeTitleText(value) {
-        return String(value || '').replace(/[^\u4e00-\u9fff0-9A-Za-z]/g, '');
+function normalizeTitleText(value) {
+    return String(value || '').replace(/[^\u4e00-\u9fff0-9A-Za-z]/g, '');
+}
+
+function formatPoemTitleForList(value) {
+    const raw = String(value || '').trim();
+    let title = raw.replace(/[《》]/g, '').replace(/\s+/g, '');
+    if (/^七律[·•・\.]/.test(title)) {
+        title = title.replace(/^七律[·•・\.]/, '七律•');
     }
+    return title || raw;
+}
 
-    function normalizeLatestWorks(list) {
-        if (!Array.isArray(list)) return [];
-        return list.map(item => {
-            if (typeof item === 'string') {
-                return { title: item, receivedAt: updateInfo.date || '' };
+function normalizeLatestWorks(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map(item => {
+        if (typeof item === 'string') {
+            return { title: item, receivedAt: updateInfo.date || '' };
             }
             if (item && typeof item === 'object') {
                 return {
                     title: item.title || '',
                     receivedAt: item.receivedAt || item.date || ''
                 };
-            }
-            return null;
-        }).filter(Boolean);
-    }
+        }
+        return null;
+    }).filter(Boolean);
+}
 
-    function findLatestWorkEntry(poemTitle) {
-        const cleanTitle = normalizeTitleText(poemTitle);
-        const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
-        return latestEntries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+function normalizeModifiedWorks(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map(item => {
+        if (typeof item === 'string') {
+            return { title: item, modifiedAt: updateInfo.date || '' };
+        }
+        if (item && typeof item === 'object') {
+            return {
+                title: item.title || '',
+                modifiedAt: item.modifiedAt || item.receivedAt || item.date || ''
+            };
+        }
+        return null;
+    }).filter(Boolean);
+}
+
+function findLatestWorkEntry(poemTitle) {
+    const cleanTitle = normalizeTitleText(poemTitle);
+    const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
+    return latestEntries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+}
+
+function findModifiedWorkEntry(poemTitle, entries) {
+    const cleanTitle = normalizeTitleText(poemTitle);
+    return entries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+}
+
+const MODIFIED_TIME_STORE_KEY = 'qilv_modified_first_times';
+
+function loadModifiedTimeStore() {
+    try {
+        const raw = localStorage.getItem(MODIFIED_TIME_STORE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (e) {
+        return {};
     }
+}
+
+function saveModifiedTimeStore(store) {
+    try {
+        localStorage.setItem(MODIFIED_TIME_STORE_KEY, JSON.stringify(store));
+    } catch (e) {
+        // ignore storage errors
+    }
+}
+
+function applyStickyModifiedTimes(entries) {
+    if (!entries.length) return entries;
+    const store = loadModifiedTimeStore();
+    const nowMs = Date.now();
+    let changed = false;
+
+    const result = entries.map(entry => {
+        const key = normalizeTitleText(entry.title);
+        const entryMs = parseBeijingDateTimeToUtcMs(entry.modifiedAt || updateInfo.date);
+        const storedMs = key ? store[key] : null;
+        let effectiveMs = entryMs;
+
+        if (storedMs && (nowMs - storedMs) <= 24 * 60 * 60 * 1000) {
+            if (!effectiveMs || effectiveMs > storedMs) {
+                effectiveMs = storedMs;
+            }
+        }
+
+        if (effectiveMs && (!storedMs || (nowMs - storedMs) > 24 * 60 * 60 * 1000 || effectiveMs < storedMs)) {
+            store[key] = effectiveMs;
+            changed = true;
+        }
+
+        return { ...entry, effectiveAt: effectiveMs };
+    });
+
+    if (changed) saveModifiedTimeStore(store);
+    return result;
+}
 
 
     function getBeijingDateString() {
@@ -430,22 +510,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (noticeEl && noticeEl.dataset.dismissed === 'true') {
             return;
         }
-        // 如果没有修改作品，或者不在更新时间窗口内，隐藏
-        if (!updateInfo.modifiedWorks || updateInfo.modifiedWorks.length === 0) {
-            noticeEl.style.display = 'none';
-            return;
-        }
+    const modifiedEntries = applyStickyModifiedTimes(normalizeModifiedWorks(updateInfo.modifiedWorks));
+
+    // 如果没有修改作品，或者不在更新时间窗口内，隐藏
+    if (!modifiedEntries.length) {
+        noticeEl.style.display = 'none';
+        return;
+    }
 
         // 使用统一的北京时间判断
 
 
-        // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
-        const isValid = isWithin24Hours(updateInfo.date);
+    // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
+    const activeModified = modifiedEntries.filter(entry => isWithin24Hours(entry.effectiveAt || entry.modifiedAt || updateInfo.date));
+    const isValid = activeModified.length > 0;
 
         if (isValid) {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示修订数量
-            const count = updateInfo.modifiedWorks.length;
+        const count = activeModified.length;
             textEl.innerHTML = `有 ${count} 首旧作翻新`;
 
 
@@ -596,7 +679,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             tabs.innerHTML = `
                 <button class="toc-tab active" data-filter="all">全部作品</button>
                 <button class="toc-tab" data-filter="new">上线新作</button>
-                <button class="toc-tab" data-filter="modified">旧作修改</button>
+                <button class="toc-tab" data-filter="modified">修改旧作</button>
             `;
             if (title) {
                 title.insertAdjacentElement('afterend', tabs);
@@ -653,9 +736,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const activeLatest = latestEntries.filter(entry => isWithin24Hours(entry.receivedAt || updateInfo.date));
         const activeLatestKeys = activeLatest.map(entry => normalizeTitleText(entry.title));
 
-        const activeModifiedKeys = (updateInfo.modifiedWorks || [])
-            .filter(() => isWithin24Hours(updateInfo.date))
-            .map(title => normalizeTitleText(title));
+        const modifiedEntries = applyStickyModifiedTimes(normalizeModifiedWorks(updateInfo.modifiedWorks));
+        const activeModified = modifiedEntries.filter(entry => isWithin24Hours(entry.effectiveAt || entry.modifiedAt || updateInfo.date));
+        const activeModifiedKeys = activeModified.map(entry => normalizeTitleText(entry.title));
 
         const filteredPoems = poems.filter(poem => {
             if (filter === 'all') return true;
@@ -671,37 +754,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (filteredPoems.length === 0) {
             const li = document.createElement('li');
-            li.innerText = filter === 'new' ? '暂无新作' : '暂无修订';
+            li.innerText = filter === 'new' ? '暂无新作' : '暂无修改';
             tocList.appendChild(li);
             return;
         }
 
-        filteredPoems.forEach((poem, index) => {
+            filteredPoems.forEach((poem, index) => {
             const li = document.createElement('li');
-            li.innerText = poem.title;
-
-            const latestEntry = findLatestWorkEntry(poem.title);
-            const isNewWork = !!latestEntry;
-            const isNewWorkActive = latestEntry && isWithin24Hours(latestEntry.receivedAt || updateInfo.date);
+            li.innerText = formatPoemTitleForList(poem.title);
 
             const cleanTitle = normalizeTitleText(poem.title);
+            const isNewWorkActive = activeLatestKeys.some(key => cleanTitle.includes(key));
+            const isModifiedWorkActive = activeModifiedKeys.some(key => cleanTitle.includes(key));
 
-            // 2. ????????? (????)
-            const isModifiedWork = updateInfo.modifiedWorks.some(work => {
-                return cleanTitle.includes(normalizeTitleText(work));
-            });
-
-            const isModifiedWorkActive = isModifiedWork && isWithin24Hours(updateInfo.date);
-
-            if (isNewWorkActive || isModifiedWorkActive) {
-                if (isNewWorkActive && isModifiedWorkActive) {
-                    li.classList.add('new-modified-highlight');
-                    li.innerHTML = `${poem.title} <span style="font-size: 0.8em; opacity: 0.8;">(\u65b0)</span><span style="color: #4A90E2; font-size: 0.8em; opacity: 0.8;">(\u4fee)</span>`;
-                } else if (isNewWorkActive) {
-                    li.classList.add('new-work-highlight');
-                } else if (isModifiedWorkActive) {
-                    li.classList.add('modified-work-highlight');
-                }
+            if (filter === 'new' && isNewWorkActive) {
+                li.classList.add('new-work-highlight');
+            }
+            if (filter === 'modified' && isModifiedWorkActive) {
+                li.classList.add('modified-work-highlight');
             }
 
 
