@@ -29,6 +29,26 @@ function isDesktopLayout() {
         window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches;
 }
 
+function swapMobileEntertainmentAndModeButtons() {
+    if (window.innerWidth > 1023) return;
+    const wrapper = document.querySelector('.music-wrapper');
+    const entertainment = wrapper ? wrapper.querySelector('.entertainment-btn-wrapper') : null;
+    const modeBtn = document.getElementById('mode-btn');
+    if (!wrapper || !entertainment || !modeBtn) return;
+    if (wrapper.dataset.mobileSwap === 'true') return;
+
+    const modeNext = modeBtn.nextSibling;
+    const entNext = entertainment.nextSibling;
+
+    if (entNext === modeBtn) {
+        wrapper.insertBefore(modeBtn, entertainment);
+    } else {
+        wrapper.insertBefore(modeBtn, entertainment);
+        wrapper.insertBefore(entertainment, modeNext);
+    }
+    wrapper.dataset.mobileSwap = 'true';
+}
+
 // 应用指定索引的背景
 function applyBackground(index) {
     const currentBg = backgrounds[index];
@@ -160,6 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         applyDeviceClasses();
         document.querySelectorAll('.snowflake').forEach(node => node.remove());
+        swapMobileEntertainmentAndModeButtons();
         initThreeCardLayout();
         updateWingDisplayButton();
         initViewModeMenu();
