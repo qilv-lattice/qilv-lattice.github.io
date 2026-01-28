@@ -1468,8 +1468,8 @@ header.char-game-active {
     transform: translateX(-50%);
     margin-top: 8px;
     background: var(--card-bg);
-    width: min(85vw, 320px);
-    max-width: 300px;
+    width: min(56vw, 210px);
+    max-width: 210px;
     max-height: 70vh;
     padding: 1rem;
     border-radius: 8px;
