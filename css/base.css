@@ -1237,15 +1237,6 @@ header.char-game-active {
     box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
 }
 
-.entertainment-branch-group.blue-mode .branch-btn {
-    color: var(--accent-blue);
-    border-color: var(--accent-blue);
-}
-
-.entertainment-branch-group.blue-mode .branch-btn:hover,
-.entertainment-branch-group.blue-mode .branch-item.active .branch-btn {
-    box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
-}
 
 /* 三级子菜单 (具体背景列表) */
 .sub-list {
@@ -1469,7 +1460,30 @@ header.char-game-active {
     z-index: 1000;
 }
 
+.entertainment-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: var(--card-bg);
+    width: min(85vw, 320px);
+    max-width: 300px;
+    max-height: 70vh;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
 .music-menu.show {
+    display: flex;
+}
+
+.entertainment-menu.show {
     display: flex;
 }
 
@@ -1494,6 +1508,20 @@ header.char-game-active {
 }
 
 .music-menu.blue-mode .music-catalog-list li.active {
+    color: var(--accent-blue);
+}
+
+.entertainment-menu.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+.entertainment-menu-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.entertainment-menu.blue-mode .entertainment-menu-list li.active {
     color: var(--accent-blue);
 }
 
