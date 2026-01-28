@@ -483,117 +483,117 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 更新通知信息（从 poems.json 动态读取）
-let updateInfo = {
-    date: '',
-    latestWorks: [],  // 改为数组，支持多首新作
-    modifiedWorks: [] // 修改的作品
-};
+    let updateInfo = {
+        date: '',
+        latestWorks: [],  // 改为数组，支持多首新作
+        modifiedWorks: [] // 修改的作品
+    };
 
-function normalizeTitleText(value) {
-    return String(value || '').replace(/[^\u4e00-\u9fff0-9A-Za-z]/g, '');
-}
-
-function formatPoemTitleForList(value) {
-    const raw = String(value || '').trim();
-    let title = raw.replace(/[《》]/g, '').replace(/\s+/g, '');
-    if (/^七律[·•・\.]/.test(title)) {
-        title = title.replace(/^七律[·•・\.]/, '七律•');
+    function normalizeTitleText(value) {
+        return String(value || '').replace(/[^\u4e00-\u9fff0-9A-Za-z]/g, '');
     }
-    return title || raw;
-}
 
-function normalizeLatestWorks(list) {
-    if (!Array.isArray(list)) return [];
-    return list.map(item => {
-        if (typeof item === 'string') {
-            return { title: item, receivedAt: updateInfo.date || '' };
+    function formatPoemTitleForList(value) {
+        const raw = String(value || '').trim();
+        let title = raw.replace(/[《》]/g, '').replace(/\s+/g, '');
+        if (/^七律[·•・\.]/.test(title)) {
+            title = title.replace(/^七律[·•・\.]/, '七律•');
+        }
+        return title || raw;
+    }
+
+    function normalizeLatestWorks(list) {
+        if (!Array.isArray(list)) return [];
+        return list.map(item => {
+            if (typeof item === 'string') {
+                return { title: item, receivedAt: updateInfo.date || '' };
             }
             if (item && typeof item === 'object') {
                 return {
                     title: item.title || '',
                     receivedAt: item.receivedAt || item.date || ''
                 };
-        }
-        return null;
-    }).filter(Boolean);
-}
-
-function normalizeModifiedWorks(list) {
-    if (!Array.isArray(list)) return [];
-    return list.map(item => {
-        if (typeof item === 'string') {
-            return { title: item, modifiedAt: updateInfo.date || '' };
-        }
-        if (item && typeof item === 'object') {
-            return {
-                title: item.title || '',
-                modifiedAt: item.modifiedAt || item.receivedAt || item.date || ''
-            };
-        }
-        return null;
-    }).filter(Boolean);
-}
-
-function findLatestWorkEntry(poemTitle) {
-    const cleanTitle = normalizeTitleText(poemTitle);
-    const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
-    return latestEntries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
-}
-
-function findModifiedWorkEntry(poemTitle, entries) {
-    const cleanTitle = normalizeTitleText(poemTitle);
-    return entries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
-}
-
-const MODIFIED_TIME_STORE_KEY = 'qilv_modified_first_times';
-
-function loadModifiedTimeStore() {
-    try {
-        const raw = localStorage.getItem(MODIFIED_TIME_STORE_KEY);
-        const parsed = raw ? JSON.parse(raw) : {};
-        return parsed && typeof parsed === 'object' ? parsed : {};
-    } catch (e) {
-        return {};
-    }
-}
-
-function saveModifiedTimeStore(store) {
-    try {
-        localStorage.setItem(MODIFIED_TIME_STORE_KEY, JSON.stringify(store));
-    } catch (e) {
-        // ignore storage errors
-    }
-}
-
-function applyStickyModifiedTimes(entries) {
-    if (!entries.length) return entries;
-    const store = loadModifiedTimeStore();
-    const nowMs = Date.now();
-    let changed = false;
-
-    const result = entries.map(entry => {
-        const key = normalizeTitleText(entry.title);
-        const entryMs = parseBeijingDateTimeToUtcMs(entry.modifiedAt || updateInfo.date);
-        const storedMs = key ? store[key] : null;
-        let effectiveMs = entryMs;
-
-        if (storedMs && (nowMs - storedMs) <= 24 * 60 * 60 * 1000) {
-            if (!effectiveMs || effectiveMs > storedMs) {
-                effectiveMs = storedMs;
             }
+            return null;
+        }).filter(Boolean);
+    }
+
+    function normalizeModifiedWorks(list) {
+        if (!Array.isArray(list)) return [];
+        return list.map(item => {
+            if (typeof item === 'string') {
+                return { title: item, modifiedAt: updateInfo.date || '' };
+            }
+            if (item && typeof item === 'object') {
+                return {
+                    title: item.title || '',
+                    modifiedAt: item.modifiedAt || item.receivedAt || item.date || ''
+                };
+            }
+            return null;
+        }).filter(Boolean);
+    }
+
+    function findLatestWorkEntry(poemTitle) {
+        const cleanTitle = normalizeTitleText(poemTitle);
+        const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
+        return latestEntries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+    }
+
+    function findModifiedWorkEntry(poemTitle, entries) {
+        const cleanTitle = normalizeTitleText(poemTitle);
+        return entries.find(entry => cleanTitle.includes(normalizeTitleText(entry.title)));
+    }
+
+    const MODIFIED_TIME_STORE_KEY = 'qilv_modified_first_times';
+
+    function loadModifiedTimeStore() {
+        try {
+            const raw = localStorage.getItem(MODIFIED_TIME_STORE_KEY);
+            const parsed = raw ? JSON.parse(raw) : {};
+            return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch (e) {
+            return {};
         }
+    }
 
-        if (effectiveMs && (!storedMs || (nowMs - storedMs) > 24 * 60 * 60 * 1000 || effectiveMs < storedMs)) {
-            store[key] = effectiveMs;
-            changed = true;
+    function saveModifiedTimeStore(store) {
+        try {
+            localStorage.setItem(MODIFIED_TIME_STORE_KEY, JSON.stringify(store));
+        } catch (e) {
+            // ignore storage errors
         }
+    }
 
-        return { ...entry, effectiveAt: effectiveMs };
-    });
+    function applyStickyModifiedTimes(entries) {
+        if (!entries.length) return entries;
+        const store = loadModifiedTimeStore();
+        const nowMs = Date.now();
+        let changed = false;
 
-    if (changed) saveModifiedTimeStore(store);
-    return result;
-}
+        const result = entries.map(entry => {
+            const key = normalizeTitleText(entry.title);
+            const entryMs = parseBeijingDateTimeToUtcMs(entry.modifiedAt || updateInfo.date);
+            const storedMs = key ? store[key] : null;
+            let effectiveMs = entryMs;
+
+            if (storedMs && (nowMs - storedMs) <= 24 * 60 * 60 * 1000) {
+                if (!effectiveMs || effectiveMs > storedMs) {
+                    effectiveMs = storedMs;
+                }
+            }
+
+            if (effectiveMs && (!storedMs || (nowMs - storedMs) > 24 * 60 * 60 * 1000 || effectiveMs < storedMs)) {
+                store[key] = effectiveMs;
+                changed = true;
+            }
+
+            return { ...entry, effectiveAt: effectiveMs };
+        });
+
+        if (changed) saveModifiedTimeStore(store);
+        return result;
+    }
 
 
     function getBeijingDateString() {
@@ -697,25 +697,25 @@ function applyStickyModifiedTimes(entries) {
         if (noticeEl && noticeEl.dataset.dismissed === 'true') {
             return;
         }
-    const modifiedEntries = applyStickyModifiedTimes(normalizeModifiedWorks(updateInfo.modifiedWorks));
+        const modifiedEntries = applyStickyModifiedTimes(normalizeModifiedWorks(updateInfo.modifiedWorks));
 
-    // 如果没有修改作品，或者不在更新时间窗口内，隐藏
-    if (!modifiedEntries.length) {
-        noticeEl.style.display = 'none';
-        return;
-    }
+        // 如果没有修改作品，或者不在更新时间窗口内，隐藏
+        if (!modifiedEntries.length) {
+            noticeEl.style.display = 'none';
+            return;
+        }
 
         // 使用统一的北京时间判断
 
 
-    // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
-    const activeModified = modifiedEntries.filter(entry => isWithin24Hours(entry.effectiveAt || entry.modifiedAt || updateInfo.date));
-    const isValid = activeModified.length > 0;
+        // 宽容模式：允许24小时内的缓冲期（即“今天”和“昨天”都算）
+        const activeModified = modifiedEntries.filter(entry => isWithin24Hours(entry.effectiveAt || entry.modifiedAt || updateInfo.date));
+        const isValid = activeModified.length > 0;
 
         if (isValid) {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示修订数量
-        const count = activeModified.length;
+            const count = activeModified.length;
             textEl.innerHTML = `有 ${count} 首旧作翻新`;
 
 
@@ -946,7 +946,7 @@ function applyStickyModifiedTimes(entries) {
             return;
         }
 
-            filteredPoems.forEach((poem, index) => {
+        filteredPoems.forEach((poem, index) => {
             const li = document.createElement('li');
             li.innerText = formatPoemTitleForList(poem.title);
 
@@ -1729,7 +1729,7 @@ function applyStickyModifiedTimes(entries) {
             fiveStars.classList.add('show-stars'); // 默认始终显示
             if (['七律·逆风', '《七律·逆风》'].some(t => poem.title.includes(t)) || poem.title.includes('逆风')) {
                 fiveStars.style.color = '#DE2910'; // China Red
-            } else if (['七律·灵犀', '《七律·灵犀》'].some(t => poem.title.includes(t)) || poem.title.includes('灵犀')) {
+            } else if (['七律·灵犀', '《七律·灵犀》'].some(t => poem.title.includes(t)) || poem.title.includes('灵犀') || poem.title.includes('白雪')) {
                 fiveStars.style.color = '#1E90FF'; // Dodger Blue
             } else {
                 fiveStars.style.color = '#CCCCCC'; // Default Gray
@@ -1894,7 +1894,7 @@ function applyStickyModifiedTimes(entries) {
                 fiveStars.classList.add('show-stars'); // 默认始终显示
                 if (poem.title.includes('逆风')) {
                     fiveStars.style.color = '#DE2910'; // China Red
-                } else if (poem.title.includes('灵犀')) {
+                } else if (poem.title.includes('灵犀') || poem.title.includes('白雪')) {
                     fiveStars.style.color = '#1E90FF'; // Dodger Blue
                 } else {
                     fiveStars.style.color = '#CCCCCC'; // Default Gray
