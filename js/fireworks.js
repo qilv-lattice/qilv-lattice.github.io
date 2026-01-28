@@ -314,13 +314,8 @@
     document.addEventListener('click', unlockAudio);
     document.addEventListener('touchstart', unlockAudio);
 
-    // 监听时间更新，实现 0~7s 循环
-    fwSound.addEventListener('timeupdate', () => {
-        if (fwSound.currentTime >= 7) {
-            fwSound.currentTime = 0;
-            fwSound.play();
-        }
-    });
+    // 移除 7s 强制循环，允许播放到 7840ms
+    // kwSound.addEventListener('timeupdate', ...);
 
     window.triggerFireworks = function () {
         initCanvas();
@@ -352,20 +347,22 @@
             loop();
         }
 
-        // 恢复 visual duration 为 7秒 (配合音频循环)
-        const duration = 7000;
+        // 恢复 visual duration 为 5秒 (配合用户分析)
+        const duration = 5000;
         const interval = 400;
         const endTime = Date.now() + duration;
+
+        // 音频截止时间：7940ms (+100ms)
+        const audioCutoff = 7940;
+        setTimeout(() => {
+            fwSound.pause();
+            fwSound.currentTime = 0;
+        }, audioCutoff);
 
         const timer = setInterval(() => {
             if (Date.now() > endTime) {
                 clearInterval(timer);
-
-                // 声音滞后 0.5秒 结束 (余音)
-                setTimeout(() => {
-                    fwSound.pause();
-                    fwSound.currentTime = 0;
-                }, 500);
+                // 视觉结束，音频继续直到 7840ms
             } else {
                 // 每次随机发射 1-2 枚
                 const count = Math.random() > 0.5 ? 2 : 1;
