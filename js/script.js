@@ -1431,8 +1431,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
-            const tagText = poem.techRomance ? '专属理工极致浪漫' : '专属斯人心灵浪漫';
-            techRomanceTag.innerHTML = tagText;
+            // 统一修改为：字字精工，无远弗届
+            techRomanceTag.innerHTML = '字字精工，无远弗届';
         }
 
         // 五星装饰显示逻辑
@@ -1596,9 +1596,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const techRomanceTag = mainCard.querySelector('#tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
-                // 统一修改为：字字精工，无远弗届 (不再区分理工/斯人)
-                const tagText = '字字精工，无远弗届';
-                techRomanceTag.innerHTML = tagText;
+                // 统一修改为：字字精工，无远弗届
+                techRomanceTag.innerHTML = '字字精工，无远弗届';
             }
 
             // 五星装饰显示逻辑 ("逆风"红星，"灵犀"蓝星，其他默认灰星)
