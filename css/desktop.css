@@ -227,7 +227,7 @@ header {
     position: relative;
     z-index: 1;
     /* 桌面端绝缘：强制取消手机端的上移效果 */
-    transform: none !important;
+    top: 0 !important;
 }
 
 #poem-title {
