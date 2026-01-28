@@ -2314,19 +2314,10 @@ function resetCollapseTimer() {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     initCollapseMenu();
-    initBusuanzi(); // 修复：恢复不蒜子统计
     // 强制隐藏公告小喇叭 (Fix: 确保缓存更新前也能隐藏)
     const notice = document.getElementById('announcement-notice');
     if (notice) notice.style.display = 'none';
 });
-
-// 动态加载不蒜子统计
-function initBusuanzi() {
-    const script = document.createElement('script');
-    script.src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js";
-    script.async = true;
-    document.body.appendChild(script);
-}
 
 // 窗口大小变化时重新初始化
 window.addEventListener('resize', () => {
