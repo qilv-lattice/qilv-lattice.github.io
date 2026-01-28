@@ -1161,6 +1161,11 @@ header.char-game-active {
     animation-delay: 120ms;
 }
 
+.music-branch-group.show .branch-item:nth-child(4) {
+    animation: splatterRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 180ms;
+}
+
 /* 分支项容器 (按钮+列表) */
 .branch-item {
     position: relative;
@@ -1237,15 +1242,6 @@ header.char-game-active {
     box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
 }
 
-.entertainment-branch-group.blue-mode .branch-btn {
-    color: var(--accent-blue);
-    border-color: var(--accent-blue);
-}
-
-.entertainment-branch-group.blue-mode .branch-btn:hover,
-.entertainment-branch-group.blue-mode .branch-item.active .branch-btn {
-    box-shadow: 0 6px 15px rgba(18, 104, 204, 0.25);
-}
 
 /* 三级子菜单 (具体背景列表) */
 .sub-list {
@@ -1450,6 +1446,85 @@ header.char-game-active {
     color: #fff;
 }
 
+.music-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.music-tab {
+    border: 2px solid var(--accent-color);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--accent-color);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1.2;
+}
+
+.music-tab.active {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.music-menu,
+.entertainment-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: var(--card-bg);
+    width: min(85vw, 320px);
+    max-width: 300px;
+    max-height: 70vh;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+.music-menu.show,
+.entertainment-menu.show {
+    display: flex;
+}
+
+.music-menu-title,
+.entertainment-menu-title {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(168, 63, 63, 0.2);
+    width: 100%;
+    text-align: center;
+}
+
+.music-menu.blue-mode .music-menu-title,
+.entertainment-menu.blue-mode .entertainment-menu-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+.music-menu.blue-mode .music-tab {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.music-menu.blue-mode .music-tab.active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
 .toc-list {
     list-style: none;
     width: 100%;
@@ -1528,6 +1603,24 @@ header.char-game-active {
 
 #toc-list li.new-work-highlight::after {
     content: "";
+}
+
+.music-catalog-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.music-menu.blue-mode .music-catalog-list li.active {
+    color: var(--accent-blue);
+}
+
+.entertainment-menu-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.entertainment-menu.blue-mode .entertainment-menu-list li.active {
+    color: var(--accent-blue);
 }
 
 /* 目录列表修订高亮 */

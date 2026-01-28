@@ -76,13 +76,12 @@
         <!-- 益智娱乐按钮（含二级菜单） -->
         <div class="music-btn-wrapper entertainment-btn-wrapper">
             <button id="entertainment-btn" class="widget-btn" onclick="toggleEntertainmentMenu()">益智<br>娱乐</button>
-            <div id="entertainment-branch-group" class="music-branch-group entertainment-branch-group">
-                <div class="branch-item" data-action="char-game">
-                    <button class="branch-btn" data-action="char-game">填字<br>挑战</button>
-                </div>
-                <div class="branch-item" data-action="fireworks">
-                    <button class="branch-btn" data-action="fireworks">烟花<br>表演</button>
-                </div>
+            <div id="entertainment-menu" class="entertainment-menu">
+                <div class="entertainment-menu-title">益智娱乐</div>
+                <ul id="entertainment-menu-list" class="toc-list entertainment-menu-list">
+                    <li data-action="char-game">填字挑战</li>
+                    <li data-action="fireworks">烟花表演</li>
+                </ul>
             </div>
         </div>
 
@@ -159,39 +158,20 @@
                 </svg>
             </div>
 
-            <!-- 音乐分类列表 (水平分叉印章菜单) -->
-            <div id="music-branch-group" class="music-branch-group">
-                <!-- 分类1：古琴 -->
-                <div class="branch-item">
-                    <div class="branch-btn">古琴</div>
-                    <ul class="sub-list">
-                        <li data-src="assets/music01-阳关三叠.mp3">阳关三叠</li>
-                        <li data-src="assets/music11-高山流水.mp3">高山流水</li>
-                        <li data-src="assets/music10-半山听雨.mp3">半山听雨</li>
-                    </ul>
+            <!-- 音乐名录下拉菜单（作品名录风格） -->
+            <div id="music-menu" class="music-menu">
+                <div class="music-menu-title">音乐名录</div>
+                <div class="music-tabs">
+                    <button class="music-tab active" data-filter="guqin">古琴</button>
+                    <button class="music-tab" data-filter="guzheng">古筝</button>
+                    <button class="music-tab" data-filter="piano">钢琴</button>
+                    <button class="music-tab" data-filter="song">歌曲</button>
                 </div>
-                <!-- 分类2：古筝 -->
-                <div class="branch-item">
-                    <div class="branch-btn">古筝</div>
-                    <ul class="sub-list">
-                        <li data-src="assets/music02-梁祝.mp3">梁祝</li>
-                        <li data-src="assets/music03-琵琶语.mp3">琵琶语</li>
-                        <li data-src="assets/music04-渔歌唱晚.mp3">渔歌唱晚</li>
-                        <li data-src="assets/music07-神话.mp3">神话</li>
-                        <li data-src="assets/music09-青城山下白素贞.mp3">青城山下白素贞</li>
-                        <li data-src="assets/music12-烟雨唱扬州.mp3">烟雨唱扬州</li>
-                    </ul>
-                </div>
-                <!-- 分类3：钢琴 -->
-                <div class="branch-item">
-                    <div class="branch-btn">钢琴</div>
-                    <ul class="sub-list">
-                        <li data-src="assets/music05-致爱丽丝.mp3">致艾丽丝</li>
-                        <li data-src="assets/music06-悲怆奏鸣曲.mp3">悲怆奏鸣曲</li>
-                        <li data-src="assets/music08-克罗地亚狂想曲.mp3">克罗地亚狂想曲</li>
-                    </ul>
-                </div>
+                <ul id="music-catalog-list" class="toc-list music-catalog-list">
+                    <!-- 动态渲染内容 -->
+                </ul>
             </div>
+
         </div> <!-- 关闭 music-btn-wrapper -->
 
         <!-- 音乐播放模式切换 -->
