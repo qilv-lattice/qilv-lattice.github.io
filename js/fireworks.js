@@ -295,8 +295,50 @@
         rockets.push(new Rocket(launchX, targetY));
     }
 
+    // === 音效管理 ===
+    const fwSound = new Audio('assets/festive-fireworks-with-the-whistle-of-rockets.mp3');
+    fwSound.loop = true;
+
+    // 移动端音频解锁：用户第一次点击任何地方时，静音播放一下，解锁 AudioContext
+    let audioUnlocked = false;
+    function unlockAudio() {
+        if (audioUnlocked) return;
+        fwSound.play().then(() => {
+            fwSound.pause();
+            fwSound.currentTime = 0;
+            audioUnlocked = true;
+        }).catch(() => { });
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('touchstart', unlockAudio);
+    }
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+
+    // 监听时间更新，实现 0~7s 循环
+    fwSound.addEventListener('timeupdate', () => {
+        if (fwSound.currentTime >= 7) {
+            fwSound.currentTime = 0;
+            fwSound.play();
+        }
+    });
+
     window.triggerFireworks = function () {
         initCanvas();
+
+        // 用户要求：去除物理延迟，直接播放，测试声音是否正常
+        // 直接播放是浏览器兼容性最好的方式
+        try {
+            fwSound.volume = 0.6;
+            fwSound.currentTime = 0;
+            const playPromise = fwSound.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.error("Audio play failed:", error);
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
 
         // 修复：【立即】发射第一枚，防止loop因队列为空而直接停止
         launchRocket();
@@ -310,13 +352,20 @@
             loop();
         }
 
-        const duration = 8000; // 时长延长至 8-10秒
-        const interval = 400;  // 发射间隔加密 (原500)
+        // 恢复 visual duration 为 7秒 (配合音频循环)
+        const duration = 7000;
+        const interval = 400;
         const endTime = Date.now() + duration;
 
         const timer = setInterval(() => {
             if (Date.now() > endTime) {
                 clearInterval(timer);
+
+                // 声音滞后 0.5秒 结束 (余音)
+                setTimeout(() => {
+                    fwSound.pause();
+                    fwSound.currentTime = 0;
+                }, 500);
             } else {
                 // 每次随机发射 1-2 枚
                 const count = Math.random() > 0.5 ? 2 : 1;

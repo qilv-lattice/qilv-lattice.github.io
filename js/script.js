@@ -537,9 +537,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(`Loaded ${poems.length} poems.`);
             renderTOC();
 
-            // 随机开始
+            // 随机开始 (首次加载，跳过动画)
             currentIndex = Math.floor(Math.random() * poems.length);
-            renderPoem(currentIndex);
+            renderPoem(currentIndex, true);
             initCharGame();
             const gameOverlay = document.getElementById('char-game-overlay');
             if (gameOverlay && gameOverlay.classList.contains('active')) {
@@ -1542,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         parent.insertBefore(wrapper, nextSibling);
     }
 
-    function renderPoem(index) {
+    function renderPoem(index, skipAnimation = false) {
         if (poems.length === 0) return;
         const poem = poems[index];
         const mainCard = getMainCard();
@@ -1551,11 +1551,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const bodyDiv = mainCard.querySelector('#poem-body');
         if (!textContainer || !bodyDiv) return;
 
-        // 3D 翻页淡出动画
-        textContainer.classList.remove('page-flip-in');
-        textContainer.classList.add('page-flip-out');
+        // 如果是首次加载 (skipAnimation = true)，直接渲染，不执行翻页动画
+        if (!skipAnimation) {
+            // 3D 翻页淡出动画 + 水墨晕染
+            textContainer.classList.remove('page-flip-in', 'ink-fade-in');
+            textContainer.classList.add('page-flip-out', 'ink-fade-out');
+        } else {
+            // 首次加载，确保没有残留动画类
+            textContainer.classList.remove('page-flip-out', 'ink-fade-out', 'page-flip-in', 'ink-fade-in');
+        }
 
-        setTimeout(() => {
+        const renderContent = () => {
             // 处理标题（如果标题里有通韵标注则移除，备注通过弹窗显示）
             let displayTitle = poem.title;
             const tongYunRegex = /[\(（]通韵[\)）]/;
@@ -1608,16 +1614,28 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // 智能注释提醒逻辑已移除
+        };
 
-
-            // 3D 翻页淡入动画
-            textContainer.classList.remove('page-flip-out');
-            textContainer.classList.add('page-flip-in');
-
+        // 如果跳过动画，直接渲染；否则延迟执行以配合动画
+        if (skipAnimation) {
+            renderContent();
             lockMobileCardHeight();
+            // 首次加载也需要同步侧翼卡片
             wingRandomizeOnNextSync = true;
             syncWingCards();
-        }, 400);
+        } else {
+            setTimeout(() => {
+                renderContent();
+
+                // 3D 翻页淡入动画 + 水墨晕染
+                textContainer.classList.remove('page-flip-out', 'ink-fade-out');
+                textContainer.classList.add('page-flip-in', 'ink-fade-in');
+
+                lockMobileCardHeight();
+                wingRandomizeOnNextSync = true;
+                syncWingCards();
+            }, 400);
+        }
     }
 
     function nextPoem() {
