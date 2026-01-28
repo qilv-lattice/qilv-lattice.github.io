@@ -76,13 +76,12 @@
         <!-- 益智娱乐按钮（含二级菜单） -->
         <div class="music-btn-wrapper entertainment-btn-wrapper">
             <button id="entertainment-btn" class="widget-btn" onclick="toggleEntertainmentMenu()">益智<br>娱乐</button>
-            <div id="entertainment-branch-group" class="music-branch-group entertainment-branch-group">
-                <div class="branch-item" data-action="char-game">
-                    <button class="branch-btn" data-action="char-game">填字<br>挑战</button>
-                </div>
-                <div class="branch-item" data-action="fireworks">
-                    <button class="branch-btn" data-action="fireworks">烟花<br>表演</button>
-                </div>
+            <div id="entertainment-menu" class="entertainment-menu">
+                <h3 class="toc-title">益智娱乐</h3>
+                <ul id="entertainment-menu-list" class="toc-list entertainment-menu-list">
+                    <li data-action="char-game">填字挑战</li>
+                    <li data-action="fireworks">烟花表演</li>
+                </ul>
             </div>
         </div>
 

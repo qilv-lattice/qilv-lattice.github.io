@@ -1499,9 +1499,9 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function openEntertainmentMenu() {
-        const group = document.getElementById('entertainment-branch-group');
-        if (!group) return;
-        group.classList.add('show');
+        const menu = document.getElementById('entertainment-menu');
+        if (!menu) return;
+        menu.classList.add('show');
         clearTimeout(entertainmentMenuTimer);
         entertainmentMenuTimer = setTimeout(() => {
             closeEntertainmentMenu();
@@ -1509,16 +1509,16 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function closeEntertainmentMenu() {
-        const group = document.getElementById('entertainment-branch-group');
-        if (!group) return;
-        group.classList.remove('show');
+        const menu = document.getElementById('entertainment-menu');
+        if (!menu) return;
+        menu.classList.remove('show');
         clearTimeout(entertainmentMenuTimer);
     }
 
     function toggleEntertainmentMenu() {
-        const group = document.getElementById('entertainment-branch-group');
-        if (!group) return;
-        if (group.classList.contains('show')) {
+        const menu = document.getElementById('entertainment-menu');
+        if (!menu) return;
+        if (menu.classList.contains('show')) {
             closeEntertainmentMenu();
         } else {
             openEntertainmentMenu();
@@ -1526,12 +1526,18 @@ function applyStickyModifiedTimes(entries) {
     }
 
     function initEntertainmentMenu() {
-        const group = document.getElementById('entertainment-branch-group');
-        if (!group) return;
-        group.querySelectorAll('.branch-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        const menu = document.getElementById('entertainment-menu');
+        const list = document.getElementById('entertainment-menu-list');
+        const btn = document.getElementById('entertainment-btn');
+        if (!menu || !list) return;
+
+        if (list.dataset.bound !== 'true') {
+            list.dataset.bound = 'true';
+            list.addEventListener('click', (e) => {
+                const item = e.target.closest('li[data-action]');
+                if (!item) return;
                 e.stopPropagation();
-                const action = btn.dataset.action;
+                const action = item.dataset.action;
                 if (action === 'char-game') {
                     if (window.toggleCharGame) window.toggleCharGame(true);
                 }
@@ -1546,7 +1552,16 @@ function applyStickyModifiedTimes(entries) {
                 }
                 closeEntertainmentMenu();
             });
-        });
+        }
+
+        if (menu.dataset.outsideBound !== 'true') {
+            menu.dataset.outsideBound = 'true';
+            document.addEventListener('click', (e) => {
+                if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+                    closeEntertainmentMenu();
+                }
+            });
+        }
     }
 
     function selectRandomWingIndices() {
@@ -1833,7 +1848,7 @@ function applyStickyModifiedTimes(entries) {
         const musicControl = document.getElementById('music-control');
         const sealBtn = document.getElementById('seal-btn');
         const viewModeGroup = document.getElementById('viewmode-branch-group');
-        const entertainmentGroup = document.getElementById('entertainment-branch-group');
+        const entertainmentMenu = document.getElementById('entertainment-menu');
         const entertainmentBtn = document.getElementById('entertainment-btn');
         const settingsBtn = document.getElementById('settings-btn');
         const musicMenu = document.getElementById('music-menu');
@@ -1845,7 +1860,7 @@ function applyStickyModifiedTimes(entries) {
         if (musicControl) musicControl.classList.toggle('blue-mode');
         if (sealBtn) sealBtn.classList.toggle('blue-mode');
         if (viewModeGroup) viewModeGroup.classList.toggle('blue-mode');
-        if (entertainmentGroup) entertainmentGroup.classList.toggle('blue-mode');
+        if (entertainmentMenu) entertainmentMenu.classList.toggle('blue-mode');
         if (entertainmentBtn) entertainmentBtn.classList.toggle('blue-mode');
         if (settingsBtn) settingsBtn.classList.toggle('blue-mode');
         if (musicMenu) musicMenu.classList.toggle('blue-mode');
@@ -2367,7 +2382,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #viewmode-branch-group, #viewmode-branch-group .branch-btn, #entertainment-branch-group, #entertainment-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);
