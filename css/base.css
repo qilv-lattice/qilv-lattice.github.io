@@ -1953,6 +1953,9 @@ header.char-game-active {
     display: flex;
 }
 
+.desktop-only {
+    display: none;
+}
 /* Serendipity 英文装饰 - 旋转90度 */
 .serendipity-text {
     position: absolute;
@@ -2335,6 +2338,10 @@ header.char-game-active {
 /* ===== 桌面断点预备 (1024px+) ===== */
 /* 核心布局调整，美学层由 desktop.css 提供 */
 @media (min-width: 1024px) {
+    .desktop-only {
+        display: flex;
+    }
+
     body {
         display: flex;
         justify-content: center;
