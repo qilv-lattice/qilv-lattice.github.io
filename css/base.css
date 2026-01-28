@@ -1460,6 +1460,25 @@ header.char-game-active {
     z-index: 1000;
 }
 
+.theme-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: var(--card-bg);
+    width: min(56vw, 210px);
+    max-width: 210px;
+    max-height: 70vh;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
 .entertainment-menu {
     display: none;
     position: absolute;
@@ -1480,6 +1499,10 @@ header.char-game-active {
 }
 
 .music-menu.show {
+    display: flex;
+}
+
+.theme-menu.show {
     display: flex;
 }
 
@@ -1511,6 +1534,21 @@ header.char-game-active {
     color: var(--accent-blue);
 }
 
+.theme-menu.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+.theme-menu.blue-mode .toc-tab {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.theme-menu.blue-mode .toc-tab.active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
 .entertainment-menu.blue-mode .toc-title {
     color: var(--accent-blue);
     border-bottom-color: rgba(18, 104, 204, 0.2);
@@ -1522,6 +1560,15 @@ header.char-game-active {
 }
 
 .entertainment-menu.blue-mode .entertainment-menu-list li.active {
+    color: var(--accent-blue);
+}
+
+.theme-menu-list li.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.theme-menu.blue-mode .theme-menu-list li.active {
     color: var(--accent-blue);
 }
 

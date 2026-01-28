@@ -1874,7 +1874,7 @@ function applyStickyModifiedTimes(entries) {
         const settingsBtn = document.getElementById('settings-btn');
         const musicMenu = document.getElementById('music-menu');
         const bgList = document.getElementById('bg-list');
-        const themeList = document.getElementById('theme-list');
+        const themeMenu = document.getElementById('theme-menu');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
@@ -1886,7 +1886,7 @@ function applyStickyModifiedTimes(entries) {
         if (settingsBtn) settingsBtn.classList.toggle('blue-mode');
         if (musicMenu) musicMenu.classList.toggle('blue-mode');
         if (bgList) bgList.classList.toggle('blue-mode');
-        if (themeList) themeList.classList.toggle('blue-mode');
+        if (themeMenu) themeMenu.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
@@ -2057,34 +2057,28 @@ function applyStickyModifiedTimes(entries) {
         const savedMode = localStorage.getItem('noteMode') || 'default';
         selectTheme(savedMode);
 
-        // 绑定下拉列表事件
+        // 绑定下拉菜单事件
         const btn = document.getElementById('theme-btn');
+        const menu = document.getElementById('theme-menu');
         const list = document.getElementById('theme-list');
 
-        if (btn && list) {
-            // 点击按钮显示/隐藏列表
+        if (btn && menu && list) {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // 动态定位
-                const rect = btn.getBoundingClientRect();
-                list.style.top = (rect.bottom + 5) + 'px';
-                list.style.left = rect.left + 'px';
-                list.classList.toggle('show');
+                menu.classList.toggle('show');
             });
 
-            // 点击列表项
             list.querySelectorAll('li').forEach(item => {
                 item.addEventListener('click', (e) => {
                     const mode = e.target.dataset.value;
                     selectTheme(mode);
-                    list.classList.remove('show');
+                    menu.classList.remove('show');
                 });
             });
 
-            // 点击外部关闭
             document.addEventListener('click', (e) => {
-                if (!btn.contains(e.target) && !list.contains(e.target)) {
-                    list.classList.remove('show');
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('show');
                 }
             });
         }
@@ -2403,7 +2397,7 @@ function initCollapseMenu() {
     });
 
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
-    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
+    wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-list, #theme-list li, #music-list li, #bg-list li, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-branch-group, #viewmode-branch-group .branch-btn').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);
