@@ -1908,7 +1908,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 fiveStars.classList.remove('rainbow-stars');
                 if (poem.title.includes('纠缠')) {
                     fiveStars.classList.add('rainbow-stars');
-                    fiveStars.style.color = '#ff3b3b';
                 } else if (poem.title.includes('逆风')) {
                     fiveStars.style.color = '#DE2910'; // China Red
                 } else if (poem.title.includes('灵犀') || poem.title.includes('白雪')) {
