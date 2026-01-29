@@ -837,9 +837,9 @@ header.char-game-active {
     font-family: var(--font-title);
     font-size: 0.85rem;
     font-weight: bold;
-    color: #fff;
-    background: var(--accent-color);
-    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.32);
+    border: 1.5px solid rgba(255, 255, 255, 0.65);
     border-radius: 4px;
     width: 50px;
     height: 50px;
@@ -847,22 +847,28 @@ header.char-game-active {
     align-items: center;
     text-align: center;
     cursor: pointer;
+    backdrop-filter: blur(10px) saturate(1.15);
+    -webkit-backdrop-filter: blur(10px) saturate(1.15);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .settings-btn.blue-mode {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(18, 104, 204, 0.12);
+    border-color: rgba(18, 104, 204, 0.55);
 }
 
-/* 展开过一次后：白底红字 */
+/* ?????????????????*/
 .settings-btn.settings-used {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(255, 255, 255, 0.75);
     color: var(--accent-color);
 }
 
 .settings-btn.blue-mode.settings-used {
     color: var(--accent-blue);
-    border-color: var(--accent-blue);
+    border-color: rgba(18, 104, 204, 0.65);
+    background: rgba(18, 104, 204, 0.16);
 }
 
 /* 折叠状态 */
