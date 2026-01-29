@@ -2099,7 +2099,7 @@ header.char-game-active {
     top: -25px;
     right: 0;
     width: 2px;
-    height: 185px;
+    height: 155px;
     /* 25px (tag offset) + 9个字到达"漫" */
     background: var(--accent-color);
     opacity: 0.7;
