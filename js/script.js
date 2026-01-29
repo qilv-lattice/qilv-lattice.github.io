@@ -318,11 +318,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configResp.json();
         backgrounds = config.backgrounds || [];
 
-        // 2. 初始随机背景
+        // 2. 初始背景：移动端固定“千里江山”，桌面端随机
         if (backgrounds.length > 0) {
-            bgIndex = Math.floor(Math.random() * backgrounds.length);
-            applyBackground(bgIndex);
-            bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
+            const isMobileLayout = window.innerWidth <= 1023;
+            if (isMobileLayout) {
+                bgMode = 'fixed';
+                bgIndex = 0;
+                fixedBgIndex = 0;
+                applyBackground(bgIndex);
+                const btn = document.getElementById('bg-btn');
+                if (btn) {
+                    btn.innerHTML = '固定<br>背景';
+                    btn.classList.add('active-mode');
+                }
+            } else {
+                bgIndex = Math.floor(Math.random() * backgrounds.length);
+                applyBackground(bgIndex);
+                bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
+            }
         }
 
         // 3. 加载诗词数据 (移到这里确保顺序)
