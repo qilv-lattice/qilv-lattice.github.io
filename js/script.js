@@ -2607,18 +2607,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const notice = document.getElementById('announcement-notice');
     if (notice) notice.style.display = 'none';
 
-    /* 
-    // 节日彩蛋：2026年春节(1.29) 自动燃放烟花 (已关闭：因浏览器自动播放策略导致无声)
+    // 节日彩蛋：2026年春节(1.29) 交互式烟花
+    // 用户请求：关闭自动播放，改由小喇叭引导用户点击燃放 (解决音频限制)
     const today = new Date();
     if (today.getFullYear() === 2026 && today.getMonth() === 0 && today.getDate() === 29) {
-        setTimeout(() => {
-            if (window.triggerFireworks) {
-                console.log("Happy CNY! Auto-triggering fireworks.");
-                window.triggerFireworks();
-            }
-        }, 1200);
+        const blessingNotice = document.getElementById('blessing-notice');
+        const blessingText = document.getElementById('blessing-notice-text');
+
+        if (blessingNotice && blessingText) {
+            // 1. 修改文案
+            blessingText.innerHTML = "🧨 新春快乐！点击此处为您燃放烟花送祝福！🎆";
+
+            // 2. 覆盖点击事件 (点击 -> 放烟花，不再直接隐藏)
+            blessingNotice.onclick = function (e) {
+                e.stopPropagation(); // 防止冒泡
+                if (window.triggerFireworks) {
+                    window.triggerFireworks();
+                }
+                // 仅点击多次后或长按才隐藏？暂时保持常驻方便多次玩
+            };
+
+            // 3. 强制显示 (不受 CSS 隐藏限制)
+            blessingNotice.style.display = 'flex';
+
+            // 4. (可选) 给个小动画提示 注意这里
+            blessingNotice.style.animation = 'pulse 2s infinite';
+        }
     }
-    */
 });
 
 // 窗口大小变化时重新初始化
