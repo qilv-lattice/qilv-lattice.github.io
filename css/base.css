@@ -2178,27 +2178,18 @@ header.char-game-active {
 }
 
 .five-stars-row.rainbow-stars {
-    color: #ff4d4d;
+    color: #ffffff;
 }
 
-.five-stars-row.rainbow-stars svg:nth-child(1) {
-    color: #ff4d4d;
+.five-stars-row.rainbow-stars svg {
+    fill: url(#star-rainbow);
 }
 
-.five-stars-row.rainbow-stars svg:nth-child(2) {
-    color: #ffa200;
-}
-
-.five-stars-row.rainbow-stars svg:nth-child(3) {
-    color: #ffe100;
-}
-
-.five-stars-row.rainbow-stars svg:nth-child(4) {
-    color: #4cd964;
-}
-
-.five-stars-row.rainbow-stars svg:nth-child(5) {
-    color: #3b82f6;
+.star-gradient-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 /* 印章在移动端显示 - 位置与桌面端一致 */
