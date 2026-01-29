@@ -2664,12 +2664,14 @@ header.char-game-active {
     }
 }
 
-/* 临时隐藏所有小喇叭通知（保留注释功能） */
+/* 临时隐藏所有小喇叭通知（保留注释功能） - 已解禁，由JS控制显示 */
+/* 
 .update-notice,
 .modification-notice,
 #announcement-notice {
     display: none !important;
-}
+} 
+*/
 
 /* ?? + ??????????/???????? */
 .card-header-group {
