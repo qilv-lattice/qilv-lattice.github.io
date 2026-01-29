@@ -1902,20 +1902,51 @@ document.addEventListener('DOMContentLoaded', async () => {
                 techRomanceTag.innerHTML = '字字精工，无远弗届';
             }
 
-            // 五星装饰显示逻辑 ("逆风"红星，"灵犀"蓝星，其他默认灰星)
+            // 五星装饰显示逻辑 - 配置化重构
             const fiveStars = mainCard.querySelector('.five-stars-row');
             if (fiveStars) {
                 fiveStars.classList.add('show-stars'); // 默认始终显示
                 fiveStars.classList.remove('rainbow-stars');
-                if (poem.title.includes('纠缠')) {
-                    fiveStars.classList.add('rainbow-stars');
-                } else if (poem.title.includes('逆风')) {
-                    fiveStars.style.color = '#DE2910'; // China Red
-                } else if (poem.title.includes('灵犀') || poem.title.includes('白雪')) {
-                    fiveStars.style.color = '#1E90FF'; // Dodger Blue
-                } else {
-                    fiveStars.style.color = '#CCCCCC'; // Default Gray
+
+                // 星星样式配置表 (如有新书，请在此处添加)
+                const STAR_STYLE_CONFIG = [
+                    {
+                        keywords: ['纠缠'],
+                        className: 'rainbow-stars',
+                        color: null
+                    },
+                    {
+                        keywords: ['逆风', '教员'],
+                        color: '#DE2910' // 中国红
+                    },
+                    {
+                        keywords: ['灵犀', '白雪', '自讽'],
+                        color: '#1E90FF' // 灵动蓝
+                    }
+                ];
+
+                // 默认颜色
+                let starColor = '#CCCCCC'; // Default Gray
+
+                // 查找匹配配置
+                const matchedConfig = STAR_STYLE_CONFIG.find(config =>
+                    config.keywords.some(keyword => poem.title.includes(keyword))
+                );
+
+                // 应用配置
+                if (matchedConfig) {
+                    if (matchedConfig.className) {
+                        fiveStars.classList.add(matchedConfig.className);
+                    }
+                    if (matchedConfig.color) {
+                        starColor = matchedConfig.color;
+                    }
+                    if (matchedConfig.fill) {
+                        fiveStars.style.fill = matchedConfig.fill;
+                    }
                 }
+
+                fiveStars.style.color = starColor;
             }
 
             // 智能注释提醒逻辑已移除
