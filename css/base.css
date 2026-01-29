@@ -1999,6 +1999,7 @@ header.char-game-active {
 .desktop-only {
     display: none;
 }
+
 /* Serendipity 英文装饰 - 旋转90度 */
 .serendipity-text {
     position: absolute;
@@ -2666,7 +2667,6 @@ header.char-game-active {
 /* 临时隐藏所有小喇叭通知（保留注释功能） */
 .update-notice,
 .modification-notice,
-.blessing-notice,
 #announcement-notice {
     display: none !important;
 }
