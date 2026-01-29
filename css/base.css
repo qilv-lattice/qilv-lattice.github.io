@@ -2515,7 +2515,7 @@ header.char-game-active {
     z-index: 2000;
     cursor: pointer;
     font-size: 0.8rem;
-    white-space: nowrap;
+    /* white-space: nowrap; (Removed to allow multi-line text) */
     animation: notice-slide-in 0.4s ease-out;
 }
 
