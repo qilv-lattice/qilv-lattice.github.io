@@ -2386,6 +2386,10 @@ header.char-game-active {
         display: flex;
     }
 
+    #blessing-notice {
+        display: none !important;
+    }
+
     body {
         display: flex;
         justify-content: center;
