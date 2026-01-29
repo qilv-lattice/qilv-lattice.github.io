@@ -2177,6 +2177,21 @@ header.char-game-active {
     opacity: 1;
 }
 
+.five-stars-row.rainbow-stars {
+    color: #ff3b3b;
+    animation: star-rainbow 6s linear infinite;
+}
+
+@keyframes star-rainbow {
+    from {
+        filter: hue-rotate(0deg);
+    }
+
+    to {
+        filter: hue-rotate(360deg);
+    }
+}
+
 /* 印章在移动端显示 - 位置与桌面端一致 */
 .stamps-container {
     display: grid;

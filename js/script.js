@@ -1892,7 +1892,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const fiveStars = mainCard.querySelector('.five-stars-row');
             if (fiveStars) {
                 fiveStars.classList.add('show-stars'); // 默认始终显示
-                if (poem.title.includes('逆风')) {
+                fiveStars.classList.remove('rainbow-stars');
+                if (poem.title.includes('纠缠')) {
+                    fiveStars.classList.add('rainbow-stars');
+                    fiveStars.style.color = '#ff3b3b';
+                } else if (poem.title.includes('逆风')) {
                     fiveStars.style.color = '#DE2910'; // China Red
                 } else if (poem.title.includes('灵犀') || poem.title.includes('白雪')) {
                     fiveStars.style.color = '#1E90FF'; // Dodger Blue
