@@ -2031,7 +2031,7 @@ header.char-game-active {
     /* 确保显示在花笺上方 */
     writing-mode: vertical-rl;
     font-size: 11px;
-    color: var(--accent-blue);
+    color: #1E90FF;
     opacity: 0.8;
     letter-spacing: 3px;
     font-family: 'Noto Serif SC', serif;
