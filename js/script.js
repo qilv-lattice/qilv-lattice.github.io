@@ -1904,35 +1904,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 五星装饰显示逻辑 ("逆风"红星，"灵犀"蓝星，其他默认灰星)
             const fiveStars = mainCard.querySelector('.five-stars-row');
-            if (fiveStars && titleEl) {
-                // 重置状态
-                fiveStars.style.display = '';
-                titleEl.style.color = '';
-
-                let isRedHighlight = false;
-                if (poem.highlightTime) {
-                    const highlightStart = new Date(poem.highlightTime).getTime();
-                    const highlightEnd = highlightStart + 24 * 60 * 60 * 1000;
-                    const now = Date.now();
-                    if (now >= highlightStart - 600000 && now <= highlightEnd) {
-                        isRedHighlight = true;
-                    }
-                }
-
-                // 标题限时高亮逻辑 (仅针对"十年")
-                if (poem.title.includes('十年') && isRedHighlight) {
-                    titleEl.style.color = '#DE2910'; // Title Red
-                }
-
-                // 星星显示逻辑
-                fiveStars.classList.add('show-stars');
+            if (fiveStars) {
+                fiveStars.classList.add('show-stars'); // 默认始终显示
                 fiveStars.classList.remove('rainbow-stars');
-
                 if (poem.title.includes('纠缠')) {
                     fiveStars.classList.add('rainbow-stars');
                 } else if (poem.title.includes('逆风')) {
                     fiveStars.style.color = '#DE2910'; // China Red
-                } else if (poem.title.includes('灵犀') || poem.title.includes('白雪') || poem.title.includes('十年')) {
+                } else if (poem.title.includes('灵犀') || poem.title.includes('白雪')) {
                     fiveStars.style.color = '#1E90FF'; // Dodger Blue
                 } else {
                     fiveStars.style.color = '#CCCCCC'; // Default Gray

@@ -1,14 +1,6 @@
 {
-    "lastUpdate": "2026-01-29 19:00",
+    "lastUpdate": "2026-01-29 09:30",
     "latestWorks": [
-        {
-            "title": "???????",
-            "receivedAt": "2026-01-29 19:00"
-        },
-        {
-            "title": "《七律·十年》",
-            "receivedAt": "2026-01-29 19:00"
-        },
         {
             "title": "《七律·游侠》",
             "receivedAt": "2026-01-29 09:30"
@@ -32,6 +24,10 @@
         {
             "title": "《七律·迷失》",
             "receivedAt": "2026-01-26 09:46"
+        },
+        {
+            "title": "《七律·论文》",
+            "receivedAt": "2026-01-25 14:15"
         }
     ],
     "modifiedWorks": [
@@ -61,32 +57,6 @@
         }
     ],
     "poems": [
-        {
-            "title": "?????",
-            "author": "当代 | 理工博士",
-            "content": [
-                "????????????????",
-                "????????????????",
-                "????????????????",
-                "????????????????"
-            ],
-            "notes": [],
-            "techRomance": false
-        },
-        {
-            "title": "七律·十年",
-            "author": "当代 | 理工博士",
-            "content": [
-                "落日迷人楼倚楼，风吹你我小街头。",
-                "青丝一句君安好，红线两端谁在愁。",
-                "仪式奢华非稳态，简单生活见温柔。",
-                "时光不与深情便，文艺迟来卷已收。"
-            ],
-            "notes": [],
-            "techRomance": false,
-            "highlightTime": "2026-01-29T19:00:00+08:00",
-            "devNote": "Ten Years. A memory of the Red Thread. For Her."
-        },
         {
             "title": "七律·游侠",
             "author": "当代 | 理工博士",
