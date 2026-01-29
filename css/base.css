@@ -2699,3 +2699,9 @@ header.char-game-active {
     top: auto;
     left: auto;
 }
+
+@media (max-width: 1023px) {
+    #blessing-notice {
+        display: none !important;
+    }
+}
