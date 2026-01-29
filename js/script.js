@@ -2607,18 +2607,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const notice = document.getElementById('announcement-notice');
     if (notice) notice.style.display = 'none';
 
-    // 节日彩蛋：2026年春节(1.29) 自动燃放烟花
-    // 用户请求：今天每次进入网站都播放
+    /* 
+    // 节日彩蛋：2026年春节(1.29) 自动燃放烟花 (已关闭：因浏览器自动播放策略导致无声)
     const today = new Date();
-    // 宽容匹配：1月29日 (注意月份从0开始)
     if (today.getFullYear() === 2026 && today.getMonth() === 0 && today.getDate() === 29) {
         setTimeout(() => {
             if (window.triggerFireworks) {
                 console.log("Happy CNY! Auto-triggering fireworks.");
                 window.triggerFireworks();
             }
-        }, 1200); // 稍微延迟一点，等待页面完全就绪
+        }, 1200);
     }
+    */
 });
 
 // 窗口大小变化时重新初始化
