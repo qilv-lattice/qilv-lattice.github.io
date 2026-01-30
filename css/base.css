@@ -2578,6 +2578,11 @@ header.char-game-active {
 
 /* 黄色公告喇叭 - 在蓝色喇叭下方 */
 #announcement-notice {
+    background: #fff;
+    color: #e6a23c;
+    /* 警示黄/公告黄 */
+    border: 2px solid #e6a23c;
+    box-shadow: 0 2px 8px rgba(230, 162, 60, 0.2);
     top: 240px;
     /* 视听按钮大概位置下方 */
     left: auto;
