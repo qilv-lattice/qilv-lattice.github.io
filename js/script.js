@@ -1742,14 +1742,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             fiveStars.classList.add('show-stars'); // 默认始终显示
             fiveStars.classList.remove('rainbow-stars');
             fiveStars.style.color = '';
-            if (poem.title.includes('纠缠')) {
-                fiveStars.classList.add('rainbow-stars');
-            } else if (['七律·逆风', '《七律·逆风》'].some(t => poem.title.includes(t)) || poem.title.includes('逆风')) {
-                fiveStars.style.color = '#DE2910'; // China Red
-            } else if (['七律·灵犀', '《七律·灵犀》'].some(t => poem.title.includes(t)) || poem.title.includes('灵犀') || poem.title.includes('白雪')) {
-                fiveStars.style.color = '#1E90FF'; // Dodger Blue
+            // 星星样式配置表 (需与 renderPoem 保持一致)
+            const STAR_STYLE_CONFIG = [
+                {
+                    keywords: ['纠缠', '人生', '尤物'],
+                    className: 'rainbow-stars',
+                    color: null
+                },
+                {
+                    keywords: ['逆风', '教员', '呐喊'],
+                    color: '#DE2910' // 中国红
+                },
+                {
+                    keywords: ['灵犀', '白雪', '自讽', '独行'],
+                    color: '#1E90FF' // 灵动蓝
+                }
+            ];
+
+            let starColor = '#CCCCCC'; // Default Gray
+            const matchedConfig = STAR_STYLE_CONFIG.find(config =>
+                config.keywords.some(keyword => poem.title.includes(keyword))
+            );
+
+            if (matchedConfig) {
+                if (matchedConfig.className) {
+                    fiveStars.classList.add(matchedConfig.className);
+                    fiveStars.style.color = '';
+                } else if (matchedConfig.color) {
+                    fiveStars.style.color = matchedConfig.color;
+                }
             } else {
-                fiveStars.style.color = '#CCCCCC'; // Default Gray
+                fiveStars.style.color = starColor;
             }
         }
     }
