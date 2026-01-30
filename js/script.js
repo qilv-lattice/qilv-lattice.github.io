@@ -706,6 +706,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const textEl = document.getElementById('announcement-text');
         if (textEl && updateInfo.announcement) {
             textEl.innerHTML = updateInfo.announcement;
+            noticeEl.style.display = 'flex';
         } else if (!updateInfo.announcement) {
             // 没有公告则隐藏
             noticeEl.style.setProperty('display', 'none', 'important');
