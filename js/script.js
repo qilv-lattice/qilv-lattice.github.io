@@ -1741,7 +1741,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (fiveStars) {
             fiveStars.classList.add('show-stars'); // 默认始终显示
             fiveStars.classList.remove('rainbow-stars');
-            if (['七律·逆风', '《七律·逆风》'].some(t => poem.title.includes(t)) || poem.title.includes('逆风')) {
+            fiveStars.style.color = '';
+            if (poem.title.includes('纠缠')) {
+                fiveStars.classList.add('rainbow-stars');
+            } else if (['七律·逆风', '《七律·逆风》'].some(t => poem.title.includes(t)) || poem.title.includes('逆风')) {
                 fiveStars.style.color = '#DE2910'; // China Red
             } else if (['七律·灵犀', '《七律·灵犀》'].some(t => poem.title.includes(t)) || poem.title.includes('灵犀') || poem.title.includes('白雪')) {
                 fiveStars.style.color = '#1E90FF'; // Dodger Blue
