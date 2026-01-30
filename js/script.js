@@ -1911,16 +1911,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // 星星样式配置表 (如有新书，请在此处添加)
                 const STAR_STYLE_CONFIG = [
                     {
-                        keywords: ['纠缠', '人生'],
+                        keywords: ['纠缠', '人生', '尤物'],
                         className: 'rainbow-stars',
                         color: null
                     },
                     {
-                        keywords: ['逆风', '教员'],
+                        keywords: ['逆风', '教员', '呐喊'],
                         color: '#DE2910' // 中国红
                     },
                     {
-                        keywords: ['灵犀', '白雪', '自讽'],
+                        keywords: ['灵犀', '白雪', '自讽', '独行'],
                         color: '#1E90FF' // 灵动蓝
                     }
                 ];
