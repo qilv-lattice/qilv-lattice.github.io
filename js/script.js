@@ -1911,7 +1911,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // 星星样式配置表 (如有新书，请在此处添加)
                 const STAR_STYLE_CONFIG = [
                     {
-                        keywords: ['纠缠'],
+                        keywords: ['纠缠', '人生'],
                         className: 'rainbow-stars',
                         color: null
                     },
