@@ -1824,6 +1824,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const useIndex = idx === 0 ? randomIndices.left : randomIndices.right;
                 const poem = poems[useIndex];
                 renderPoemIntoCard(wing, poem);
+            } else if (poems.length > 0) {
+                // Sync Mode: Left = Prev, Right = Next
+                let targetIndex;
+                if (idx === 0) { // Left Wing
+                    targetIndex = (currentIndex - 1 + poems.length) % poems.length;
+                } else { // Right Wing
+                    targetIndex = (currentIndex + 1) % poems.length;
+                }
+                const poem = poems[targetIndex];
+                renderPoemIntoCard(wing, poem);
             }
         });
 
