@@ -407,6 +407,72 @@ header {
     /* 确保折叠时靠右 */
 }
 
+/* ===== 桌面端按钮重排序 (ORDER SWAP) ===== */
+/* 实现效果：交换“益智娱乐”与“横排/竖排”按钮的位置 */
+/* 
+   Original Order:
+   1. entertainment-btn (-wrapper)
+   2. toc-btn
+   3. bg-btn (-wrapper)
+   4. mode-btn (Horizontal/Vertical)
+   5. viewmode-btn (-wrapper) (Single/Sync)
+   ...
+*/
+
+.music-wrapper .entertainment-btn-wrapper {
+    order: 4;
+    /* Move to Mode's position */
+}
+
+.music-wrapper #mode-btn {
+    order: 1;
+    /* Move to Front (Entertainment's position) */
+}
+
+/* Ensure other items stay in between */
+.music-wrapper #toc-btn {
+    order: 2;
+}
+
+.music-wrapper .bg-btn-wrapper {
+    order: 3;
+}
+
+/* Ensure items after stay after */
+.music-wrapper .viewmode-btn-wrapper {
+    order: 5;
+}
+
+.music-wrapper .theme-btn-wrapper {
+    order: 6;
+}
+
+.music-wrapper #note-btn {
+    order: 7;
+}
+
+.music-wrapper .music-control-wrapper {
+    order: 8;
+}
+
+.music-wrapper #playmode-btn {
+    order: 9;
+}
+
+.music-wrapper #seal-btn {
+    order: 10;
+}
+
+/* Mobile setting button usually hidden on desktop, but explicit order safe */
+.music-wrapper #settings-btn {
+    order: 11;
+}
+
+.music-wrapper #music-list {
+    order: 12;
+}
+
+
 /* 双螺旋晶格链背景 */
 /* 双螺旋晶格链 - 包络线风格 */
 .music-wrapper::before {
