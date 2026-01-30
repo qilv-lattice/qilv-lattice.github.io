@@ -1888,7 +1888,7 @@ header.char-game-active {
 
 /* 黄色公告喇叭 */
 #announcement-notice {
-    display: flex !important;
+    /* display controlled by JS */
     /* 强制显示公告喇叭 */
     /* 蓝喇叭下方 */
     border-color: #D4A017;
@@ -1955,7 +1955,7 @@ header.char-game-active {
 
     /* 保留黄色公告喇叭 */
     #announcement-notice {
-        display: flex !important;
+        /* display controlled by JS */
         top: 60px;
         /* 位置上移 */
         right: 10px;
