@@ -47,6 +47,23 @@ const bgCatalog = {
 
 let currentBgFilter = 'macro';
 
+// 星星样式配置表 (全局配置)
+const STAR_STYLE_CONFIG = [
+    {
+        keywords: ['纠缠', '人生', '尤物'],
+        className: 'rainbow-stars',
+        color: null
+    },
+    {
+        keywords: ['逆风', '教员', '呐喊'],
+        color: '#DE2910' // 中国红
+    },
+    {
+        keywords: ['灵犀', '白雪', '自讽', '独行'],
+        color: '#1E90FF' // 灵动蓝
+    }
+];
+
 function isTouchDevice() {
     return ('ontouchstart' in window) ||
         (navigator.maxTouchPoints || 0) > 0 ||
@@ -1742,22 +1759,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             fiveStars.classList.add('show-stars'); // 默认始终显示
             fiveStars.classList.remove('rainbow-stars');
             fiveStars.style.color = '';
-            // 星星样式配置表 (需与 renderPoem 保持一致)
-            const STAR_STYLE_CONFIG = [
-                {
-                    keywords: ['纠缠', '人生', '尤物'],
-                    className: 'rainbow-stars',
-                    color: null
-                },
-                {
-                    keywords: ['逆风', '教员', '呐喊'],
-                    color: '#DE2910' // 中国红
-                },
-                {
-                    keywords: ['灵犀', '白雪', '自讽', '独行'],
-                    color: '#1E90FF' // 灵动蓝
-                }
-            ];
+            // 星星样式配置表 (使用全局 STAR_STYLE_CONFIG)
 
             let starColor = '#CCCCCC'; // Default Gray
             const matchedConfig = STAR_STYLE_CONFIG.find(config =>
@@ -1944,22 +1946,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 fiveStars.classList.add('show-stars'); // 默认始终显示
                 fiveStars.classList.remove('rainbow-stars');
 
-                // 星星样式配置表 (如有新书，请在此处添加)
-                const STAR_STYLE_CONFIG = [
-                    {
-                        keywords: ['纠缠', '人生', '尤物'],
-                        className: 'rainbow-stars',
-                        color: null
-                    },
-                    {
-                        keywords: ['逆风', '教员', '呐喊'],
-                        color: '#DE2910' // 中国红
-                    },
-                    {
-                        keywords: ['灵犀', '白雪', '自讽', '独行'],
-                        color: '#1E90FF' // 灵动蓝
-                    }
-                ];
+                // 星星样式配置表 (使用全局 STAR_STYLE_CONFIG)
 
                 // 默认颜色
                 let starColor = '#CCCCCC'; // Default Gray
