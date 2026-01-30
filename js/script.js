@@ -702,6 +702,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const noticeEl = document.getElementById('announcement-notice');
         if (!noticeEl) return;
 
+        // 设置公告内容
+        const textEl = document.getElementById('announcement-text');
+        if (textEl && updateInfo.announcement) {
+            textEl.innerHTML = updateInfo.announcement;
+        } else if (!updateInfo.announcement) {
+            // 没有公告则隐藏
+            noticeEl.style.setProperty('display', 'none', 'important');
+            return;
+        }
+
         // 显示公告 (CSS中有 !important，这里不需要额外操作，但为了保险可以写)
         // noticeEl.style.display = 'flex'; 
 
@@ -817,6 +827,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 支持新格式 latestWorks 数组，兼容旧格式 latestWork 字符串
             updateInfo.latestWorks = data.latestWorks || (data.latestWork ? [data.latestWork] : []);
             updateInfo.modifiedWorks = data.modifiedWorks || [];
+            updateInfo.announcement = data.announcement || '';
 
             // 读取诗词数组
             poems = data.poems || data;
