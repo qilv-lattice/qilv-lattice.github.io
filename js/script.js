@@ -1033,7 +1033,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const overlay = document.getElementById('toc-overlay');
         const tocCard = overlay ? overlay.querySelector('.toc-card') : null;
         const tocBtn = document.getElementById('toc-btn');
-        const tocOverlay = document.getElementById('toc-overlay');
         if (!tocCard || !tocBtn) return;
 
         const rect = tocBtn.getBoundingClientRect();
@@ -2050,7 +2049,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (playmodeBtn) playmodeBtn.classList.toggle('blue-mode');
         if (bgBtn) bgBtn.classList.toggle('blue-mode');
         if (viewModeBtn) viewModeBtn.classList.toggle('blue-mode');
-        if (tocOverlay) tocOverlay.classList.toggle('blue-mode');
 
         // 新增：遗漏的按钮颜色切换
         const voiceBtn = document.getElementById('voice-btn');
