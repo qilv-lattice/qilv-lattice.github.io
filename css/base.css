@@ -1888,7 +1888,8 @@ header.char-game-active {
 
 /* 黄色公告喇叭 */
 #announcement-notice {
-    /* display controlled by JS */
+    display: none !important;
+    /* forced hidden per request */
     /* 强制显示公告喇叭 */
     /* 蓝喇叭下方 */
     border-color: #D4A017;
