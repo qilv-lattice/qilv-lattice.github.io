@@ -1447,6 +1447,25 @@ header.char-game-active {
     color: #fff;
 }
 
+#toc-overlay.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+#toc-overlay.blue-mode .toc-tab {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+#toc-overlay.blue-mode .toc-tab.active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+#toc-overlay.blue-mode #toc-list li.active {
+    color: var(--accent-blue);
+}
+
 .music-menu {
     display: none;
     position: absolute;
