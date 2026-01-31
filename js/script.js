@@ -59,7 +59,7 @@ const STAR_STYLE_CONFIG = [
         color: '#DE2910' // 中国红
     },
     {
-        keywords: ['灵犀', '白雪', '自讽', '独行'],
+        keywords: ['灵犀', '白雪', '自讽', '独行', '落差'],
         color: '#1E90FF' // 灵动蓝
     }
 ];
