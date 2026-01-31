@@ -55,7 +55,7 @@ const STAR_STYLE_CONFIG = [
         color: null
     },
     {
-        keywords: ['逆风', '教员', '呐喊'],
+        keywords: ['逆风', '教员', '呐喊', '先锋'],
         color: '#DE2910' // 中国红
     },
     {
