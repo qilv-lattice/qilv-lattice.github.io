@@ -6,6 +6,7 @@ let lastWingIndices = { left: null, right: null };
 let lastFireworkAt = 0;
 let fireworksState = null;
 let wingRandomizeOnNextSync = true;
+let autoFireworksReady = false;
 
 // 全局关闭雪花特效
 window.disableSnow = true;
@@ -1793,6 +1794,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Fireworks are provided by js/fireworks.js via window.triggerFireworks
     function maybeTriggerFireworks() {
+        if (!autoFireworksReady) return;
         if (wingDisplayMode !== 'random') return;
         if (!isDesktopLayout()) return;
         if (document.body.classList.contains('view-mode-single')) return;
@@ -1858,6 +1860,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         if (didRandomize) {
             maybeTriggerFireworks();
+        }
+        if (!autoFireworksReady) {
+            autoFireworksReady = true;
         }
     }
 
