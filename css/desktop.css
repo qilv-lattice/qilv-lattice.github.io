@@ -55,6 +55,12 @@ body::before {
     max-width: none;
 }
 
+/* 桌面端三卡：上边缘向上延展15px，底部保持不动 */
+body:not(.view-mode-single) .screen-grid .poem-content {
+    margin-top: -15px;
+    padding-top: calc(var(--card-vertical-padding) + 33px);
+}
+
 body.view-mode-single .screen-grid {
     grid-template-columns: var(--card-width);
 }
