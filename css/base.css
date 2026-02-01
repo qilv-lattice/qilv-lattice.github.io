@@ -1681,6 +1681,31 @@ header.char-game-active {
     color: var(--accent-blue);
 }
 
+/* ===== 作品名录弹窗蓝色模式 ===== */
+.toc-overlay.blue-mode .toc-title {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(18, 104, 204, 0.2);
+}
+
+.toc-overlay.blue-mode .toc-tab {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.toc-overlay.blue-mode .toc-tab.active {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.toc-overlay.blue-mode .toc-list li:active {
+    background: rgba(18, 104, 204, 0.1);
+    color: var(--accent-blue);
+}
+
+.toc-overlay.blue-mode .toc-close {
+    color: var(--accent-blue);
+}
+
 .toc-list {
     list-style: none;
     width: 100%;

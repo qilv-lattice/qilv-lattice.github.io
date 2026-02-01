@@ -2062,6 +2062,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const musicMenu = document.getElementById('music-menu');
         const bgMenu = document.getElementById('bg-menu');
         const themeMenu = document.getElementById('theme-menu');
+        const tocOverlay = document.getElementById('toc-overlay');
+        const notesOverlay = document.getElementById('notes-overlay');
 
         if (voiceBtn) voiceBtn.classList.toggle('blue-mode');
         if (noteBtn) noteBtn.classList.toggle('blue-mode');
@@ -2074,6 +2076,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (musicMenu) musicMenu.classList.toggle('blue-mode');
         if (bgMenu) bgMenu.classList.toggle('blue-mode');
         if (themeMenu) themeMenu.classList.toggle('blue-mode');
+        if (tocOverlay) tocOverlay.classList.toggle('blue-mode');
+        if (notesOverlay) notesOverlay.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');
