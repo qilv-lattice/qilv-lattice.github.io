@@ -907,9 +907,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             tabs = document.createElement('div');
             tabs.className = 'toc-tabs';
             tabs.innerHTML = `
-                <button class="toc-tab active" data-filter="all">全部作品</button>
-                <button class="toc-tab" data-filter="new">上线新作</button>
-                <button class="toc-tab" data-filter="modified">修改旧作</button>
+                <div class="toc-tabs-row">
+                    <button class="toc-tab active" data-filter="all">全部作品</button>
+                    <button class="toc-tab" data-filter="new">上线新作</button>
+                    <button class="toc-tab" data-filter="modified">修改旧作</button>
+                </div>
+                <div class="toc-tabs-row toc-category-tabs">
+                    <button class="toc-tab toc-cat-tab" data-filter="心声">心声</button>
+                    <button class="toc-tab toc-cat-tab" data-filter="诗道">诗道</button>
+                    <button class="toc-tab toc-cat-tab" data-filter="情思">情思</button>
+                    <button class="toc-tab toc-cat-tab" data-filter="史鉴">史鉴</button>
+                </div>
             `;
             if (title) {
                 title.insertAdjacentElement('afterend', tabs);
@@ -922,10 +930,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const style = document.createElement('style');
             style.id = 'toc-tab-style';
             style.textContent = `
-                .toc-tabs{display:flex;gap:6px;margin-bottom:.75rem;width:100%;justify-content:center;flex-wrap:wrap}
+                .toc-tabs{display:flex;flex-direction:column;gap:6px;margin-bottom:.75rem;width:100%}
+                .toc-tabs-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+                .toc-category-tabs{margin-top:4px;padding-top:6px;border-top:1px dashed rgba(168,63,63,0.2)}
                 .toc-tab{border:2px solid var(--accent-color);background:rgba(255,255,255,.92);color:var(--accent-color);
                 padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;line-height:1.2}
                 .toc-tab.active{background:var(--accent-color);color:#fff}
+                .toc-cat-tab{font-size:.75rem;padding:3px 10px}
+                .toc-overlay.blue-mode .toc-category-tabs{border-top-color:rgba(18,104,204,0.2)}
+                @media(max-width:480px){
+                    .toc-tabs{gap:4px}
+                    .toc-tabs-row{gap:4px}
+                    .toc-tab{font-size:.72rem;padding:3px 6px;border-width:1.5px}
+                    .toc-cat-tab{font-size:.68rem;padding:2px 8px}
+                    .toc-category-tabs{margin-top:3px;padding-top:5px}
+                }
             `;
             document.head.appendChild(style);
         }
@@ -952,6 +971,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         tabs.forEach(tab => {
             tab.classList.toggle('active', tab.dataset.filter === filter);
         });
+
+        // 点击"上线新作"或"修改旧作"时隐藏分类标签行
+        const categoryTabsRow = document.querySelector('.toc-category-tabs');
+        if (categoryTabsRow) {
+            if (filter === 'new' || filter === 'modified') {
+                categoryTabsRow.style.display = 'none';
+            } else {
+                categoryTabsRow.style.display = 'flex';
+            }
+        }
     }
 
     // 目录分类切换（兼容旧缓存页面）
@@ -979,12 +1008,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (filter === 'modified') {
                 return activeModifiedKeys.some(key => cleanTitle.includes(key));
             }
+            // 按 category 分类筛选
+            if (['心声', '诗道', '情思', '史鉴'].includes(filter)) {
+                return poem.category === filter;
+            }
             return true;
         });
 
         if (filteredPoems.length === 0) {
             const li = document.createElement('li');
-            li.innerText = filter === 'new' ? '暂无新作' : '暂无修改';
+            if (filter === 'new') {
+                li.innerText = '暂无新作';
+            } else if (filter === 'modified') {
+                li.innerText = '暂无修改';
+            } else {
+                li.innerText = '该分类暂无作品';
+            }
             tocList.appendChild(li);
             return;
         }

@@ -122,7 +122,8 @@
             "notes": [
                 "2025年一段云端往事，知交甚少，记忆颇多，遂成文。"
             ],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·春秋",
@@ -134,7 +135,8 @@
                 "而今若选心安地，唯有云端可结庐。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·求是",
@@ -148,7 +150,8 @@
             "notes": [
                 "二乔乃胡乔木和乔冠华。"
             ],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·史讽",
@@ -160,7 +163,8 @@
                 "洞明世事如观火，未必周期演我们。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·素怀",
@@ -172,7 +176,8 @@
                 "时光奥妙多余问，事事有心知剪裁。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·自矜",
@@ -184,7 +189,8 @@
                 "师古学成新范式，壮怀直逼大唐仙。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·先锋",
@@ -196,7 +202,8 @@
                 "孟轲点我浩然气，孤独深埋坦荡胸。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·分形",
@@ -208,7 +215,8 @@
                 "致敬天涯新祝语，愿君快乐可分形。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·人生",
@@ -220,7 +228,8 @@
                 "顿悟吾心无所住，毫厘累积不唐捐。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·李牧",
@@ -232,7 +241,8 @@
                 "其实将军身殒日，邯郸麋鹿走苏台。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·游侠",
@@ -244,7 +254,8 @@
                 "三生有幸文成典，四拒高谈座上宾。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·呐喊",
@@ -256,7 +267,8 @@
                 "方家尚且知谦逊，勿堕雷鸣吹捧中。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·逆风",
@@ -268,7 +280,8 @@
                 "横取英雄真本色，扼流沧海在我曹。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·落差",
@@ -280,7 +293,8 @@
                 "神州广袤分南北，字印山河博士章。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·灵犀",
@@ -292,7 +306,8 @@
                 "人世相逢需确幸，知音无处不安家。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·迷失",
@@ -306,7 +321,8 @@
             "notes": [
                 "铁驱金借劣币驱逐良币典故。"
             ],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·论文",
@@ -318,7 +334,8 @@
                 "求知若奉痴迷样，既向源头更向深。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·自述",
@@ -330,7 +347,8 @@
                 "追求些许真情愫，只恐灵魂不及君。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·黑马",
@@ -342,7 +360,8 @@
                 "滚石上山留印记，星河呵护远行人。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·渔色",
@@ -354,7 +373,8 @@
                 "我辈蔡桓焉有病，多余扁鹊太天真。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·抱负",
@@ -366,7 +386,8 @@
                 "耻做春秋门下客，活成当代信陵君。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·诗缘",
@@ -378,7 +399,8 @@
                 "莫道上苍非宠我，蓬山之外遇神仙。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·噪音",
@@ -390,7 +412,8 @@
                 "何须鲁迅狂人吠，放大强音即噪音。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·意淫",
@@ -402,7 +425,8 @@
                 "大梦槐安余落幕，亢龙有悔汉宫闱。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·创作",
@@ -414,7 +438,8 @@
                 "索句寻章君莫笑，基频本就属痴嗔。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·教员",
@@ -426,7 +451,8 @@
                 "重读百年波澜史，人民站起始于公。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·史鉴",
@@ -438,7 +464,8 @@
                 "秉性犹如封建制，道君最喜是青词。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·呻吟",
@@ -450,7 +477,8 @@
                 "秘方药引相思泪，婉约画皮文字疽。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "诗道"
         },
         {
             "title": "七律·读史",
@@ -462,7 +490,8 @@
                 "盈川冷看麒麟楦，将相人人装醉翁。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "史鉴"
         },
         {
             "title": "七律·白雪",
@@ -474,7 +503,8 @@
                 "翘首俟君君未晚，敲开蓓蕾伴寒英。"
             ],
             "notes": [],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·博弈",
@@ -486,7 +516,8 @@
                 "天资筹换三分运，大道铺陈一等星。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "心声"
         },
         {
             "title": "七律·罂粟",
@@ -498,7 +529,8 @@
                 "相思流入平湖底，镜面携来云上槎。"
             ],
             "notes": [],
-            "techRomance": false
+            "techRomance": false,
+            "category": "情思"
         },
         {
             "title": "七律·自诫",
@@ -510,7 +542,8 @@
                 "而今清醒成原罪，学问补牢非补妆！"
             ],
             "notes": [],
-            "techRomance": true
+            "techRomance": true,
+            "category": "心声"
         },
         {
             "title": "七律·攻读",
@@ -521,7 +554,8 @@
                 "初心不老降龙虎，小愿求全做鹿鱼。",
                 "自许丈夫当克己，寒窗应作斗牛墟。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "史鉴"
         },
         {
             "title": "七律·中庸",
@@ -532,7 +566,8 @@
                 "思想调和偏向秀，图腾殉道顾嵇康。",
                 "何妨允执中庸法，留下青山来日长。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "史鉴"
         },
         {
             "title": "七律·纠缠",
@@ -546,7 +581,8 @@
             "notes": [
                 "通韵"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·画心",
@@ -557,7 +593,8 @@
                 "多情伏脉循能指，工笔画心输白描。",
                 "试问斯人谁自比，文坛反向座山雕。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "诗道"
         },
         {
             "title": "七律·差距",
@@ -568,7 +605,8 @@
                 "傲气横行于过往，虚心沉淀自当前。",
                 "天高地厚今知我，贻笑至多朋友圈。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "诗道"
         },
         {
             "title": "七律·问卦",
@@ -579,7 +617,8 @@
                 "男士文章男士品，女人字句女人心。",
                 "占星问卦神仙语，传说诗中有子衿。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "诗道"
         },
         {
             "title": "七律·画眉",
@@ -590,7 +629,8 @@
                 "明月聆听银汉语，诗心勾勒竹林风。",
                 "云笺眉上精雕句，作祟迷人荷尔蒙。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "诗道"
         },
         {
             "title": "七律·采芹",
@@ -604,7 +644,8 @@
             "notes": [
                 "概率云：量子力学概率，意在表达人与人相逢之确幸"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·尤物",
@@ -618,7 +659,8 @@
             "notes": [
                 "相变乃材料科学概念，借指人的蜕变。"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "史鉴"
         },
         {
             "title": "七律·未来",
@@ -632,7 +674,8 @@
             "notes": [
                 "以穿越未来视角观现在之我"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·抉择",
@@ -643,7 +686,8 @@
                 "抉择回环桃叶渡，悲欢提炼古龙津。",
                 "五兵羸弱双车困，大任偏将无用身。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·自况",
@@ -654,7 +698,8 @@
                 "既恐他人期待己，还忧自己索求人。",
                 "痴迷一件难平事，解放才情有限身。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·革新",
@@ -666,7 +711,8 @@
                 "蓝图不在桃源地，擘画纵横卷八荒。"
             ],
             "notes": [],
-            "techRomance": true
+            "techRomance": true,
+            "category": "史鉴"
         },
         {
             "title": "七律·易安",
@@ -678,7 +724,8 @@
                 "追踪两宋飞鸿印，最是钟情李易安。"
             ],
             "notes": [],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·独白",
@@ -691,7 +738,8 @@
             ],
             "notes": [
                 "通韵"
-            ]
+            ],
+            "category": "心声"
         },
         {
             "title": "七律·独行",
@@ -702,7 +750,8 @@
                 "确信才情能自己，岂将因果累他人。",
                 "行文力拔山兮势，落子无由问鬼神。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·刚柔",
@@ -713,7 +762,8 @@
                 "金城树老时光逝，百炼人艰钢铁柔。",
                 "傲气凝成鸡血句，青丝白发弄行舟。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·香草",
@@ -724,7 +774,8 @@
                 "梦纹香草灵均愿，文续箴言元亮心。",
                 "硬核余生侬自渡，身同日月共浮沉。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·怪象",
@@ -735,7 +786,8 @@
                 "命舛书中真伯虎，名高纸上假卢梭。",
                 "春秋笔法尊尊者，细读深思佛与魔。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "史鉴"
         },
         {
             "title": "七律·自嘲",
@@ -746,7 +798,8 @@
                 "孤独偶然形问影，狷狂无忌事违心。",
                 "逆行日益风吹紧，任尔难松我热忱。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·自讽",
@@ -757,7 +810,8 @@
                 "颜如玉女真红拂，孔乙己身非药师。",
                 "白雪寒英天上品，心幡谁动任由之。"
             ],
-            "notes": []
+            "notes": [],
+            "category": "心声"
         },
         {
             "title": "七律·悖论",
@@ -771,7 +825,8 @@
             "notes": [
                 "作者机械工程在读博士生"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         },
         {
             "title": "七律·光阴",
@@ -784,7 +839,8 @@
             ],
             "notes": [
                 "颔联重在说光阴带给自己的压力；颈联重在论述光阴给人生命之无奈。"
-            ]
+            ],
+            "category": "情思"
         },
         {
             "title": "七律·自洽",
@@ -798,7 +854,8 @@
             "notes": [
                 "二象即物理学中的波粒二象性"
             ],
-            "techRomance": true
+            "techRomance": true,
+            "category": "情思"
         }
     ]
 }
