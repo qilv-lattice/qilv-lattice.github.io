@@ -1801,8 +1801,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
-            // 统一修改为：字字精工，无远弗届
-            techRomanceTag.innerHTML = '字字精工，无远弗届';
+            // 统一修改为：在心成象，在纸成形
+            techRomanceTag.innerHTML = '在心成象，在纸成形';
         }
 
         // 五星装饰显示逻辑
@@ -1992,8 +1992,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const techRomanceTag = mainCard.querySelector('#tech-romance-tag');
             if (techRomanceTag) {
                 techRomanceTag.style.display = 'block';
-                // 统一修改为：字字精工，无远弗届
-                techRomanceTag.innerHTML = '字字精工，无远弗届';
+                // 统一修改为：在心成象，在纸成形
+                techRomanceTag.innerHTML = '在心成象，在纸成形';
             }
 
             // 五星装饰显示逻辑 - 配置化重构
