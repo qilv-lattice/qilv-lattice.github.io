@@ -938,6 +938,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .toc-tab.active{background:var(--accent-color);color:#fff}
                 .toc-cat-tab{font-size:.75rem;padding:3px 10px}
                 .toc-overlay.blue-mode .toc-category-tabs{border-top-color:rgba(18,104,204,0.2)}
+                .bg-tabs,.music-tabs{flex-direction:row!important;justify-content:center;flex-wrap:wrap}
                 @media(max-width:480px){
                     .toc-tabs{gap:4px}
                     .toc-tabs-row{gap:4px}
