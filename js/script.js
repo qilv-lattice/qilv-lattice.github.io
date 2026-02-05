@@ -1834,6 +1834,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Fireworks are provided by js/fireworks.js via window.triggerFireworks
     function maybeTriggerFireworks() {
+        // 彩蛋已关闭
+        return;
+        /*
         if (!autoFireworksReady) return;
         if (wingDisplayMode !== 'random') return;
         if (!isDesktopLayout()) return;
@@ -1844,6 +1847,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.triggerFireworks();
             }
         }
+        */
     }
 
     function syncWingCards() {
