@@ -56,10 +56,18 @@
     color: #fff;
 }
 
-/* ===== 自定义滚动条（桌面端） ===== */
+/* ===== 自定义滚动条 ===== */
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+/* WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    /* 极细 */
+    height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -67,12 +75,15 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 3px;
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    opacity: 0.8;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a01830;
+    background-color: #a01830;
+    /* 深红悬停 */
+    opacity: 1;
 }
 
 html {
@@ -415,6 +426,8 @@ header {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 8px;
+    /* 磨砂质感边框 */
+    border: 1px solid rgba(255, 255, 255, 0.4);
     /* 与页脚一致 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
@@ -438,6 +451,22 @@ header.char-game-active {
     font-size: 2rem;
     color: var(--text-color);
     margin-bottom: 0.25rem;
+    /* 会呼吸的标题 */
+    animation: text-breathe 4s ease-in-out infinite;
+}
+
+@keyframes text-breathe {
+
+    0%,
+    100% {
+        text-shadow: 0 0 1px rgba(176, 58, 46, 0.05);
+        /* 极淡 */
+    }
+
+    50% {
+        text-shadow: 0 0 8px rgba(176, 58, 46, 0.25);
+        /* 略明显的红色光晕 */
+    }
 }
 
 /* 标题石章装饰 - 不影响标题居中 */
@@ -496,6 +525,8 @@ header.char-game-active {
     padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
     /* 用户需求：顶部额外增加 20px->18px 空间 (配合内部调整共上移正文) */
     padding-top: calc(var(--card-vertical-padding) + 18px);
+    /* 磨砂质感边框 */
+    border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
@@ -2072,6 +2103,9 @@ header.char-game-active {
     pointer-events: none;
     padding-right: 12px;
     /* 为装饰线留空间 */
+    /* 会呼吸的标签 */
+    animation: text-breathe 4s ease-in-out infinite 2s;
+    /* 延迟2秒，错峰呼吸 */
 }
 
 /* 梅花小图标 (独立定位版) */
@@ -2760,4 +2794,28 @@ header.char-game-active {
     #blessing-notice {
         display: none !important;
     }
+}
+
+/* ===== UX 细节优化 (UX Polish) ===== */
+
+/* 1. 触感反馈 (Tactile Feedback) - 统一的Q弹按压效果 */
+.char-game-btn:active,
+.widget-btn:active,
+#mode-btn:active,
+.music-control:active,
+.music-label:active,
+#prev-btn:active,
+#next-btn:active,
+.toc-tab:active,
+.sub-list li:active,
+.selector-list li:active,
+.close-btn:active,
+.nav-btn:active,
+.branch-btn:active,
+.music-list li:active,
+.viewmode-btn:active,
+.entertainment-btn:active,
+.toc-list li:active {
+    transform: scale(0.92);
+    transition: transform 0.05s ease-out;
 }
