@@ -1425,9 +1425,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         charGameState.finished = true;
         if (hint) hint.textContent = `已填满 ${charGameState.maxFill} 字，测试结束。`;
-        if (typeof window.triggerFireworks === 'function') {
-            window.triggerFireworks();
-        }
+        // 烟花仅保留“益智娱乐”按钮触发
         stopCharGameFall();
         hideCharGameNav();
         showCharGameDialog();
@@ -2757,9 +2755,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. 覆盖点击事件 (点击 -> 放烟花，不再直接隐藏)
             blessingNotice.onclick = function (e) {
                 e.stopPropagation(); // 防止冒泡
-                if (window.triggerFireworks) {
-                    window.triggerFireworks();
-                }
+                // 烟花仅保留“益智娱乐”按钮触发
                 // 仅点击多次后或长按才隐藏？暂时保持常驻方便多次玩
             };
 
