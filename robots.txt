@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qilv-lattice-github-io.pages.dev/sitemap.xml
