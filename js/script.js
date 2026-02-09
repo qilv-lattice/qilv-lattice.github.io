@@ -1792,9 +1792,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         if (bodyDiv) {
             bodyDiv.innerHTML = '';
-            poem.content.forEach(line => {
+            poem.content.forEach((line, index) => {
                 const p = document.createElement('p');
                 p.innerText = line;
+                p.style.setProperty('--line-index', index);
+                p.classList.add('poem-line-animate');
                 bodyDiv.appendChild(p);
             });
         }
@@ -1973,9 +1975,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 渲染正文（不渲染备注，备注通过弹窗单独显示）
             bodyDiv.innerHTML = '';
-            poem.content.forEach(line => {
+            poem.content.forEach((line, index) => {
                 const p = document.createElement('p');
                 p.innerText = line;
+                p.style.setProperty('--line-index', index);
+                p.classList.add('poem-line-animate');
                 bodyDiv.appendChild(p);
             });
 

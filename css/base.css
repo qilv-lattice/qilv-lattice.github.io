@@ -2819,3 +2819,21 @@ header.char-game-active {
     transform: scale(0.92);
     transition: transform 0.05s ease-out;
 }
+/* ===== 诗句逐行入场动画 (移动端优先) ===== */
+.poem-line-animate {
+    opacity: 0;
+    transform: translateX(15px);
+    animation: poem-line-fade-in 0.4s ease forwards;
+    animation-delay: calc(var(--line-index, 0) * 0.08s + 0.2s);
+}
+
+@keyframes poem-line-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
