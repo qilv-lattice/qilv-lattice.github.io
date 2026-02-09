@@ -303,11 +303,15 @@
     let audioUnlocked = false;
     function unlockAudio() {
         if (audioUnlocked) return;
+        // 修复：play() 前静音，防止解锁时发出声音
+        const savedVolume = fwSound.volume;
+        fwSound.volume = 0;
         fwSound.play().then(() => {
             fwSound.pause();
             fwSound.currentTime = 0;
+            fwSound.volume = savedVolume;
             audioUnlocked = true;
-        }).catch(() => { });
+        }).catch(() => { fwSound.volume = savedVolume; });
         document.removeEventListener('click', unlockAudio);
         document.removeEventListener('touchstart', unlockAudio);
     }
