@@ -2826,20 +2826,25 @@ header.char-game-active {
 /* ===== 诗句逐行入场动画 (移动端优先) ===== */
 .poem-line-animate {
     opacity: 0;
-    transform: translateX(15px);
-    animation: poem-line-fade-in 0.4s ease forwards;
-    animation-delay: calc(var(--line-index, 0) * 0.08s + 0.2s);
+    transform: translateY(12px) translateX(8px);
+    animation: poem-line-fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: calc(var(--line-index, 0) * 0.12s + 0.15s);
 }
 
 @keyframes poem-line-fade-in {
-    from {
+    0% {
         opacity: 0;
-        transform: translateX(15px);
+        transform: translateY(12px) translateX(8px);
     }
 
-    to {
+    60% {
+        opacity: 0.85;
+        transform: translateY(-2px) translateX(0);
+    }
+
+    100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0) translateX(0);
     }
 }
 
