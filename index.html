@@ -420,9 +420,25 @@
         }
     </script>
 
-    <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-        data-cf-beacon='{"token": "a57e3df1e80d42bb9314f924b3f9dcc3"}'></script>
+    <!-- Cloudflare Web Analytics (根据域名动态加载) -->
+    <script>
+        (function () {
+            var host = window.location.hostname;
+            var token = '';
+            if (host.indexOf('pages.dev') !== -1) {
+                token = 'a57e3df1e80d42bb9314f924b3f9dcc3'; // CF Pages
+            } else if (host.indexOf('github.io') !== -1) {
+                token = '13846cd9f465497e8ec6ea5d7f251308'; // GitHub Pages
+            }
+            if (token) {
+                var s = document.createElement('script');
+                s.defer = true;
+                s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+                s.setAttribute('data-cf-beacon', '{"token":"' + token + '"}');
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
     <!-- End Cloudflare Web Analytics -->
 </body>
 
