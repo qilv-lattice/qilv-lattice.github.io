@@ -1169,7 +1169,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         filteredPoems.forEach((poem, index) => {
             const li = document.createElement('li');
-            li.innerText = formatPoemTitleForList(poem.title);
+            // 加锁诗词在目录中也隐藏标题
+            if (poem.locked && !isPoemUnlocked(poem.title)) {
+                li.innerText = '🔒 加锁作品';
+            } else {
+                li.innerText = formatPoemTitleForList(poem.title);
+            }
 
             const cleanTitle = normalizeTitleText(poem.title);
             const isNewWorkActive = activeLatestKeys.some(key => cleanTitle.includes(key));
@@ -2106,6 +2111,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const tongYunRegex = /[\(（]通韵[\)）]/;
             if (tongYunRegex.test(displayTitle)) {
                 displayTitle = displayTitle.replace(tongYunRegex, "");
+            }
+
+            // 加锁诗词：隐藏真实标题
+            if (poem.locked && !isPoemUnlocked(poem.title)) {
+                displayTitle = '加锁作品';
             }
 
             const titleEl = mainCard.querySelector('#poem-title');
