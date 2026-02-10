@@ -1,3 +1,53 @@
+// ===== 诗词加锁/解锁系统 =====
+const UNLOCKED_POEMS_KEY = 'unlockedPoems';
+
+function getUnlockedMap() {
+    try {
+        return JSON.parse(localStorage.getItem(UNLOCKED_POEMS_KEY) || '{}');
+    } catch { return {}; }
+}
+
+function isPoemUnlocked(title) {
+    return title in getUnlockedMap();
+}
+
+function markPoemUnlocked(title, password) {
+    const map = getUnlockedMap();
+    map[title] = btoa(password);
+    localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(map));
+}
+
+async function decryptPoemContent(encryptedBase64, password) {
+    const raw = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0));
+    const nonce = raw.slice(0, 12);
+    const ciphertext = raw.slice(12);
+    const encoder = new TextEncoder();
+    const keyMaterial = await crypto.subtle.digest('SHA-256', encoder.encode(password));
+    const key = await crypto.subtle.importKey('raw', keyMaterial, 'AES-GCM', false, ['decrypt']);
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: nonce }, key, ciphertext);
+    return JSON.parse(new TextDecoder().decode(decrypted));
+}
+
+// 页面加载后自动解密已解锁的诗词
+async function autoDecryptPoems() {
+    const map = getUnlockedMap();
+    for (const poem of poems) {
+        if (poem.locked && poem.encryptedContent && map[poem.title]) {
+            try {
+                const pwd = atob(map[poem.title]);
+                poem.content = await decryptPoemContent(poem.encryptedContent, pwd);
+                if (poem.encryptedNotes) {
+                    poem.notes = await decryptPoemContent(poem.encryptedNotes, pwd);
+                }
+            } catch {
+                // 密码不匹配（可能被更换），清除解锁记录
+                delete map[poem.title];
+                localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(map));
+            }
+        }
+    }
+}
+
 let poems = [];
 let currentIndex = 0;
 let wingDisplayMode = localStorage.getItem('wingDisplayMode') || 'sync';
@@ -918,6 +968,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 读取诗词数组
             poems = data.poems || data;
+
+            // 自动解密已解锁的加锁诗词
+            await autoDecryptPoems();
 
             // 检查并显示更新通知（红喇叭）
             checkUpdateNotice();
@@ -2058,15 +2111,62 @@ document.addEventListener('DOMContentLoaded', async () => {
             const titleEl = mainCard.querySelector('#poem-title');
             if (titleEl) titleEl.innerText = displayTitle;
 
-            // 渲染正文（不渲染备注，备注通过弹窗单独显示）
+            // 渲染正文（支持加锁诗词）
             bodyDiv.innerHTML = '';
-            poem.content.forEach((line, index) => {
-                const p = document.createElement('p');
-                p.innerText = line;
-                p.style.setProperty('--line-index', index);
-                p.classList.add('poem-line-animate');
-                bodyDiv.appendChild(p);
-            });
+            if (poem.locked && !isPoemUnlocked(poem.title)) {
+                // 加锁状态：显示锁定 UI
+                bodyDiv.innerHTML = `
+                    <div class="poem-locked-overlay">
+                        <div class="lock-icon">🔒</div>
+                        <p class="lock-hint">此作品已加锁</p>
+                        <div class="lock-input-row">
+                            <input type="password" id="poem-password-input"
+                                   placeholder="请输入密码" maxlength="20"
+                                   class="lock-password-input">
+                            <button id="poem-unlock-btn" class="lock-unlock-btn">解锁</button>
+                        </div>
+                        <p class="lock-error" id="lock-error" style="display:none">密码错误</p>
+                    </div>`;
+                // 绑定解锁事件
+                const unlockBtn = bodyDiv.querySelector('#poem-unlock-btn');
+                const pwdInput = bodyDiv.querySelector('#poem-password-input');
+                const errorMsg = bodyDiv.querySelector('#lock-error');
+                const doUnlock = async () => {
+                    const pwd = pwdInput.value.trim();
+                    if (!pwd) return;
+                    try {
+                        const content = await decryptPoemContent(poem.encryptedContent, pwd);
+                        const notes = poem.encryptedNotes
+                            ? await decryptPoemContent(poem.encryptedNotes, pwd)
+                            : [];
+                        // 解密成功：更新内存数据
+                        poem.content = content;
+                        poem.notes = notes;
+                        markPoemUnlocked(poem.title, pwd);
+                        // 重新渲染
+                        renderPoem(currentIndex, true);
+                    } catch {
+                        errorMsg.style.display = 'block';
+                        pwdInput.value = '';
+                        pwdInput.focus();
+                        setTimeout(() => { errorMsg.style.display = 'none'; }, 2000);
+                    }
+                };
+                unlockBtn.addEventListener('click', doUnlock);
+                pwdInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') doUnlock();
+                });
+                setTimeout(() => pwdInput.focus(), 100);
+            } else {
+                // 正常渲染（含已解锁的诗词）
+                poem.content.forEach((line, index) => {
+                    const p = document.createElement('p');
+                    p.innerText = line;
+                    p.style.setProperty('--line-index', index);
+                    p.classList.add('poem-line-animate');
+                    bodyDiv.appendChild(p);
+                });
+            }
 
             // 检测是否有备注，高亮注释按钮
             const noteBtn = document.getElementById('note-btn');

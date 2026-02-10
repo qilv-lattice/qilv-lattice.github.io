@@ -2947,3 +2947,90 @@ header.char-game-active {
     background-color: var(--accent-blue);
     color: #fff;
 }
+
+/* ===== 诗词加锁 UI ===== */
+.poem-locked-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    min-height: 200px;
+}
+
+.lock-icon {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+    filter: grayscale(0.3);
+}
+
+.lock-hint {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.1em;
+}
+
+.lock-input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.lock-password-input {
+    padding: 8px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    width: 140px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.lock-password-input:focus {
+    border-color: var(--accent-color);
+}
+
+.lock-unlock-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.lock-unlock-btn:hover {
+    opacity: 0.85;
+}
+
+.lock-unlock-btn:active {
+    transform: scale(0.95);
+}
+
+.lock-error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
