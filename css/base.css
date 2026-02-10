@@ -2842,3 +2842,20 @@ header.char-game-active {
         transform: translateX(0);
     }
 }
+/* 背景菜单特殊选项 */
+#bg-list .special-option {
+    font-weight: bold;
+    color: var(--accent-blue);
+    border-bottom: 2px dashed rgba(0,0,0,0.1);
+    margin-bottom: 5px;
+    padding-bottom: 8px;
+}
+
+#bg-list .special-option:hover {
+    background-color: rgba(26, 85, 153, 0.1);
+}
+
+#bg-list .special-option.active {
+    background-color: var(--accent-blue);
+    color: #fff;
+}

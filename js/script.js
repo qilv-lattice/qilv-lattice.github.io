@@ -220,6 +220,26 @@ function renderBgMenu(filter = currentBgFilter) {
     if (!list) return;
     list.innerHTML = '';
     const items = bgCatalog[filter] || [];
+
+    // 添加“恢复随机”选项
+    const randomLi = document.createElement('li');
+    randomLi.innerHTML = '🔀 恢复随机';
+    randomLi.classList.add('special-option');
+    if (bgMode === 'random') randomLi.classList.add('active');
+    randomLi.addEventListener('click', (e) => {
+        e.stopPropagation();
+        bgMode = 'random';
+        const btn = document.getElementById('bg-btn');
+        if (btn) {
+            btn.innerHTML = '随机<br>背景';
+            btn.classList.remove('active-mode');
+        }
+        changeBackground(); // 立即随机切换一次
+        const menu = document.getElementById('bg-menu');
+        if (menu) menu.classList.remove('show');
+    });
+    list.appendChild(randomLi);
+
     if (!items.length) {
         const li = document.createElement('li');
         li.innerText = '暂无背景';
@@ -230,17 +250,43 @@ function renderBgMenu(filter = currentBgFilter) {
         const li = document.createElement('li');
         li.innerText = item.title;
         li.dataset.index = String(item.index);
-        if (item.index === bgIndex) li.classList.add('active');
+        if (bgMode === 'fixed' && item.index === bgIndex) li.classList.add('active');
+
+        // 绑定点击事件：选择特定背景
+        li.addEventListener('click', (e) => {
+            e.stopPropagation();
+            bgMode = 'fixed';
+            bgIndex = item.index;
+            const btn = document.getElementById('bg-btn');
+            if (btn) {
+                btn.innerHTML = '固定<br>背景';
+                btn.classList.add('active-mode');
+            }
+            changeBackground(); // 切换到指定背景
+            const menu = document.getElementById('bg-menu');
+            if (menu) menu.classList.remove('show');
+        });
+
         list.appendChild(li);
     });
 }
 
+
 function updateBgMenuActive() {
     const list = document.getElementById('bg-list');
     if (!list) return;
+
+    // 更新普通背景项
     list.querySelectorAll('li[data-index]').forEach(li => {
-        li.classList.toggle('active', Number(li.dataset.index) === bgIndex);
+        // 如果是固定模式且索引匹配，则高亮
+        li.classList.toggle('active', bgMode === 'fixed' && Number(li.dataset.index) === bgIndex);
     });
+
+    // 更新“恢复随机”选项
+    const randomLi = list.querySelector('.special-option');
+    if (randomLi) {
+        randomLi.classList.toggle('active', bgMode === 'random');
+    }
 }
 
 function toggleBgMenu() {
