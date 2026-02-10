@@ -13,7 +13,8 @@
     /* 中国红 - 明亮正气 (备用原色: #c91f37) */
     --accent-blue: #1A5599;
     /* 霁蓝 - 更深邃典雅 */
-    --card-bg: #ffffff;
+    /* 宣纸白 - 暖色调护眼，更有书卷气 (原: #ffffff) */
+    --card-bg: #fdfbf7;
     --font-title: 'Ma Shan Zheng', cursive;
     --font-body: 'Noto Serif SC', serif;
     --overlay-bg: rgba(0, 0, 0, 0.7);
@@ -520,6 +521,8 @@ header.char-game-active {
     /* 响应式宽度: 手机350px → iPad500px → 桌面600px */
     max-width: clamp(320px, 75vw, 600px);
     background-color: var(--card-bg);
+    /* 移动端宣纸纹理 (极淡噪点) */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
     border-radius: 4px;
     /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
     padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
@@ -2819,6 +2822,7 @@ header.char-game-active {
     transform: scale(0.92);
     transition: transform 0.05s ease-out;
 }
+
 /* ===== 诗句逐行入场动画 (移动端优先) ===== */
 .poem-line-animate {
     opacity: 0;
@@ -2832,6 +2836,7 @@ header.char-game-active {
         opacity: 0;
         transform: translateX(15px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
