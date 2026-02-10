@@ -55,6 +55,11 @@
         (function () {
             var overlay = document.getElementById('hero-ink-overlay');
             if (!overlay) return;
+            // 移动端不显示水墨渐显效果
+            if (window.innerWidth < 1024) {
+                overlay.classList.add('skip');
+                return;
+            }
             // 同一会话内只播放一次
             if (sessionStorage.getItem('heroPlayed')) {
                 overlay.classList.add('skip');
