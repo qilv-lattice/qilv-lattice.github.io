@@ -19,6 +19,8 @@ const cacheBuster = Date.now(); // 时间戳破缓存
 let bgMode = 'random'; // 背景模式：random（随机）或 fixed（固定）
 let bgIntervalId = null; // 背景切换定时器ID
 let fixedBgIndex = 0; // 固定模式下的背景索引
+const BG_MODE_STORAGE_KEY = 'bgMode';
+const BG_INDEX_STORAGE_KEY = 'bgIndex';
 
 const bgCatalog = {
     macro: [
@@ -47,6 +49,33 @@ const bgCatalog = {
 };
 
 let currentBgFilter = 'macro';
+
+function updateBgButtonState() {
+    const btn = document.getElementById('bg-btn');
+    if (!btn) return;
+    if (bgMode === 'fixed') {
+        btn.innerHTML = '固定<br>背景';
+        btn.classList.add('active-mode');
+    } else {
+        btn.innerHTML = '随机<br>背景';
+        btn.classList.remove('active-mode');
+    }
+}
+
+function persistBgState() {
+    localStorage.setItem(BG_MODE_STORAGE_KEY, bgMode);
+    localStorage.setItem(BG_INDEX_STORAGE_KEY, String(bgIndex));
+}
+
+function restartBgInterval() {
+    if (bgIntervalId) {
+        clearInterval(bgIntervalId);
+        bgIntervalId = null;
+    }
+    if (bgMode === 'random') {
+        bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
+    }
+}
 
 // 星星样式配置表 (全局配置)
 const STAR_STYLE_CONFIG = [
@@ -185,26 +214,32 @@ function analyzeBackground(url) {
 function changeBackground() {
     if (!backgrounds.length) return;
     if (bgMode === 'fixed') return; // 固定模式不切换
-    bgIndex = Math.floor(Math.random() * backgrounds.length);
+    let nextIndex = Math.floor(Math.random() * backgrounds.length);
+    if (backgrounds.length > 1 && nextIndex === bgIndex) {
+        nextIndex = (nextIndex + 1) % backgrounds.length;
+    }
+    bgIndex = nextIndex;
     applyBackground(bgIndex);
+    persistBgState();
     updateBgMenuActive();
 }
 
 // 切换背景模式（随机/固定）
 function toggleBgMode() {
-    const btn = document.getElementById('bg-btn');
     if (bgMode === 'random') {
         // 切换到固定模式
         bgMode = 'fixed';
         fixedBgIndex = bgIndex; // 固定当前背景
-        btn.innerHTML = '固定<br>背景';
-        btn.classList.add('active-mode');
+        updateBgButtonState();
+        restartBgInterval();
+        persistBgState();
     } else {
         // 切换到随机模式
         bgMode = 'random';
-        btn.innerHTML = '随机<br>背景';
-        btn.classList.remove('active-mode');
+        updateBgButtonState();
         changeBackground(); // 立即切换一次
+        restartBgInterval();
+        persistBgState();
     }
 }
 
@@ -229,12 +264,10 @@ function renderBgMenu(filter = currentBgFilter) {
     randomLi.addEventListener('click', (e) => {
         e.stopPropagation();
         bgMode = 'random';
-        const btn = document.getElementById('bg-btn');
-        if (btn) {
-            btn.innerHTML = '随机<br>背景';
-            btn.classList.remove('active-mode');
-        }
+        updateBgButtonState();
         changeBackground(); // 立即随机切换一次
+        restartBgInterval();
+        persistBgState();
         const menu = document.getElementById('bg-menu');
         if (menu) menu.classList.remove('show');
     });
@@ -255,14 +288,7 @@ function renderBgMenu(filter = currentBgFilter) {
         // 绑定点击事件：选择特定背景
         li.addEventListener('click', (e) => {
             e.stopPropagation();
-            bgMode = 'fixed';
-            bgIndex = item.index;
-            const btn = document.getElementById('bg-btn');
-            if (btn) {
-                btn.innerHTML = '固定<br>背景';
-                btn.classList.add('active-mode');
-            }
-            changeBackground(); // 切换到指定背景
+            selectBackground(item.index);
             const menu = document.getElementById('bg-menu');
             if (menu) menu.classList.remove('show');
         });
@@ -351,13 +377,15 @@ function initBgMenu() {
 
 // 选择指定背景并固定
 function selectBackground(index) {
+    if (!backgrounds.length) return;
+    if (index < 0 || index >= backgrounds.length) return;
     bgMode = 'fixed';
     fixedBgIndex = index;
     bgIndex = index;
     applyBackground(index);
-    const btn = document.getElementById('bg-btn');
-    btn.innerHTML = '固定<br>背景';
-    btn.classList.add('active-mode');
+    updateBgButtonState();
+    restartBgInterval();
+    persistBgState();
     updateBgMenuActive();
 }
 
@@ -382,23 +410,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configResp.json();
         backgrounds = config.backgrounds || [];
 
-        // 2. 初始背景：移动端固定“千里江山”，桌面端随机
+        // 2. 初始背景：优先恢复用户设置；无历史设置时，移动端固定“千里江山”，桌面端随机
         if (backgrounds.length > 0) {
-            const isMobileLayout = window.innerWidth <= 1023;
-            if (isMobileLayout) {
-                bgMode = 'fixed';
-                bgIndex = 0;
-                fixedBgIndex = 0;
+            const savedMode = localStorage.getItem(BG_MODE_STORAGE_KEY);
+            const savedIndexRaw = localStorage.getItem(BG_INDEX_STORAGE_KEY);
+            const savedIndex = Number.parseInt(savedIndexRaw || '', 10);
+            const hasSavedIndex = Number.isInteger(savedIndex) && savedIndex >= 0 && savedIndex < backgrounds.length;
+
+            if (savedMode === 'fixed' && hasSavedIndex) {
+                selectBackground(savedIndex);
+            } else if (savedMode === 'random') {
+                bgMode = 'random';
+                bgIndex = hasSavedIndex ? savedIndex : Math.floor(Math.random() * backgrounds.length);
                 applyBackground(bgIndex);
-                const btn = document.getElementById('bg-btn');
-                if (btn) {
-                    btn.innerHTML = '固定<br>背景';
-                    btn.classList.add('active-mode');
-                }
+                updateBgButtonState();
+                restartBgInterval();
+                persistBgState();
             } else {
-                bgIndex = Math.floor(Math.random() * backgrounds.length);
-                applyBackground(bgIndex);
-                bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
+                const isMobileLayout = window.innerWidth <= 1023;
+                if (isMobileLayout) {
+                    selectBackground(0);
+                } else {
+                    bgMode = 'random';
+                    bgIndex = Math.floor(Math.random() * backgrounds.length);
+                    applyBackground(bgIndex);
+                    updateBgButtonState();
+                    restartBgInterval();
+                    persistBgState();
+                }
             }
         }
 
