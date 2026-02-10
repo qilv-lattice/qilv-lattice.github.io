@@ -16,7 +16,7 @@
     /* 宣纸白 - 暖色调护眼，更有书卷气 (原: #ffffff) */
     --card-bg: #fdfbf7;
     --font-title: 'Ma Shan Zheng', cursive;
-    --font-body: 'Noto Serif SC', serif;
+    --font-body: 'LXGW WenKai Screen', 'Noto Serif SC', serif;
     --overlay-bg: rgba(0, 0, 0, 0.7);
     --gradient-start: #e8f0e8;
     --gradient-end: #f5f0e8;
@@ -2842,11 +2842,12 @@ header.char-game-active {
         transform: translateX(0);
     }
 }
+
 /* 背景菜单特殊选项 */
 #bg-list .special-option {
     font-weight: bold;
     color: var(--accent-blue);
-    border-bottom: 2px dashed rgba(0,0,0,0.1);
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.1);
     margin-bottom: 5px;
     padding-bottom: 8px;
 }
