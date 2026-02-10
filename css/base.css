@@ -4,6 +4,88 @@
  * 无 position:fixed、无复杂动画
  */
 
+/* ===== 水墨渐显首屏 Hero ===== */
+@property --ink-spread {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+.hero-ink-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: radial-gradient(ellipse at 50% 42%,
+            transparent var(--ink-spread),
+            #f5f0e8 calc(var(--ink-spread) + 2%));
+    pointer-events: none;
+    animation: ink-spread 2s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards;
+}
+
+/* 遮罩中心的站名标题 */
+.hero-ink-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-title, 'Ma Shan Zheng', cursive);
+    font-size: clamp(2rem, 8vw, 4rem);
+    color: #3a2a1a;
+    letter-spacing: 0.3em;
+    opacity: 0;
+    animation:
+        hero-title-in 0.6s ease-out 0.1s forwards,
+        hero-title-out 0.5s ease-in 1.2s forwards;
+    white-space: nowrap;
+}
+
+/* 渐显动画已完成后隐藏整个遮罩 */
+.hero-ink-overlay.done {
+    display: none;
+}
+
+/* 如果本次会话已播放过，直接隐藏 */
+.hero-ink-overlay.skip {
+    display: none;
+}
+
+@keyframes ink-spread {
+    0% {
+        --ink-spread: 0%;
+    }
+
+    100% {
+        --ink-spread: 85%;
+    }
+}
+
+@keyframes hero-title-in {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes hero-title-out {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.15);
+        filter: blur(4px);
+    }
+}
+
 /* ===== CSS Reset & Variables ===== */
 :root {
     --bg-color: #f5f5f5;

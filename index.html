@@ -47,6 +47,29 @@
 </head>
 
 <body>
+    <!-- 水墨渐显首屏 Hero 遮罩 -->
+    <div id="hero-ink-overlay" class="hero-ink-overlay" aria-hidden="true">
+        <div class="hero-ink-title">七律空间</div>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('hero-ink-overlay');
+            if (!overlay) return;
+            // 同一会话内只播放一次
+            if (sessionStorage.getItem('heroPlayed')) {
+                overlay.classList.add('skip');
+                return;
+            }
+            sessionStorage.setItem('heroPlayed', '1');
+            // 动画结束后移除遮罩
+            overlay.addEventListener('animationend', function (e) {
+                if (e.animationName === 'ink-spread') {
+                    overlay.classList.add('done');
+                }
+            });
+        })();
+    </script>
+
     <!-- 粒子画布 (仅桌面端显示) -->
     <canvas id="particle-canvas"></canvas>
 
