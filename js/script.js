@@ -11,6 +11,10 @@ function isPoemUnlocked(title) {
     return title in getUnlockedMap();
 }
 
+function isLockedPoemHidden(poem) {
+    return !!(poem && poem.locked && !isPoemUnlocked(poem.title));
+}
+
 function markPoemUnlocked(title, password) {
     const map = getUnlockedMap();
     map[title] = btoa(password);
@@ -1155,7 +1159,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             return true;
         });
 
-        if (filteredPoems.length === 0) {
+        const lockedPoems = filteredPoems.filter(poem => isLockedPoemHidden(poem));
+        const visiblePoems = filteredPoems.filter(poem => !isLockedPoemHidden(poem));
+        const displayPoems = [...visiblePoems];
+        if (lockedPoems.length > 0) {
+            displayPoems.push({
+                __lockedGroup: true,
+                __lockedPoems: lockedPoems
+            });
+        }
+
+        if (displayPoems.length === 0) {
             const li = document.createElement('li');
             if (filter === 'new') {
                 li.innerText = '暂无新作';
@@ -1168,18 +1182,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        filteredPoems.forEach((poem, index) => {
+        displayPoems.forEach((poem, index) => {
             const li = document.createElement('li');
-            // 加锁诗词在目录中也隐藏标题
-            if (poem.locked && !isPoemUnlocked(poem.title)) {
+            if (poem.__lockedGroup) {
                 li.innerText = '🔒 加锁作品';
             } else {
                 li.innerText = formatPoemTitleForList(poem.title);
             }
 
-            const cleanTitle = normalizeTitleText(poem.title);
-            const isNewWorkActive = activeLatestKeys.some(key => cleanTitle.includes(key));
-            const isModifiedWorkActive = activeModifiedKeys.some(key => cleanTitle.includes(key));
+            const cleanTitle = poem.__lockedGroup ? '' : normalizeTitleText(poem.title);
+            const isNewWorkActive = !poem.__lockedGroup && activeLatestKeys.some(key => cleanTitle.includes(key));
+            const isModifiedWorkActive = !poem.__lockedGroup && activeModifiedKeys.some(key => cleanTitle.includes(key));
 
             if (filter === 'new' && isNewWorkActive) {
                 li.classList.add('new-work-highlight');
@@ -1190,7 +1203,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
             li.onclick = () => {
-                const realIndex = poems.findIndex(p => p.title === poem.title);
+                const targetPoem = poem.__lockedGroup ? poem.__lockedPoems[0] : poem;
+                const realIndex = poems.findIndex(p => p === targetPoem);
                 currentIndex = realIndex >= 0 ? realIndex : index;
                 renderPoem(currentIndex);
                 toggleTOC();
@@ -1260,6 +1274,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 如果弹窗将要打开，先填充内容
         if (!overlay.classList.contains('active')) {
             const poem = poems[currentIndex];
+            if (isLockedPoemHidden(poem)) {
+                notesContent.innerHTML = '<p>加锁作品暂不显示注释</p>';
+                if (noteBtn) noteBtn.classList.remove('has-notes');
+                overlay.classList.toggle('active');
+                return;
+            }
             const notes = poem.notes || [];
 
             if (notes.length > 0) {
@@ -2190,7 +2210,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 检测是否有备注，高亮注释按钮
             const noteBtn = document.getElementById('note-btn');
-            const hasNotes = poem.notes && poem.notes.length > 0;
+            const hasNotes = !isLockedPoemHidden(poem) && poem.notes && poem.notes.length > 0;
 
             if (noteBtn) {
                 if (hasNotes) {
