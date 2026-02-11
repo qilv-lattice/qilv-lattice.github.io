@@ -1244,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayPoems.forEach((poem, index) => {
             const li = document.createElement('li');
             if (poem.__lockedGroup) {
-                li.innerText = '🔒 加锁作品';
+                li.innerText = '🔒 情感珍藏';
             } else {
                 li.innerText = formatPoemTitleForList(poem.title);
             }
@@ -1334,7 +1334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!overlay.classList.contains('active')) {
             const poem = poems[currentIndex];
             if (isLockedPoemHidden(poem)) {
-                notesContent.innerHTML = '<p>加锁作品暂不显示注释</p>';
+                notesContent.innerHTML = '<p>情感珍藏暂不显示注释</p>';
                 if (noteBtn) noteBtn.classList.remove('has-notes');
                 overlay.classList.toggle('active');
                 return;
@@ -2013,7 +2013,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             // 加锁诗词：隐藏标题
             if (poem.locked && !isPoemUnlocked(poem.title)) {
-                displayTitle = '加锁作品';
+                displayTitle = '情感珍藏';
             }
             titleEl.innerText = displayTitle;
         }
@@ -2021,7 +2021,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             bodyDiv.innerHTML = '';
             // 加锁诗词：副卡显示锁定提示
             if (poem.locked && !isPoemUnlocked(poem.title)) {
-                bodyDiv.innerHTML = '<div class="poem-locked-overlay"><div class="lock-icon">🔒</div><p class="lock-hint">此作品已加锁</p></div>';
+                bodyDiv.innerHTML = '<div class="poem-locked-overlay"><div class="lock-icon">🔒</div><p class="lock-hint">情感珍藏，待您开启</p></div>';
             } else {
                 poem.content.forEach((line, index) => {
                     const p = document.createElement('p');
@@ -2204,7 +2204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 加锁诗词：隐藏真实标题
             if (poem.locked && !isPoemUnlocked(poem.title)) {
-                displayTitle = '加锁作品';
+                displayTitle = '情感珍藏';
             }
 
             const titleEl = mainCard.querySelector('#poem-title');
@@ -2217,7 +2217,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 bodyDiv.innerHTML = `
                     <div class="poem-locked-overlay">
                         <div class="lock-icon">🔒</div>
-                        <p class="lock-hint">此作品已加锁</p>
+                        <p class="lock-hint">情感珍藏，待您开启</p>
                         <div class="lock-input-row">
                             <input type="password" id="poem-password-input"
                                    placeholder="请输入密码" maxlength="20"
