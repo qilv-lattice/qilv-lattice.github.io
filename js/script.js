@@ -93,6 +93,18 @@ function clearGlobalUnlockData() {
     localStorage.removeItem(UNLOCKED_POEMS_KEY);
 }
 
+function applyPoemContentFixes(poem) {
+    if (!poem || !Array.isArray(poem.content)) return;
+    const title = String(poem.title || '');
+    if (title.includes('观世')) {
+        poem.content = poem.content.map(line =>
+            line.includes('宇宙将军名现世')
+                ? line.replace('宇宙将军名现世', '宇宙将军人现世')
+                : line
+        );
+    }
+}
+
 async function derivePasswordKey(password) {
     const encoder = new TextEncoder();
     const keyMaterial = await crypto.subtle.digest('SHA-256', encoder.encode(password));
@@ -141,6 +153,7 @@ async function autoDecryptPoems() {
             markPoemUnlocked(originalTitle);
             poem.content = payload.content || payload;
             poem.notes = payload.notes || [];
+            applyPoemContentFixes(poem);
             successCount++;
         } catch {
             failedCount++;
@@ -1096,6 +1109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 读取诗词数组
             poems = data.poems || data;
+            poems.forEach(applyPoemContentFixes);
 
             // 自动解密已解锁的加锁诗词
             await autoDecryptPoems();
@@ -2313,6 +2327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         poem.content = payload.content || payload;
                         poem.notes = payload.notes || [];
+                        applyPoemContentFixes(poem);
                         // 一次成功解锁后，自动解密全部锁作，避免重复输入
                         await autoDecryptPoems();
                         // 重新渲染 + 刷新目录
