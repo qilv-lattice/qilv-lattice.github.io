@@ -35,10 +35,11 @@ async function autoDecryptPoems() {
         if (poem.locked && poem.encryptedContent && map[poem.title]) {
             try {
                 const pwd = atob(map[poem.title]);
-                poem.content = await decryptPoemContent(poem.encryptedContent, pwd);
-                if (poem.encryptedNotes) {
-                    poem.notes = await decryptPoemContent(poem.encryptedNotes, pwd);
-                }
+                const payload = await decryptPoemContent(poem.encryptedContent, pwd);
+                // 打包格式：{ realTitle, content, notes }
+                if (payload.realTitle) poem.title = payload.realTitle;
+                poem.content = payload.content || payload;
+                poem.notes = payload.notes || [];
             } catch {
                 // 密码不匹配（可能被更换），清除解锁记录
                 delete map[poem.title];
@@ -2154,16 +2155,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const pwd = pwdInput.value.trim();
                     if (!pwd) return;
                     try {
-                        const content = await decryptPoemContent(poem.encryptedContent, pwd);
-                        const notes = poem.encryptedNotes
-                            ? await decryptPoemContent(poem.encryptedNotes, pwd)
-                            : [];
-                        // 解密成功：更新内存数据
-                        poem.content = content;
-                        poem.notes = notes;
+                        const payload = await decryptPoemContent(poem.encryptedContent, pwd);
+                        // 解密成功：用假标题作为 localStorage 键
                         markPoemUnlocked(poem.title, pwd);
-                        // 重新渲染
+                        // 恢复真实数据
+                        if (payload.realTitle) poem.title = payload.realTitle;
+                        poem.content = payload.content || payload;
+                        poem.notes = payload.notes || [];
+                        // 重新渲染 + 刷新目录
                         renderPoem(currentIndex, true);
+                        renderTOC();
                     } catch {
                         errorMsg.style.display = 'block';
                         pwdInput.value = '';
