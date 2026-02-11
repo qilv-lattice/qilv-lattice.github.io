@@ -1054,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <button class="toc-tab toc-cat-tab" data-filter="心声">心声</button>
                     <button class="toc-tab toc-cat-tab" data-filter="诗道">诗道</button>
                     <button class="toc-tab toc-cat-tab" data-filter="情思">情思</button>
-                    <button class="toc-tab toc-cat-tab" data-filter="史鉴">史鉴</button>
+                    <button class="toc-tab toc-cat-tab" data-filter="观察">观察</button>
                 </div>
             `;
             if (title) {
@@ -1148,7 +1148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return activeModifiedKeys.some(key => cleanTitle.includes(key));
             }
             // 按 category 分类筛选
-            if (['心声', '诗道', '情思', '史鉴'].includes(filter)) {
+            if (['心声', '诗道', '情思', '观察'].includes(filter)) {
                 return poem.category === filter;
             }
             return true;
