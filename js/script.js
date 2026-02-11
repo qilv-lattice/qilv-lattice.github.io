@@ -4,14 +4,54 @@ const LEGACY_UNLOCKED_POEMS_KEY = 'unlockedPoems';
 const LEGACY_SESSION_UNLOCKED_POEMS_KEY = 'unlockedPoemsSession';
 const GLOBAL_UNLOCK_KEY = 'lockedPoemsKeyV1';
 
+function getUnlockToken(title) {
+    const source = String(title || '');
+    let h1 = 0x811c9dc5;
+    let h2 = 0x9e3779b9;
+    for (let i = 0; i < source.length; i++) {
+        const code = source.charCodeAt(i);
+        h1 ^= code;
+        h1 = Math.imul(h1, 16777619);
+        h2 ^= (code + i) & 0xffff;
+        h2 = Math.imul(h2, 2246822519);
+    }
+    const a = (h1 >>> 0).toString(16).padStart(8, '0');
+    const b = (h2 >>> 0).toString(16).padStart(8, '0');
+    return `u_${a}${b}`;
+}
+
 function getUnlockedMap() {
     try {
         return JSON.parse(localStorage.getItem(UNLOCKED_POEMS_KEY) || '{}');
     } catch { return {}; }
 }
 
+function migrateLegacyUnlockMap() {
+    const map = getUnlockedMap();
+    const keys = Object.keys(map);
+    if (!keys.length) return;
+
+    let changed = false;
+    const nextMap = {};
+    keys.forEach(key => {
+        if (!map[key]) return;
+        if (key.startsWith('u_')) {
+            nextMap[key] = true;
+            return;
+        }
+        nextMap[getUnlockToken(key)] = true;
+        changed = true;
+    });
+
+    if (changed) {
+        localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(nextMap));
+    }
+}
+
 function isPoemUnlocked(title) {
-    return title in getUnlockedMap();
+    const map = getUnlockedMap();
+    const token = getUnlockToken(title);
+    return !!map[token] || !!map[title];
 }
 
 function isLockedPoemHidden(poem) {
@@ -20,7 +60,7 @@ function isLockedPoemHidden(poem) {
 
 function markPoemUnlocked(title) {
     const map = getUnlockedMap();
-    map[title] = true;
+    map[getUnlockToken(title)] = true;
     localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(map));
 }
 
@@ -82,6 +122,7 @@ async function autoDecryptPoems() {
     if (sessionStorage.getItem(LEGACY_SESSION_UNLOCKED_POEMS_KEY)) {
         sessionStorage.removeItem(LEGACY_SESSION_UNLOCKED_POEMS_KEY);
     }
+    migrateLegacyUnlockMap();
 
     const keyBytes = getGlobalUnlockKey();
     if (!keyBytes) return;
@@ -764,6 +805,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).filter(Boolean);
     }
 
+    function entryMatchesVisiblePoems(entry, visibleTitleKeys) {
+        const key = normalizeTitleText(entry.title);
+        if (!key) return false;
+        for (const visibleKey of visibleTitleKeys) {
+            if (visibleKey.includes(key) || key.includes(visibleKey)) return true;
+        }
+        return false;
+    }
+
+    function sanitizeUpdateInfoForLockedPoems() {
+        const visibleTitleKeys = new Set(
+            poems
+                .filter(poem => !isLockedPoemHidden(poem))
+                .map(poem => normalizeTitleText(poem.title))
+                .filter(Boolean)
+        );
+
+        updateInfo.latestWorks = normalizeLatestWorks(updateInfo.latestWorks)
+            .filter(entry => entryMatchesVisiblePoems(entry, visibleTitleKeys));
+        updateInfo.modifiedWorks = normalizeModifiedWorks(updateInfo.modifiedWorks)
+            .filter(entry => entryMatchesVisiblePoems(entry, visibleTitleKeys));
+    }
+
     function findLatestWorkEntry(poemTitle) {
         const cleanTitle = normalizeTitleText(poemTitle);
         const latestEntries = normalizeLatestWorks(updateInfo.latestWorks);
@@ -1035,6 +1099,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 自动解密已解锁的加锁诗词
             await autoDecryptPoems();
+            // 防止加锁作品通过新作/修改列表意外暴露标题
+            sanitizeUpdateInfoForLockedPoems();
 
             // 检查并显示更新通知（红喇叭）
             checkUpdateNotice();
