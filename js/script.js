@@ -97,11 +97,16 @@ function applyPoemContentFixes(poem) {
     if (!poem || !Array.isArray(poem.content)) return;
     const title = String(poem.title || '');
     if (title.includes('观世')) {
-        poem.content = poem.content.map(line =>
-            line.includes('宇宙将军名现世')
-                ? line.replace('宇宙将军名现世', '宇宙将军人现世')
-                : line
-        );
+        poem.content = poem.content.map(line => {
+            let fixed = line;
+            if (fixed.includes('宇宙将军名现世')) {
+                fixed = fixed.replace('宇宙将军名现世', '宇宙将军人现世');
+            }
+            if (fixed.includes('得车有赖秦王病')) {
+                fixed = fixed.replace('得车有赖秦王病', '车多有赖秦王病');
+            }
+            return fixed;
+        });
     }
 }
 
