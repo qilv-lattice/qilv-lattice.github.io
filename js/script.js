@@ -1931,17 +1931,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (tongYunRegex.test(displayTitle)) {
                 displayTitle = displayTitle.replace(tongYunRegex, "");
             }
+            // 加锁诗词：隐藏标题
+            if (poem.locked && !isPoemUnlocked(poem.title)) {
+                displayTitle = '加锁作品';
+            }
             titleEl.innerText = displayTitle;
         }
         if (bodyDiv) {
             bodyDiv.innerHTML = '';
-            poem.content.forEach((line, index) => {
-                const p = document.createElement('p');
-                p.innerText = line;
-                p.style.setProperty('--line-index', index);
-                p.classList.add('poem-line-animate');
-                bodyDiv.appendChild(p);
-            });
+            // 加锁诗词：副卡显示锁定提示
+            if (poem.locked && !isPoemUnlocked(poem.title)) {
+                bodyDiv.innerHTML = '<div class="poem-locked-overlay"><div class="lock-icon">🔒</div><p class="lock-hint">此作品已加锁</p></div>';
+            } else {
+                poem.content.forEach((line, index) => {
+                    const p = document.createElement('p');
+                    p.innerText = line;
+                    p.style.setProperty('--line-index', index);
+                    p.classList.add('poem-line-animate');
+                    bodyDiv.appendChild(p);
+                });
+            }
         }
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
