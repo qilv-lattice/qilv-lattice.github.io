@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-02-11 13:39",
+    "lastUpdate": "2026-02-12 07:27",
     "announcement": "《先锋》作者最喜欢系列作品之一，<br>希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "《七律·达观》",
+            "receivedAt": "2026-02-12 07:27"
+        },
         {
             "title": "《七律·Dandelion》",
             "receivedAt": "2026-02-11 13:39"
@@ -182,6 +186,19 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·达观",
+            "author": "当代 | 理工博士",
+            "content": [
+                "风令花开亦令残，为情所绊脱身难。",
+                "气凝眉角煎思虑，心渡虚空信涅槃。",
+                "或许求真能稷下，亦曾学步至邯郸。",
+                "人生物语都同构，可幸悲观有乐观。"
+            ],
+            "notes": [],
+            "techRomance": false,
+            "category": "心声"
+        },
         {
             "title": "七律·Dandelion",
             "author": "当代 | 理工博士",
