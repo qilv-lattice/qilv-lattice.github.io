@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-02-11 08:00",
+    "lastUpdate": "2026-02-11 13:39",
     "announcement": "《先锋》作者最喜欢系列作品之一，<br>希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "《七律·Dandelion》",
+            "receivedAt": "2026-02-11 13:39"
+        },
         {
             "title": "《七律·磐石》",
             "receivedAt": "2026-02-10 23:54"
@@ -178,6 +182,19 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·Dandelion",
+            "author": "当代 | 理工博士",
+            "content": [
+                "深秋诗语小蒹葭，似羽似绒还似花。",
+                "如伞身形通美感，若蓬意象比浮槎。",
+                "风携飞絮佳人梦，愿许精灵游子家。",
+                "且以轻盈随浪漫，心无羁绊赴天涯。"
+            ],
+            "notes": [],
+            "techRomance": false,
+            "category": "情思"
+        },
         {
             "title": "情感珍藏-1",
             "author": "当代 | 理工博士",
