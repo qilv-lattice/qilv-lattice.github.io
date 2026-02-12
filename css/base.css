@@ -801,11 +801,6 @@ header.char-game-active {
     font-size: 1.4rem;
     margin: 0 0 1rem 0;
     text-align: center;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: fit-content;
-    max-width: 100%;
 }
 
 .poem-content.horizontal-mode .body-text {
@@ -814,11 +809,7 @@ header.char-game-active {
     line-height: 2rem;
     letter-spacing: 1px;
     /* 减小字间距 */
-    width: fit-content;
-    max-width: calc(100% - 1rem);
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
     text-align: center;
 }
 
