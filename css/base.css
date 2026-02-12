@@ -814,7 +814,8 @@ header.char-game-active {
 }
 
 .poem-content.horizontal-mode .body-text p {
-    margin: 0.5rem 0;
+    margin: 0.5rem 0 0.5rem 3px;
+    /* 微调：向右偏移 3px 修正视觉中心 */
     width: 100%;
     text-align: center;
     white-space: nowrap;
