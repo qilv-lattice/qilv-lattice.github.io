@@ -299,25 +299,6 @@
     const fwSound = new Audio('assets/festive-fireworks-with-the-whistle-of-rockets.mp3');
     fwSound.loop = true;
 
-    // 移动端音频解锁：用户第一次点击任何地方时，静音播放一下，解锁 AudioContext
-    let audioUnlocked = false;
-    function unlockAudio() {
-        if (audioUnlocked) return;
-        // 修复：play() 前静音，防止解锁时发出声音
-        const savedVolume = fwSound.volume;
-        fwSound.volume = 0;
-        fwSound.play().then(() => {
-            fwSound.pause();
-            fwSound.currentTime = 0;
-            fwSound.volume = savedVolume;
-            audioUnlocked = true;
-        }).catch(() => { fwSound.volume = savedVolume; });
-        document.removeEventListener('click', unlockAudio);
-        document.removeEventListener('touchstart', unlockAudio);
-    }
-    document.addEventListener('click', unlockAudio);
-    document.addEventListener('touchstart', unlockAudio);
-
     // 移除 7s 强制循环，允许播放到 7840ms
     // kwSound.addEventListener('timeupdate', ...);
 
