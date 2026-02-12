@@ -2507,6 +2507,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (themeMenu) themeMenu.classList.toggle('blue-mode');
         if (tocOverlay) tocOverlay.classList.toggle('blue-mode');
         if (notesOverlay) notesOverlay.classList.toggle('blue-mode');
+        const arrowPrev = document.getElementById('arrow-prev');
+        const arrowNext = document.getElementById('arrow-next');
+        if (arrowPrev) arrowPrev.classList.toggle('blue-mode');
+        if (arrowNext) arrowNext.classList.toggle('blue-mode');
 
         // 联动宽度：header/footer 与诗词卡片对齐
         if (headerEl) headerEl.classList.toggle('horizontal-width');

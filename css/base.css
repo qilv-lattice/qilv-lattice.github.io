@@ -842,6 +842,11 @@ header.char-game-active {
     }
 }
 
+/* ===== 箭头导航（默认隐藏，桌面端由 desktop.css 启用） ===== */
+.nav-arrow {
+    display: none;
+}
+
 /* ===== 控制按钮 ===== */
 .control-panel {
     display: flex;

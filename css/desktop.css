@@ -69,6 +69,99 @@ body.view-mode-single .poem-content.wing {
     display: none;
 }
 
+/* ===== 桌面端箭头导航按钮 ===== */
+.nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    /* 外观 */
+    width: 44px;
+    height: 72px;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    color: var(--accent-color);
+    cursor: pointer;
+    /* 动效 */
+    transition: all 0.25s ease;
+    opacity: 0.4;
+}
+
+.nav-arrow:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow:active {
+    transform: translateY(-50%) scale(0.92);
+    opacity: 0.85;
+}
+
+/* 蓝色模式适配 */
+.nav-arrow.blue-mode {
+    color: var(--accent-blue);
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .nav-arrow {
+    background: rgba(40, 40, 40, 0.5);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #aaa;
+}
+
+[data-theme="dark"] .nav-arrow:hover {
+    background: rgba(60, 60, 60, 0.85);
+    color: #fff;
+}
+
+/* 左箭头：贴在三卡区域左边缘外 */
+.nav-arrow-left {
+    /* 三卡 grid 总宽 ≈ 1480px，居中后左边缘 = 50vw - 740px
+       箭头贴在左边缘外侧，留 8px 间隙 */
+    left: calc(50vw - 740px - 52px);
+}
+
+/* 右箭头：贴在三卡区域右边缘外 */
+.nav-arrow-right {
+    right: calc(50vw - 740px - 52px);
+}
+
+/* 窄屏桌面（grid 可能超宽）：箭头贴边 */
+@media (max-width: 1620px) {
+    .nav-arrow-left {
+        left: 8px;
+    }
+
+    .nav-arrow-right {
+        right: 8px;
+    }
+}
+
+/* 单卡模式：隐藏箭头 */
+body.view-mode-single .nav-arrow {
+    display: none;
+}
+
+/* 三卡模式：隐藏底部文字按钮（箭头替代） */
+body:not(.view-mode-single) .control-panel {
+    display: none;
+}
+
+/* SVG 尺寸 */
+.nav-arrow svg {
+    width: 24px;
+    height: 48px;
+    pointer-events: none;
+}
+
 header {
     width: var(--card-width);
     max-width: none;
@@ -729,6 +822,7 @@ header {
         opacity: 0;
         transform: translateX(20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
