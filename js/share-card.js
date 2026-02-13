@@ -69,30 +69,25 @@ window.generateShareCard = function (poems, currentIndex) {
     clone.style.width = cardWidth + 'px';
     clone.style.maxWidth = cardWidth + 'px';
 
-    // 落款（使用绝对定位，不干扰文档流）
-    const footerMark = document.createElement('div');
-    footerMark.innerHTML = '七律空间 · 雅藏';
-    footerMark.style.cssText = [
-        'position: absolute',
-        'font-size: 0.85rem',
-        'opacity: 0.6',
-        'font-family: "Ma Shan Zheng", cursive',
-        'pointer-events: none'
-    ].join(';');
-
     const isHorizontal = originalCard.classList.contains('horizontal-mode');
-    if (isHorizontal) {
-        footerMark.style.bottom = '1.5rem';
-        footerMark.style.left = '50%';
-        footerMark.style.transform = 'translateX(-50%)';
-        footerMark.style.textAlign = 'center';
-    } else {
-        footerMark.style.writingMode = 'vertical-rl';
-        footerMark.style.bottom = '2rem';
-        footerMark.style.left = '1.5rem';
-    }
 
-    clone.appendChild(footerMark);
+    // 落款：仅横排模式添加（竖排模式底部已有品牌印章，无需重复）
+    if (isHorizontal) {
+        const footerMark = document.createElement('div');
+        footerMark.innerHTML = '七律空间 · 雅藏';
+        footerMark.style.cssText = [
+            'position: absolute',
+            'bottom: 1.5rem',
+            'left: 50%',
+            'transform: translateX(-50%)',
+            'text-align: center',
+            'font-size: 0.85rem',
+            'opacity: 0.6',
+            'font-family: "Ma Shan Zheng", cursive',
+            'pointer-events: none'
+        ].join(';');
+        clone.appendChild(footerMark);
+    }
     cloneContainer.appendChild(clone);
 
     // 延时确保渲染完成
