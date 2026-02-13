@@ -2068,7 +2068,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     console.log('点击生成雅帖');
                     if (window.generateShareCard) {
                         console.log('调用 generateShareCard');
-                        window.generateShareCard();
+                        window.generateShareCard(poems, currentIndex);
                     } else {
                         console.error('window.generateShareCard 未定义');
                         alert('功能尚未加载，请检查网络或刷新页面');
