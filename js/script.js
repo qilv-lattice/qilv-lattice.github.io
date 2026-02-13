@@ -1442,21 +1442,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!overlay.classList.contains('active')) {
             const poem = poems[currentIndex];
             if (isLockedPoemHidden(poem)) {
-                notesContent.innerHTML = '<p>情感珍藏暂不显示注释</p>';
+                notesContent.textContent = '';
+                const p = document.createElement('p');
+                p.textContent = '情感珍藏暂不显示注释';
+                notesContent.appendChild(p);
                 if (noteBtn) noteBtn.classList.remove('has-notes');
                 overlay.classList.toggle('active');
                 return;
             }
             const notes = poem.notes || [];
 
+            notesContent.textContent = '';
             if (notes.length > 0) {
-                // 有注释：逐条显示
-                notesContent.innerHTML = notes.map(note => `<p>${note}</p>`).join('');
+                // 有注释：逐条显示（安全创建 DOM 元素，防止 XSS）
+                notes.forEach(note => {
+                    const p = document.createElement('p');
+                    p.textContent = note;
+                    notesContent.appendChild(p);
+                });
                 // 点击查看后移除高亮
                 if (noteBtn) noteBtn.classList.remove('has-notes');
             } else {
                 // 无注释
-                notesContent.innerHTML = '<p>暂无注释</p>';
+                const p = document.createElement('p');
+                p.textContent = '暂无注释';
+                notesContent.appendChild(p);
             }
         }
 
