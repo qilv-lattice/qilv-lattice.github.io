@@ -2941,18 +2941,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, { passive: true });
     }
 
-    // ===== 秘密功能：点击标题5次查看访客统计 =====
+    // ===== 秘密功能：点击标题7次查看访客统计 =====
     // 动态加载不蒜子统计
     function loadBusuanzi() {
-        // 防抖：如果已经加载过，不再重复加载
-        if (window.busuanziLoaded || document.getElementById('busuanzi-script')) return;
-
-        window.busuanziLoaded = true; // 标记已加载
+        if (document.getElementById('busuanzi-script')) return;
         const script = document.createElement('script');
         script.id = 'busuanzi-script';
         script.async = true;
         script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+        script.onload = () => { window.busuanziLoaded = true; };
+        script.onerror = () => {
+            // 加载失败时移除脚本标签，允许下次重试
+            script.remove();
+        };
         document.body.appendChild(script);
+    }
+
+    // 轮询等待不蒜子数据就绪，最多 5 秒
+    function waitForBusuanzi(callback) {
+        const uvSpan = document.getElementById('busuanzi_value_site_uv');
+        const pvSpan = document.getElementById('busuanzi_value_site_pv');
+        let attempts = 0;
+        const maxAttempts = 25; // 25 × 200ms = 5s
+        const timer = setInterval(() => {
+            attempts++;
+            const uvReady = uvSpan && uvSpan.innerText;
+            const pvReady = pvSpan && pvSpan.innerText;
+            if ((uvReady && pvReady) || attempts >= maxAttempts) {
+                clearInterval(timer);
+                callback(uvReady || '统计中...', pvReady || '统计中...');
+            }
+        }, 200);
     }
 
     // 普通访客：自动加载统计
@@ -2984,23 +3003,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (clickCount === 7) {
                 clickCount = 0; // 重置
 
+                const wasAdmin = localStorage.getItem('qilv_admin');
+                if (wasAdmin) {
+                    // 已是管理员：再次点击7次退出管理员模式
+                    localStorage.removeItem('qilv_admin');
+                    alert('管理员模式已退出，刷新页面后恢复统计。');
+                    return;
+                }
+
                 // 标记为管理员
                 localStorage.setItem('qilv_admin', 'true');
 
                 // 强制加载脚本以获取数据（如果未加载）
                 loadBusuanzi();
 
-                // 获取不蒜子统计数据
-                const uvSpan = document.getElementById('busuanzi_value_site_uv');
-                const pvSpan = document.getElementById('busuanzi_value_site_pv');
-
-                // 简单的轮询等待数据加载
-                setTimeout(() => {
-                    const uv = (uvSpan && uvSpan.innerText) ? uvSpan.innerText : '统计中...';
-                    const pv = (pvSpan && pvSpan.innerText) ? pvSpan.innerText : '统计中...';
-
-                    alert(`㊙️ 秘密数据 (管理员模式已激活)\n\n👤 总访客数 (UV): ${uv}\n👁️ 总访问量 (PV): ${pv}\n\n⚠️ 注：您的访问今后将不再计入统计。`);
-                }, 500); // 延迟500ms等待脚本初始化
+                // 轮询等待数据就绪后弹窗
+                waitForBusuanzi((uv, pv) => {
+                    alert(`㊙️ 秘密数据 (管理员模式已激活)\n\n👤 总访客数 (UV): ${uv}\n👁️ 总访问量 (PV): ${pv}\n\n⚠️ 注：您的访问今后将不再计入统计。\n💡 再次连点7次可退出管理员模式。`);
+                });
             }
         });
 
