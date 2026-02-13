@@ -111,7 +111,7 @@ function applyPoemContentFixes(poem) {
 }
 
 // PBKDF2 密钥派生（安全）：25万次迭代 + 固定盐
-const PBKDF2_SALT = new Uint8Array([113,105,108,118,45,108,97,116,116,105,99,101,45,107,100,102]);
+const PBKDF2_SALT = new Uint8Array([113, 105, 108, 118, 45, 108, 97, 116, 116, 105, 99, 101, 45, 107, 100, 102]);
 const PBKDF2_ITERATIONS = 250000;
 
 async function derivePasswordKey(password) {
@@ -144,12 +144,15 @@ async function decryptPoemContentWithKey(encryptedBase64, keyBytes) {
 
 async function decryptPoemContent(encryptedBase64, password) {
     // 先尝试 legacy SHA-256（兼容现有加密数据），再尝试 PBKDF2（未来新数据）
+    // 返回 { payload, keyBytes }，让调用方知道实际使用的密钥
     try {
         const legacyKey = await derivePasswordKeyLegacy(password);
-        return await decryptPoemContentWithKey(encryptedBase64, legacyKey);
+        const payload = await decryptPoemContentWithKey(encryptedBase64, legacyKey);
+        return { payload, keyBytes: legacyKey };
     } catch {
         const pbkdf2Key = await derivePasswordKey(password);
-        return await decryptPoemContentWithKey(encryptedBase64, pbkdf2Key);
+        const payload = await decryptPoemContentWithKey(encryptedBase64, pbkdf2Key);
+        return { payload, keyBytes: pbkdf2Key };
     }
 }
 
@@ -172,7 +175,16 @@ async function autoDecryptPoems() {
     for (const poem of poems) {
         if (!(poem.locked && poem.encryptedContent)) continue;
         try {
-            const payload = await decryptPoemContentWithKey(poem.encryptedContent, keyBytes);
+            // 先用存储的密钥尝试，若失败则尝试另一种派生方式
+            let payload;
+            try {
+                payload = await decryptPoemContentWithKey(poem.encryptedContent, keyBytes);
+            } catch {
+                // 存储密钥失败，可能是混合加密（部分 legacy/部分 PBKDF2）
+                // 此时无法自动解锁该诗词，标记跳过
+                failedCount++;
+                continue;
+            }
             const originalTitle = poem.title;
             if (payload.realTitle) {
                 poem.title = payload.realTitle;
@@ -189,6 +201,7 @@ async function autoDecryptPoems() {
     }
 
     // 若存储密钥已失效（如你更换了锁密码），自动清空并回退到手动输入
+    // 但若部分成功部分失败（混合加密），保留密钥，仅失败的诗词需手动输入
     if (failedCount > 0 && successCount === 0) {
         clearGlobalUnlockData();
     }
@@ -1010,7 +1023,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 设置公告内容
         const textEl = document.getElementById('announcement-text');
         if (textEl && updateInfo.announcement) {
-            textEl.textContent = updateInfo.announcement;
+            // 安全渲染公告：仅允许 <br> 换行标签，其余 HTML 转义
+            const safeHtml = updateInfo.announcement
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/&lt;br&gt;/gi, '<br>').replace(/&lt;br\s*\/&gt;/gi, '<br>');
+            textEl.innerHTML = safeHtml;
             noticeEl.style.display = 'flex';
         } else if (!updateInfo.announcement) {
             // 没有公告则隐藏
@@ -2365,9 +2382,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const pwd = pwdInput.value.trim();
                     if (!pwd) return;
                     try {
-                        const payload = await decryptPoemContent(poem.encryptedContent, pwd);
-                        // 解密成功后，用 legacy 密钥存储（兼容现有加密数据）
-                        const keyBytes = await derivePasswordKeyLegacy(pwd);
+                        const { payload, keyBytes } = await decryptPoemContent(poem.encryptedContent, pwd);
+                        // 存储实际解密成功的密钥（可能是 legacy 或 PBKDF2）
                         storeGlobalUnlockKey(keyBytes);
                         // 解密成功：用假标题作为 localStorage 键
                         const lockedAliasTitle = poem.title;

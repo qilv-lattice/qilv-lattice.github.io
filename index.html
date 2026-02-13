@@ -3,16 +3,18 @@
 
 <head>
     <script>
-        if (!localStorage.getItem('qilv_admin')) {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JB5KT83L5R';
-            document.head.appendChild(s);
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-JB5KT83L5R');
-        }
+        try {
+            if (localStorage.getItem('qilv_admin')) { /* skip analytics */ } else {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JB5KT83L5R';
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-JB5KT83L5R');
+            }
+        } catch (e) { /* localStorage 不可用时静默降级，不阻断页面 */ }
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -480,7 +482,7 @@
     <!-- Cloudflare Web Analytics (根据域名动态加载) -->
     <script>
         (function () {
-            if (localStorage.getItem('qilv_admin')) return;
+            try { if (localStorage.getItem('qilv_admin')) return; } catch (e) { /* 静默降级 */ }
             var host = window.location.hostname;
             var token = '';
             if (host.indexOf('pages.dev') !== -1) {
