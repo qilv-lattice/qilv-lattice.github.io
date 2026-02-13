@@ -2351,6 +2351,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="lock-input-row">
                             <input type="password" id="poem-password-input"
                                    placeholder="请输入密码" maxlength="20"
+                                   autocomplete="off" spellcheck="false"
                                    class="lock-password-input">
                             <button id="poem-unlock-btn" class="lock-unlock-btn">解锁</button>
                         </div>
