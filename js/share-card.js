@@ -116,18 +116,62 @@ window.generateShareCard = function (poems, currentIndex) {
             previewContainer.innerHTML = '';
             previewContainer.appendChild(img);
 
+            // 判断是否为移动端
+            const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+            // 移动端：显示"长按保存"提示（UC/微信等不支持 <a download> 编程下载）
+            if (isMobile) {
+                const tip = document.createElement('div');
+                tip.style.cssText = 'text-align:center; padding:0.8rem 0 0.2rem; color:#888; font-size:0.85rem;';
+                tip.textContent = '📱 长按上方图片即可保存到相册';
+                previewContainer.appendChild(tip);
+            }
+
             const downloadBtn = document.getElementById('download-share-btn');
             if (downloadBtn) {
                 const newBtn = downloadBtn.cloneNode(true);
                 downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
-                newBtn.onclick = () => {
-                    const link = document.createElement('a');
-                    link.download = `七律空间_${currentPoem.title}_雅帖.png`;
-                    link.href = imgData;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                };
+
+                if (isMobile) {
+                    // 移动端：点击下载按钮时尝试 Blob 方式，若失败则提示长按
+                    newBtn.textContent = '保存雅帖';
+                    newBtn.onclick = () => {
+                        try {
+                            // 将 dataURL 转为 Blob，再通过 URL.createObjectURL 下载
+                            const byteString = atob(imgData.split(',')[1]);
+                            const mimeType = imgData.split(',')[0].match(/:(.*?);/)[1];
+                            const ab = new ArrayBuffer(byteString.length);
+                            const ia = new Uint8Array(ab);
+                            for (let i = 0; i < byteString.length; i++) {
+                                ia[i] = byteString.charCodeAt(i);
+                            }
+                            const blob = new Blob([ab], { type: mimeType });
+                            const blobUrl = URL.createObjectURL(blob);
+
+                            const link = document.createElement('a');
+                            link.download = `七律空间_${currentPoem.title}_雅帖.png`;
+                            link.href = blobUrl;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+
+                            // 延迟释放 Blob URL
+                            setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+                        } catch (e) {
+                            alert('请长按上方图片，选择"保存图片"即可下载。');
+                        }
+                    };
+                } else {
+                    // 桌面端：直接使用 data URL 下载
+                    newBtn.onclick = () => {
+                        const link = document.createElement('a');
+                        link.download = `七律空间_${currentPoem.title}_雅帖.png`;
+                        link.href = imgData;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    };
+                }
             }
 
             document.body.removeChild(cloneContainer);
