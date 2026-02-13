@@ -16,6 +16,18 @@ body::before {
     /* 滤镜已移除，背景原色显示 */
 }
 
+/* 桌面端全屏体验：默认隐藏滚动条 */
+body {
+    overflow: hidden;
+}
+
+/* 矮屏幕回退：当高度不足以完全显示内容时，允许滚动 */
+@media (max-height: 800px) {
+    body {
+        overflow-y: auto;
+    }
+}
+
 /* ===== 粒子画布 ===== */
 #particle-canvas {
     display: block;
