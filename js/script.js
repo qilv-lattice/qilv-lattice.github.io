@@ -110,7 +110,24 @@ function applyPoemContentFixes(poem) {
     }
 }
 
+// PBKDF2 密钥派生（安全）：25万次迭代 + 固定盐
+const PBKDF2_SALT = new Uint8Array([113,105,108,118,45,108,97,116,116,105,99,101,45,107,100,102]);
+const PBKDF2_ITERATIONS = 250000;
+
 async function derivePasswordKey(password) {
+    const encoder = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey(
+        'raw', encoder.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
+    );
+    const derived = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt: PBKDF2_SALT, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+        keyMaterial, 256
+    );
+    return new Uint8Array(derived);
+}
+
+// Legacy SHA-256 派生（仅用于兼容现有加密数据，待全部诗词重新加密后移除）
+async function derivePasswordKeyLegacy(password) {
     const encoder = new TextEncoder();
     const keyMaterial = await crypto.subtle.digest('SHA-256', encoder.encode(password));
     return new Uint8Array(keyMaterial);
@@ -126,8 +143,14 @@ async function decryptPoemContentWithKey(encryptedBase64, keyBytes) {
 }
 
 async function decryptPoemContent(encryptedBase64, password) {
-    const keyBytes = await derivePasswordKey(password);
-    return decryptPoemContentWithKey(encryptedBase64, keyBytes);
+    // 先尝试 legacy SHA-256（兼容现有加密数据），再尝试 PBKDF2（未来新数据）
+    try {
+        const legacyKey = await derivePasswordKeyLegacy(password);
+        return await decryptPoemContentWithKey(encryptedBase64, legacyKey);
+    } catch {
+        const pbkdf2Key = await derivePasswordKey(password);
+        return await decryptPoemContentWithKey(encryptedBase64, pbkdf2Key);
+    }
 }
 
 // 自动解密已解锁诗词：支持同浏览器持久免二次输入
@@ -2331,9 +2354,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const pwd = pwdInput.value.trim();
                     if (!pwd) return;
                     try {
-                        const keyBytes = await derivePasswordKey(pwd);
-                        storeGlobalUnlockKey(keyBytes);
                         const payload = await decryptPoemContent(poem.encryptedContent, pwd);
+                        // 解密成功后，用 legacy 密钥存储（兼容现有加密数据）
+                        const keyBytes = await derivePasswordKeyLegacy(pwd);
+                        storeGlobalUnlockKey(keyBytes);
                         // 解密成功：用假标题作为 localStorage 键
                         const lockedAliasTitle = poem.title;
                         markPoemUnlocked(lockedAliasTitle);
