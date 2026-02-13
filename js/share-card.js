@@ -80,9 +80,8 @@ window.generateShareCard = function (poems, currentIndex) {
     clone.style.transition = 'none';
     clone.style.border = 'none';
     clone.style.height = 'auto';
-    clone.style.minHeight = '800px'; // 稍微增加高度以适应长屏
+    clone.style.minHeight = '850px'; // 增加高度以确保竖排有足够空间展示落款
     clone.style.color = getComputedStyle(originalCard).color;
-    // 强制背景样式（以防 computed style 丢失）
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
 
@@ -96,27 +95,23 @@ window.generateShareCard = function (poems, currentIndex) {
     } else {
         // 竖排模式布局优化
         clone.style.writingMode = 'vertical-rl';
-        clone.style.padding = '2rem'; // 减少内边距，让 centering 发挥作用
+        clone.style.padding = '3rem 2rem'; // 恢复适度内边距
 
-        // 使用 Flexbox 居中
+        // 使用 Flexbox 布局
         clone.style.display = 'flex';
-        // 在 vertical-rl 中，row 是垂直堆叠（坏），column 是水平堆叠（好）
-        // 这里的 'column' 方向实际上是 Right-to-Left (Block Axis)
+        // vertical-rl 下 column 方向是从右向左排列 (符合阅读顺序)
         clone.style.flexDirection = 'column';
 
-        // 垂直居中 (Cross Axis) - 若喜欢顶部对齐可改为 flex-start
-        clone.style.alignItems = 'center';
+        // 关键修正：垂直方向（Cross Axis）改为顶部对齐，避免标题悬浮在中间
+        clone.style.alignItems = 'flex-start';
 
-        // 水平居中 (Main Axis)
+        // 水平方向（Main Axis）居中
         clone.style.justifyContent = 'center';
-
-        // 确保高度填满容器以便垂直居中生效
-        // 但 cloneContainer 是 auto height，所以 minHeight 800px 起作用
     }
 
     // 落款
     const footerMark = document.createElement('div');
-    footerMark.style.fontSize = '0.9rem'; // 稍微放大
+    footerMark.style.fontSize = '0.9rem';
     footerMark.style.opacity = '0.7';
     footerMark.style.fontFamily = '"Ma Shan Zheng", cursive';
     footerMark.style.textAlign = 'center';
@@ -127,12 +122,18 @@ window.generateShareCard = function (poems, currentIndex) {
     } else {
         // 竖排落款样式
         footerMark.style.writingMode = 'vertical-rl';
-        // 在 flex column (Right-to-Left) 中，这是最左边一列
-        // 垂直对齐到底部 (Cross Axis End)
+
+        // 在 flex column (Right-to-Left) 中
+        // Cross Axis 是垂直方向 (Top-Bottom)
+        // 我们希望落款文字底对齐 -> align-self: flex-end (Bottom)
         footerMark.style.alignSelf = 'flex-end';
-        footerMark.style.marginTop = '0'; // Top is Right
-        footerMark.style.marginLeft = '1rem'; // Left spacing
-        footerMark.style.marginBottom = '2rem'; // Bottom spacing
+
+        // 文字内容也要底对齐（如果 div 本身高度被拉伸）
+        footerMark.style.textAlign = 'right'; // vertical mode 下 right = bottom
+
+        footerMark.style.marginTop = '0';
+        footerMark.style.marginLeft = '1.5rem'; // 左侧留白，与正文隔开
+        footerMark.style.marginBottom = '3rem'; // 底部留白 (物理底部)
         footerMark.style.marginRight = '0.5rem';
     }
     footerMark.innerHTML = '七律空间 · 雅藏';
