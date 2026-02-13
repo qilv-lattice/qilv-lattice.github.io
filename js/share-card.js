@@ -1,41 +1,29 @@
 /* ===== 雅帖生成逻辑 ===== */
-console.log('%c[ShareCard] js/share-card.js 已加载', 'color: green; font-weight: bold;');
 
 // 接收 poems 和 currentIndex 作为参数，避免作用域问题
 window.generateShareCard = function (poems, currentIndex) {
-    console.log('%c[ShareCard] generateShareCard 被调用', 'color: blue;', { poemsLength: poems ? poems.length : 0, currentIndex });
 
     if (typeof html2canvas === 'undefined') {
-        console.error('[ShareCard] html2canvas 未定义！CDN 加载失败？');
         alert('抱歉，绘图组件(html2canvas)加载失败。\n请检查网络连接或刷新页面重试。');
         return;
     }
 
     if (typeof currentIndex === 'undefined' || !poems) {
-        console.error("[ShareCard] 诗词数据未传入");
         alert('系统数据尚未就绪，请稍候再试。');
         return;
     }
 
-    if (currentIndex < 0 || currentIndex >= poems.length) {
-        console.error("[ShareCard] 索引越界", currentIndex);
-        return;
-    }
+    if (currentIndex < 0 || currentIndex >= poems.length) return;
 
     const currentPoem = poems[currentIndex];
 
     // 检查加锁逻辑
-    let isUnlocked = false;
-    if (!currentPoem.locked) {
-        isUnlocked = true;
-    } else {
+    let isUnlocked = !currentPoem.locked;
+    if (!isUnlocked) {
         if (typeof window.isPoemUnlocked === 'function') {
             isUnlocked = window.isPoemUnlocked(currentPoem.title);
-        } else if (window.unlockedPoems && window.unlockedPoems.includes(currentPoem.title)) {
-            isUnlocked = true;
         }
     }
-
     if (currentPoem.locked && !isUnlocked) {
         alert('抱歉，该作品隐藏深意，解锁后方可生成雅帖。');
         return;
@@ -54,93 +42,75 @@ window.generateShareCard = function (poems, currentIndex) {
         return;
     }
 
-    // 创建隐藏容器
+    const isHorizontal = originalCard.classList.contains('horizontal-mode');
+
+    // 创建离屏容器
     const cloneContainer = document.createElement('div');
     cloneContainer.id = 'share-card-clone-container';
-    cloneContainer.style.position = 'fixed';
-    cloneContainer.style.top = '0';
-    cloneContainer.style.left = '0';
-    cloneContainer.style.width = '480px';
-    cloneContainer.style.zIndex = '-9999';
-    cloneContainer.style.visibility = 'visible';
+    cloneContainer.style.cssText = 'position:fixed; top:0; left:0; width:480px; z-index:-9999; visibility:visible;';
     document.body.appendChild(cloneContainer);
 
     const clone = originalCard.cloneNode(true);
 
-    // 清理
-    const cursors = clone.querySelectorAll('.cursor-flashing');
-    cursors.forEach(el => el.remove());
-    const audioControls = clone.querySelectorAll('.audio-controls');
-    audioControls.forEach(el => el.remove());
+    // === 最小限度的视觉清理 ===
+    // 仅移除不适合出现在静态图片中的元素
+    clone.querySelectorAll('.cursor-flashing').forEach(el => el.remove());
+    clone.querySelectorAll('.audio-controls').forEach(el => el.remove());
 
-    // 基础样式
+    // 仅重置视觉干扰属性，不触碰布局属性（display/flex/writing-mode）
     clone.style.margin = '0';
     clone.style.transform = 'none';
     clone.style.boxShadow = 'none';
     clone.style.transition = 'none';
     clone.style.border = 'none';
-    clone.style.height = 'auto';
-    clone.style.minHeight = '850px'; // 增加高度以确保竖排有足够空间展示落款
-    clone.style.color = getComputedStyle(originalCard).color;
+    clone.style.width = '480px';
+    clone.style.maxWidth = '480px';
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
 
-    if (clone.classList.contains('horizontal-mode')) {
-        // 横排模式布局
+    // 仅横排模式需要额外的布局调整
+    if (isHorizontal) {
         clone.style.padding = '4rem 2rem 3rem 2rem';
         clone.style.display = 'flex';
         clone.style.flexDirection = 'column';
         clone.style.alignItems = 'center';
         clone.style.justifyContent = 'center';
-    } else {
-        // 竖排模式布局优化
-        clone.style.writingMode = 'vertical-rl';
-        clone.style.padding = '3rem 2rem'; // 恢复适度内边距
-
-        // 使用 Flexbox 布局
-        clone.style.display = 'flex';
-        // vertical-rl 下 column 方向是从右向左排列 (符合阅读顺序)
-        clone.style.flexDirection = 'column';
-
-        // 关键修正：垂直方向（Cross Axis）改为顶部对齐，避免标题悬浮在中间
-        clone.style.alignItems = 'flex-start';
-
-        // 水平方向（Main Axis）居中
-        clone.style.justifyContent = 'center';
+        clone.style.minHeight = '800px';
     }
+    // 竖排模式：完全不覆盖布局属性！
+    // 原始 CSS 中 #poem-text-container 已经设置好了 writing-mode/flex/居中
+    // 只需确保克隆节点在 480px 容器中正常渲染即可
 
-    // 落款
+    // 落款（使用绝对定位，不干扰原有文档流）
     const footerMark = document.createElement('div');
-    footerMark.style.fontSize = '0.9rem';
-    footerMark.style.opacity = '0.7';
-    footerMark.style.fontFamily = '"Ma Shan Zheng", cursive';
-    footerMark.style.textAlign = 'center';
-
-    if (clone.classList.contains('horizontal-mode')) {
-        footerMark.style.marginTop = '2rem';
-        footerMark.style.width = '100%';
-    } else {
-        // 竖排落款样式
-        footerMark.style.writingMode = 'vertical-rl';
-
-        // 在 flex column (Right-to-Left) 中
-        // Cross Axis 是垂直方向 (Top-Bottom)
-        // 我们希望落款文字底对齐 -> align-self: flex-end (Bottom)
-        footerMark.style.alignSelf = 'flex-end';
-
-        // 文字内容也要底对齐（如果 div 本身高度被拉伸）
-        footerMark.style.textAlign = 'right'; // vertical mode 下 right = bottom
-
-        footerMark.style.marginTop = '0';
-        footerMark.style.marginLeft = '1.5rem'; // 左侧留白，与正文隔开
-        footerMark.style.marginBottom = '3rem'; // 底部留白 (物理底部)
-        footerMark.style.marginRight = '0.5rem';
-    }
     footerMark.innerHTML = '七律空间 · 雅藏';
+    footerMark.style.cssText = [
+        'position: absolute',
+        'font-size: 0.85rem',
+        'opacity: 0.6',
+        'font-family: "Ma Shan Zheng", cursive',
+        'pointer-events: none'
+    ].join(';');
+
+    if (isHorizontal) {
+        // 横排：底部居中
+        footerMark.style.bottom = '1.5rem';
+        footerMark.style.left = '50%';
+        footerMark.style.transform = 'translateX(-50%)';
+        footerMark.style.textAlign = 'center';
+    } else {
+        // 竖排：左下角，竖排文字
+        footerMark.style.writingMode = 'vertical-rl';
+        footerMark.style.bottom = '2rem';
+        footerMark.style.left = '1.5rem';
+    }
+
+    // clone 已经有 position: relative（来自原始 CSS），所以绝对定位可以工作
     clone.appendChild(footerMark);
 
     cloneContainer.appendChild(clone);
 
+    // 延时确保渲染完成
     setTimeout(() => {
         html2canvas(clone, {
             scale: 2.5,
@@ -167,7 +137,6 @@ window.generateShareCard = function (poems, currentIndex) {
             if (downloadBtn) {
                 const newBtn = downloadBtn.cloneNode(true);
                 downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
-
                 newBtn.onclick = () => {
                     const link = document.createElement('a');
                     link.download = `七律空间_${currentPoem.title}_雅帖.png`;
@@ -186,7 +155,7 @@ window.generateShareCard = function (poems, currentIndex) {
                 document.body.removeChild(cloneContainer);
             }
         });
-    }, 300);
+    }, 500);
 };
 
 window.closeShareCard = function () {
