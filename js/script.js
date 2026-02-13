@@ -2064,6 +2064,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         alert("烟花组件尚未加载完成，请稍后再试。");
                     }
                 }
+                if (action === 'share-card') {
+                    console.log('点击生成雅帖');
+                    if (window.generateShareCard) {
+                        console.log('调用 generateShareCard');
+                        window.generateShareCard();
+                    } else {
+                        console.error('window.generateShareCard 未定义');
+                        alert('功能尚未加载，请检查网络或刷新页面');
+                    }
+                }
+                // 点击后收起菜单
+                menu.classList.remove('active');
                 closeEntertainmentMenu();
             });
         }

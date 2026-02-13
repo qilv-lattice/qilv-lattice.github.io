@@ -40,6 +40,9 @@
     <link rel="icon" type="image/png" href="assets/Seal1.png">
     <link rel="apple-touch-icon" href="assets/Seal1.png">
 
+    <!-- html2canvas 用于生成雅帖 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <!-- 移动优先基础样式 -->
     <link rel="stylesheet" href="css/base.css?v=Rouge-Color">
 
@@ -120,6 +123,9 @@
                 <ul id="entertainment-menu-list" class="toc-list entertainment-menu-list">
                     <li data-action="char-game">填字挑战</li>
                     <li data-action="fireworks">烟花表演</li>
+                    <li data-action="share-card"
+                        style="border-top: 1px dashed rgba(0,0,0,0.1); margin-top: 4px; padding-top: 8px; color: var(--accent-color);">
+                        生成雅帖</li>
                 </ul>
             </div>
         </div>
@@ -425,6 +431,7 @@
     <!-- 核心逻辑 -->
     <script src="js/fireworks.js?v=Audio-25810"></script>
     <script src="js/script.js?v=BlueStars-5"></script>
+    <script src="js/share-card.js?v=1"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
 
@@ -485,6 +492,26 @@
         })();
     </script>
     <!-- End Cloudflare Web Analytics -->
+    <!-- 雅帖生成预览弹窗 -->
+    <div id="share-card-overlay" class="share-card-overlay" onclick="closeShareCard()">
+        <div class="share-card-panel" onclick="event.stopPropagation()">
+            <div class="share-card-header">
+                <h3>诗词雅帖</h3>
+                <button class="share-card-close" onclick="closeShareCard()">[ 关闭 ]</button>
+            </div>
+            <div class="share-card-preview-container" id="share-card-preview-container">
+                <!-- 生成的图片将显示在这里 -->
+                <div class="share-loading">正在绘制雅帖...</div>
+            </div>
+            <div class="share-card-actions">
+                <p class="share-tip">长按图片可保存，或点击下载</p>
+                <div class="share-btn-group">
+                    <button id="download-share-btn" class="share-action-btn primary">下载保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
