@@ -2317,6 +2317,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         grid.appendChild(left);
         grid.appendChild(mainCard);
         grid.appendChild(right);
+
+        // [新增] 将导航箭头移入 grid 容器，使其跟随布局
+        const prevArrow = document.getElementById('arrow-prev');
+        const nextArrow = document.getElementById('arrow-next');
+        // 移动端隐藏箭头，仅桌面端移入
+        if (prevArrow) grid.appendChild(prevArrow);
+        if (nextArrow) grid.appendChild(nextArrow);
+
         wrapper.appendChild(grid);
 
         parent.insertBefore(wrapper, nextSibling);

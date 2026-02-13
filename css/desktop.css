@@ -77,6 +77,11 @@ body:not(.view-mode-single) .screen-grid .poem-content {
     padding-top: calc(var(--card-vertical-padding) + 33px);
 }
 
+/* 允许箭头相对于 grid 定位 */
+.screen-grid {
+    position: relative;
+}
+
 body.view-mode-single .screen-grid {
     grid-template-columns: var(--card-width);
 }
@@ -90,7 +95,8 @@ body.view-mode-single .poem-content.wing {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
+    position: absolute;
+    /* 改为绝对定位，跟随 grid */
     top: 50%;
     transform: translateY(-50%);
     z-index: 1000;
@@ -140,25 +146,14 @@ body.view-mode-single .poem-content.wing {
 
 /* 左箭头：贴在三卡区域左边缘外 */
 .nav-arrow-left {
-    /* 三卡 grid 总宽 ≈ 1480px，居中后左边缘 = 50vw - 740px
-       箭头贴在左边缘外侧，留 8px 间隙 */
-    left: calc(50vw - 740px - 52px);
+    left: -70px;
+    right: auto;
 }
 
 /* 右箭头：贴在三卡区域右边缘外 */
 .nav-arrow-right {
-    right: calc(50vw - 740px - 52px);
-}
-
-/* 窄屏桌面（grid 可能超宽）：箭头贴边 */
-@media (max-width: 1620px) {
-    .nav-arrow-left {
-        left: 8px;
-    }
-
-    .nav-arrow-right {
-        right: 8px;
-    }
+    right: -70px;
+    left: auto;
 }
 
 /* 单卡模式：隐藏箭头 */
