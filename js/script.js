@@ -969,7 +969,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示具体数量
             const count = activeLatest.length;
-            textEl.innerHTML = `有新作 ${count} 首上线`;
+            textEl.textContent = `有新作 ${count} 首上线`;
 
             // 清除旧定时器，确保只有一个隐藏定时器
             if (updateNoticeTimer) clearTimeout(updateNoticeTimer);
@@ -1010,7 +1010,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 设置公告内容
         const textEl = document.getElementById('announcement-text');
         if (textEl && updateInfo.announcement) {
-            textEl.innerHTML = updateInfo.announcement;
+            textEl.textContent = updateInfo.announcement;
             noticeEl.style.display = 'flex';
         } else if (!updateInfo.announcement) {
             // 没有公告则隐藏
@@ -1062,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // noticeEl.style.display = 'flex'; // 隐藏喇叭
             // 直接显示修订数量
             const count = activeModified.length;
-            textEl.innerHTML = `有 ${count} 首旧作翻新`;
+            textEl.textContent = `有 ${count} 首旧作翻新`;
 
 
             // 清除旧定时器，确保只有一个隐藏定时器
