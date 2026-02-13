@@ -1,6 +1,6 @@
 /* ===== 雅帖生成逻辑 ===== */
 
-// 接收 poems 和 currentIndex 作为参数，避免作用域问题
+// 接收 poems 和 currentIndex 作为参数
 window.generateShareCard = function (poems, currentIndex) {
 
     if (typeof html2canvas === 'undefined') {
@@ -19,10 +19,8 @@ window.generateShareCard = function (poems, currentIndex) {
 
     // 检查加锁逻辑
     let isUnlocked = !currentPoem.locked;
-    if (!isUnlocked) {
-        if (typeof window.isPoemUnlocked === 'function') {
-            isUnlocked = window.isPoemUnlocked(currentPoem.title);
-        }
+    if (!isUnlocked && typeof window.isPoemUnlocked === 'function') {
+        isUnlocked = window.isPoemUnlocked(currentPoem.title);
     }
     if (currentPoem.locked && !isUnlocked) {
         alert('抱歉，该作品隐藏深意，解锁后方可生成雅帖。');
@@ -42,46 +40,36 @@ window.generateShareCard = function (poems, currentIndex) {
         return;
     }
 
-    const isHorizontal = originalCard.classList.contains('horizontal-mode');
+    // 获取原始卡片的实际渲染尺寸（而非硬编码）
+    const cardWidth = originalCard.offsetWidth;
+    // 获取用户实际视口宽度（desktop.css 的媒体查询需要 1024px+）
+    const viewportWidth = window.innerWidth;
 
-    // 创建离屏容器
+    // 创建离屏容器，宽度与原始卡片一致
     const cloneContainer = document.createElement('div');
     cloneContainer.id = 'share-card-clone-container';
-    cloneContainer.style.cssText = 'position:fixed; top:0; left:0; width:480px; z-index:-9999; visibility:visible;';
+    cloneContainer.style.cssText = `position:fixed; top:0; left:0; width:${cardWidth}px; z-index:-9999; visibility:visible;`;
     document.body.appendChild(cloneContainer);
 
     const clone = originalCard.cloneNode(true);
 
     // === 最小限度的视觉清理 ===
-    // 仅移除不适合出现在静态图片中的元素
     clone.querySelectorAll('.cursor-flashing').forEach(el => el.remove());
     clone.querySelectorAll('.audio-controls').forEach(el => el.remove());
 
-    // 仅重置视觉干扰属性，不触碰布局属性（display/flex/writing-mode）
+    // 仅重置视觉干扰属性，不触碰布局属性
     clone.style.margin = '0';
     clone.style.transform = 'none';
     clone.style.boxShadow = 'none';
     clone.style.transition = 'none';
     clone.style.border = 'none';
-    clone.style.width = '480px';
-    clone.style.maxWidth = '480px';
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
+    // 宽度保持与原始卡片一致（不再强制覆盖）
+    clone.style.width = cardWidth + 'px';
+    clone.style.maxWidth = cardWidth + 'px';
 
-    // 仅横排模式需要额外的布局调整
-    if (isHorizontal) {
-        clone.style.padding = '4rem 2rem 3rem 2rem';
-        clone.style.display = 'flex';
-        clone.style.flexDirection = 'column';
-        clone.style.alignItems = 'center';
-        clone.style.justifyContent = 'center';
-        clone.style.minHeight = '800px';
-    }
-    // 竖排模式：完全不覆盖布局属性！
-    // 原始 CSS 中 #poem-text-container 已经设置好了 writing-mode/flex/居中
-    // 只需确保克隆节点在 480px 容器中正常渲染即可
-
-    // 落款（使用绝对定位，不干扰原有文档流）
+    // 落款（使用绝对定位，不干扰文档流）
     const footerMark = document.createElement('div');
     footerMark.innerHTML = '七律空间 · 雅藏';
     footerMark.style.cssText = [
@@ -92,22 +80,19 @@ window.generateShareCard = function (poems, currentIndex) {
         'pointer-events: none'
     ].join(';');
 
+    const isHorizontal = originalCard.classList.contains('horizontal-mode');
     if (isHorizontal) {
-        // 横排：底部居中
         footerMark.style.bottom = '1.5rem';
         footerMark.style.left = '50%';
         footerMark.style.transform = 'translateX(-50%)';
         footerMark.style.textAlign = 'center';
     } else {
-        // 竖排：左下角，竖排文字
         footerMark.style.writingMode = 'vertical-rl';
         footerMark.style.bottom = '2rem';
         footerMark.style.left = '1.5rem';
     }
 
-    // clone 已经有 position: relative（来自原始 CSS），所以绝对定位可以工作
     clone.appendChild(footerMark);
-
     cloneContainer.appendChild(clone);
 
     // 延时确保渲染完成
@@ -117,8 +102,11 @@ window.generateShareCard = function (poems, currentIndex) {
             useCORS: true,
             backgroundColor: null,
             logging: false,
-            width: 480,
-            windowWidth: 480,
+            // 关键修复：使用原始卡片宽度，而非硬编码 480px
+            width: cardWidth,
+            // 关键修复：使用真实视口宽度，确保 desktop.css 媒体查询生效
+            // 这样 @media (min-width: 1024px) 中的 ::before 章印样式才会被应用
+            windowWidth: viewportWidth,
             x: 0,
             y: 0
         }).then(canvas => {
