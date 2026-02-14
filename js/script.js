@@ -289,7 +289,7 @@ function restartBgInterval() {
 // 星星样式配置表 (全局配置)
 const STAR_STYLE_CONFIG = [
     {
-        keywords: ['纠缠', '人生', '尤物', '分形'],
+        keywords: ['纠缠', '人生', '尤物', '分形', '光学'],
         className: 'rainbow-stars',
         color: null
     },
