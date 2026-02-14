@@ -2965,7 +2965,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, { passive: true });
     }
 
-    // ===== 秘密功能：点击标题7次查看访客统计 =====
+    // ===== 秘密功能：点击标题7次进入管理员，10次退出 =====
     // 动态加载不蒜子统计
     function loadBusuanzi() {
         if (document.getElementById('busuanzi-script')) return;
@@ -3023,13 +3023,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             clickCount++;
             lastClickTime = currentTime;
 
-            // 连续点击7次触发
-            if (clickCount === 7) {
+            const wasAdmin = localStorage.getItem('qilv_admin');
+            const triggerCount = wasAdmin ? 10 : 7;
+
+            // 非管理员：连点7次触发；管理员：连点10次退出
+            if (clickCount === triggerCount) {
                 clickCount = 0; // 重置
 
-                const wasAdmin = localStorage.getItem('qilv_admin');
                 if (wasAdmin) {
-                    // 已是管理员：再次点击7次退出管理员模式
+                    // 已是管理员：再次点击10次退出管理员模式
                     localStorage.removeItem('qilv_admin');
                     alert('管理员模式已退出，刷新页面后恢复统计。');
                     return;
@@ -3043,7 +3045,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // 轮询等待数据就绪后弹窗
                 waitForBusuanzi((uv, pv) => {
-                    alert(`㊙️ 秘密数据 (管理员模式已激活)\n\n👤 总访客数 (UV): ${uv}\n👁️ 总访问量 (PV): ${pv}\n\n⚠️ 注：您的访问今后将不再计入统计。\n💡 再次连点7次可退出管理员模式。`);
+                    alert(`㊙️ 秘密数据 (管理员模式已激活)\n\n👤 总访客数 (UV): ${uv}\n👁️ 总访问量 (PV): ${pv}\n\n⚠️ 注：您的访问今后将不再计入统计。\n💡 连点10次可退出管理员模式。`);
                 });
             }
         });
