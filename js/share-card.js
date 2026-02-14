@@ -1,12 +1,27 @@
 /* ===== 雅帖生成逻辑 ===== */
 
-// 接收 poems 和 currentIndex 作为参数
-window.generateShareCard = function (poems, currentIndex) {
+const _H2C_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 
-    if (typeof html2canvas === 'undefined') {
-        alert('抱歉，绘图组件(html2canvas)加载失败。\n请检查网络连接或刷新页面重试。');
-        return;
-    }
+function _loadHtml2Canvas() {
+    return new Promise((resolve, reject) => {
+        if (typeof html2canvas !== 'undefined') { resolve(); return; }
+        if (document.getElementById('html2canvas-script')) {
+            const t = setInterval(() => {
+                if (typeof html2canvas !== 'undefined') { clearInterval(t); resolve(); }
+            }, 100);
+            return;
+        }
+        const s = document.createElement('script');
+        s.id = 'html2canvas-script';
+        s.src = _H2C_CDN;
+        s.onload = resolve;
+        s.onerror = () => reject(new Error('html2canvas 加载失败'));
+        document.head.appendChild(s);
+    });
+}
+
+// 接收 poems 和 currentIndex 作为参数
+window.generateShareCard = async function (poems, currentIndex) {
 
     if (typeof currentIndex === 'undefined' || !poems) {
         alert('系统数据尚未就绪，请稍候再试。');
@@ -32,6 +47,15 @@ window.generateShareCard = function (poems, currentIndex) {
     if (!overlay || !previewContainer) return;
 
     overlay.classList.add('active');
+    previewContainer.innerHTML = '<div class="share-loading">正在加载绘图组件...</div>';
+
+    try {
+        await _loadHtml2Canvas();
+    } catch {
+        previewContainer.innerHTML = '<div class="share-loading" style="color:#e74c3c">绘图组件加载失败，请检查网络后重试</div>';
+        return;
+    }
+
     previewContainer.innerHTML = '<div class="share-loading">正在绘制雅帖，请稍候...</div>';
 
     const originalCard = document.querySelector('.poem-content.main-card');
@@ -69,25 +93,6 @@ window.generateShareCard = function (poems, currentIndex) {
     clone.style.width = cardWidth + 'px';
     clone.style.maxWidth = cardWidth + 'px';
 
-    const isHorizontal = originalCard.classList.contains('horizontal-mode');
-
-    // 落款：仅横排模式添加（竖排模式底部已有品牌印章，无需重复）
-    if (isHorizontal) {
-        const footerMark = document.createElement('div');
-        footerMark.innerHTML = '七律空间 · 雅藏';
-        footerMark.style.cssText = [
-            'position: absolute',
-            'bottom: 1.5rem',
-            'left: 50%',
-            'transform: translateX(-50%)',
-            'text-align: center',
-            'font-size: 0.85rem',
-            'opacity: 0.6',
-            'font-family: "Ma Shan Zheng", cursive',
-            'pointer-events: none'
-        ].join(';');
-        clone.appendChild(footerMark);
-    }
     cloneContainer.appendChild(clone);
 
     // 延时确保渲染完成
@@ -119,50 +124,20 @@ window.generateShareCard = function (poems, currentIndex) {
             // 判断是否为移动端
             const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
-            // 移动端：显示"长按保存"提示（UC/微信等不支持 <a download> 编程下载）
-            if (isMobile) {
-                const tip = document.createElement('div');
-                tip.style.cssText = 'text-align:center; padding:0.8rem 0 0.2rem; color:#888; font-size:0.85rem;';
-                tip.textContent = '📱 长按上方图片即可保存到相册';
-                previewContainer.appendChild(tip);
-            }
-
             const downloadBtn = document.getElementById('download-share-btn');
             if (downloadBtn) {
-                const newBtn = downloadBtn.cloneNode(true);
-                downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
-
                 if (isMobile) {
-                    // 移动端：点击下载按钮时尝试 Blob 方式，若失败则提示长按
-                    newBtn.textContent = '保存雅帖';
-                    newBtn.onclick = () => {
-                        try {
-                            // 将 dataURL 转为 Blob，再通过 URL.createObjectURL 下载
-                            const byteString = atob(imgData.split(',')[1]);
-                            const mimeType = imgData.split(',')[0].match(/:(.*?);/)[1];
-                            const ab = new ArrayBuffer(byteString.length);
-                            const ia = new Uint8Array(ab);
-                            for (let i = 0; i < byteString.length; i++) {
-                                ia[i] = byteString.charCodeAt(i);
-                            }
-                            const blob = new Blob([ab], { type: mimeType });
-                            const blobUrl = URL.createObjectURL(blob);
-
-                            const link = document.createElement('a');
-                            link.download = `七律空间_${currentPoem.title}_雅帖.png`;
-                            link.href = blobUrl;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-
-                            // 延迟释放 Blob URL
-                            setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
-                        } catch (e) {
-                            alert('请长按上方图片，选择"保存图片"即可下载。');
-                        }
-                    };
+                    // 移动端：隐藏下载按钮，长按图片即可保存
+                    downloadBtn.style.display = 'none';
+                    const tip = document.createElement('div');
+                    tip.style.cssText = 'text-align:center; padding:0.8rem 0 0.2rem; color:#888; font-size:0.85rem;';
+                    tip.textContent = '长按上方图片即可保存到相册';
+                    previewContainer.appendChild(tip);
                 } else {
                     // 桌面端：直接使用 data URL 下载
+                    downloadBtn.style.display = '';
+                    const newBtn = downloadBtn.cloneNode(true);
+                    downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
                     newBtn.onclick = () => {
                         const link = document.createElement('a');
                         link.download = `七律空间_${currentPoem.title}_雅帖.png`;
