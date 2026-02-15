@@ -16,11 +16,14 @@
                 gtag('js', new Date());
                 gtag('config', 'G-JB5KT83L5R');
 
-                // 百度统计 (Baidu Analytics)
+                // 百度统计 (Baidu Analytics) - 按域名区分站点
                 var _hmt = _hmt || [];
                 (function () {
                     var hm = document.createElement("script");
-                    hm.src = "https://hm.baidu.com/hm.js?afba77dcd1cd11042766a5edca1056e2";
+                    var hmId = window.location.hostname === 'qilv-lattice.github.io'
+                        ? '5a52c841b2a186228386c8c898228ec5'  // 七律晶格 (GitHub Pages)
+                        : 'afba77dcd1cd11042766a5edca1056e2'; // 七律空间 (Cloudflare)
+                    hm.src = "https://hm.baidu.com/hm.js?" + hmId;
                     var s = document.getElementsByTagName("script")[0];
                     s.parentNode.insertBefore(hm, s);
                 })();
