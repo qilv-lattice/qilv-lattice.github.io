@@ -2,11 +2,12 @@
 <html lang="zh-CN">
 
 <head>
-    <script>
+    <script data-cfasync="false">
         try {
             if (localStorage.getItem('qilv_admin')) { /* skip analytics */ } else {
                 var s = document.createElement('script');
                 s.async = true;
+                s.setAttribute('data-cfasync', 'false'); // 防止 Rocket Loader 干扰动态脚本
                 s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JB5KT83L5R';
                 document.head.appendChild(s);
                 window.dataLayer = window.dataLayer || [];
