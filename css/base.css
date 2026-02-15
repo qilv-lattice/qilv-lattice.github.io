@@ -2965,6 +2965,9 @@ header.char-game-active {
     justify-content: center;
     padding: 2rem 1rem;
     min-height: 200px;
+    /* 强制横排：不受竖排模式影响 */
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed;
 }
 
 .lock-icon {
