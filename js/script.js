@@ -1177,8 +1177,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(`Loaded ${poems.length} poems.`);
             renderTOC();
 
-            // 随机开始 (首次加载，跳过动画)
-            currentIndex = Math.floor(Math.random() * poems.length);
+            // 默认展示《黑马》；若不存在则回退到第一首
+            const defaultPoemTitle = '七律·黑马';
+            const defaultIndex = poems.findIndex(poem => poem.title === defaultPoemTitle);
+            currentIndex = defaultIndex >= 0 ? defaultIndex : 0;
             renderPoem(currentIndex, true);
             initCharGame();
             const gameOverlay = document.getElementById('char-game-overlay');
