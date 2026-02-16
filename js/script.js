@@ -242,7 +242,8 @@ const bgCatalog = {
         { title: '光影森林', index: 10 },
         { title: '峰青雪白', index: 12 },
         { title: '蓝色冰湖', index: 14 },
-        { title: '浪漫星空', index: 16 }
+        { title: '浪漫星空', index: 16 },
+        { title: '背景十八', index: 17 }
     ],
     micro: [
         { title: '蓝星一角', index: 6 },
@@ -619,33 +620,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configResp.json();
         backgrounds = config.backgrounds || [];
 
-        // 2. 初始背景：优先恢复用户设置；无历史设置时，移动端固定“千里江山”，桌面端随机
+        // 2. 初始背景：默认固定 background18（若缺失则走历史逻辑回退）
         if (backgrounds.length > 0) {
-            const savedMode = localStorage.getItem(BG_MODE_STORAGE_KEY);
-            const savedIndexRaw = localStorage.getItem(BG_INDEX_STORAGE_KEY);
-            const savedIndex = Number.parseInt(savedIndexRaw || '', 10);
-            const hasSavedIndex = Number.isInteger(savedIndex) && savedIndex >= 0 && savedIndex < backgrounds.length;
-
-            if (savedMode === 'fixed' && hasSavedIndex) {
-                selectBackground(savedIndex);
-            } else if (savedMode === 'random') {
-                bgMode = 'random';
-                bgIndex = hasSavedIndex ? savedIndex : Math.floor(Math.random() * backgrounds.length);
-                applyBackground(bgIndex);
-                updateBgButtonState();
-                restartBgInterval();
-                persistBgState();
+            const fixedBgPath = 'assets/background18.jpg';
+            const fixedBgIndex = backgrounds.indexOf(fixedBgPath);
+            if (fixedBgIndex >= 0) {
+                selectBackground(fixedBgIndex);
             } else {
-                const isMobileLayout = window.innerWidth <= 1023;
-                if (isMobileLayout) {
-                    selectBackground(0);
-                } else {
+                const savedMode = localStorage.getItem(BG_MODE_STORAGE_KEY);
+                const savedIndexRaw = localStorage.getItem(BG_INDEX_STORAGE_KEY);
+                const savedIndex = Number.parseInt(savedIndexRaw || '', 10);
+                const hasSavedIndex = Number.isInteger(savedIndex) && savedIndex >= 0 && savedIndex < backgrounds.length;
+
+                if (savedMode === 'fixed' && hasSavedIndex) {
+                    selectBackground(savedIndex);
+                } else if (savedMode === 'random') {
                     bgMode = 'random';
-                    bgIndex = Math.floor(Math.random() * backgrounds.length);
+                    bgIndex = hasSavedIndex ? savedIndex : Math.floor(Math.random() * backgrounds.length);
                     applyBackground(bgIndex);
                     updateBgButtonState();
                     restartBgInterval();
                     persistBgState();
+                } else {
+                    selectBackground(0);
                 }
             }
         }
