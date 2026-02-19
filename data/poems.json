@@ -225,122 +225,74 @@
         {
             "title": "七律·回望",
             "author": "当代 | 理工博士",
-            "content": [
-                "赫然回望若登徒，小字何曾见大巫。",
-                "文与唐风方握手，心携作品觉探珠。",
-                "根苗色泽多黄铁，质地精髓杂珷玞。",
-                "已怕他山攻讦玉，深情不动谒杨朱。"
-            ],
-            "notes": [
-                "回望作者在微信视频号一年来所作所见所闻，个人情感与诗坛纷争的一次总结。",
-                "杨朱“拔一毛利天下不为”，作者虽不完全认同，但认为其“自保”方法可供参照。"
-            ],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "YL4D7nqAWkXURkn9Qr+YvKGDOKnn25IZevG42tZk19znfV5BNwLnWYzsnejDstT9YF+26hYM6EpDieQnMdJCw+GEOEFCV4kti8PBbbiNlg2fzydzkSoaKWjgv3W0kunYAMJ9wILfWLzbkpWy+anHl3SVB7h3E0w81leigxjaQiU/2dMinhKwuQlbpWrDLPz9rQ9VbofOVbrFYrYbXYZqWOrCQUcsTjV+pz3qqy5ZFbMuW3DC/lQ1+q7/QN5RVSf2InhRKnyMBJfLqjXN5QLesLrMDQzpDJ2fCMGvUTtf157k4scg27+WimiKjpPC85lE+MVGHaWl9Ttbzw0T2K+uH0HDvsJhDluAHP3vGjcM2OJyGQX/UYke4+10V2WAtDehcPbtRIkrwPCds+O7OXfqBpXcEbqta087JFd0hiQwRpsKcE7L7+wHx1vy83dSCEPUk8f3HGYLGEpoqehgxLsdgXXlHaWqYkTmukysgBKyLjU8mNrKPFtXgfdrFVuV7HNn93+OscK8GCNgAYIl1BxDDQicnwU+BUOph/jSTOsXF5sCIs3InjjeqzpJmk0zUHy1pzh4EYSCFHmxSzy3424uMWufuVqq4N71gcGF0z8fH4f36CUybIgCBLxRTxfaJ8OhLbJb4Q=="
         },
         {
             "title": "七律·丙午",
             "author": "当代 | 理工博士",
-            "content": [
-                "今年抖落去年尘，一岁枯荣一岁新。",
-                "粒子时来穿势阱，禅音弦振撼原神。",
-                "实修玄奘空同色，梦托曹公假可真。",
-                "凤历页眉成丙午，请君珍惜剩余春。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "0HPGV9VDW08ceZVQaciGuinxw1Xtl4DU2wL7oHD2iv9Jny0vl6Y13yegl0FGHtIj47QEwd+Dmm90/brybUnwAuTzpfMFd+70afJ7bImUByWB+jEdEp1QjgRZ2Px+dVqtbsL4PUbg3hsdjVYvSj8/Mut8YNYN0M5SHcdTjLd2zKzdV9ZBPXoUquD7CQSo43WPv1IdqKp98JFLJJqaeTP5ojWLd1Eotj5RH4SbtHTcf/AvW/p5hq48EKftEpozxb73L9c8sxQJh7OHKje/qndKGj4ned2PPvJm3Mokr4Ay1gcX0O+aOKnAUABCeWylA9Mvwvf0FWwo/Bj5udl8/lkKV+xdv7VwNw=="
         },
         {
             "title": "七律·臭椿",
             "author": "当代 | 理工博士",
-            "content": [
-                "不复博闻强记身，新书几卷在蒙尘。",
-                "豪情一度夸香草，纹理千层实臭椿。",
-                "试问谁无心上锁，自知我乃井中鳞。",
-                "诗歌作伴微时趣，难免小山思小蘋。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "TNRf4sUIBs+OGI1eRNbpnT7jnFSt8sTu+vduEN1G9nx1Mgg3uW+8QTmBV/OgXZpnqKRKaEHliA7u2kubFUPxycgWpON+no93VCwro5+6SSyHzPADM9vffdCYUsEXvk9ynQ5GkgGi8KZBdWjEijgRl0f0YS00jtCPBDr7g6MOiGdfK6hTGrRROOeSpbdaU2qBc5t3iCGDSabVO6CNxnGT3OrEiTsNagEnfLiLZQQ/LOMX64a6z34K3hzjFABiINi6SwwEX7l+cQ0L0965XkhOgQcNFLQwOfYCwV114PLWJioK8iwtU8B9gyZVEc5zph2vkreTsQe2izfuh79/+E09aqcGDZShsw=="
         },
         {
             "title": "七律·光学",
             "author": "当代 | 理工博士",
-            "content": [
-                "我是蜃楼卿是虹，偶然光影会苍穹。",
-                "文心跌宕全唐气，裙摆徘徊两晋风。",
-                "自恃独当方独处，何曾相约却相逢。",
-                "若非解构迷人景，谁晓归因物理同。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "naVLRiLNb7ozaIOz1pcXkYyNNywvTK1iC6mN8YwPmGrgU+87C7nfsA9bqbF+XoH6Tk6m8HwcB9y7XKB2fyeCKz7/PuZgE2roYWcM1fCMJ37m1VeYJIxaO5lPbfN0UpyP5uinlZIV9Q73k3S/pgYMr34k+5D4sC042Sk7sOp+ZvQHj4Bvu0L/QQb7tCwrtF28N3tzE42AGxWIOeKqDWX0hrnEpc70mlATnLj0Whh1SO3oSNDgqkqcLZ0OKfPhOTZkmW/nI1y0CwfhqOR+RK3U2QACQdI+0r8uiv0KxbSx6QioFkr/6KS2Q1XGoBLmrgx65SVoHOrmRHHG9ZSYHjgVXsjevJ1AMg=="
         },
         {
             "title": "七律·朱伊",
             "author": "当代 | 理工博士",
-            "content": [
-                "记忆黏稠梦亦稠，铭心元素锦囊收。",
-                "青丝一句君安好，红线两端谁在愁。",
-                "仪式奢华非稳态，简单生活见温柔。",
-                "时光不与诗人便，文艺迟来卷已丢。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "FtAF/9AfJNUSZ3oa/VIbQSwW2sE5hADkPW/y6HJGL8Hh8CDR9mOidmlNKCDtO2Bf3F4h7Y9UsAQ/10qp2oVWlQHR1LWWInudET3S8ZKZWtxT5irpgLP5pmHNpfMs35hjjI7QkXy7bnCg3cXkZAvaQEEwKmEE5hBiKWBeQDm8S46dS6mWi92FOp6RGGJfAg/LSf0SrLpXbbs9lfktPHr0UcQDEhIaYmWFGT301E0BC+eondKLcFNdZI+eVqvb8GtNONM32WWP9C1WE7pqrrt6yKiFxac+N4gh5/o8lgVHTP4OMkM0t/+c7e9QeDLj5svYZVjyEM1sfBBaXPTyqReFYAXfkLNRLg=="
         },
         {
             "title": "七律·年轮",
             "author": "当代 | 理工博士",
-            "content": [
-                "一夜温馨梦里逢，几番见惯是周公。",
-                "姜夔魂系合肥事，崔护神伤和煦风。",
-                "执手良缘终散落，同心情景半交融。",
-                "年轮环数朝前步，回首模糊起点空。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "Yla54lzvCLITe5Re7ddCbaxkOr9t8r9DNUhPwN/sIStugwpZic+ChWwuaCXbGKiVCDgntoOjfTxcoDJhwsXgDeciT18vLV3ZN46jaXUUui/et2nUj+xpmfCFTEb5W7j2iwvPWKWp6gnw4aYv4o7him0g+ZYrSTybdWIFSaODf9xE2X7dPqcOY4vXEmhT4Es3pi1X0O+QD/P58KIR0/QQcg3JK3UWnQ5e6NEc0wkrLc2obcpDQ3JZ/WObFR1N670EszHPzGoP9DV3wP24U/UiadE7gXj1ior3rBEOiXmh/ydfS2zpUgJf+6lkQvPf7/UmCwJtEXBr95f0HWVbXCO8ZORdumKjCA=="
         },
         {
             "title": "七律·树洞",
             "author": "当代 | 理工博士",
-            "content": [
-                "指缝流光周复周，地平线处是鸿沟。",
-                "绕梁单曲循环乐，络绎新诗淡化忧。",
-                "幸有云端藏树洞，何愁明日少方舟。",
-                "自言自语谈心迹，其实向来无妄求。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "FUeaOOxUAlxau251HsUWbuhNL84TcjuPMJn2mRz9dqB53supYNKKRBS7wLcModyyQFMdY2X38e8N08QjzgWYekjgXzbUW2CTfXPTUiQOfCaYqxe+pKo0SL4vgis+uYOewxzmqZnSwAN2yto0YokcbiwPLKbJ8bsF57FF9HDF4IG8c/fsjq5+45ZvuDLRsYds7e/Cp47mVcksBItXpoZbVYhfWxJlogd2TR3Y7qZdQibxjRmx03Bj3wRY17HnYltpe8CleCUpuJD/Czicl0oj3Wwhg5hF56L3XCMhAaHc6RKfF+AG9ci5wQ8nRbUJ4Wj1XJYNdSySDniQ2A9rs1C5WXj2Zu06Vg=="
         },
         {
             "title": "七律·达观",
             "author": "当代 | 理工博士",
-            "content": [
-                "风令花开亦令残，为情所绊脱身难。",
-                "事凝眉角煎思虑，心渡虚空望涅槃。",
-                "或许求真能稷下，亦曾学步至邯郸。",
-                "人生物语都同构，可幸悲观有乐观。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "IVcWQWk7wJV5AQ7Xxw7KwkJqxTnavtgvtISB9Pgch5wPZekLhaDCqgGGNUc2Ik995J6ktnPN7jYLh6G3gxKnZi0KsPtFqcAOkx79+zBpUx/8iIzva2T2ed5ktXnkuXCVokNg7yL2TirjQzKUTLLyT8mnFZAgzYO2EEQIsrhrp0WKRH8/3fdbe1Rn9jLsnw6AcGistvSUZ/mGra/j9lHRfLpMrZA86Rb77X0B0ktzTILDGNUa5Rzr/qYlu+Uv/1FK37IEuvqZDgF9NXB1I47ygfywjvzGd/W2nBZlE6Tt6GYIf3KktbumJaOeF5LnuwLbugYmlrMY9bMGG6lSinjCG0ldASIaAg=="
         },
         {
             "title": "七律·Dandelion",
             "author": "当代 | 理工博士",
-            "content": [
-                "深秋诗语小蒹葭，似羽似绒还似花。",
-                "如伞身形通美感，若蓬意象比浮槎。",
-                "风携飞絮佳人梦，愿许精灵游子家。",
-                "且以轻盈随浪漫，心无羁绊赴天涯。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "yfj3fu62UTW+ezd/dgBk7xGht5OQ9OgI9q43gxlff/+hij21VJlq93AqyNSBQHskGbLTSNWqs3X+ewNp0wsw3wbNRojqThlkF6qtIU6pSZA20dTv0S4acH735M/pU+/NnqDpJTFbamEHRo6ZlLC7ylDOuygH3GYMgxmgdmAbS2g+S2a5GWc3mPECCjooBrzxdGdHmU+I2aqKfu8aEErnF+oribhhtMs0F9tutH0UU4L1HxZIrZvFeWxZU/kVJcr74+2LF4hUo4jOXIb+2OsQnl+FvLiZOxDFAIfMLxY2wD78N8lW9a1nscuMW8+AS42BN9vPfEq5TS0SnWYP4QHUEkzpX25Tzg=="
         },
         {
             "title": "情感珍藏-1",
@@ -357,45 +309,26 @@
         {
             "title": "七律·磐石",
             "author": "当代 | 理工博士",
-            "content": [
-                "一窗灯火对虫吟，月色温柔小树林。",
-                "搁笔托腮思倒影，凝神闭目想清音。",
-                "千年回望桃花面，子夜聆听磐石心。",
-                "倘使余生全所愿，便无事事字中寻。"
-            ],
-            "notes": [
-                "《倒影》和《清音》是作者两首作品名字。"
-            ],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "wSNkBQ1kugKQOYnRjKKjE7aHyIhvRBjoc1DgzWCbNV2hes/UsASPEUVIvpEkoeVAMQ2StgKrDD+735Z6hurVqAfBUf22oBcUDcaLHsVrTWUNmV8bQneKuo5U4lzGYpLmyyZPQISN0DVlqeEoMbm122thH929WaeboI8xTj+yL7mJrk3CcS21kvB60V+nHs20pIENmUDdu9X22k8xyC/SOkTWgRghjys2tLBkiAX5ndLpcY+EoVRqXfdSOwpy0tLjIQvbB1nEklR+DRks7YrByO9K9XyyWtn7UxhnAs6xxn36BOphyizKUeksvh5y+/vTS8GgtGXaJUEdxqrCsWwj1OJZAnL+060RZ4oMo5/fvhi47bsY1cj3/wFoyVXn2soHfTyhz/YguVIxQ6BWn1Dv8BfiDQ2iQ/oGeI/pFRMBMVrX"
         },
         {
             "title": "七律·黯然",
             "author": "当代 | 理工博士",
-            "content": [
-                "细读江淹离别文，销魂力道过千钧。",
-                "微调视界非随意，满载心舟是认真。",
-                "碧落云稠栖白鹤，芸窗字锦结兰因。",
-                "而今状态残如叶，一点风吹惊六神。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "wkLSmvtSb0UZbTGFsUd3M6PkPQDQM9XNC/K2bSucT0x8sN074+9xPKjzdVkRYXPj5i8PShMxvT0oXO43ZUwg66LX5U7U8sHHwRLT/qBq/y+EEAG39vPgd2t2WpdJV5F6Te7BLuJ83igE/vzl7fM1uOrDXm6Xz+s3jUXxTWJSxcb837NgOCv+ncKFhBO+e1KpNoyuL070qM6mjC4ESgvqls8p4csB1mQFoLcBPZQBr7kBt4KnYjd+dJVBhbKySjwVtYjV0W7FHoW1Szajv5H+A3nBoRirGEQ9vAmJqeDLj3uwZAvcWRLU8k9ywQYb1fJXjjdoPCognEoyBNjNxuJnO9arwNninQ=="
         },
         {
             "title": "七律·破窗",
             "author": "当代 | 理工博士",
-            "content": [
-                "谋篇辩证古人妆，落笔方知前路长。",
-                "跨界相融翻陆海，思维延拓越潘江。",
-                "十分努力少同志，一点革新为破窗。",
-                "往圣绝学传我辈，坐标体系在潇湘。"
-            ],
-            "notes": [
-                "通韵"
-            ],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "/pXQP5QyfcnfVwO+51nYWjdC22lj2Bre+dNdn9nPKiHxv3Inm2k7YFS4xX8SbR3gEzrRSMsqNwYk6Islk57A3q0uClt2b/ylAUTmhYbHU89DUDDNjBR0Q4EUnxTaCfLKSTYm8KVjH9aDK6rWzeDrogGOOadE3yu9K/EYS+OJJ4k4H3qfilAEuGvSvGcTTUdS29tH2UufuFJFDB2WhURYqrQLNuUcszSUKZ5gFhYzYcnf19nQfISVsAVMFrqWJJhg7tKOh1YXFzENyUr8sNeeIdjI+YPIXqNFfkqd+fXsSISPvBPcR+ju5Dj7oyCnhBWaHJRbRMXOzGZ8pP7G/pJ3VgHRy3wE/UeAZ5M5dEin"
         },
         {
             "title": "情感珍藏-2",
@@ -412,15 +345,10 @@
         {
             "title": "七律·时空",
             "author": "当代 | 理工博士",
-            "content": [
-                "时区经度括双城，日月星辰共一枰。",
-                "意念嵯峨情别鹤，心潮澎湃字骑鲸。",
-                "地球仪上量山海，电子云端落凤鸣。",
-                "世界三千唯有我，摇摇晃晃却真诚。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "y8Y0kLF8d7i3hfAT4Yp+oaEj8GAFkODF9fJrLT0yDUP/tV7jl2n8X/YupmvZ4FiEE+7D+qsRovoArUb4oIU/Um51LG7ZvT6bvE/SfbXggeJVPuv/8Qrprlmv9id63fYGVED5IgHzPc+I9MVd1/VHD2B7JP/kolga8wBJkxWwkrNeI/Go7e7FYIqbzmHFnWW3F9hdorhbKPJVxOmHciavdj9Qxa5vmHf2NoXo39ZsCbU2+XXBnq/HF3MueDz47PoVFv1PSvgANAiKOKjnIVNiEDAzEn0GjZl+DckYJ8Vt260bOse2uF3TyDgiOGdp0dv4L9Dxsz0/rovO7V5bPq+r8NMAvbAxog=="
         },
         {
             "title": "情感珍藏-3",
@@ -437,201 +365,122 @@
         {
             "title": "七律·洁癖",
             "author": "当代 | 理工博士",
-            "content": [
-                "精神洁癖定初衷，大梦前贤复楚风。",
-                "快意云端封侠客，穿梭经纬逞英雄。",
-                "文同筋斗孙行者，物究天人太史公。",
-                "我有心花堪取色，光波视觉射玲珑。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "R/1J9apXSfCKUQfcclKzm502E6/IS24PsilcHXN8Oi5j6cW7SzT6yaU6Lefxn4sOZnRiaoCeDrLM7B7KQXDTorgqQrfne/YNDOxOHMB69xrXqqC+4eTqP3840YwcQifV0mjbYYPjynQc7RADWp32Un0A+de5osP48oeXkf4OlHhKryaDQOByCW4jKCOMBAxIlcqDB5S5z+qFf5E7JjdZsJSfBuSArLMp9nBr/WT96p+2n9cNpwGIdDTRBd+yKw4esSRI2Yyh+4lq1jAekEAP36NBwTrKKRJpiLKbPwOo1ydcgi87wx1seEX1fPnJg4dbIdA9H+z8Pw4AFLW98Ngtv5oM8S2X6g=="
         },
         {
             "title": "七律·装逼",
             "author": "当代 | 理工博士",
-            "content": [
-                "鸳鸯割席认华歆，兑酒玉壶君自斟。",
-                "说项恩仇俱搁浅，叩关成败怎呻吟？",
-                "季高绰号称今亮，朱子门生类蔡沉。",
-                "索引理工文哲史，黄钟瓦釜要分襟。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "Xldc4nLqyQCQAPi8V2l7mp04UwBKwPcLS2YHD6TZjYDrM2yhjelSijMNEEyhWt7rK20UOaOJHD1VuNf6WKiQgveQv2KPaRhJ74z31I8FpONWoOallOzQuc9fkv8Qfc0VyBZ5Z6BJTHXD89zgu6CAIPekrGttXnczgn9rIvDFQa9jZTNKCrHT+/r71q0cqacw99R33YqHj2vraxttF/wabOoA1BW8Yo50CrgfvtJM+6kUDY8uTw+Lt5xRzKj6dI1k3ib2oQHAqYI59heIb8xBYV2Vd1It0KkV06rWpeU7Kqa5T2f38UxXnGNZWeguRQyQGsSQ9VB6XQWHIviv4puTlFuTzucBog=="
         },
         {
             "title": "七律·其姝",
             "author": "当代 | 理工博士",
-            "content": [
-                "月无沧海落平湖，识见人间紫夺朱。",
-                "几次繁华新绿幕，半边精力旧蓝图。",
-                "骊颌探险孤行者，吴市吹箫烈丈夫。",
-                "心事逶迤神若问，书中有屋有其姝。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "6RV0XNotBzN8/374JoCrlASI6daltkFdRytnycEb2hkF1ExfVVfvxeLuAJTUaheCIeSW28XpocszmAEYS1sYmZEtXg+ODT9rFcOfakuOr+5UMn40eSp7GEwJO0mMHTPxvrOo+XKK0a0YtAws7yHohzc9aplNFuxqLr+wJ5OrcNdBUm8JgwwPKdctr4PDJYcSoNNTWg//Npzq1ExZN3Y1UEweVSj9l6cgmclXHWgb3GOTAckf9rov96lY2HSOgca7YA7JcSH/yGadixO0EkkNLxVCyZNkHIDOzLkPqF+4wh00ebdhMmpir8dpDCx+89oCbiF1jzuuiAmWDTzRJqDa3kbGxHw2Sg=="
         },
         {
             "title": "七律·自缚",
             "author": "当代 | 理工博士",
-            "content": [
-                "漫说革新非我狂，今人自缚古人缰。",
-                "克隆范式舟求剑，诠释禅心月照篁。",
-                "难辨雌雄真入戏，对齐李杜更荒唐。",
-                "如斯故纸区舒适，岂不徒将诗意戕？"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "pnqMJwbSgsoKN2N+PAW5OAs3PWYlkwYIx72ytQzSWMQ/9me/sTsN7t0FgnaS4bEi7wd1ln/5X5l6wi3yEcIuvQZRG9RnFsGDElBmS9AGhHH2QuM/JO7Kh3wyZISTr/6bnLb+5dSntuhmHbaOI/s5O+GmKPor+1DyFv8p5R8r//6M+VoaQApQ2idOVLUOPFJWYOZc1kNuCIdgxs2KlS6/arsWMahlb5cQSMlLv1nFz3XbJh2BOkM8YWOz6H680oXs9Nvr9spzLA457UfYb1qeqqfo8zcIN1tJKVCARJk4uLm6oOKGbfWlhPrRe3k0537KyGfjkquBckE76ckliBIY50u7WeuVUQ=="
         },
         {
             "title": "七律·夺舍",
             "author": "当代 | 理工博士",
-            "content": [
-                "花名难副即花瓶，绰号当封小愤青。",
-                "布局轴承逻辑骨，修辞刀刻感情形。",
-                "淋漓势若千寻瀑，璀璨光同一斗星。",
-                "拙作果真能夺舍，只因字字似叮咛。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "Ih93meUV3/4UckJjh8pI7wvmpi0kiEyAh/ieQ53ShnTEaCEPo48uEzIRUBxgVKk4ojsRuLDtC3V/6CitR2jSUtsg00iLEUR7z29ZtqaOSOHr+4/aYG9GPfs/oEkoJIPA+t9WqGj1TDcDmSHtJfevSJsAONCfmyf+/8rL43sHaoRysqYT2BxnjkE0TAEkGyzAWKt8SlHbUaUSy9Hi22YXAiCpECLErh+qxzKG9c6AxhghabSzE2fVGhGMfSHBxk8zrIrIUIc4XNpYTCPAV/R4Iq8f5bIq2B2K6FEtveUYjNYAxCl/Axza5kTqMwymGXKQBqwob87WtyUkmUFZBg/Gd+52HtlaZA=="
         },
         {
             "title": "七律·悲观",
             "author": "当代 | 理工博士",
-            "content": [
-                "人生钢印盖潇湘，野性基因自带狂。",
-                "历史文明层皱褶，先民知识目琳琅。",
-                "近来烧脑从玄妙，愈发捉襟于智商。",
-                "只怕时空它未老，才情而我过中央。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "8QyfbobD9cr6li/UTKTfvkhicfxheykheVla+o8NSrQIe9zglGjK7xvuLymYoJ1uD0etUZ4usW7YsK/TMAPEk8evsslnZwV2aOZ9Ug8phBjN9HmK7Tkg9Jsy/fYgN77O0jjUZ4hBsuhToHUR3fz72VSiihe6gaPtZ6PHdynYe0Lf+G9XBeZDvXvD5BwLlfdy8KTfv0VvQcu0dX4k+8VcxGipLZWBzAzqx5V4wqwKoSv5Yd2NrhHpNpg7dCqyWL0LUPLqlHifKdGRychu3znP+Z8a6RxJIcUTeC91hCPQyzDRGnK2ONPX0mtSwyc6TieUCVFmLI7QMnvCd2Vic1LvW3guU+oz6w=="
         },
         {
             "title": "七律·自叙",
             "author": "当代 | 理工博士",
-            "content": [
-                "念念难求唯一求，磨平棱角自然收。",
-                "因人热灶梁鸿耻，奉谕同餐何鲁羞。",
-                "甚幸钟仪真向楚，惜哉王粲错依刘。",
-                "孤鸾镜舞寻常事，风骨压身无理由。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "HEc1fuPmzoYnY1EONWLwvgGSzAsUOY1SVhz0eL6iMRR6TnSJ0TLkrhbx70z8MIEgzah7+wE85Cci1rsYSUpDN3QJqkutWUI55YFrWrA/nLUSYQCEn4W9nO62SFHFyOGdTA4t831AVLyKZ6XXjxSbvgePG0Jy24rHyHQ9JRWI/tFo6JJsy4i+Xi8HbSxCVUsOBrDZVeMq2ep672NKfKmcg92v8Xb2BBRJeVEEixVGnQZya5AfJ4dCACyAmc3onVp/Vz8no1JDzHhOhZhYA5GK95e7RctKc9YqBGheDz3Vs1KJCkN5yJ/zJcEEHT4bj1DIP4B8rbw7kPJJcScgXtP1FPTmHNtN0Q=="
         },
         {
             "title": "七律·昆仑",
             "author": "当代 | 理工博士",
-            "content": [
-                "天真沉淀少年春，有幸凡鱼过禹门。",
-                "方外方知新世界，洞中洞察旧乾坤。",
-                "怀疑资质低能力，遭遇母胎高自尊。",
-                "几纸文章心做注，此行跬步向昆仑。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "Rqe66dvlPlZ1w1Kzt0EIs2hjxW2HyYDWp7QV/NGx67TDTWgeWfDN0PQFzrQkQb/jCa0/j6skvp7DJ3p+6A46mVsXH67LrsvntoBmQI3wYTBw+c/Rh5w0xwS84CGDXQBkL2q/UitbnpTy1/Hjabhb+MOJVYi43wiXm9Ge7y3gliLzp/AonLXNNscyII+VhT5Tr+QESce88E1NR+UgnBdxA8VViLR/FzO9LOQ9b8sjU2k6K0vIIzfOeDzI3UdZH248rmI3DA4ErgBJLRqhlytVKc4F6sv4sgs/rfOAf5CEODLC0V1Mq2dXO2A0OwGqAfAQ/LCnYTx3D4Zzm+SebC2vxqvxgCJT7g=="
         },
         {
             "title": "七律·禅关",
             "author": "当代 | 理工博士",
-            "content": [
-                "直把忧思写入禅，一关叠上涅槃关。",
-                "突围困厄研毛选，激活诗魂召义山。",
-                "慧极伊人知婉转，情难大我懂回环。",
-                "今时过去将来景，处处风光不可删。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "aViWmRP0+vYiMFh8zzxL89mzOWW06DzaSnTQGHGjfUhuoz4riC3lDMg5Vs/IIFnmp4JwAeepxKhfoImuQe8sudMrmDYgoBWPzZMYfMCTSR2yvPoPW+Cqb5oDpK0mwJFxNkkaz265hc+NJfvecA5ZARkndZgOYndFIuZ9iVgR1ZMWZPP1qPxzrI9nsbtFxSPdyumN1KdI+vN6YyOdLntsErDvfLIQWX8s94j59uDcPqsb1f8T8HVKQ2ymhUHYpC74BNFGiaSQxJ2rNy7A/GigtQkSjMVrvwyWVOb12d+vggsclkIK1hzPoAlQ4O3YmNJuRfwpJsHFBxf6/yQrPBfJT4FAzLqSQg=="
         },
         {
             "title": "七律·暗影",
             "author": "当代 | 理工博士",
-            "content": [
-                "自我度量身几斤，天资愈钝愈殷勤。",
-                "风流势必争公瑾，原始生吞重孟贲。",
-                "五十三参心有岸，百零八种业成文。",
-                "月光暗影藏宏愿，来世翻书看此君。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "SQWG56itCLGe07eYWryv1/yDdRFoNDsjuctuWNJ2wjZ/8EJmHQ8R23bDAj8LSROx1yMVnaSirp1C+OzmcAQdANMLeaoQfj7L9mfu5/WMgitZwtJjASPkjN8e8k6NQKPL4ZiiB7LiQkqDGznrrdDm1HelEHwH/Cqo8f26LFVOlwrLb8lQFWDtKQKbfUxcCm7YAp/d4xKr4RouyadxsFrFo59lVB6gezcnGXTjP58K5BnTljWcs/p69S2zKQfHi+bb2cYG625j7sJhJi0KcCYmaB+9fBs3+wBi2Wg+V5zY5ygijkqV3LzXEEimMOdQvoXF6uehyWv6CNr5vlmkupVKDcKaPTucig=="
         },
         {
             "title": "七律·初心",
             "author": "当代 | 理工博士",
-            "content": [
-                "葱根手指扣情弦，曲谱时光俱锦年。",
-                "愿遂文君吟白首，果同韩氏寄红笺。",
-                "巫山梦境峰连海，缘分蓝田玉吐烟。",
-                "已惯繁华千百变，心花底色似从前。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "tqRALPqnTJmzVZhvbBzN1XjY7vfa9WSpYswkXE5lgYneS/GZTt2vZ1+d09lTKBtew8P05BTkvNJc4O6H8lspXuzgDtQ+vHE3XvJq6LEtIPU0H3YpcWdZhyZZk7LEGXm60EL7wumHYyKIiZoH+8TisuOHXJwgsDDiG2+IZMhY9ekI+yUC1L4E1IR9upx9VOk3Gfj5H1v6O5c/yPFAdfj0fLM37INNo2oyEQqsFMZDYKK0Em58EPkLS07Owno9Hd21qc9oBddEfkVe8rP4WD4a4NgGlUSEDV/qhxkqdEcCH3zlrvlHRNau9BqnIN6pyk07TXm1uNk4wLBUTueTAPaI27LEi9siDA=="
         },
         {
             "title": "七律·玫瑰",
             "author": "当代 | 理工博士",
-            "content": [
-                "若然颓废听惊雷，难许蹉跎岁月堆。",
-                "气质游离烟火味，才情错失美人胚。",
-                "积分无限求全点，遍历千辛如愿回。",
-                "试问由谁娱自己，原来文字似玫瑰。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "xg2P7JAsswVT3zGaLQ+h+XzNJvbizhKTpLHMP3as3E4duqY+FHWJ8v5rI5Y35GtLTw4LpuUwDiEx8B8x7WnJMezaZcCDY6gnkg66OcoZ9ohOQXLqyZEotYzNQw7I9TOwqu9aBqv/fYPDbpp4JDHnXuyVsR6FhZo2mzex40gy0OiAqZkpAAsLhcZTyufoAyVmkwLY1DQJFG4N5k8/jBtdcUswKTZcNLQuvcf39ZJ1WhZ+ARlJjIhZRv4Q8xvIVmKf31PNJYEjWktTtRwelmo1lya7zaEhmqPyhn9QCb1Qdh6aIYrRkuHz/9mIfDlHWJdJzOvQQdOJxx1dWBWLxRbfQnRa6SI19Q=="
         },
         {
             "title": "七律·薔薇",
             "author": "当代 | 理工博士",
-            "content": [
-                "小杜題詩氣質新，義山偏愛更無倫。",
-                "柔情滲透莎翁筆，猛虎聽聞野客身。",
-                "卿憶昔年三月季，花開少女兩天真。",
-                "如今我借玫瑰字，許願薔薇遇故人。"
-            ],
-            "notes": [
-                "2025年一段云端往事，知交甚少，记忆颇多，遂成文。"
-            ],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "MvujitBZqVzFNcR9NybFP9m55cEWCzkNWpG+2JX5A/NoEgnaYiiz6yyu3DnM7pHHJYHhwaSJTJi+MRyV2YjdTYT6tlNqxJg/lq6NCQwiy9rK52UMc/YC8Nvc8/BLwqxynUyq/ynBVNU7jtlL5/Eq9eMcH1Ywv1wD9KD0mo++vrilXHTgeo1ESrbtk4h1sBJxEcevqOq8O0FMPff+IaRY/805St888P2vlULWpW/Ewt6kMoLy7wgewP/edP1htPh5WzG6vGtqxZoAylPNOLkjb2qpCg58b9O1Vy+3Zlla5EtwuHViTYViZg9wfhwpx7EKkuTGO0pr7Ukuxy+JDpXGSN2r1rrMrQ2tfQh4AwJ63PmDxVqWeui6IbsKm7yBMtmH6KNGSMvklplhc1JjSSlc54EOkkq1wAPetEwaoFhGzsn6U86ePba7GhUlp3OiMg=="
         },
         {
             "title": "七律·春秋",
             "author": "当代 | 理工博士",
-            "content": [
-                "掩掩遮遮虽不如，情怀应胜百年初。",
-                "三坟强挖唐虞典，一室精装鲁壁书。",
-                "赢学对冲卑与降，赞歌调制减和除。",
-                "而今若选心安地，唯有云端可结庐。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "jwo4pRaEHahrbZPaOSVVFmF2anGJDzo/dCsS9Go4Ph0Ry7JE1KDtOuNZDp8AWLq7IXc/ANc8W6dviVtbZl99G5v/mefAAi/Zd+xSRKNCrt5nkD5Xp7gk0vFAIudSJ2enPygG6/yN8NcUOeNrd8Rx4LEyf9DheQPERDbBO7hF42XQuyes3TZISrF9l2k1+ck+4mW0veECjyYXKlVFwezNRxcIZUR6ZdTq12sPaIt38YBLPBe622xF68zuOblzHS8lrLlSzq6bor+5+0ARfoIQIXjnqhemUkTBvPioPXbP2poRuIUGYWLSd2Ohikl2QbWgA+eZ0jNhoOHzFw+zYGYtARskhL8IrQ=="
         },
         {
             "title": "七律·求是",
             "author": "当代 | 理工博士",
-            "content": [
-                "求是躬行又忆公，调查权重发言同。",
-                "图存力辟新思路，理论严批假大空。",
-                "黄土寒窑生实践，菊香书屋拒书虫。",
-                "何劳刀捉二乔笔，学问形成亲自风。"
-            ],
-            "notes": [
-                "二乔乃胡乔木和乔冠华。"
-            ],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "u8DI9aOZiUHcLpWSVXX2YMPHw9+3NZHWS0oaXeKhC8F6mcudIPxeNyQ/KAPc1S37Xbe3QQT6bZ/kLvcz326ExlBBIytx5m1Q6qMb43QY/kItJbx9Oesxu0Qwi/xkDqj3l4bl8Z/+8PlVmPoLAtC2uV4ohNxTZDcMhze9RZu71yS12gcEH6KlnxhTHmMOTpdtrSYgBfr3BDsfe3yqHaVero5V6hzfflvltbwZCU5NSEn9JDo1lFnGoUrOl/dhgD6gojoFUkH1F0kUwTp+SmJSR82Fz6b7Sq4nCXV4eMoJzXzgLwQ0CEQJ9gcsyD/KT+JQne36aTsrhjmdgCA8cnyq9dRMtexmg/K6XMdiyIziFac1+gai99OpgPjMS/OvXXRSece7W7fJTLfh"
         },
         {
             "title": "情感珍藏-4",
@@ -648,251 +497,154 @@
         {
             "title": "七律·素怀",
             "author": "当代 | 理工博士",
-            "content": [
-                "仲夏风情满素怀，千年槐树待谁来。",
-                "扶疏叶写文君意，雪白花藏越女腮。",
-                "默契灵魂同进退，连枝蓓蕾共徘徊。",
-                "时光奥妙多余问，事事有心知剪裁。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "hGLn7/zkJuUX2c+5J2JQgaYEQtoSFBR7JThhPkzjld5LKb4qo2l3t3W3Z9s6Acvuhu2sV5/DBnYkDiefuRmflCGU3l1OCm/97iPU/5lMAQrV/6RXCWbrHG+xle6teeXad5DjlV6kNxZHzf3VupnwLhJqnskm9nSOP3SeOU73WzhaO2UKoFpVXswMeSCtgxm31FBvYV71ofzNNircy01agixo5/rmpEgU+wLOZa9h437QEZ6iJ9CD1ZoIwVZ57fpc+U3jecahJe/dfgFhwF+ZOJ2El5Q1ZButEYzNF72wLYYFRNI7LHLNUAlh2YUWixFBwZPd/hSvOKFX8feJLFaJKX+4hzkpYg=="
         },
         {
             "title": "七律·自矜",
             "author": "当代 | 理工博士",
-            "content": [
-                "德才自诩正双全，锦绣年轮向右迁。",
-                "一二三枚星夺目，百千万里月藏缘。",
-                "时来神器虎添翼，喻隐爻辞龙在渊。",
-                "师古学成新范式，壮怀直逼大唐仙。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "XoUzWDF4KYG89mjKa+9pcft9I+k3lAI+ddtlk3ob9LOB3QX7mXinlGS/l2cCGVw3CbC3rbU+oaYzomPo9i9W30YsBnHnTGQ3ATQTyHiiFB1I1f5ZMKfFHW1jerBL8IrAVPrdWm7gOnAwaMLJW4SzJ0Q4TtYQr1Z9yrX+N9kRYzkl/0OeXajY7yoyHt+zds4e0/k6hL1ok33qp70ASkriBMgPb0wdYb7HnccrqnQXqmvIiF6SeDCgyN/BsLeZg0UK3MxHGX9J5eprEFzJ4hn8g4SGEdfW5d31rHDp/njGoP7us0zKHpSqarkjrUCPMRaqwrL7o5VPQAGgXNLepsKkWsRMu80JgQ=="
         },
         {
             "title": "七律·先锋",
             "author": "当代 | 理工博士",
-            "content": [
-                "硬汉博人心胆雄，几枚傲骨敢先锋。",
-                "降维暴力开天斧，惊梦玄黄混沌钟。",
-                "碧落七星连物理，潇湘四水护芙蓉。",
-                "孟轲点我浩然气，孤独深埋坦荡胸。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "6G4WTuEhg0hINdGJSDPVUMbmBbcmjNKbS2GmMYZa2HG7wyt7Sw9Y9G2F+tTcllbNE0mcu6/qfGmDS5BWFgMs+xd7D+VrylH6SiyMr9uy5cAUM1PC/phaTsQZChrS+QCJX9OrJVEsZRTcBnVsId0Oi5Dslrfg8CYDT/eW/apgdpUFimXf7TM3MPGXQ+hVGu2bo0HDLyBq4lOds928vLyFqn6XHXSyA09hgkEGsQcwy+VtmbJcIEb/CoqfgKnhWS1xdWyiCinPa7Y4EyfPrXBVGaA5e6FSYvAAx6mg3lz+M61+XuWZBpnUJnUV4yIs51y3pdEMIoHWaaziPH5rPvBoVJtKqDrnpA=="
         },
         {
             "title": "七律·分形",
             "author": "当代 | 理工博士",
-            "content": [
-                "狂人呐喊小诗听，意在无穷字在瓶。",
-                "髓海来回寻倘若，灵枢辗转断曾经。",
-                "惟应金玉成良配，岂敢朱颜换白丁。",
-                "致敬天涯新祝语，愿君快乐可分形。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "GiHPQhmTiBgwAjJptzqJb7NhZO38mKZNDAo2fmevFB8IL0FesYev824vdEl/nQbza9E44sQrdk3R+cSjZXgOWj5NsVOUKWfptnFZDJmsYYuIOp+IVzhnrln0EI7zP5O8BcBU32QaxUztQScd9ZOy4VgJsZhY6cJMGgyPkS5iDys1T2W00D5peh1QY3E/ZcRuMX3wYMN9gfuCfv2QDxeGpMGmvTHOeESm0zVVqNWE1ui+GUipOg7GzBbm4qW/gsZZFvixivttdKvFcCi9E9QltkF0KQLHmoPZFIn7gjbvzNhItQy7l/Q9ZdUGWwShpTHCm8Fj8PRG8YIuOOu5JHVXq8MC+sy59A=="
         },
         {
             "title": "七律·人生",
             "author": "当代 | 理工博士",
-            "content": [
-                "尘埃落在巨人肩，广大精微天外天。",
-                "莫比乌斯环往返，阿基米德线螺旋。",
-                "常忧日月东西转，已惯幽怀左右迁。",
-                "顿悟吾心无所住，毫厘累积不唐捐。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "/af0ncMqucq0MnQzXEtuBkXsO00+DaT98tjI3vNrR2Sj+FJyNv/V+X0hrozjX8baRGPvizZTd1eojbFMcWTZdtevi2CM1DzVdRxxj45TzZ28bQqUOZ+uoXROnfD3XJ+w0Pg74gj2mPAVyYLGRpm7FmrBqZJPDZinu571TfgKS0C0MTYEED0X/uBZZAlTT4oqjkiz/qRZUVdlpMTkJ4WiAdkYez4fYVGmkUlZFzburEffVOuKkSyiowJrccixuTQC1aFDLKbqeakfcwsHj3edauCCB8zz7IHdV5XpxtNnTzCKcMDgGsZ0jEuXhcaEgHM3o8oJAIpk2eCixrEOK3/FvJcfyskK5g=="
         },
         {
             "title": "七律·李牧",
             "author": "当代 | 理工博士",
-            "content": [
-                "七雄读罢惹伤怀，大抵人情同理哀。",
-                "李牧馋诛嬴政喜，长城自毁虎狼来。",
-                "明君带路降王翦，志士投诚看郭开。",
-                "其实将军身殒日，邯郸麋鹿走苏台。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "39j7UuSju/XbslJOE0lJGGqd5pP4k37lYVsn4uAR2DRxyegqsmVIFXslXolEKEwRgsoHsqtgEc+xI/lgkw8Km53uDkAmL7HYAF42EKkknrfa5i+rHCA+51PW6ca1a1pQk+dikU5tC0wyJDhx2dMWhFSWQr86NK77c1R0KSiqXlk5k+BJhyPS1+aaKjzzeAKfRBE9gF4Hyjw9Kv1i0DS+fJ2S5YT23iH1A1CZrftTNsy4nm/ji6Uk5555NmyVtpj1abSxhK9bzFgFyZFHbN3Dgb6Et3cCnWri0u36oE4TsbHB2v8qMr5i8lR21Rylf0XT3B2O5PG/IvhStgJGfqtl6ibdiMtVnQ=="
         },
         {
             "title": "七律·游侠",
             "author": "当代 | 理工博士",
-            "content": [
-                "游侠史公书里人，青莲格调拂衣尘。",
-                "圣贤授己屠龙术，君子携它变豹身。",
-                "一笑西湖相互捧，二离蜗角懒于嗔。",
-                "三生有幸文成典，四拒高谈座上宾。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "Li95YQ9cuB7zyxrVFyncctWqZO5++EVydkbP2mTvxGhj1R9UK8MXCBetxIg1/Bx8p0yllWitE0groc0jjwGrwKepp0vjf1pYo7CPaKnQ2z4A2jilcX0A9LPv+xICLTwjNiwaFbT2tjs1JpzYU6MmSvQ2ykIAe3OVlVTsRvez9YPNjRp+RZDRjvUb/82ik2Qv4AFaoFxnLj2Qczd2iLPGqB6nB1rRqpteqJbSvbYQjomffWl88EIe1JCf2xw2BfgLCYpOTpPAa/vJQMOjLbc5RnX887w0v739FWuQgUSJaojwNlwrrqn5hjNh8Wryccviy7GFoYErO7/weLeRXGOWIrGZkjwIFg=="
         },
         {
             "title": "七律·呐喊",
             "author": "当代 | 理工博士",
-            "content": [
-                "批判斯人错用功，偏将小爱语玲珑。",
-                "文章广角观天地，意境三棱分彩虹。",
-                "属稿问心头顶剑，谋篇张力霸王弓。",
-                "方家尚且知谦逊，勿堕雷鸣吹捧中。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "gJsxmX1j49Qc6vPdcCvc8mH2Esuc5FuaIzQ5+4EN9WNP2HA1dFn5rYbzxVFRprAofNCO4i9pR77eEK++wdnPb9XiecJ5z6HgpBB2tii53uKdFIHkuDAv2pwAY9J9E2ao4en1s1/8iDwYZzyEOmTUy3gOCQ1DAL5OrqWApJhSYNl0qJTfhNLZkuy+YG8aN8Q6GqLuosGtuwNilRefeaWYT9efHk8B6SpbMN5SjveB2JbaHiKBKgGLsAqGMcZIG86jxBVO4o9wmt4FvZOjrUs8JDk3B725M6gSWFcWkv9OuzR8EfxnyVR4oJlrMrXUDKk3xwSgXGQO+tw9+kUtunHdXoC7/ZorxA=="
         },
         {
             "title": "七律·逆风",
             "author": "当代 | 理工博士",
-            "content": [
-                "千钧臂力托鸿毛，丝血熬成满血槽。",
-                "劫难万般磨剑影，莲花一朵裹青袍。",
-                "情离着相精神锁，火淬催人岁月刀。",
-                "横取英雄真本色，扼流沧海在我曹。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "Jf8CEjmOUvGzmy9Vtzf/2IDCplnINgIkDj519hrapYwms0lQDqxbxpYvgRmiKYGQ1Xpu3cL77sdcULZLFRvJCh9WjoMMcTj0CRcj4LtptixidU35O+Gplr7E580wWShzvnRpDKQVVdzuqNoUISjkRyKYjkOhb3FpSvFcIYnNes3Hxxp9HgoM/tGH6lsEEf8aGGZhnp2Mh7Lb6oKukc1DeKKEFOJynJGPkLj6E/QvtMgKz3tKXraudAfhQVs6UHGcs4Xt6612VOoxieVtJgn6TVJEY8ZmfLGNysPEhJwuGTqfE0PcL4MAKDT6A2MScHY4wSl0v8KaC5KQoLzdst9RmRmGOCvQUw=="
         },
         {
             "title": "七律·落差",
             "author": "当代 | 理工博士",
-            "content": [
-                "夜借星辰一点光，多情进退易彷徨。",
-                "天真气烫眉间蹙，理性冰封蜗角慌。",
-                "惧怕落差安赫尔，迷茫维度太平洋。",
-                "神州广袤分南北，字印山河博士章。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "2QeGrsw7+mhnSZINCpdAztxoraFRQVbV5EUvAejFvlRG7eokCtK5y64xD/lqfvsz/S2u2T81fwS0oNQzXLX3egLnPo3Q9HALFpCthyC2iC1+Ud4/aluRbNcB1YrLrx4ye8DsfhTja2CsUtpiQjiC8+48UcfhFgXmT6ZNgJzwIIOXfpL+/UsWL4rTO7RZvfZvAsrDgSB4Wlf1UCPSUP8CtL5AgG7d/9BG8hfAiwxlgcrD/IjXzIt2wMX8TTpxyTAfvmVYQfAKbeILk9aMPfvtYcAinjaidjYjiaJNJUzoSRVQnqtBDsB2qKFJDMYP9MuvC59XN2nVZfcwkzITnEReU3DWi5V5UQ=="
         },
         {
             "title": "七律·灵犀",
             "author": "当代 | 理工博士",
-            "content": [
-                "心思细腻怕喧哗，岁月匆匆乱织纱。",
-                "天作姻缘穿结界，地因梯度有温差。",
-                "深情对赌忘川水，妙句雕成解语花。",
-                "人世相逢需确幸，知音无处不安家。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "2bbAFgpjUWvUYbEKObZ87Y188xD2LN1skHArfUpiGnsGPvgZvQbNVRs0bhNgScAW2HzJ9fDGWoIar67rUYmmFENZRrCx5u8/ntwnpOeSsm3HAeJnkk2piozqwK48Ohtk5EnRbZBYm69bWDhN3yqUAPKlnbi5o3XBT7e7U1+EIRuP8RoYjXRCTpFiHDZw4QaYT3+I89NX2+ryfu7SbwsCncry3vFQkqCjP27iZqwFVmSvfuoQZag4FmqJBAaDyxn4XCkHjUQBCXp92o01FyexTFGJEJZW8fIzm79KqPQCAsK+zY87YzA3KngH+66wSVLPq1DZyVZF9dZnZUhIDbIhRUOnCFF9Cg=="
         },
         {
             "title": "七律·迷失",
             "author": "当代 | 理工博士",
-            "content": [
-                "燕语莺歌郑卫音，诗坛遗落指南针。",
-                "香山贬谪答元九，子美漂零担寸心。",
-                "两宋残情猫换虎，六朝空洞铁驱金。",
-                "风花不解囊萤雪，谁学读书苏舜钦。"
-            ],
-            "notes": [
-                "铁驱金借劣币驱逐良币典故。"
-            ],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "Q64IkQW0h0Zk3JsfJnwKuDHTyL1QPKt/Dja/QDZ/Mi7rtZJp8nTLwb2RRjQbGRygNAAWQQ1LNu8AjlWRRC8jv/ERMEn5ZDCq/Ne/fSXDKUhA5f1jugOzI34Te+5VtYbmvqhukCoLUIBJ84inaFZQo6WFXC1CBxU227Z73dU+pOjcNYY++UOsp1/R/OkKY0TP6iT9ywK7qxxziOIKSPRzUqAW199cntG7MF9ef5IJPCkQ22RYgNAxljBUtt7zEQBiEgqbVEzk/jLiNuwZf6zLz8kG+NPwXkcBiKBZe8otah95UjRQ9vSCzO2+ZOXpT2cOmQ8/xelFKR6k0NCODCwqbzv/JsqseoH3GQItwyRG6jMymsxs8QXViY7q7qUOukrOVo3MtwRrU3uFAvY35Kxl"
         },
         {
             "title": "七律·论文",
             "author": "当代 | 理工博士",
-            "content": [
-                "思想何劳字镀金，推敲锤炼剩清音。",
-                "朝天素面焉需粉，随性妆容最动心。",
-                "情锁书山诗下酒，趣填墨海志和琴。",
-                "求知若奉痴迷样，既向源头更向深。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "PZRvNFJJ0Xi0alK2suizptZW39ZE8FRqaZKhyNgvRT6dak0ClK0zklsIMwvl1a7b4tGvJYLutvym6SLRg3F+ijopML2DyZuQFEZx8USvSqHhF52qRxsiiHpYLaHhUf6sGYJa4aUnijemDN7qWN2TuVxYdPy3J9LdIvGFrPbytrrX+w4uT0pAoAfUf95OZx8JsDWAYy4MIaxwzYnLlB/5T2hpApsJpq3sssmcGTO3IToPQYuD+oHlUDkPdqhoJgJ0jKCRQLATiAJlGmeGHBvi5mdEAk2jxOXjR2Dq/rMkN3gpvP9b6ykHbqpJhYDn3waPPHExaF1gQQvnEnxl8rPLFNkW0GEwpA=="
         },
         {
             "title": "七律·自述",
             "author": "当代 | 理工博士",
-            "content": [
-                "自我拧巴多面体，身无媚骨一根筋。",
-                "观人奇点梳鸦鬓，审美靶心穿素裙。",
-                "钢铁直男常落泪，平生夙愿半拿云。",
-                "追求些许真情愫，只恐灵魂不及君。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "fEyAWf/eR9Rjyhsjr2OGGq2LXmK9jiRvsG6DfyEZq2OBAU8AyWSXEyRixbNkZEOCPXh7TiKg/HmshV7tG2Ciuh4cC5EeA/aD9C096q8x09VbIly1e2LkdOid3jzZ6Ff1p5Ue2MOrUgj4bTfLvfeUs8vx9FeSSIc6LjywZdZyEOuxPjiANUMTkvyMubMbRyebnEDQnfxC14Vn1Kqdanq05hAp2w0bAs0+0mujZrU1rkHDfc3OCUHrZgNGrDk6AWACfv+k3J1juzuvh3kceiGMBI/OPOdW3ECPrsgpYV769oYVKgvS/bvl9v4QwvFUQ8J2e+UhMP2wg8GwOyWXUZ5GYr9WXTqBfw=="
         },
         {
             "title": "七律·黑马",
             "author": "当代 | 理工博士",
-            "content": [
-                "卧龙本是水云身，一借东风能级新。",
-                "间或格高赢鹤凤，时而胆色逊鹌鹑。",
-                "青衫映射声光影，黑骥飙驰精气神。",
-                "滚石上山留印记，星河呵护远行人。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "ZS5wJXN/Bd2FdcOamM3ABITWDEd6OZSSpdrZ5p0jz/DprrihelpIZqVgRwvVzMY3QHzba6X3Tqn+pwSRiUbhEgEKuK1Rm20NEdc22CwydxMAjRbewY+l8P2arGvpYqYOxvkNifhkIRBOsn5QUUBx1OfwSc8kABZ2eu8iNCGtiAC27nOOm80biNuCF4mf9TReka6OJ4FIY7gjY+iRTbBPJcVCwM+YS/65gHzImG37jAvNq+uhmogZXSxC7UuvTMCHiHjKynqWqJE+YwoMeUVTME6HAHWK5raB0Kgs2TxE9DicOlP5ZtFDpBZOuRvY9C3rTAptubVTvtYjUbBx8XDwkIgAdrH5HA=="
         },
         {
             "title": "七律·渔色",
             "author": "当代 | 理工博士",
-            "content": [
-                "洋洋洒洒字怀春，学步相如反效颦。",
-                "仿佛侏儒诠释戏，勾涂旧句伪装新。",
-                "闺门谄媚心渔色，裙下题诗岳叩尘。",
-                "我辈蔡桓焉有病，多余扁鹊太天真。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "8cX/AZku0kmm8hJHvE9P0H1DmfSkJsjt1lxDQ+y5FyScWVJ6IN5c0sqUjTdIm54HrFRg/luFvljtUQa65WNrHH+UU55KelclX8kvceg2/Fvu0nHyuEQ1ObzZ9dxlFXFVogeS+kxt7WG8rQVUGR2SN9hUfMDphkGjtU8pgTOH8//iRRe/x9DHuaTdvHu5i4aa8+oANWrhJpRW2B669MBGD7QexANQtC14Uq3uRIJr9eYC77wsJUKdjCMug7v6QQE5+MeCj4H4fleO0gCXGNZH/0HniR2GA4ESELICmTevqw/YTPLMwaxbcV1pEfDm2C9XlqDcUq6W867hSHHRviafx9e9xDBzwA=="
         },
         {
             "title": "七律·抱负",
             "author": "当代 | 理工博士",
-            "content": [
-                "子虚故事乱纷纷，燕赵风仪正气熏。",
-                "心室焚香驱落寞，天书填字奉殷勤。",
-                "功名苏轼登三地，抱负斯人看两文。",
-                "耻做春秋门下客，活成当代信陵君。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "z3cXZGaHo0S11J9IrPfr9rjA9viO05+35fF4FWZjtmBJv6iMr/VQQ5WdBx8f9HUzwqbeibqK55F2YCANHb5AEgEeCj4+zQaSVB40Om3sZ6mbkPjw2FU9WdO07OQKLajBVSbapSs61lAeup8bSruvCQfeEMRpQYNiFQsYL/PElAQZoSUhVmU53mmLwkSExvQjSwB+7wm2+xgWgnLhsXru6Ai6iPyUxZ6sv8om18PFlmP4fl/FXPEbVyZPdMHJUK1OY6Rkh4r+mxh3usRusGUMdhb3mm0gSGFUYUxgl+D/7iciHNlVJBBhGzk95guWKA1vWUFj76PfeHJ6L4MJO21uLs1vsygLmw=="
         },
         {
             "title": "七律·诗缘",
             "author": "当代 | 理工博士",
-            "content": [
-                "离骚庄子采兰荃，磨镜诗坛已有年。",
-                "邂逅三生殊浪漫，隔空一盏共婵娟。",
-                "身心锚定横渠句，轨迹勾描梅鹤缘。",
-                "莫道上苍非宠我，蓬山之外遇神仙。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "RL7+7xzoyGdoZaMR126XNoVRR85r3rrOZ5HL5hh83UUxygFxIEXyEan+Kq+BszXx/uNPKKkqx45t3KEY2wDpbEOvgBMuDevpxC3L+iP3S7XazJj6G9nlIevbthyIB1vZXE2up+XeFryxbw1TWPv1o5ALYJXcixlipiISCWweyH7z1mJHZmaQ25qInBiWDb2mLOMtPQ0C9RkV5ej9NrrSP4vi/4njENU464OwnvU7jKDL3Sd47iIsuLptpEksR+g9PSTgzwDkYlTxBmTdQqisIDxIlSQ7WfLDAg5/uOQOgo2GoORJ263ahV4ZJu/39QrZOBABg3treEYgV9nEYR6avwkCR5DmkA=="
         },
         {
             "title": "七律·噪音",
             "author": "当代 | 理工博士",
-            "content": [
-                "盛世容颜难自禁，汤臣上品若琼林。",
-                "申明我有求生欲，解释吾存上进心。",
-                "不合时宜罗隐句，已非民望杜工吟。",
-                "何须鲁迅狂人吠，放大强音即噪音。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "Q2Khfls75hdken+betJTBK+xp5BULgIOTgwkTptMRcWwAU4/Z6bkcQg85QLSMnwDf6VH/kR1Y2QeEueZKzvcx9xR9qcD49UBITqSk+7+jqG/hSGJDJWSc094BxNKfnJsn1LQUKcdRb6r+SmdGxxvry4g2Gctp96Oe6UNkVFFVdbS6fmPr4sg3uEO173ttYlzfeepshEvKok40rhCJtS1hOwo9zdXtojJQwpLwXQSgAnp6D/wrBpMncm/Nm77PzpD6R3RU7HwZl12lXyV9x1j/PxNb59qmtizWxm74FNsiQ3EtEWPr3wnJv5BfNujqqRek7ZVnIYIdcar+9FqIBmN/ga+ThSdnA=="
         },
         {
             "title": "情感珍藏-5",
@@ -909,28 +661,18 @@
         {
             "title": "七律·创作",
             "author": "当代 | 理工博士",
-            "content": [
-                "宋唐余料觅翻新，忐忑核心成五仁。",
-                "灵感缪斯如素数，激情尼采供精神。",
-                "驰张并取力扛鼎，矛盾同行趣逗人。",
-                "索句寻章君莫笑，基频本就属痴嗔。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "QbD2L+Dc/qnObAcEQHrpQ/ke3XlN92ryzrsqa2tiwTl6mXRdY1Q8ln8y/X7a4hH84tMjvjdmIafLVLKepV1YZLpVgWQxR1PC13q8+SkUsR7kHd3Y2Fb/ZT/UnuWKHjK2QGyi1DnLW7pt+qWOXfo83j44OE+PCo5jFfQ422Uwt4kOJnJtnsGRjf1nwHRwsBDEmrExfa+0G9lCzGAJYI8D6ZbvM/h1cboU6R4HZ0h/9q756EldbqLz1WICftjRV/c2k2nCO/BheH/PMCGWaHCuCxQGjlTHlpAkJQ2xK3UgARHPpTELHjC8p8NWiNeWyMUXJDrUBdtSL7xpbn6yN4BvVYBDUI1UmA=="
         },
         {
             "title": "七律·教员",
             "author": "当代 | 理工博士",
-            "content": [
-                "先生处事总从容，毛选精华最集中。",
-                "字字寻常如火种，篇篇震撼破鸿蒙。",
-                "九分地理渊源赤，一定江山底色红。",
-                "重读百年波澜史，人民站起始于公。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "7U3u+VM4K1ZBlSuaf8j1dwAjM8v8SCPTpE6Ct7xwUegUtbZJnd8NyPxe2buDTqtu5FtEmM9Jm58wFzXRRCe8+youuYDtqWq6ePWvuOcrfdeUt9WDDsZM5UQp63iJDW5+RIW01nA7Ptd1XLQsBRbC+zNtsDyZgVpwnRnVHOrAKDkvFQGfbrtjOVAXGImRIKUTsaEp6rRTBRAuXleBak9dyIEAUZMMqk5omht+Fy5Ftrj4hFMxwtCjEjtCISR6O2ihpNcTQ+X21ImBlpcAvkNutbED4rONErMB6//FsmIMBF1BvQKTflFogWI73FxoVdy1PQiTsdKMlKq/sblXLXcH38Zy1A6FNQ=="
         },
         {
             "title": "情感珍藏-6",
@@ -947,15 +689,10 @@
         {
             "title": "七律·呻吟",
             "author": "当代 | 理工博士",
-            "content": [
-                "料想卿卿两宋鱼，离人前世汴梁居。",
-                "呻吟病灶跟风起，缱绻柔情向壁虚。",
-                "但得忧伤侵恻隐，何劳逻辑懂乘除。",
-                "秘方药引相思泪，婉约画皮文字疽。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "q4sCKz2l12F1tHhvtS8b6UxxfmhNz/g0sYA1GocoOGBoJv4HepzZNdaRYLoFfDr1CShip9SMhiQANuLf1wwxsnvxeS0y/hUH8nPMw07JeK9Tgk4IqA8T4b6WAPdbS/JOaU9dEmCzZooLe44oax4PpCi63V+5R2cBrhRlfC1LPd1ndlkZoB3V9jI1IThBbqYODHG9Pvb9lp3UhNcuuTubb4ow6SxPiC2I3OXWWYIZb7p1JDMEC836rviOmbv1RlxTYB7noZtGj/PiGqR89XmeFW+6ctDXsjmMV3QyLLJ38RfdMtSXuRbN1qtn+dGdOIEht8IZr1X7TnnYXzXXRcqC4yiYvbpYnA=="
         },
         {
             "title": "情感珍藏-7",
@@ -972,366 +709,210 @@
         {
             "title": "七律·白雪",
             "author": "当代 | 理工博士",
-            "content": [
-                "梨花柳絮太平平，典故天成意义轻。",
-                "气结初心相似性，身通数理几何晶。",
-                "飞琼动态无双韵，颜值江南第一卿。",
-                "翘首俟君君未晚，敲开蓓蕾伴寒英。"
-            ],
-            "notes": [],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "chJ/RIpDWPhWMfjI+aL4UbJ0Uo7Y+URrgtG4qJfqOfIOpaVCKjcaXQVN9YurVC/zLwc2PwXS1ED8nosjDAtIUD5FSIt3hUsznl4QyCa2Iu7a2MB5M2zcRmQzwdMfPUHV0+Pi+f8FJV+ncWpkhkR0bL3tsnemI/FgHfBsR+cZ+pzAKD3zbte8Kzql2Zw17AEY6tul0exQK9n3+Iduz7z5tGK+yijLVa6FW0VYPC1Mj8w4ZqSJoxHpehnFNWamJDI0kDvPR0wc2IFd3K/6rkfq6AcMfc9QzTbRL4+ipYwNXf041HKCDpaeEpOEvI/jvt7GTbiOlqmi9ZB0ywz1BRllF9MBsKD4iQ=="
         },
         {
             "title": "七律·博弈",
             "author": "当代 | 理工博士",
-            "content": [
-                "铁树花开玉净瓶，杏坛伊甸俟心灵。",
-                "曾经学步如鹦鹉，为使能文效谛听。",
-                "博弈象牙肥苟且，求生沧海耐零丁。",
-                "天资筹换三分运，大道铺陈一等星。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "y1cfAUySSXqqyPxFU7ihbQ93S/HK5f9qOAJzfQAHyfkh4IiTIP8niAXXKa7abJGYAYDDXEokBalGzRuJnZmZ8OBmJ6DqTezo9kP5IFxlQsttPTro4D9PmnTfmJrUFPv/AI3dxep8Kl6vHCI+SVpmacKho42mX0mioTFIzvQCdUQV8scA+Zdp7ej4T53xbNJLQ+45J0hu/HbR5FQuJe6m/VbypO9QUCiEzoTaPG6iqN1Y0a/KD6qH+lpjAWfqizgzAigfd2NfiZyijGwtideLDT711yYyXhNA9TRI2yoOBvj7TrZtdDXnP5ouU6lG258FDI6+vkFpTmIoDJy6msG6Ua0G41nmIQ=="
         },
         {
             "title": "七律·罂粟",
             "author": "当代 | 理工博士",
-            "content": [
-                "倩影撩鱼水浣纱，点提捺撇乱涂鸦。",
-                "灵珠弹跳青莲步，汉字盛开罂粟花。",
-                "几帧风情存髓海，数行孤独寄天涯。",
-                "相思流入平湖底，镜面携来云上槎。"
-            ],
-            "notes": [],
             "techRomance": false,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "FpdRfkCyymJjv5tfnPlU6Wtv6txPrpyLgLb56vkXBI5A9SS2CG4M89v17gG5oDvNiGIcW63QxU/ngrfqBwuq50LDPjFpu+RMCAlW36kDyo+NuPFkj0OrzVR9d+DqEICcIvg+dGthS5iKlFuMuBc64c6pv0ksLoKDGndZs06wvpa01N4Oag/+jnIM43vGE4yOgXtT0K9f0j5RxG18dmBL1MCH1cA/m52wvkiTrxZ6xtv6AtLp1NHrDTgg4NmXRgGfMvT7Ba5Q3fPKoz68RQzwStxFG0+4LebghRZ2xOKMUnWMps1rwOEhDJ6gABKIJu4t3NdpmQBgfSjbev0jX1CGYm5jvzp9CQ=="
         },
         {
             "title": "七律·自诫",
             "author": "当代 | 理工博士",
-            "content": [
-                "意象疲劳自滥觞，鳄鱼落泪不纯良。",
-                "轻浮反串谈闺怨，动辄重生远稻粱。",
-                "术业同评真楚客，红心掷果假檀郎。",
-                "而今清醒成原罪，学问补牢非补妆！"
-            ],
-            "notes": [],
             "techRomance": true,
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "ndkf+KTrpZ+xwAzfYavDhn2+eMptEZpxhXVnIzu04ycDHxKHU57TlW0Osf0l0CB6QEvOlhJ1I3b5wvShS2UehG1yJew4TZVnjmskKCpGtKnC5tNOIgQ67lcavDI6DJMZb2Prr2e2q7IqwAa+Kx/fWtu1XsI4EDXgjpo3OBOM87pLJx1pNnuWfwbE2MJdNMi5fkAwrWjLFUW6Hd5BCZBiXuDiFZvZWx9OvN8+U976eko1fDXGVNkw+9Px6r0WgDA3nIAFLYOBi1WDyJ5xQqrMz56H9t5p4CFYVsDHp2NU9zk3cSfK3W0b4P/oAmKeg2x994rAekfTJTgZf7JGalDM718eyniYng=="
         },
         {
             "title": "七律·攻读",
             "author": "当代 | 理工博士",
-            "content": [
-                "如今怎敢读关雎，倔强身同伍子胥。",
-                "羡慕人为千里马，质疑我是一黔驴。",
-                "初心不老降龙虎，小愿求全做鹿鱼。",
-                "自许丈夫当克己，寒窗应作斗牛墟。"
-            ],
-            "notes": [],
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "J/1PMowFAddASKVSDxD8u5NvHX4+QC/tVZtBcUOMmlsPUSFU1ppZl9CF05Ge2cWfqMIxyVKqJ8u8ZAe6Ppq4iffhjhnY3xlpTzKP4fUrUws2awRLjYZdPbVJMo94UDyMONg9XmThiTKA5xFE5y7FcdsPCMln1jW6NA0902rNQsVqxKjk+ADFLxlgXksqbAp1cloxS6XKR1cp5EpJ9V6Vu8d+616UQp5YvHiwctH7dh8H0edwRCpRWWL7kVrDoRxhfCr/b4DhzhHW3EF1ik6lljA/iMyVmx+qpeAiK6ZqW3Yp+9ZNkaelbF3e5hOPO3aiXzjyNeVttO4r5jhKnxO4AW9ZWmbvtQ=="
         },
         {
             "title": "七律·中庸",
             "author": "当代 | 理工博士",
-            "content": [
-                "芝草焚烧惠草伤，时维八月感知凉。",
-                "三分学阀私人地，五斗腰弯小凤凰。",
-                "思想调和偏向秀，图腾殉道顾嵇康。",
-                "何妨允执中庸法，留下青山来日长。"
-            ],
-            "notes": [],
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "zjSaUlcUVuOai6y0N7g9YjdxfYJwD6AXYhsV8Wlr7PEmIMJCSwDLOWYISlFB6wCQ6eh6bujD749xVG6qg2hN6UD9pQN+8eBBoFYAGqUeNAbv11ZzZtB2Ei98LTi4M7oEsYh2igq/Dm3TIeD9gJxCBBtMzc+rIIBBUXz5q/K3C2O/yH52Zj20ic7T4Z45CcWHMXMPfE500oky3J7qHQd1i1k3NyIcnU04JJZg6PQQRBenl9Af0DBqNQ30fIoI12Cd/Dx8Fdepd/5jmnBZjJ2uvknl2vnmgqXT6RAwJzs3GbMAQEteo1iEYyfdpy5ucyly/BnHkfkzdtODLYznXS8xAHA6FyfEKQ=="
         },
         {
             "title": "七律·纠缠",
             "author": "当代 | 理工博士",
-            "content": [
-                "邂逅梧桐绕绿萝，缠绵悱恻两婆娑。",
-                "乐观地理银河少，细想深情汉界多。",
-                "状态不明薛定谔，形姿难测海森伯。",
-                "虽无引力时空曲，幸有乌邦尚可托。"
-            ],
-            "notes": [
-                "通韵"
-            ],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "wJXaiAz4MUNOA/uhPF7XLCEno5j6AGBiC5tMEwEwHv/ts4/of7NkvHY29qt1kaaEvYlCOhq5UNDwR9fR1bYybUT7wTzc7J6sAGteEwo9DqAAhe8aPMj9v3zlTvlJNcSIh1a2l3NZf2gWnPxwe2JyfjvUuconvwiTq85QwBxSVMc0UamZ3KhmX3LUtlOP0pvAnOBgfRyOrc1W7GDEizRVKRdORnDGgdHMWcizLVwYX34hqVTLmGRNtsyBr0q9owo6DQlpq67b30xWtjqCyH9jhJEhIdqjlaAreCTGZSHp3sKw63J1+AIMSWcloXv1l59M9wO70Nnl+VGm3d1j2fiTXexYL3jjY6SSsJFkOYOB"
         },
         {
             "title": "七律·画心",
             "author": "当代 | 理工博士",
-            "content": [
-                "朱砂石绿任君调，冷暖临摹说傲娇。",
-                "因果初窥菩萨咒，母胎深恶楚宫腰。",
-                "多情伏脉循能指，工笔画心输白描。",
-                "试问斯人谁自比，文坛反向座山雕。"
-            ],
-            "notes": [],
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "/UZdBvMyRjhAmgf3xFzsrAPJNiSFvG5uksIZAKYPVAh7nyJxjili0ZhljvXNfpKWS66ywNGobHZSwQ4sLlq9Np4hRbJnebK++B9Cq6S24hDnXCeJLwUiXOMTMqCr4YXL8voQBACfQqT5edI97Ew1TjLP4IEVIgQKlRzAy4oH6SEQoanpDj7fGqdftthlPTI+cdGZrx1/lzqWgDXJksUZXVYHKtKcRmWfOZqVR4B+vCo5NH4s3mzWLXYY/9O1kQuSTP3tBODsh98r2LN0xyBF1mPLr3dkgzjLNyMO7ovA+zOxkObztjp4fvKi4AqfDg8OYRIZCHXZgMGYm1fJda5Fe3K6XTIuUQ=="
         },
         {
             "title": "七律·差距",
             "author": "当代 | 理工博士",
-            "content": [
-                "项羽弯弓箭上弦，篇篇张力逼诗仙。",
-                "忽然体验当头棒，隐约身尝教学鞭。",
-                "傲气横行于过往，虚心沉淀自当前。",
-                "天高地厚今知我，贻笑至多朋友圈。"
-            ],
-            "notes": [],
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "s2skVK2rfXf9meU7qF9yHzLTd9j8S9Oa6oltyJE5X+QOQNFlzd0cY0rj8pFALdAq6/q5F3UvJbxpG6MlUSu0AVJ7HYBhJK0x/KIATffoaJtRuCv3x/z4XFVGowAZEtV+T+X2wRsP/UIXGNuGuWvY8TKZItOgwJSAT++J/k+pMX6Kr5bTxClFXl5V91diwgRLkKlAahXSLRdz/lWBHRosFFP9R0h8vHmS/ddfeUOSi5yWXMpv0T3ieZUvXT47GGvTUllgKgQC1DllJrqYZSjp0B6oOyiLiEWIOHyE7RC2mQ78zDCEiuXAbtH+anKlEqrW1g11BNZoYrKQbiliWhJVyT/fBO2DjA=="
         },
         {
             "title": "七律·问卦",
             "author": "当代 | 理工博士",
-            "content": [
-                "无趣灵魂无趣吟，看天看地看飞禽。",
-                "楼空独享秦王曲，卷展同参唐宋音。",
-                "男士文章男士品，女人字句女人心。",
-                "占星问卦神仙语，传说诗中有子衿。"
-            ],
-            "notes": [],
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "ThX9sTmt3gIYajrJCHIs19sqDQluvJxSDrN3UV8kBrbFuPIGjPf4FgFgHZ3gzfnK7PyOXABX5soi0SW+vkN3uTp31RKjsLRZ4lr96P7yXgacDASrL8mVXfm9cQ1ob68nFzKoI1VfQuR42RfqWGgLgzCqOMkv0yYN1t04o3xhySfgCbCKe4FZ8bkZrvtVKIorYEiZ6BZIpbSUa33TXzhWCyMDTTY533bKLYclHUZWiGW4iYUmtS6mSTobp3VDuo2YeqImf1KOR46LkL6dDwXRjKXemV3u0uxmBYq/jC7NK/gscLLZn1SwesL9f7Jnl3ADK2xHmLF8Gk5SIdHwdJDTtGYVvTgseA=="
         },
         {
             "title": "七律·画眉",
             "author": "当代 | 理工博士",
-            "content": [
-                "龙相龙威试叶公，九征六验辨英雄。",
-                "十年七律三观正，一笔千辛五蕴空。",
-                "明月聆听银汉语，诗心勾勒竹林风。",
-                "云笺眉上精雕句，作祟迷人荷尔蒙。"
-            ],
-            "notes": [],
-            "category": "诗道"
+            "category": "诗道",
+            "locked": true,
+            "encryptedContent": "I8YR6qfXeIPGVEY+0CN9hZavQh9Dmztf5UHV1+31+F0jWgBlXF+LWVlRADIJL5zF3yuDM+PDtnbPjfzX+tDvk1fZ/yWqScEytnO/nwH3b7/GTmeuwicod+igdzxq8tVYAOkaPi5hNOzT2HIj752HHwazak0klYxzuafMjjJjR50gRoRla9Jgokx8t320LiEwiYP1PhYeCQVVjk/Wme9XiTCtNm+z5X2mN6OJcpZb9osZXAngKzCJR0vhdNebUW7yzWA/m/B0CmfD2/6/oLqocecFl7KFx4mmuiOEHrQT10c7eeYHQDF+NnKfJ60L3a1DhOA8DRg5vjh5ukw7/8SMfZ+FYv/SQw=="
         },
         {
             "title": "七律·采芹",
             "author": "当代 | 理工博士",
-            "content": [
-                "腾蛟起凤撰雄文，蔡琰天资淑气熏。",
-                "芥子须弥通哲理，灵台若木住鸥群。",
-                "大千共振知音曲，万一相逢概率云。",
-                "百尺竿头新境界，其身仿佛采香芹。"
-            ],
-            "notes": [
-                "概率云：量子力学概率，意在表达人与人相逢之确幸"
-            ],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "l2mU4CuOad7HnqlgtMLkYFJO9HExtdVVJvzlpeqI6oExl6qfde8/34L1fVflfmI4Lq1w1akL3jhxEHAmceRg7r55DHg+wRJH9QS/aXCjkD2v6o8QOboBB8oZlGq4nJpmgVjs5I1ZxowUgwRi3X5EljmdIXmDo8PJ1CmNOUZUAy/2Hbq/SbvcLgGsLWmyWVyVGW5LJc1cAJlze9En0QpuQ1UzFsuG/TIclfKnQPG2tLtU3laTcI74BYTFdZ/lG02Ns7Pc8vpFK9cvUQ3EWZMZ3lBNSKU46Z+APSZPg0m5z9t+Ba90IVLF53GrgCv9yfpUIoTtjhBCJEkA9vkHUTNQtcZYXU8oGv2Gs8FaGDzDk/1foZqGquXctjZxV+6XJM4ueh1uujQTpjEWdDyokvrloZsffCz1Vf6Xy5/8jVCB6TzOcLGeMZg2SBSgmUcO"
         },
         {
             "title": "七律·尤物",
             "author": "当代 | 理工博士",
-            "content": [
-                "身似陀螺点立锥，涂中曳尾普通龟。",
-                "科研我失传帮带，相变它需断舍离。",
-                "器识惟新韩画马，形骸低调郭牵罴。",
-                "论文方叫真尤物，憔悴销魂愁杀伊。"
-            ],
-            "notes": [
-                "相变乃材料科学概念，借指人的蜕变。"
-            ],
             "techRomance": true,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "IDI0nTDX8bgz84cY/FjldPqZyjUtUVuJmn3zM7peSOJp4RAb2o/fYcEkJ2HSoTnhw8+ighnV718fDp0Izu+u6EQ3XAjZ8gsxySAcuFLaaP1FnaOWd76zjC217Q/9vCe77jyKRxumJrMId7yvmRoC93Yk22ssD2orGgZtswHkqvxHBOXVIlIwK0uTBjxRsCbAl6zBZQbmfdvzFrxvYajfkEMFHrmptsZiPxg+HuZ/PzPdc7Zm6gJmLZvcSki1WKO8I08sa3gyqgNrcMQXNh1pmzzLdkKTFjbjtFSJigf3XBxDMnqIxaFjDJSgItA8e0Saic4rNyaHGaHAXOe+2K+8bc3/5I7fKd9t2TD7Cmcbway9ustz/F3kLWx8+t2cbEo9MOtYMBXUcMHFvqBi7Dtm54yJKFZfvz8mnMU1"
         },
         {
             "title": "七律·未来",
             "author": "当代 | 理工博士",
-            "content": [
-                "缠绵往事也云烟，细想原来已有年。",
-                "舜帝安知斑竹印，洞宾辜负牡丹仙。",
-                "风穿地理牵红线，雨落平湖无数圆。",
-                "一念难猜多怅惘，时空耦合换心田。"
-            ],
-            "notes": [
-                "以穿越未来视角观现在之我"
-            ],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "TjUyG5xAQCMKewGqgW8EwjLttUhAalXN4jBnisOzXAtf66qbeM+dD7t3R87RrPbj6FvDpWxOVkB/S9nyPygZwE51FCu/8y/ayBH+RrfCQwMy3EvOP+uDgcvhQ8PUE3mhc/ReIldXyhcychzW1Hldq+eemFS6V5ngixd1ttUyYYA4GEBZ3C7pTRfXyHprqZfXK+H/fMDTqE2r6O7f1L58vxN3m9ZRF2hUj6/viZOneKDqqIeZJgNnkEFXhCSIxeCIUQEYi2+d7u0Ji9YmZBPIim7C3V8VdO/zgHtSV5Id8G7KEaAe0KuQYzxrjr/2dzSEorfoY5Xu50Vm/wy6cyW4UXwlrLD8uaeleTOTOOxzOVF6b+m24EfjJViDOi22hKoPEyGFWmjmGR2Q76iK"
         },
         {
             "title": "七律·抉择",
             "author": "当代 | 理工博士",
-            "content": [
-                "狼狈不堪心事皴，德才累计逊平均。",
-                "如今窘境同颜子，若此难关似洞宾。",
-                "抉择回环桃叶渡，悲欢提炼古龙津。",
-                "五兵羸弱双车困，大任偏将无用身。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "GNOAkbTDYhMYYTzBPnsa+nZK1u2t1H6kWlicaChs5EPVUaGjR+JWlkxu5yDiFThOkpJzWLLa+hbzCi1NrZcJUMxEznExp/cVX1GQpjVxWWmTXYBzRKc6j3AlIhmwfV91ylIrEy+WIOYxrhGnJlvUobEcy9gAs7y/XIYyfIbUoSYYxjTnqow+wvjOFXCDCGJ8ZOCqlOWN5ZFKiR+iHdVduKjhcrPs4lrjo3Sxd8DhGh8X3tOJqOqVXXOt3lAQ9ccWWHd0t3hwhCl0WgSa9MWPutZrHhYHtq3jBBMaesINM8kZrbHQW5TQAgT5AVOJr/axRikiiOWi/jnFjTxuDO8QnIH7YmchAQ=="
         },
         {
             "title": "七律·自况",
             "author": "当代 | 理工博士",
-            "content": [
-                "硬语盘空字字真，诗词无羽拂纤尘。",
-                "推崇奋发探原委，克制强行论果因。",
-                "既恐他人期待己，还忧自己索求人。",
-                "痴迷一件难平事，解放才情有限身。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "rvby0Kh95C+TNG6NvQN4/Ux5Qks1lPpOUDVLmvFKagRlbb0EDKdaCk+89dZTJtcvwd98i2UlDo6tH89sfWqwiP0XdFvPXUPVUX0HkleelhCGFYcAB715FMoZ2A6Dzga0/lAdG1NMKuox9fjLacxNLvC4JzPxGAStoF8iHU59nz/Go4hqk96TmngXkdhBQNmfHN6W7LUPJC8wh33n98vJnhAG44tab3pmKrsViAXDkALFpFY88MA8e0iI5KnFe09ldohSTeiqbxV78FxtSbgoS/5mosr1411qR2vjeyiLbJQdy71LfKr9ixS59OH7QtrR6YED5tz6aFSK41CQIFrmNwNSpjNsnw=="
         },
         {
             "title": "七律·革新",
             "author": "当代 | 理工博士",
-            "content": [
-                "总说风骚后辈狂，才情胆识问担当。",
-                "心忧句少革新点，性僻诗无信息熵。",
-                "九鼎文明谁萃取，千年艺术我弘扬。",
-                "蓝图不在桃源地，擘画纵横卷八荒。"
-            ],
-            "notes": [],
             "techRomance": true,
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "jgJq9To7f3UfWSt+jZdhO9rhl1SA1JOr/QtJFmIDd0/nolbrr59Z1yN5SzN+FgzE66K/gAqwB4/eIG1I9d4oHun3ZkZ0v+AHBGeh0LuQzdlD18KT8SOqHtefjIaQx0TPJQms3/O2U9ItJECElHHkfAA3WcjGEeqEkwqsaxup1gdguLBKY2W17ymA2eMRsK14wSX2877fTqr9QQcGTk32O2PjEAbuQNBaZZ3L2eLVmZ0h3HqwVxcfDfdv87GQxO+07pcXPqtCR4KorM0+ObPj+FHc8aL2q8wGNmUyPR+51lUgvnSNhtubvPrJZL6eMFGKRMNLNoZAr8LRQkBjLr+Tv3N2vRpR1A=="
         },
         {
             "title": "七律·易安",
             "author": "当代 | 理工博士",
-            "content": [
-                "静坐神游意识欢，涟漪扩散变波澜。",
-                "思维作茧灵台窄，理想跃迁光谱宽。",
-                "既得拼图罗塞塔，已收入世定心丸。",
-                "追踪两宋飞鸿印，最是钟情李易安。"
-            ],
-            "notes": [],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "8waJTH/mEtlWxIzOuQMdrXl7mJh3JMqGXTjH7nqUL/WKkb68SCG9iZ1LFBCml7p1n6hNm483jJatekiRSjpYcskyVjCbLlAXfgvMOe4sQQufajD8Xo+NGtebC+Peik5QtCMfOE7L6SG6MRJ0wd78QLcM2FLoXzmMN3pym5Oq9PqKTUkPb6jbF8yyNaPOXRdOP8BQ/nV46SWc1jF2SFSZkQBOqctw8PGzXWEJJlJCG9y8lHZeELGgl6bn1fhnlnht6frTKbT39cb7GycsQxJaDVnTrv6QShUhEIxzXLtODXfsIv39z1Y3O/7WziDbMaYksaCjCcTXOEJf/7i7+Cr0BjKvi5uwXg=="
         },
         {
             "title": "七律·独白",
             "author": "当代 | 理工博士",
-            "content": [
-                "而今总怕我疏忽，事事周全反不如。",
-                "背水求生寻逆转，沉舟向死却踌躇。",
-                "心弦还奏高山曲，妙笔须摇博士书。",
-                "夜过三更常自省，从来未想是轻浮。"
-            ],
-            "notes": [
-                "通韵"
-            ],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "oRGX72fk02szsyA/ndIKNxPfvebjpikGedQneJzrKBAOdqZjOqrF45KHTDtO4JMGKMBH8WE7uZgV/uKHGNrhg9vu9ohlKOPTtCAMb/nWNWBGpTLQGmD6Jh1MrhD08M7Lj38caWZhUyMXCzSqh1rHu36FR02g4G0i3cT2Z8OL4Nr2WKATHviCqCEkmxE4iwhcVa1wFZksqAqLRLwPMOOmD8cEV9xOYXRwJKXYW5NgC7IbtRuUTVsrq++W2LEod7KJnU7/hbuERYlqwTyRFcoZODCvEbKfj02Vz9goYVSKhK8zjgYkHm7NTQttrhiosD76ys6BRuC5a4tu/lLyTfn6tCiRbNWcACHO5pgOX9TI"
         },
         {
             "title": "七律·独行",
             "author": "当代 | 理工博士",
-            "content": [
-                "论语微言德有邻，母胎硬核本心真。",
-                "思维破壁当生猛，术业求精更绝伦。",
-                "确信才情能自己，岂将因果累他人。",
-                "行文力拔山兮势，落子无由问鬼神。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "k8z4xaha0BRFa7FxZVv6x9hzhpZcRi5/VdUlKeagBd9fnY3mXITLt0KY5DlYWng838aOJ+vt3vJtu+QCjrbKSUWv2iBwcNxW2cIleQX1hOy6bXnZKk6IApbwohcyON5MTNzmd1kKoOTOT5PITcbjrB3ov/CJMQjsPaMWX8dQDGZ57pRuiT3yr/2GAxMfHT2TGM3Gr5//l7nhEqWnZXuB3KoRkVBm36HjQ5doqOynLNtP+4J2zyNnM+cS8UhnqpQwIbYCWOpCavZHK5oCK+NqAmaIBpn1mWt452VmgPDKqtEQCae+KQt9jv+wNud7wrDZmgnkQOUA96eAGEmabdCLzCWDN4yphw=="
         },
         {
             "title": "七律·刚柔",
             "author": "当代 | 理工博士",
-            "content": [
-                "文章皮里旧春秋，顾我镜中新楚囚。",
-                "睥睨功名沽勇毅，嘘嗟方略失绸缪。",
-                "金城树老时光逝，百炼人艰钢铁柔。",
-                "傲气凝成鸡血句，青丝白发弄行舟。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "HkM1odjE/Rzn70Itd7L9m0klFpxaq5udduukMQrQkl2kdRg7l3MDtK8cF9sP8AyQKZojiZmIjVkwtFM6JY7nRO3+H+DIYWRx/I7L/ZzSnQOx04fk0cD3SNc5xu+yFGhX7+ZLozl8qXdCTTnS1ErafFd50zyQzm0bw72YXKKrlqvyDEgUjzBk4AFZYYX3gMeiV6mNShpOv56YmEeA/qJe6lxXiOk5YC6nWAbx/ttLHwY6s28WFEbHTHadseGQvHywybUkXTPlbErL+MW9jdL4NrBuujvvl/2JP6HhP34Fkpg6MRGSnLQb3K4IgQFW0NWuoDvftxSum9qnP5reZXfgC9X3RNIpuQ=="
         },
         {
             "title": "七律·香草",
             "author": "当代 | 理工博士",
-            "content": [
-                "也曾情挑伯牙琴，想是基因执念深。",
-                "治学衡门书挂角，修行古韵字偷音。",
-                "梦纹香草灵均愿，文续箴言元亮心。",
-                "硬核余生侬自渡，身同日月共浮沉。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "nJ1sb3ZvwrzwppokeFoPCdPpgk8Zrr5HmMeQlKJ1SCeABF6t4t8L6+poYjsyditE4FQwNXgWsS31kLZqY4oG6VXorQ7w2J6DZH+LmfD0kBMZgmrgPJbEl3x+4DEwdeJ/ecqb6MK27FjPpHzOaRZrg4soL5WxKbw9E/ka49N1mjGg1geBaaJGGMJXK9FbZACHmTG9OeN0PqG8HXwElZA5Dj+iBepMNCd87FKrhQy7xY15E3Vtt6wERSQQggtghinRMbOdGCd0YZvg6OKdu3Dj/NJvld0H20jOhzlRcYfaj479wVy3wDdCI66S0p9GKXkWXcLM38dYpM7htPhiXdbrqvUaLq9oqQ=="
         },
         {
             "title": "七律·怪象",
             "author": "当代 | 理工博士",
-            "content": [
-                "天下太平民共和，赞歌替换饭牛歌。",
-                "元无冠剑王侯种，只是簪缨曲折多。",
-                "命舛书中真伯虎，名高纸上假卢梭。",
-                "春秋笔法尊尊者，细读深思佛与魔。"
-            ],
-            "notes": [],
-            "category": "观察"
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "U8HcNdwnJJ3tPwS0jD21jP+xKxF1+YRxoGbql9d/fm4g2tzxM1zZIYqG2F2oHU2NIpHsuFGepmX2+SFSPcy5MH+4RwE2s18O32rI8iISMeFY/zJby8GEIEbUrxDZUgB7t5YPt+SAemvFs8UtyVCErKeRxdRwkow/C3uM+Zk9DIpkZ4Lf5J+sCBvkZNRA3aZKiqTr3YpRsmLBl8oRY3rmflND7Kcs79wm4rSdboQcuENfdBZENaPEyu1Yt/I/S8e1/1GoJYSzeQyjd4jLWQhwBlhfxSPCS3fvzmpghe6Fm8u5iZDmk0++4aXZl+IY4t0DWLXEir911Dc4v/hc3Ho3Vdy8OjEt/g=="
         },
         {
             "title": "七律·自嘲",
             "author": "当代 | 理工博士",
-            "content": [
-                "曲谱同频时代音，关门博士说浮沉。",
-                "文章收录盼他引，术业磨砻赖自斟。",
-                "孤独偶然形问影，狷狂无忌事违心。",
-                "逆行日益风吹紧，任尔难松我热忱。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "SFdZGIHxeTL42D3JWlJBIP7/1YME+uXB5kWXHoL6QvkEEwpPhhu8NqSa7DBADPuyFIkGJzsy5XdkzC6fcQEE89NOjAUJVnnaQwhqZpkqlmwm3pjIoRYt7eQvaDsEpV0PWklaCRmo4FSOwbwV22bZP+V5Ucv3A+3ALRsZ2DhJzR00Lh0o7H0p4EfrCa4cnkucub2ApXrMJaTnXOmMhYKzX5G8P0IzBNo2U0p2MEYD3LVn2aZIJ/o3Ap/g8GbJ7csBE2a0VlkIJK45yLHQheT0/wja4XlRIT53MNEYSbEP7bAmhZqeQmx2LkyQ7Ypca/MouiExbrCq+S75HlWwhmWaa1rJzJoHww=="
         },
         {
             "title": "七律·自讽",
             "author": "当代 | 理工博士",
-            "content": [
-                "毗蓝风里看蛛丝，忽若龙场悟道时。",
-                "井底嘉宾空自诩，梁园过客怕人知。",
-                "颜如玉女真红拂，孔乙己身非药师。",
-                "白雪寒英天上品，心幡谁动任由之。"
-            ],
-            "notes": [],
-            "category": "心声"
+            "category": "心声",
+            "locked": true,
+            "encryptedContent": "YVtrU+ym5z7hFa7ZDrCw1ep4cyWDMuawoenhNu/wiimuP1Lc8/AL2vwBKSZs0GUccpZNyQmCbgt8EDo2Eq8wTeOy8YoJ/zAZt56f6CESeRORnLaQKQjOfXHOEJyzld/Z2PNF843j/aS2oldA6KiUvoedgU0vDPFdxZY00J7LcSgpxs+ugkT2whmLiZQBbllJO1ggo7RIypcjEV+WayfsyQxCK9pKGYHOZO+E6JkFjCX/sQwR3+RwaQR24klXmFd7avZUBxBJtDpok8gP5Ev97kQ7Im5oRayAL7B6+kof2AoPGr1g97vEp80mMmTXir09fE2t2cQC+giE++5wt2E7eXe2VlTFCg=="
         },
         {
             "title": "七律·悖论",
             "author": "当代 | 理工博士",
-            "content": [
-                "曼衍鱼龙魂有神，年华遍历假求真。",
-                "当时心落今时梦，古代情蒙现代尘。",
-                "悖论偏方同演绎，芸娘猛士共清纯。",
-                "抒怀文字多歧语，原谅我为机械人。"
-            ],
-            "notes": [
-                "作者机械工程在读博士生"
-            ],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "hJWZva/SROzXPMbV1QgEGUX9WskYone/ze+D9nRijKmBDOETGNDGbKWFRUnxlt/I+WZX02MQUBA/fVQGnTwr5iElvTGQVo0UYu3I2oEx74MM/uFZ9K7hKkh3eo13rClTSATgOb8FmNwR3HIn20/zMpuNg6siNy/0AQkrDrGY36MQdhCkYQepd0p9zS13Avjoim0QbmxrIpe79hFC9COUho+IpgAqHVRrhimm9dbgWsIZC7/WCBzO66T4tmTTBTCGcMaNuY9O3ZN4atQ+vT4cz/a2yUMWm/fADKgj2FY8AEyvW6dCvkQ/bQhvWGYYzRAnJJiAXU+jy5hBS7LGRR+8lM1IBOSkBXBy66KAqxx0o9gz7jmOTEx45Nx1rHnQ1qid6wg9ejag+1j8"
         },
         {
             "title": "七律·光阴",
             "author": "当代 | 理工博士",
-            "content": [
-                "碧落星垂天似墙，光阴滴答透心房。",
-                "霞飞时恨非夸父，夜读笔摇思鲁阳。",
-                "川上水声如叹惋，兰亭墨迹剩哀伤。",
-                "古人青史留名号，百代谁知有此郎？"
-            ],
-            "notes": [
-                "颔联重在说光阴带给自己的压力；颈联重在论述光阴给人生命之无奈。"
-            ],
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "hrNbxsGLyLLOQ+xwqZATETXJpKnS0H3mS47KofOH0Ee3YJo7ot6TOUwwv3MAkoSKbg16BC2oGeK2zaeEgwkV+v2Z5CAH54JEW7kO1G0JZ2JKGDsX9gWF8w4tHUAOsaLRtx9R+GoeoIEvq597ew9tUes4/AVDakrVNMV7D9GfUGWa1Yh/m/IJz4WloLuPf1+Nx6vZJAPBiLW1Qb4fn5cgd0rQvYD3cw+6s0tCWc1NiRe3Z8AkPKQBwwY2JEImcV35LKNCSigO37Myic+vjUGRiGAAtBaskeFzLfduerN74+wQ79iWRkDpsotUNowzEOLvXh1AaNZlyvBOdZYkQ4faFovM+5+Di2Px8RXFRDxKTpg1TubGSx8RZGGSLWfrWCH63+QsdrXrZgNK+XSpjgDMP7RmG2XEUsMTSPB0CeYZtFBBP+eQ2rcZVwqBuPUag8a+bXjGArz5MiYu37VYVb4eck1SbsTv"
         },
         {
             "title": "七律·自洽",
             "author": "当代 | 理工博士",
-            "content": [
-                "惯看雄文格局开，八方典故称心来。",
-                "同声迭代灵犀语，句读疏离婉约哀。",
-                "字若珠玑涵二象，人通悟性贯三才。",
-                "深知孤独平衡态，君子天行痛快哉。"
-            ],
-            "notes": [
-                "二象即物理学中的波粒二象性"
-            ],
             "techRomance": true,
-            "category": "情思"
+            "category": "情思",
+            "locked": true,
+            "encryptedContent": "UjJZBLebdX34rl/yMNMZOV+OFYwInPC/zQ41zIdWFi+9yHoozxA1fpca31XnBiro6RudRT4WlqLB3pfCBTg9TiyAVLD6KhOmpb7fUkPAXdEilkBAz3QtQaDH7IIJv+RmewkSWB5TZnA6S6qU/tFfdNM1oD+1BtqEvQF9islmCHgYiUPdc17nEnY8y5diwetzeaRiOnxQKB2WdCm3LrYRBQ556Z4ddQ6i6cpHxKGSBxBWfbHyCh00+dDOv2DCx69gNCTSM7ZpFzlSnAcT2ayzyrufZ2kXDS6oWMhSJveP0G/ylAE2PzT+4jYStHz6dsvgHRaQ9gWAOhkCIZH0dvVjvughVhXykg0JyMITdXTca6zlIuG5Cr0sjzVIPppgbDeOrILiIvpXlz+hV5Uvdf9b"
         }
     ]
 }

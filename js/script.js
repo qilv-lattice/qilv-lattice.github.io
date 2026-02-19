@@ -1,4 +1,4 @@
-// ===== 全站临时访问锁 =====
+// ===== 全站访问锁 =====
 (function () {
     const SITE_LOCK_KEY = 'qilv_site_unlocked';
     if (sessionStorage.getItem(SITE_LOCK_KEY) === '1') return;
@@ -7,17 +7,38 @@
     const input = document.getElementById('global-pwd-input');
     const btn = document.getElementById('global-unlock-btn');
     const err = document.getElementById('global-lock-error');
-    const check = () => {
+    let busy = false;
+
+    const check = async () => {
+        if (busy) return;
         const pwd = input.value.trim();
-        if (btoa(pwd) === 'MTQxNTE3') {
-            sessionStorage.setItem(SITE_LOCK_KEY, '1');
-            overlay.classList.add('unlocking');
-            setTimeout(() => { overlay.style.display = 'none'; }, 400);
-        } else {
+        if (!pwd) return;
+        // 快速预检（btoa），避免 PBKDF2 耗时让用户等待
+        if (btoa(pwd) !== 'MTQxNTE3') {
             err.style.display = 'block';
             input.value = '';
             input.focus();
             setTimeout(() => { err.style.display = 'none'; }, 2000);
+            return;
+        }
+        busy = true;
+        btn.disabled = true;
+        try {
+            // 派生真实密钥并存储，供 autoDecryptPoems 使用
+            const keyBytes = await derivePasswordKey(pwd);
+            storeGlobalUnlockKey(keyBytes);
+            sessionStorage.setItem(SITE_LOCK_KEY, '1');
+            overlay.classList.add('unlocking');
+            setTimeout(() => { overlay.style.display = 'none'; }, 400);
+            // 若诗词已加载，立即解密并重新渲染
+            if (typeof autoDecryptPoems === 'function') {
+                await autoDecryptPoems();
+                if (typeof renderPoem === 'function') renderPoem(currentIndex, true);
+                if (typeof renderTOC === 'function') renderTOC();
+            }
+        } catch {
+            busy = false;
+            btn.disabled = false;
         }
     };
     btn.addEventListener('click', check);
@@ -81,7 +102,13 @@ function isPoemUnlocked(title) {
     return !!map[token] || !!map[title];
 }
 
+// 仅 情感珍藏 系列诗词：在目录中整体隐藏（聚合显示）
 function isLockedPoemHidden(poem) {
+    return !!(poem && poem.locked && !isPoemUnlocked(poem.title) && poem.title && poem.title.includes('情感珍藏'));
+}
+
+// 所有加锁诗词：内容需要密码才能查看
+function isContentLocked(poem) {
     return !!(poem && poem.locked && !isPoemUnlocked(poem.title));
 }
 
@@ -1484,10 +1511,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 如果弹窗将要打开，先填充内容
         if (!overlay.classList.contains('active')) {
             const poem = poems[currentIndex];
-            if (isLockedPoemHidden(poem)) {
+            if (isContentLocked(poem)) {
                 notesContent.textContent = '';
                 const p = document.createElement('p');
-                p.textContent = '情感珍藏暂不显示注释';
+                p.textContent = '内容已加密，解锁后可查看注释';
                 notesContent.appendChild(p);
                 if (noteBtn) noteBtn.classList.remove('has-notes');
                 overlay.classList.toggle('active');
@@ -2383,8 +2410,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 displayTitle = displayTitle.replace(tongYunRegex, "");
             }
 
-            // 加锁诗词：隐藏真实标题
-            if (poem.locked && !isPoemUnlocked(poem.title)) {
+            // 仅情感珍藏系列：隐藏真实标题
+            if (isLockedPoemHidden(poem)) {
                 displayTitle = '情感珍藏';
             }
 
@@ -2393,12 +2420,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 渲染正文（支持加锁诗词）
             bodyDiv.innerHTML = '';
-            if (poem.locked && !isPoemUnlocked(poem.title)) {
+            if (isContentLocked(poem)) {
                 // 加锁状态：显示锁定 UI
+                const lockHint = isLockedPoemHidden(poem) ? '情感珍藏，待您开启' : '内容已加密，请输入密码';
                 bodyDiv.innerHTML = `
                     <div class="poem-locked-overlay">
                         <div class="lock-icon">🔒</div>
-                        <p class="lock-hint">情感珍藏，待您开启</p>
+                        <p class="lock-hint">${lockHint}</p>
                         <div class="lock-input-row">
                             <input type="password" id="poem-password-input"
                                    placeholder="请输入密码" maxlength="20"
@@ -2460,7 +2488,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 检测是否有备注，高亮注释按钮
             const noteBtn = document.getElementById('note-btn');
-            const hasNotes = !isLockedPoemHidden(poem) && poem.notes && poem.notes.length > 0;
+            const hasNotes = !isContentLocked(poem) && poem.notes && poem.notes.length > 0;
 
             if (noteBtn) {
                 if (hasNotes) {
