@@ -169,6 +169,10 @@
     ],
     "modifiedWorks": [
         {
+            "title": "《七律·回望》",
+            "modifiedAt": "2026-02-19 23:11"
+        },
+        {
             "title": "《七律·朱伊》",
             "modifiedAt": "2026-02-14 22:33"
         },
@@ -228,7 +232,13 @@
             "techRomance": false,
             "category": "观察",
             "locked": true,
-            "encryptedContent": "YL4D7nqAWkXURkn9Qr+YvKGDOKnn25IZevG42tZk19znfV5BNwLnWYzsnejDstT9YF+26hYM6EpDieQnMdJCw+GEOEFCV4kti8PBbbiNlg2fzydzkSoaKWjgv3W0kunYAMJ9wILfWLzbkpWy+anHl3SVB7h3E0w81leigxjaQiU/2dMinhKwuQlbpWrDLPz9rQ9VbofOVbrFYrYbXYZqWOrCQUcsTjV+pz3qqy5ZFbMuW3DC/lQ1+q7/QN5RVSf2InhRKnyMBJfLqjXN5QLesLrMDQzpDJ2fCMGvUTtf157k4scg27+WimiKjpPC85lE+MVGHaWl9Ttbzw0T2K+uH0HDvsJhDluAHP3vGjcM2OJyGQX/UYke4+10V2WAtDehcPbtRIkrwPCds+O7OXfqBpXcEbqta087JFd0hiQwRpsKcE7L7+wHx1vy83dSCEPUk8f3HGYLGEpoqehgxLsdgXXlHaWqYkTmukysgBKyLjU8mNrKPFtXgfdrFVuV7HNn93+OscK8GCNgAYIl1BxDDQicnwU+BUOph/jSTOsXF5sCIs3InjjeqzpJmk0zUHy1pzh4EYSCFHmxSzy3424uMWufuVqq4N71gcGF0z8fH4f36CUybIgCBLxRTxfaJ8OhLbJb4Q=="
+            "encryptedContent": "YL4D7nqAWkXURkn9Qr+YvKGDOKnn25IZevG42tZk19znfV5BNwLnWYzsnejDstT9YF+26hYM6EpDieQnMdJCw+GEOEFCV4kti8PBbbiNlg2fzydzkSoaKWjgv3W0kunYAMJ9wILfWLzbkpWy+anHl3SVB7h3E0w81leigxjaQiU/2dMinhKwuQlbpWrDLPz9rQ9VbofOVbrFYrYbXYZqWOrCQUcsTjV+pz3qqy5ZFbMuW3DC/lQ1+q7/QN5RVSf2InhRKnyMBJfLqjXN5QLesLrMDQzpDJ2fCMGvUTtf157k4scg27+WimiKjpPC85lE+MVGHaWl9Ttbzw0T2K+uH0HDvsJhDluAHP3vGjcM2OJyGQX/UYke4+10V2WAtDehcPbtRIkrwPCds+O7OXfqBpXcEbqta087JFd0hiQwRpsKcE7L7+wHx1vy83dSCEPUk8f3HGYLGEpoqehgxLsdgXXlHaWqYkTmukysgBKyLjU8mNrKPFtXgfdrFVuV7HNn93+OscK8GCNgAYIl1BxDDQicnwU+BUOph/jSTOsXF5sCIs3InjjeqzpJmk0zUHy1pzh4EYSCFHmxSzy3424uMWufuVqq4N71gcGF0z8fH4f36CUybIgCBLxRTxfaJ8OhLbJb4Q==",
+            "content": [
+                "赫然回望若登徒，小字何曾见大巫。",
+                "乍遇唐风方握手，初窥门径认探珠。",
+                "根苗色泽多黄铁，思想菁华杂珷玞。",
+                "已怕他山攻击玉，深情不动谒杨朱。"
+            ]
         },
         {
             "title": "七律·丙午",
