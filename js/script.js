@@ -1,5 +1,7 @@
 // ===== 全站访问锁 =====
 (function () {
+    // 验证令牌：固定明文用正确密钥加密的结果，源码中不含任何密码信息
+    const SITE_VERIFY_TOKEN = 'lhtH58aG+ioBHmuvPBcxFcAYHyASX2uwQRBh99hbz4ZtDIYLW+gPrwdng6/ChWDwex/GkJNkFQ==';
     const SITE_LOCK_KEY = 'qilv_site_unlocked';
     if (sessionStorage.getItem(SITE_LOCK_KEY) === '1') return;
     const overlay = document.getElementById('global-lock-overlay');
@@ -13,32 +15,32 @@
         if (busy) return;
         const pwd = input.value.trim();
         if (!pwd) return;
-        // 快速预检（btoa），避免 PBKDF2 耗时让用户等待
-        if (btoa(pwd) !== 'MTQxNTE3') {
-            err.style.display = 'block';
-            input.value = '';
-            input.focus();
-            setTimeout(() => { err.style.display = 'none'; }, 2000);
-            return;
-        }
         busy = true;
         btn.disabled = true;
+        btn.textContent = '验证中…';
         try {
-            // 派生真实密钥并存储，供 autoDecryptPoems 使用
+            // 派生密钥，尝试解密验证令牌——错误密码会抛出异常
             const keyBytes = await derivePasswordKey(pwd);
+            await decryptPoemContentWithKey(SITE_VERIFY_TOKEN, keyBytes);
+            // 解密成功：密码正确，存储密钥并解锁
             storeGlobalUnlockKey(keyBytes);
             sessionStorage.setItem(SITE_LOCK_KEY, '1');
             overlay.classList.add('unlocking');
             setTimeout(() => { overlay.style.display = 'none'; }, 400);
-            // 若诗词已加载，立即解密并重新渲染
             if (typeof autoDecryptPoems === 'function') {
                 await autoDecryptPoems();
                 if (typeof renderPoem === 'function') renderPoem(currentIndex, true);
                 if (typeof renderTOC === 'function') renderTOC();
             }
         } catch {
+            // 解密失败：密码错误
             busy = false;
             btn.disabled = false;
+            btn.textContent = '进入';
+            err.style.display = 'block';
+            input.value = '';
+            input.focus();
+            setTimeout(() => { err.style.display = 'none'; }, 2000);
         }
     };
     btn.addEventListener('click', check);
