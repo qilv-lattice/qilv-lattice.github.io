@@ -1,3 +1,30 @@
+// ===== 全站临时访问锁 =====
+(function () {
+    const SITE_LOCK_KEY = 'qilv_site_unlocked';
+    if (sessionStorage.getItem(SITE_LOCK_KEY) === '1') return;
+    const overlay = document.getElementById('global-lock-overlay');
+    if (!overlay) return;
+    const input = document.getElementById('global-pwd-input');
+    const btn = document.getElementById('global-unlock-btn');
+    const err = document.getElementById('global-lock-error');
+    const check = () => {
+        const pwd = input.value.trim();
+        if (btoa(pwd) === 'MTQxNTE3') {
+            sessionStorage.setItem(SITE_LOCK_KEY, '1');
+            overlay.classList.add('unlocking');
+            setTimeout(() => { overlay.style.display = 'none'; }, 400);
+        } else {
+            err.style.display = 'block';
+            input.value = '';
+            input.focus();
+            setTimeout(() => { err.style.display = 'none'; }, 2000);
+        }
+    };
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
+    setTimeout(() => { if (input) input.focus(); }, 100);
+})();
+
 // ===== 诗词加锁/解锁系统 =====
 const UNLOCKED_POEMS_KEY = 'unlockedPoemsPersistent';
 const LEGACY_UNLOCKED_POEMS_KEY = 'unlockedPoems';
