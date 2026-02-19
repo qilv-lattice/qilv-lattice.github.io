@@ -3,7 +3,7 @@
     // 验证令牌：固定明文用正确密钥加密的结果，源码中不含任何密码信息
     const SITE_VERIFY_TOKEN = 'lhtH58aG+ioBHmuvPBcxFcAYHyASX2uwQRBh99hbz4ZtDIYLW+gPrwdng6/ChWDwex/GkJNkFQ==';
     const SITE_LOCK_KEY = 'qilv_site_unlocked';
-    if (sessionStorage.getItem(SITE_LOCK_KEY) === '1') return;
+    if (localStorage.getItem(SITE_LOCK_KEY) === '1') return;
     const overlay = document.getElementById('global-lock-overlay');
     if (!overlay) return;
     const input = document.getElementById('global-pwd-input');
@@ -24,7 +24,7 @@
             await decryptPoemContentWithKey(SITE_VERIFY_TOKEN, keyBytes);
             // 解密成功：密码正确，存储密钥并解锁
             storeGlobalUnlockKey(keyBytes);
-            sessionStorage.setItem(SITE_LOCK_KEY, '1');
+            localStorage.setItem(SITE_LOCK_KEY, '1');
             overlay.classList.add('unlocking');
             setTimeout(() => { overlay.style.display = 'none'; }, 400);
             if (typeof autoDecryptPoems === 'function') {
