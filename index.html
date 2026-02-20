@@ -70,25 +70,6 @@
 </head>
 
 <body>
-    <!-- 全站临时访问锁 -->
-    <div id="global-lock-overlay">
-        <div class="global-lock-box">
-            <div class="global-lock-title">七律空间</div>
-            <p class="global-lock-subtitle">暂不对外开放</p>
-            <div class="lock-input-row">
-                <input type="password" id="global-pwd-input" placeholder="请输入密码" maxlength="20"
-                       autocomplete="off" spellcheck="false" class="lock-password-input">
-                <button id="global-unlock-btn" class="lock-unlock-btn">进入</button>
-            </div>
-            <p class="lock-error" id="global-lock-error" style="display:none">密码错误</p>
-        </div>
-    </div>
-    <script>
-        if (localStorage.getItem('qilv_site_unlocked') === '1') {
-            document.getElementById('global-lock-overlay').style.display = 'none';
-        }
-    </script>
-
     <!-- 水墨渐显首屏 Hero 遮罩 -->
     <div id="hero-ink-overlay" class="hero-ink-overlay" aria-hidden="true">
         <div class="hero-ink-title">七律空间</div>
