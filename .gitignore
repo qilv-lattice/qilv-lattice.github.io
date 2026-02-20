@@ -1,2 +1,5 @@
 # 忽略本地字体文件（太大，不适合 Git）
 assets/fonts/
+
+# Claude Code 本地配置
+.claude/
