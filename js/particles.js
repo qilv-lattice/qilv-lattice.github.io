@@ -18,7 +18,7 @@ window.addEventListener('resize', () => {
 const mouse = {
     x: null,
     y: null,
-    radius: 150 // 鼠标影响半径
+    radius: 180 // 鼠标影响半径 (稍微调大增强排斥感)
 }
 
 window.addEventListener('mousemove', (event) => {
@@ -26,99 +26,152 @@ window.addEventListener('mousemove', (event) => {
     mouse.y = event.y;
 });
 
-// 粒子类
+// 触摸设备支持
+window.addEventListener('touchmove', (event) => {
+    if (event.touches.length > 0) {
+        mouse.x = event.touches[0].clientX;
+        mouse.y = event.touches[0].clientY;
+    }
+});
+window.addEventListener('touchend', () => {
+    mouse.x = null;
+    mouse.y = null;
+});
+
+window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+});
+
+// 粒子类 (现在作为晶格节点)
 class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
+    constructor(x, y, size, color) {
+        // 初始位置，也是节点受引力回归锁定的目标位置（平衡态）
+        this.baseX = x;
+        this.baseY = y;
+
+        // 当前位置
         this.x = x;
         this.y = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.baseSize = size; // 记录基础大小
+
+        // 速度
+        this.vx = 0;
+        this.vy = 0;
+
         this.size = size;
+        this.baseSize = size;
         this.color = color;
-        this.angle = Math.random() * 6.2; // 随机初始相位
+        this.angle = Math.random() * Math.PI * 2;
     }
 
-    // 绘制单个粒子
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'; // 稍微透明一点，更有层次感
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 
-    // 更新粒子位置
     update() {
-        // 呼吸效果：根据正弦函数动态调整粒子大小
-        this.angle += 0.02;
-        this.size = this.baseSize + Math.sin(this.angle) * 0.8;
+        // 呼吸效果：让晶格点显得有一点生命力
+        this.angle += 0.03;
+        this.size = this.baseSize + Math.sin(this.angle) * 0.5;
 
-        // 边界检查（反弹）
-        if (this.x > canvas.width || this.x < 0) {
-            this.directionX = -this.directionX;
-        }
-        if (this.y > canvas.height || this.y < 0) {
-            this.directionY = -this.directionY;
-        }
+        // --- 物理计算模型 ---
 
-        // 鼠标排斥/吸引逻辑
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx*dx + dy*dy);
+        // 1. 计算鼠标排斥力 (反比于距离的力)
+        let dxMouse = mouse.x - this.x;
+        let dyMouse = mouse.y - this.y;
+        let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
-        if (distance < mouse.radius + this.size) {
-            if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                this.x += 2; // 稍微躲避鼠标
-            }
-            if (mouse.x > this.x && this.x > this.size * 10) {
-                this.x -= 2;
-            }
-            if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                this.y += 2;
-            }
-            if (mouse.y > this.y && this.y > this.size * 10) {
-                this.y -= 2;
-            }
+        if (mouse.x != null && distanceMouse < mouse.radius) {
+            // 计算排斥力系数 (距离越近，力越大)
+            let forceDirectionX = dxMouse / distanceMouse;
+            let forceDirectionY = dyMouse / distanceMouse;
+            let force = (mouse.radius - distanceMouse) / mouse.radius;
+            // 节点加速度
+            let maxSpeed = 10;
+            let ax = forceDirectionX * force * maxSpeed;
+            let ay = forceDirectionY * force * maxSpeed;
+
+            // 施加相反方向的加速度 (排斥)
+            this.vx -= ax;
+            this.vy -= ay;
         }
 
-        // 正常移动
-        this.x += this.directionX;
-        this.y += this.directionY;
+        // 2. 弹簧恢复力 (Hooke's Law: F = -k * x)
+        // 计算节点偏离初始位置的距离
+        let dxBase = this.baseX - this.x;
+        let dyBase = this.baseY - this.y;
+
+        // 弹簧弹性系数 (控制拉回的紧实度，0.1 左右比较适合弹性)
+        let springFactor = 0.08;
+
+        // 3. 阻尼/摩擦力 (让节点最终能平稳停下来，不会永远振荡下去)
+        let friction = 0.85;
+
+        // 综合速度： 弹簧拉回的加速度 + 历史速度的阻尼衰减
+        this.vx = (this.vx + dxBase * springFactor) * friction;
+        this.vy = (this.vy + dyBase * springFactor) * friction;
+
+        // 应用速度更新位置
+        this.x += this.vx;
+        this.y += this.vy;
 
         this.draw();
     }
 }
 
-// 初始化粒子群
+// 初始化晶格点阵
 function init() {
     particlesArray = [];
-    // 粒子数量：根据屏幕面积动态计算，避免太密或太疏
-    let numberOfParticles = (canvas.height * canvas.width) / 15000; 
-    
-    for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 1; // 粒子大小 1-3px
-        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-        let directionX = (Math.random() * 0.4) - 0.2; // 速度极慢
-        let directionY = (Math.random() * 0.4) - 0.2;
-        let color = '#ffffff';
 
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+    // 晶格间距参数
+    const spacing = Math.min(window.innerWidth, window.innerHeight) / 10;
+
+    // 计算可以容纳几行几列 (多铺一点到屏幕外以防缩放边缘问题)
+    const cols = Math.floor(canvas.width / spacing) + 2;
+    const rows = Math.floor(canvas.height / spacing) + 2;
+
+    const offsetX = (canvas.width - cols * spacing) / 2;
+    const offsetY = (canvas.height - rows * spacing) / 2;
+
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            // 生成规则坐标
+            let x = i * spacing + offsetX;
+            let y = j * spacing + offsetY;
+
+            // 可以给晶格加一点点固定的错位 (Hexagonal 样式)
+            if (j % 2 === 1) {
+                x += spacing / 2;
+            }
+
+            let size = 1.5; // 晶格点大小
+            let color = 'rgba(255, 255, 255, 0.7)';
+
+            particlesArray.push(new Particle(x, y, size, color));
+        }
     }
 }
 
-// 连线逻辑
+// 连线逻辑 (画出晶格的 Bond)
 function connect() {
-    let opacityValue = 1;
     for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a; b < particlesArray.length; b++) {
-            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-            + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-            
-            // 如果距离小于阈值（比如 120px），就连线
-            if (distance < (canvas.width/7) * (canvas.height/7)) {
-                opacityValue = 1 - (distance/25000); // 稍微调大分母，让线更亮一点点
-                ctx.strokeStyle = 'rgba(255, 255, 255,' + opacityValue * 0.35 + ')'; // 透明度从 0.2 升到 0.35
+        // 只遍历之后的节点，避免重复画线
+        for (let b = a + 1; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+            let distance = dx * dx + dy * dy;
+
+            // 设定连线的最大阈值距离 (应该略大于晶格间距, 以便斜向或者相连的节点能连上)
+            let maxDistance = (Math.min(window.innerWidth, window.innerHeight) / 10) * 1.5;
+            maxDistance = maxDistance * maxDistance;
+
+            if (distance < maxDistance) {
+                // 距离越近，网格线越清晰; 在受扰动拉伸时线条会变淡
+                let opacityValue = 1 - (distance / maxDistance);
+
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue * 0.4})`; // 稍微增亮线条
                 ctx.lineWidth = 0.8;
                 ctx.beginPath();
                 ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -133,7 +186,7 @@ function connect() {
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    
+
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
     }
@@ -143,9 +196,3 @@ function animate() {
 // 启动
 init();
 animate();
-
-// 鼠标移出窗口时清除坐标
-window.addEventListener('mouseout', () => {
-    mouse.x = undefined;
-    mouse.y = undefined;
-});
