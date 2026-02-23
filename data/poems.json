@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-02-19 11:00",
+    "lastUpdate": "2026-02-23 20:52",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "《七律·春雨》",
+            "receivedAt": "2026-02-23 20:52"
+        },
         {
             "title": "《七律·回望》",
             "receivedAt": "2026-02-19 11:00"
@@ -226,6 +230,20 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·春雨",
+            "author": "当代 | 理工博士",
+            "techRomance": false,
+            "category": "情思",
+            "locked": false,
+            "encryptedContent": "U2QALfwmuvnV3MLnAp7jpm0QDwot6WW7HTZktbauYAp7n5ILqcNkGYVuTIK9qUVFrQvcZiFoAlJpLZj+t2kS5LZfoH7i5rAaGAprX6V/VJsjMRTP7Qelj7wjGhWZvDsJD027lZUb4ep/k54BpW5A03sfSu+N7SsW/NP+Gmyt494lSaSvcmRyUadhTFEa0gU63V3C+kK9beNtIQ8emQF9BG3wYrQSVvgOgC+mn+v9Yi9Ea2pBtCHTPS5Ah9kVM5BqTt71i4++Uzw/dVKUxMi/IZHW1mz4sHG63B+2Q9aFqHaK6tZ2JRpzkvXu4FsUFBOOYR2e9W3G03ha/4NmGqMOwA==",
+            "content": [
+                "多情剪影石榴裙，一帧春光烘气氛。",
+                "记忆当真留琥珀，时空偶尔笼氤氲。",
+                "大心脏有大烦恼，小论文赢小作文。",
+                "夜色交融窗外雨，如花往事落纷纷。"
+            ]
+        },
         {
             "title": "七律·回望",
             "author": "当代 | 理工博士",
