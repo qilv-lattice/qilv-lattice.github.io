@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-02-23 20:52",
+    "lastUpdate": "2026-02-24 23:00",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "《七律·自题》",
+            "receivedAt": "2026-02-24 23:00"
+        },
         {
             "title": "《七律·春雨》",
             "receivedAt": "2026-02-23 20:52"
@@ -230,6 +234,20 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·自题",
+            "author": "当代 | 理工博士",
+            "techRomance": false,
+            "category": "自况",
+            "locked": false,
+            "encryptedContent": "/KJrxk6Z/SLlBG5+YAsYUsG2ebUlE0RX0dzTGieCBd3tVDQscNOggtgISREr0MagmuE4OZmpUm/PbYc/mXpi1E3bdRI0wFr0Qzi4xKGYXNOYKVcedaKb3Bw+2mz2hkRvWXgpgT4B+Mp28BiVSzeaf7aDVOkPLwENYGA/DLtCTCaY78bh1NKJCXQSjx3pS8k/v3GESeCcFjfen7V6JGVeKO6efbQW2EJ821VkK4E3cKwKie+teDa5jVHkjbU8rqiBZerppGsdJC6OSVDiHxFe5j+5n0J/fKGRmliP88K4Nlf1GHhCbgmkSvDN2MU8EFVh8OCoiWY=",
+            "content": [
+                "不合时宜个性孤，白银世界少青蚨。",
+                "梦同皓月溶沧海，心共斯文落玉壶。",
+                "三径荒交方外客，六如偈换夜明珠。",
+                "复盘数载知行句，格物其中有似无。"
+            ]
+        },
         {
             "title": "七律·春雨",
             "author": "当代 | 理工博士",
