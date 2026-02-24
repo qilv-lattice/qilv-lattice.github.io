@@ -626,31 +626,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configResp.json();
         backgrounds = config.backgrounds || [];
 
-        // 2. 初始背景：默认固定 background18（若缺失则走历史逻辑回退）
+        // 2. 初始背景：随机
         if (backgrounds.length > 0) {
-            const fixedBgPath = 'assets/background18.jpg';
-            const fixedBgIndex = backgrounds.indexOf(fixedBgPath);
-            if (fixedBgIndex >= 0) {
-                selectBackground(fixedBgIndex);
-            } else {
-                const savedMode = localStorage.getItem(BG_MODE_STORAGE_KEY);
-                const savedIndexRaw = localStorage.getItem(BG_INDEX_STORAGE_KEY);
-                const savedIndex = Number.parseInt(savedIndexRaw || '', 10);
-                const hasSavedIndex = Number.isInteger(savedIndex) && savedIndex >= 0 && savedIndex < backgrounds.length;
-
-                if (savedMode === 'fixed' && hasSavedIndex) {
-                    selectBackground(savedIndex);
-                } else if (savedMode === 'random') {
-                    bgMode = 'random';
-                    bgIndex = hasSavedIndex ? savedIndex : Math.floor(Math.random() * backgrounds.length);
-                    applyBackground(bgIndex);
-                    updateBgButtonState();
-                    restartBgInterval();
-                    persistBgState();
-                } else {
-                    selectBackground(0);
-                }
-            }
+            bgMode = 'random';
+            bgIndex = Math.floor(Math.random() * backgrounds.length);
+            applyBackground(bgIndex);
+            updateBgButtonState();
+            restartBgInterval();
+            persistBgState();
         }
 
         // 3. 加载诗词数据 (移到这里确保顺序)
@@ -1180,10 +1163,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(`Loaded ${poems.length} poems.`);
             renderTOC();
 
-            // 默认展示《黑马》；若不存在则回退到第一首
-            const defaultPoemTitle = '七律·黑马';
-            const defaultIndex = poems.findIndex(poem => poem.title === defaultPoemTitle);
-            currentIndex = defaultIndex >= 0 ? defaultIndex : 0;
+            // 随机展示一首
+            currentIndex = Math.floor(Math.random() * poems.length);
             renderPoem(currentIndex, true);
             initCharGame();
             const gameOverlay = document.getElementById('char-game-overlay');
