@@ -2471,6 +2471,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 fiveStars.style.color = starColor;
             }
 
+            // 序号标注
+            const indexLabel = mainCard.querySelector('#poem-index-label');
+            if (indexLabel) {
+                const n = String(index + 1).padStart(2, '0');
+                const total = String(poems.length).padStart(2, '0');
+                indexLabel.textContent = `· ${n} / ${total} ·`;
+            }
+
             // 智能注释提醒逻辑已移除
         };
 
