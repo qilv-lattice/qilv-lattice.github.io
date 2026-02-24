@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-02-24 23:00",
+    "lastUpdate": "2026-02-25 08:00",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "《七律·嬗变》",
+            "receivedAt": "2026-02-25 08:00"
+        },
         {
             "title": "《七律·自题》",
             "receivedAt": "2026-02-24 23:00"
@@ -234,6 +238,20 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·嬗变",
+            "author": "当代 | 理工博士",
+            "techRomance": false,
+            "category": "情思",
+            "locked": false,
+            "encryptedContent": "8/zJF4RcollPBsBB4cB5XSkDajtXsT7phjEK8ewUuVD6OyI8+uRDSIpjv/smn/tYJ/jyIjlgjzJbbpZ91u6qEMHtlXaoCPzflaxW+ePk6iqxi501a5EutO6D3CjNAchPsa2k582BQHE4YCEt7BvmJCUEo1BE8G7syaXjsTq4XmM1MhCGU/y1qn4N8G8pI4NAk+CJeu+NiZ19IRyOUmwmcZ8cwAWBrWl0oF8H+wSh4CSBIIWikdyDJW7v047xTvxRH4QpMtWyh1TFx69HKtYAMauWu90mCQFWkyTTSDTrJkc3SaJOqBrGuasdqY6MOx+c5bDgT9s=",
+            "content": [
+                "月是多情小太阳，我拿月相写沧桑。",
+                "时间空隙填心意，汉字精灵绣锦囊。",
+                "恰似桃溪迷阮肇，浑如神女逗襄王。",
+                "厘清缥缈关雎曲，一岁思量已可商。"
+            ]
+        },
         {
             "title": "七律·自题",
             "author": "当代 | 理工博士",
