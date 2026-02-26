@@ -95,6 +95,28 @@
     let lastMouseY = 0;
     let autoRotateTimeout = null;
 
+    // 量子场交互变量
+    let mousePos = { x: 0, y: 0 };
+    let fieldIntensity = 0;
+    let lastActivityTime = Date.now();
+
+    // 监听全局鼠标移动以计算场效应
+    window.addEventListener('mousemove', (e) => {
+        mousePos.x = e.clientX;
+        mousePos.y = e.clientY;
+        lastActivityTime = Date.now();
+        
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        fieldIntensity = Math.max(0, 1 - distance / 400);
+    });
+
     // ===== 交互事件监听 =====
     canvas.addEventListener('mousedown', startDrag);
     canvas.addEventListener('touchstart', startDrag, { passive: false });
@@ -240,7 +262,26 @@
         ctx.shadowBlur = 0;
 
         if (!isDragging && !autoRotateTimeout) {
-            angleY += CONFIG.rotationSpeed;
+            const now = Date.now();
+            const inactiveTime = now - lastActivityTime;
+            const isIdle = inactiveTime > 30000;
+
+            if (isIdle) {
+                fieldIntensity *= 0.95;
+                angleX += (0.35 - angleX) * 0.02;
+                angleY += CONFIG.rotationSpeed;
+            } else {
+                const currentSpeed = CONFIG.rotationSpeed * (1 + fieldIntensity * 3);
+                angleY += currentSpeed;
+                
+                const rect = canvas.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const targetTiltX = (mousePos.y - centerY) * 0.0005;
+                
+                angleX += (targetTiltX + 0.35 - angleX) * 0.05;
+            }
         }
         requestAnimationFrame(draw);
     }

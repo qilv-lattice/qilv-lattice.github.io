@@ -92,6 +92,30 @@
     let lastMouseY = 0;
     let autoRotateTimeout = null;
 
+    // 量子场交互变量
+    let mousePos = { x: 0, y: 0 };
+    let fieldIntensity = 0;
+    let lastActivityTime = Date.now(); // 记录最后一次活动时间
+
+    // 监听全局鼠标移动以计算场效应
+    window.addEventListener('mousemove', (e) => {
+        mousePos.x = e.clientX;
+        mousePos.y = e.clientY;
+        lastActivityTime = Date.now(); // 更新活动时间
+        
+        // 计算鼠标与 Canvas 中心的距离
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // 场强：400像素内开始产生感应，越近越强
+        fieldIntensity = Math.max(0, 1 - distance / 400);
+    });
+
     // ===== 交互事件监听 =====
     canvas.addEventListener('mousedown', startDrag);
     canvas.addEventListener('touchstart', startDrag, { passive: false });
@@ -117,6 +141,7 @@
 
     function drag(e) {
         if (!isDragging) return;
+        lastActivityTime = Date.now(); // 拖拽也视为活动
 
         // 仅当手指在 Canvas 上时阻止滚动
         if (e.type === 'touchmove' && e.target === canvas) {
@@ -243,7 +268,29 @@
 
         // 仅在非拖拽且无暂停时自动旋转
         if (!isDragging && !autoRotateTimeout) {
-            angleY += CONFIG.rotationSpeed;
+            const now = Date.now();
+            const inactiveTime = now - lastActivityTime;
+            const isIdle = inactiveTime > 30000; // 30秒无操作
+
+            if (isIdle) {
+                // 处于空闲状态：能量衰减，姿态复位
+                fieldIntensity *= 0.95; // 快速衰减场强
+                angleX += (0.35 - angleX) * 0.02; // 平滑转回初始倾角
+                angleY += CONFIG.rotationSpeed; // 恢复基础转速
+            } else {
+                // 处于活跃状态：执行量子场加速和倾斜
+                const currentSpeed = CONFIG.rotationSpeed * (1 + fieldIntensity * 3);
+                angleY += currentSpeed;
+                
+                const rect = canvas.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const targetTiltX = (mousePos.y - centerY) * 0.0005;
+                
+                angleX += (targetTiltX + 0.35 - angleX) * 0.05;
+                // 移除 angleY 的锁定逻辑，允许自由旋转
+            }
         }
 
         requestAnimationFrame(draw);
