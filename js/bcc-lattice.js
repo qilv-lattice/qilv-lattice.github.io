@@ -14,32 +14,42 @@
     const ctx = canvas.getContext('2d');
 
     // 配置参数
-    // 配置参数
     const CONFIG = {
         size: 160,          // 略小于 FCC (180)
         cellSize: 50,       // 晶胞大小
         atomRadius: 6,      // 原子半径
         rotationSpeed: 0.006, // 旋转速度略慢
-        opacity: 0.75,
+        opacity: 0.8,
         atomColor: '#FFD700', // 默认金色 (深色模式)
         secondaryColor: '#FFFFFF', // 默认白色 (深色模式)
-        bondColor: 'rgba(255, 255, 255, 0.35)',
-        bondWidth: 1.2
+        bondColor: 'rgba(255, 255, 255, 0.25)',
+        bondWidth: 1.2,
+        glowColor: 'rgba(68, 136, 255, 0.4)'
     };
+
+    // 辅助函数：颜色插值
+    function lerpColor(a, b, amount) {
+        const ah = parseInt(a.replace(/#/g, ''), 16),
+            ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+            bh = parseInt(b.replace(/#/g, ''), 16),
+            br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+            rr = ar + amount * (br - ar),
+            rg = ag + amount * (bg - ag),
+            rb = ab + amount * (bb - ab);
+        return `rgb(${Math.round(rr)}, ${Math.round(rg)}, ${Math.round(rb)})`;
+    }
 
     // 监听背景主题变化 (反向变色龙)
     window.addEventListener('lattice-theme-change', (e) => {
         const isDark = e.detail.isDark;
         if (isDark) {
-            // 深色背景
             CONFIG.atomColor = '#FFD700';
             CONFIG.secondaryColor = '#FFFFFF';
-            CONFIG.bondColor = 'rgba(255, 255, 255, 0.35)';
+            CONFIG.bondColor = 'rgba(255, 255, 255, 0.2)';
         } else {
-            // 浅色背景 (高对比度)
-            CONFIG.atomColor = '#00008B'; // 深蓝
-            CONFIG.secondaryColor = '#333333'; // 深灰
-            CONFIG.bondColor = 'rgba(0, 0, 0, 0.4)';
+            CONFIG.atomColor = '#00008B';
+            CONFIG.secondaryColor = '#333333';
+            CONFIG.bondColor = 'rgba(0, 0, 0, 0.15)';
         }
     });
 
@@ -160,14 +170,25 @@
             return project(centered);
         });
 
-        // 绘制键
-        ctx.strokeStyle = CONFIG.bondColor;
+        // 绘制键 (带物理深度和温控颜色)
         ctx.lineWidth = CONFIG.bondWidth;
         bonds.forEach(bond => {
+            const z1 = transformedAtoms[bond[0]][2];
+            const z2 = transformedAtoms[bond[1]][2];
+            const avgZ = (z1 + z2) / 2 + 0.5; // 0-1 深度
+
             ctx.beginPath();
             ctx.moveTo(transformedAtoms[bond[0]][0], transformedAtoms[bond[0]][1]);
             ctx.lineTo(transformedAtoms[bond[1]][0], transformedAtoms[bond[1]][1]);
+
+            // 根据旋转速度和深度调整颜色 (模拟热效应)
+            const heatRatio = Math.min(1, CONFIG.rotationSpeed * 60);
+            const depthColor = lerpColor('#4488ff', '#ff4444', heatRatio * avgZ);
+            
+            ctx.strokeStyle = depthColor;
+            ctx.globalAlpha = 0.15 + avgZ * 0.35;
             ctx.stroke();
+            ctx.globalAlpha = 1;
         });
 
         // 按深度排序绘制原子
@@ -176,28 +197,30 @@
 
         sortedAtoms.forEach(item => {
             const [x, y, z] = item.pos;
-            const index = item.index; // 确保获取原始索引
+            const index = item.index;
+            const depth = (z / CONFIG.cellSize) + 0.5;
+            const radius = CONFIG.atomRadius * (0.8 + depth * 0.4);
+            const alpha = 0.5 + depth * 0.5;
 
-            // 简单的深度缩放效果
-            const scale = 1 + z / (CONFIG.size * 2);
-            const radius = CONFIG.atomRadius * scale;
-            const alpha = 0.6 + z / (CONFIG.size) * 0.4; // 深度也影响透明度
-
-            // 颜色逻辑：FCC风格 (顶点=ThemeColor，体心=SecondaryColor)
-            // BCC: 0-7 是顶点，8 是体心
+            // BCC 逻辑：0-7 顶点，8 体心
             const isCorner = index < 8;
             const color = isCorner ? CONFIG.atomColor : CONFIG.secondaryColor;
+
+            // 电子云光晕
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 10 * depth;
 
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.fillStyle = color;
-            ctx.globalAlpha = Math.max(0.2, Math.min(1, alpha)); // 限制透明度范围
+            ctx.globalAlpha = Math.max(0.3, Math.min(1, alpha));
             ctx.fill();
 
-            // 高光
+            // 重置阴影，绘制高光
+            ctx.shadowBlur = 0;
             ctx.beginPath();
-            ctx.arc(x - radius * 0.3, y - radius * 0.3, radius * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.arc(x - radius * 0.3, y - radius * 0.3, radius * 0.3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fill();
         });
 

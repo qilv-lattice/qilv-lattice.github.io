@@ -21,26 +21,37 @@
         heightScale: 1.633, // c/a 轴比，理想比值 1.633
         atomRadius: 6,
         rotationSpeed: 0.007,
-        opacity: 0.75,
+        opacity: 0.8,
         atomColor: '#FFD700', // 默认金色 (深色模式)
         secondaryColor: '#FFFFFF', // 默认白色 (深色模式)
-        bondColor: 'rgba(255, 255, 255, 0.35)',
-        bondWidth: 1.2
+        bondColor: 'rgba(255, 255, 255, 0.2)',
+        bondWidth: 1.2,
+        glowColor: 'rgba(68, 136, 255, 0.4)'
     };
+
+    // 辅助函数：颜色插值
+    function lerpColor(a, b, amount) {
+        const ah = parseInt(a.replace(/#/g, ''), 16),
+            ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+            bh = parseInt(b.replace(/#/g, ''), 16),
+            br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+            rr = ar + amount * (br - ar),
+            rg = ag + amount * (bg - ag),
+            rb = ab + amount * (bb - ab);
+        return `rgb(${Math.round(rr)}, ${Math.round(rg)}, ${Math.round(rb)})`;
+    }
 
     // 监听背景主题变化 (反向变色龙)
     window.addEventListener('lattice-theme-change', (e) => {
         const isDark = e.detail.isDark;
         if (isDark) {
-            // 深色背景
             CONFIG.atomColor = '#FFD700';
             CONFIG.secondaryColor = '#FFFFFF';
-            CONFIG.bondColor = 'rgba(255, 255, 255, 0.35)';
+            CONFIG.bondColor = 'rgba(255, 255, 255, 0.2)';
         } else {
-            // 浅色背景 (高对比度)
             CONFIG.atomColor = '#00008B';
             CONFIG.secondaryColor = '#333333';
-            CONFIG.bondColor = 'rgba(0, 0, 0, 0.4)';
+            CONFIG.bondColor = 'rgba(0, 0, 0, 0.15)';
         }
     });
 
@@ -211,14 +222,25 @@
             return project(p);
         });
 
-        // 绘制键
-        ctx.strokeStyle = CONFIG.bondColor;
+        // 绘制键 (带物理深度和温控颜色)
         ctx.lineWidth = CONFIG.bondWidth;
         bonds.forEach(bond => {
+            const z1 = transformedAtoms[bond[0]][2];
+            const z2 = transformedAtoms[bond[1]][2];
+            const avgZ = (z1 + z2) / (CONFIG.cellSize * 4) + 0.5;
+
             ctx.beginPath();
             ctx.moveTo(transformedAtoms[bond[0]][0], transformedAtoms[bond[0]][1]);
             ctx.lineTo(transformedAtoms[bond[1]][0], transformedAtoms[bond[1]][1]);
+
+            // 根据旋转模拟热力颜色
+            const heatRatio = Math.min(1, CONFIG.rotationSpeed * 65);
+            const depthColor = lerpColor('#4488ff', '#ff4444', heatRatio * avgZ);
+            
+            ctx.strokeStyle = depthColor;
+            ctx.globalAlpha = 0.15 + avgZ * 0.35;
             ctx.stroke();
+            ctx.globalAlpha = 1;
         });
 
         // 按深度排序绘制原子 (Z轴作为深度)
@@ -228,30 +250,30 @@
         sortedAtoms.forEach(item => {
             const [x, y, z] = item.pos;
             const index = item.index;
+            const depth = (z / (CONFIG.cellSize * 2)) + 0.5;
+            const radius = CONFIG.atomRadius * (0.8 + depth * 0.4);
+            const alpha = 0.4 + depth * 0.6;
 
-            // 颜色逻辑：FCC风格
-            // 顶点 = 1-6 (底面), 8-13 (顶面) -> 金色 (ThemeColor)
-            // 内部 = 0 (底心), 7 (顶心), 14-16 (中间层) -> 白色 (SecondaryColor)
+            // HCP 逻辑：顶点=金色，中心/内层=白色
             const isFrameVertex = (index >= 1 && index <= 6) || (index >= 8 && index <= 13);
             const color = isFrameVertex ? CONFIG.atomColor : CONFIG.secondaryColor;
 
-            // 深度效果
-            const depthFactor = z / (CONFIG.cellSize * 3);
-
-            const scale = 1 + depthFactor;
-            const radius = CONFIG.atomRadius * scale;
-            const alpha = 0.7 + depthFactor * 0.3;
+            // 电子云光晕
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 12 * depth;
 
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.fillStyle = color;
-            ctx.globalAlpha = Math.max(0.2, Math.min(1, alpha));
+            ctx.globalAlpha = Math.max(0.3, Math.min(1, alpha));
             ctx.fill();
 
-            // 高光
+            // 重置阴影，绘制高光
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1.0;
             ctx.beginPath();
-            ctx.arc(x - radius * 0.3, y - radius * 0.3, radius * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.arc(x - radius * 0.3, y - radius * 0.3, radius * 0.3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fill();
         });
 

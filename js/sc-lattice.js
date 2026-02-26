@@ -19,21 +19,34 @@
         cellSize: 60,
         atomRadius: 8,
         rotationSpeed: 0.006,
-        opacity: 0.75,
+        opacity: 0.8,
         atomColor: '#FFD700', // 默认金色 (深色模式)
-        bondColor: 'rgba(255, 255, 255, 0.35)',
-        bondWidth: 1.5
+        bondColor: 'rgba(255, 255, 255, 0.25)',
+        bondWidth: 1.5,
+        glowColor: 'rgba(68, 136, 255, 0.4)'
     };
+
+    // 辅助函数：颜色插值
+    function lerpColor(a, b, amount) {
+        const ah = parseInt(a.replace(/#/g, ''), 16),
+            ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+            bh = parseInt(b.replace(/#/g, ''), 16),
+            br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+            rr = ar + amount * (br - ar),
+            rg = ag + amount * (bg - ag),
+            rb = ab + amount * (bb - ab);
+        return `rgb(${Math.round(rr)}, ${Math.round(rg)}, ${Math.round(rb)})`;
+    }
 
     // 监听背景主题变化 (反向变色龙)
     window.addEventListener('lattice-theme-change', (e) => {
         const isDark = e.detail.isDark;
         if (isDark) {
             CONFIG.atomColor = '#FFD700';
-            CONFIG.bondColor = 'rgba(255, 255, 255, 0.35)';
+            CONFIG.bondColor = 'rgba(255, 255, 255, 0.25)';
         } else {
             CONFIG.atomColor = '#00008B';
-            CONFIG.bondColor = 'rgba(0, 0, 0, 0.4)';
+            CONFIG.bondColor = 'rgba(0, 0, 0, 0.15)';
         }
     });
 
@@ -169,7 +182,7 @@
             project(pos[0], pos[1], pos[2], angleY, angleX)
         );
 
-        // 按 z 排序绘制键
+        // 按 z 排序绘制键 (带热力颜色)
         const sortedBonds = [...bonds].sort((a, b) => {
             const zA = (projectedAtoms[a[0]].z + projectedAtoms[a[1]].z) / 2;
             const zB = (projectedAtoms[b[0]].z + projectedAtoms[b[1]].z) / 2;
@@ -179,13 +192,21 @@
         sortedBonds.forEach(bond => {
             const atom1 = projectedAtoms[bond[0]];
             const atom2 = projectedAtoms[bond[1]];
+            const avgZ = (atom1.z + atom2.z) / (CONFIG.cellSize * 2) + 0.5;
 
             ctx.beginPath();
             ctx.moveTo(atom1.x, atom1.y);
             ctx.lineTo(atom2.x, atom2.y);
-            ctx.strokeStyle = CONFIG.bondColor;
+            
+            // 热力颜色插值
+            const heatRatio = Math.min(1, CONFIG.rotationSpeed * 70);
+            const depthColor = lerpColor('#4488ff', '#ff4444', heatRatio * avgZ);
+            
+            ctx.strokeStyle = depthColor;
             ctx.lineWidth = CONFIG.bondWidth * Math.min(atom1.scale, atom2.scale);
+            ctx.globalAlpha = 0.2 + avgZ * 0.4;
             ctx.stroke();
+            ctx.globalAlpha = 1.0;
         });
 
         // 按 z 排序绘制原子
@@ -195,19 +216,24 @@
 
         sortedAtoms.forEach(({ proj }) => {
             const radius = CONFIG.atomRadius * proj.scale;
+            const depth = (proj.z / CONFIG.cellSize) + 0.5;
 
-            // 原子渐变
-            const gradient = ctx.createRadialGradient(
-                proj.x - radius * 0.3, proj.y - radius * 0.3, 0,
-                proj.x, proj.y, radius
-            );
-            gradient.addColorStop(0, 'white');
-            gradient.addColorStop(0.3, CONFIG.atomColor);
-            gradient.addColorStop(1, 'rgba(0,0,0,0.3)');
+            // 电子云光晕
+            ctx.shadowColor = CONFIG.atomColor;
+            ctx.shadowBlur = 12 * depth;
 
             ctx.beginPath();
             ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = CONFIG.atomColor;
+            ctx.globalAlpha = 0.4 + depth * 0.6;
+            ctx.fill();
+
+            // 重置阴影，绘制高光
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1.0;
+            ctx.beginPath();
+            ctx.arc(proj.x - radius * 0.3, proj.y - radius * 0.3, radius * 0.25, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fill();
         });
 
