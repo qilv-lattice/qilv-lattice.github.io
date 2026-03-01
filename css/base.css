@@ -600,25 +600,54 @@ header.char-game-active {
 
 .poem-content {
     width: 95%;
-    /* 响应式宽度: 手机350px → iPad500px → 桌面600px */
     max-width: clamp(320px, 75vw, 600px);
     background-color: var(--card-bg);
-    /* 移动端宣纸纹理 (极淡噪点) */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
     border-radius: 4px;
-    /* 非对称内边距：左右较小，上下正常（针对竖排文本优化） */
     padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
-    /* 用户需求：顶部额外增加 20px->18px 空间 (配合内部调整共上移正文) */
     padding-top: calc(var(--card-vertical-padding) + 18px);
-    /* 磨砂质感边框 */
     border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.04);
     position: relative;
-    /* 3D 翻页效果透视 */
     perspective: 1000px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 强化版量子呼吸脉冲层 */
+.poem-content::after {
+    content: "";
+    position: absolute;
+    inset: -5px; /* 增加溢出范围 */
+    border-radius: 8px;
+    /* 强力量子荧光：深蓝与紫红的交织 */
+    box-shadow: 
+        0 0 40px rgba(68, 136, 255, 0.6),
+        0 0 60px rgba(136, 68, 255, 0.3);
+    opacity: 0;
+    animation: quantum-breath-vivid 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes quantum-breath-vivid {
+    0% { 
+        opacity: 0.2; 
+        transform: scale(0.97); 
+        filter: blur(2px);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.04); 
+        filter: blur(0px);
+        /* 峰值时产生更强的扩散感 */
+        box-shadow: 
+            0 0 60px rgba(68, 136, 255, 0.8),
+            0 0 90px rgba(255, 68, 68, 0.4);
+    }
+    100% { 
+        opacity: 0.2; 
+        transform: scale(0.97); 
+        filter: blur(2px);
+    }
 }
 
 /* 鎵嬫満/榛樿: 闅愯棌宸﹀彸鍓崱 */
