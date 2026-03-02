@@ -26,7 +26,7 @@
         secondaryColor: '#FFFFFF', // 默认白色 (深色模式)
         bondColor: 'rgba(255, 255, 255, 0.2)',
         bondWidth: 1.2,
-        glowColor: 'rgba(68, 136, 255, 0.4)'
+        glowColor: 'rgba(68, 220, 220, 0.4)'
     };
 
     // 辅助函数：颜色插值

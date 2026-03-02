@@ -23,7 +23,7 @@
         atomColor: '#FFD700', // 默认金色 (深色模式)
         bondColor: 'rgba(255, 255, 255, 0.35)',
         bondWidth: 1.2,
-        glowColor: 'rgba(68, 136, 255, 0.4)' // 电子云光晕颜色
+        glowColor: 'rgba(68, 255, 136, 0.4)' // 电子云光晕颜色
     };
 
     // 辅助函数：颜色插值
@@ -44,11 +44,11 @@
         if (isDark) {
             CONFIG.atomColor = '#FFD700';
             CONFIG.bondColor = 'rgba(255, 255, 255, 0.25)';
-            CONFIG.glowColor = 'rgba(68, 136, 255, 0.4)';
+            CONFIG.glowColor = 'rgba(68, 255, 136, 0.4)';
         } else {
             CONFIG.atomColor = '#00008B';
             CONFIG.bondColor = 'rgba(0, 0, 0, 0.2)';
-            CONFIG.glowColor = 'rgba(0, 0, 139, 0.2)';
+            CONFIG.glowColor = 'rgba(68, 200, 100, 0.2)';
         }
     });
 
