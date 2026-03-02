@@ -56,8 +56,8 @@
     canvas.width = CONFIG.size;
     canvas.height = CONFIG.size;
     canvas.style.position = 'fixed';
-    canvas.style.bottom = '25px';
-    canvas.style.left = '25px';  // 左下角
+    canvas.style.top = '55%';
+    canvas.style.right = '25px';  // 右侧，与HCP同行
     canvas.style.zIndex = '50';
     canvas.style.pointerEvents = 'auto'; // 允许鼠标/触摸交互
     canvas.style.cursor = 'grab';       // 抓手光标

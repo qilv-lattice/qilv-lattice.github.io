@@ -50,12 +50,12 @@
         }
     });
 
-    // 设置 Canvas 样式 - 左上角
+    // 设置 Canvas 样式 - 右侧，与BCC同行
     canvas.width = CONFIG.size;
     canvas.height = CONFIG.size;
     canvas.style.position = 'fixed';
-    canvas.style.top = '15px';
-    canvas.style.left = '20px';
+    canvas.style.top = '28%';
+    canvas.style.right = '25px';
     canvas.style.zIndex = '50';
     canvas.style.pointerEvents = 'auto'; // 允许交互
     canvas.style.cursor = 'grab';
