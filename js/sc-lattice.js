@@ -54,7 +54,7 @@
     canvas.width = CONFIG.size;
     canvas.height = CONFIG.size;
     canvas.style.position = 'fixed';
-    canvas.style.top = '28%';
+    canvas.style.top = 'calc(50% - 190px)';
     canvas.style.right = '25px';
     canvas.style.zIndex = '50';
     canvas.style.pointerEvents = 'auto'; // 允许交互

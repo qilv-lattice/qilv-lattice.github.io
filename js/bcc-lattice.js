@@ -57,7 +57,7 @@
     canvas.width = CONFIG.size;
     canvas.height = CONFIG.size;
     canvas.style.position = 'fixed';
-    canvas.style.top = '28%';   // 位于位错下方
+    canvas.style.top = 'calc(50% - 175px)';   // 纵向居中（上）
     canvas.style.left = '25px'; // 左侧对齐
     canvas.style.zIndex = '50';
     canvas.style.pointerEvents = 'auto'; // 允许交互
