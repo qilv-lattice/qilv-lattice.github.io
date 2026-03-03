@@ -1048,19 +1048,17 @@ header.char-game-active {
 .settings-btn.blue-mode {
     color: var(--accent-blue);
     background: rgba(18, 104, 204, 0.12);
-    border-color: rgba(18, 104, 204, 0.55);
+    /* 移除 border-color，保持金色 */
 }
 
-/* ?????????????????*/
+/* 按钮已使用状态 */
 .settings-btn.settings-used {
     background: rgba(255, 255, 255, 0.45);
-    border-color: rgba(255, 255, 255, 0.75);
     color: var(--accent-color);
 }
 
 .settings-btn.blue-mode.settings-used {
     color: var(--accent-blue);
-    border-color: rgba(18, 104, 204, 0.65);
     background: rgba(18, 104, 204, 0.16);
 }
 
