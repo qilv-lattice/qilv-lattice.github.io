@@ -1,4 +1,8 @@
-User-agent: *
+User-agent: Googlebot
 Allow: /
 
-Sitemap: https://qilv-lattice-github-io.pages.dev/sitemap.xml
+User-agent: Bingbot
+Allow: /
+
+User-agent: *
+Disallow: /
