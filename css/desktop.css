@@ -317,6 +317,10 @@ header {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 1;
+    box-shadow: none;
+    inset: 0;
+    border-radius: 0;
     z-index: 0;
     pointer-events: none;
 }
