@@ -534,8 +534,6 @@ header.char-game-active {
     font-size: 2rem;
     color: var(--text-color);
     margin-bottom: 0.25rem;
-    /* 会呼吸的标题 */
-    animation: text-breathe 4s ease-in-out infinite;
 }
 
 @keyframes text-breathe {
@@ -623,7 +621,6 @@ header.char-game-active {
         0 0 40px rgba(68, 136, 255, 0.6),
         0 0 60px rgba(136, 68, 255, 0.3);
     opacity: 0;
-    animation: quantum-breath-vivid 3s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
 }
@@ -2226,9 +2223,6 @@ header.char-game-active {
     pointer-events: none;
     padding-right: 12px;
     /* 为装饰线留空间 */
-    /* 会呼吸的标签 */
-    animation: text-breathe 4s ease-in-out infinite 2s;
-    /* 延迟2秒，错峰呼吸 */
 }
 
 /* 梅花小图标 (独立定位版) */
