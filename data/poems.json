@@ -64,6 +64,14 @@
     ],
     "poems": [
         {
+            "title": "七律·奴性",
+            "author": "当代 | 理工博士",
+            "techRomance": true,
+            "category": "观察",
+            "locked": true,
+            "encryptedContent": "AqSz3rUqgNgElPv/oXoOq4HxSTA/6v4eK0bHVYWfufnbErUBDK12M+uQsP7/ND5CSDH8FcrKV0++3hIovpyJBnL/83toz1qScYVi/FNq3zP0iktLN3VaAQEvbfllwZREGCg6q3pGz17o34CMcY2IDFFDhcpSMVllQ1AyUnWkd6B90nsSP55T+OazOG6lbutM8aAxJ9JohoVQAAPG0bbYmVfFaAEh93aD6ACCIzfNV1eL2p/cf7IhW4breOgrGjvfLB31eHMq47hFzfJ8uClGsUjm9yl36trtSHnFWuQGpT3rqUm5uJqMXrviCO7S9qjRkUiuUANj9VvDkXPjHXwH9Q=="
+        },
+        {
             "title": "七律·春药",
             "author": "当代 | 理工博士",
             "techRomance": false,
@@ -836,14 +844,6 @@
             "category": "情思",
             "locked": true,
             "encryptedContent": "UjJZBLebdX34rl/yMNMZOV+OFYwInPC/zQ41zIdWFi+9yHoozxA1fpca31XnBiro6RudRT4WlqLB3pfCBTg9TiyAVLD6KhOmpb7fUkPAXdEilkBAz3QtQaDH7IIJv+RmewkSWB5TZnA6S6qU/tFfdNM1oD+1BtqEvQF9islmCHgYiUPdc17nEnY8y5diwetzeaRiOnxQKB2WdCm3LrYRBQ556Z4ddQ6i6cpHxKGSBxBWfbHyCh00+dDOv2DCx69gNCTSM7ZpFzlSnAcT2ayzyrufZ2kXDS6oWMhSJveP0G/ylAE2PzT+4jYStHz6dsvgHRaQ9gWAOhkCIZH0dvVjvughVhXykg0JyMITdXTca6zlIuG5Cr0sjzVIPppgbDeOrILiIvpXlz+hV5Uvdf9b"
-        },
-        {
-            "title": "七律·奴性",
-            "author": "当代 | 理工博士",
-            "techRomance": true,
-            "category": "观察",
-            "locked": true,
-            "encryptedContent": "AqSz3rUqgNgElPv/oXoOq4HxSTA/6v4eK0bHVYWfufnbErUBDK12M+uQsP7/ND5CSDH8FcrKV0++3hIovpyJBnL/83toz1qScYVi/FNq3zP0iktLN3VaAQEvbfllwZREGCg6q3pGz17o34CMcY2IDFFDhcpSMVllQ1AyUnWkd6B90nsSP55T+OazOG6lbutM8aAxJ9JohoVQAAPG0bbYmVfFaAEh93aD6ACCIzfNV1eL2p/cf7IhW4breOgrGjvfLB31eHMq47hFzfJ8uClGsUjm9yl36trtSHnFWuQGpT3rqUm5uJqMXrviCO7S9qjRkUiuUANj9VvDkXPjHXwH9Q=="
         }
     ]
 }
