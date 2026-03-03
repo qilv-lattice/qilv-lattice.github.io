@@ -983,6 +983,27 @@ header.char-game-active {
 /* 仅在手机端生效 (base.css 本身就是移动优先) */
 
 /* 独立的设置按钮：默认隐藏（仅在折叠时显示） */
+/* 七律logo印章 */
+.logo-stamp {
+    display: none;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.32);
+    border: 1.5px solid rgba(255, 255, 255, 0.65);
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px) saturate(1.15);
+    -webkit-backdrop-filter: blur(10px) saturate(1.15);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.logo-stamp-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
 .settings-btn {
     display: none;
     font-family: var(--font-title);
@@ -1031,10 +1052,16 @@ header.char-game-active {
     /* 保持高度防止跳变 */
 }
 
-/* 折叠时：显示独立设置按钮 */
+/* 折叠时：显示logo印章和设置按钮 */
 .music-wrapper.collapsed .settings-btn {
     display: flex;
-    /* 确保按钮本身不需要额外的定位，由 flex-end 控制 */
+    position: relative;
+}
+
+.music-wrapper.collapsed .logo-stamp {
+    display: flex;
+    position: absolute;
+    right: 56px;
 }
 
 /* 折叠时：隐藏所有7个按钮（叠在右上角音乐图标位置） */
@@ -1051,7 +1078,8 @@ header.char-game-active {
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 展开状态：隐藏设置按钮 */
+/* 展开状态：隐藏logo印章和设置按钮 */
+.music-wrapper.expanded .logo-stamp,
 .music-wrapper.expanded .settings-btn {
     display: none;
 }
