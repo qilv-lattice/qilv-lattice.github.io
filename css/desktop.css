@@ -350,7 +350,7 @@ header {
 
 #poem-title {
     font-size: 2.4rem;
-    margin: 0 0 0 3rem;
+    margin: 0 0 0 2rem; /* 间距缩减为 2/3 (原 3rem)，增强标题与正文的紧凑感 */
     letter-spacing: 2px;
     text-align: center;
 }
@@ -412,8 +412,8 @@ header {
 .seal {
     width: 30px;
     height: 30px;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
+    border: 2px solid #E60000; /* 换成更鲜艳的正红印油色 */
+    color: #E60000; /* 文字同步变红 */
     font-size: 10px;
     display: flex;
     justify-content: center;
@@ -421,11 +421,11 @@ header {
     text-align: center;
     border-radius: 4px;
     font-family: var(--font-title);
-    opacity: 0.8;
+    opacity: 0.95; /* 提高不透明度，增加鲜艳感 */
     line-height: 1;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), inset 0 0 5px rgba(212, 175, 55, 0.1);
-    transition: transform 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.9); /* 略微提高背景亮度以反衬红色 */
+    box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.2), inset 0 0 5px rgba(230, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .seal:hover {
