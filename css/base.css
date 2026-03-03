@@ -986,19 +986,28 @@ header.char-game-active {
 /* 仅在手机端生效 (base.css 本身就是移动优先) */
 
 /* 独立的设置按钮：默认隐藏（仅在折叠时显示） */
-/* 七律logo印章 */
+/* 七律logo印章 - 注入描金边框效果 */
 .logo-stamp {
     display: none;
     width: 50px;
     height: 50px;
-    background: rgba(255, 255, 255, 0.32);
-    border: 1.5px solid rgba(255, 255, 255, 0.65);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.4); /* 略微调亮背景 */
+    border: 1.8px solid #FFD700; /* 描金边框 */
+    border-radius: 6px;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(10px) saturate(1.15);
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 0 8px rgba(255, 215, 0, 0.4); /* 金色微光 */
+    transition: all 0.3s ease;
+}
+
+.logo-stamp:hover {
+    transform: scale(1.05);
+    border-color: #FFEC8B; /* 悬停时金边更亮 */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
 .logo-stamp-img {
@@ -1013,9 +1022,9 @@ header.char-game-active {
     font-size: 0.85rem;
     font-weight: bold;
     color: var(--accent-color);
-    background: rgba(255, 255, 255, 0.32);
-    border: 1.5px solid rgba(255, 255, 255, 0.65);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.4); /* 调亮背景 */
+    border: 1.8px solid #FFD700; /* 描金边框 */
+    border-radius: 6px;
     width: 50px;
     height: 50px;
     justify-content: center;
@@ -1024,7 +1033,16 @@ header.char-game-active {
     cursor: pointer;
     backdrop-filter: blur(10px) saturate(1.15);
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 0 8px rgba(255, 215, 0, 0.4); /* 金色微光 */
+    transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+    transform: scale(1.05);
+    border-color: #FFEC8B;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
 .settings-btn.blue-mode {
