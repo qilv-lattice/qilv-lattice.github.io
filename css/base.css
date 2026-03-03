@@ -1064,7 +1064,7 @@ header.char-game-active {
 .music-wrapper.collapsed .logo-stamp {
     display: flex;
     position: absolute;
-    right: 56px;
+    right: 62px;
 }
 
 /* 折叠时：隐藏所有7个按钮（叠在右上角音乐图标位置） */
