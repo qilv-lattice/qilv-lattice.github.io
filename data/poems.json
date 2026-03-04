@@ -1,8 +1,9 @@
 {
-    "lastUpdate": "2026-03-04 14:46",
+    "lastUpdate": "2026-03-04 17:36",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
-        "七律·奴性"
+        "七律·奴性",
+        "七律·知音"
     ],
     "modifiedWorks": [
         {
@@ -67,6 +68,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 92,
+            "title": "七律 · 知音",
+            "author": "启路",
+            "dynasty": "今",
+            "content": [
+                "层层记忆慢钩沉，三月花开遇子衿。",
+                "彩凤舍身留尾羽，灵犀有线系知音。",
+                "一番呓语听肤浅，千里相思越纵深。",
+                "且看平生多少事，无须证伪是吾心。"
+            ],
+            "encryptedContent": "fH1PBAgW1f39crWZSYt4sw0DeQgmIp1gxMHqGFqhYBwMkrq/JSQLT0euAhbcO8s/8X3OhYTzLYz34UXLreBPrXNozayFQp2CERDQzeaLEP/1Kp2VqqH7f4hX57BmuLy74BhfYx8r5CSEjryo6yXqr/X0cFHgHkxz2F3bLQvaUjDvtevqpu05YRmNF3eyi6iZW4KOYzivUcyF0N9Rnmm+F9ZAh1GMuzzR+9ocEPDhvP/FxwbmHAsA8B68kkEiBRzr4yru4u1KHPuUNqtkYCKYXf1cH8h1X69B3MocK91h1Tof+dIgtcCJmpngv/G+vcS4xFM4VaBSwF4OGcZmaxQY9w==",
+            "locked": true,
+            "category": "情感"
+        },
         {
             "title": "七律·奴性",
             "author": "当代 | 理工博士",
