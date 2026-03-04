@@ -2472,6 +2472,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // 智能注释提醒逻辑已移除
+
+            // 更新页码
+            const pageNumEl = document.getElementById('poem-page-number');
+            if (pageNumEl) {
+                pageNumEl.textContent = `${index + 1} / ${poems.length}`;
+            }
         };
 
         // 如果跳过动画，直接渲染；否则延迟执行以配合动画
