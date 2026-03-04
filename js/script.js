@@ -2175,9 +2175,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (wingStyle.color) fiveStars.style.color = wingStyle.color;
             } else {
                 fiveStars.style.color = '#C0C0C0';
-                fiveStars.querySelectorAll('svg').forEach(svg => {
-                    svg.style.fill = 'url(#star-silver)';
-                });
             }
         }
     }
@@ -2432,6 +2429,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // 星星样式 (数据驱动，读取 poem.starStyle)
                 fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
+                fiveStars.style.color = '';
 
                 const mainStyle = STAR_STYLES[poem.starStyle];
                 if (mainStyle) {
@@ -2439,9 +2437,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (mainStyle.color) fiveStars.style.color = mainStyle.color;
                 } else {
                     fiveStars.style.color = '#C0C0C0';
-                    fiveStars.querySelectorAll('svg').forEach(svg => {
-                        svg.style.fill = 'url(#star-silver)';
-                    });
                 }
             }
 
