@@ -1,9 +1,10 @@
 {
-    "lastUpdate": "2026-03-04 17:36",
+    "lastUpdate": "2026-03-04 21:12",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         "七律·奴性",
-        "七律·知音"
+        "七律·知音",
+        "七律·军火"
     ],
     "modifiedWorks": [
         {
@@ -68,6 +69,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 93,
+            "title": "七律·军火",
+            "author": "启路",
+            "dynasty": "今",
+            "content": [
+                "小生冲浪不寻芳，万紫千红一点黄。",
+                "搔首镜前人夺眼，健身屏底腿修长。",
+                "蛮腰樊素瑜伽裤，俏脸西施粉黛妆。",
+                "莫笑名媛军火展，均为聘礼价高娘。"
+            ],
+            "encryptedContent": "qEWi7l80JUQctFlal/+N9fm90LBhJZZndt+6u/flzdVdS3XPkdK/SB71zRJ9dbwGjJYPFd4kHDFPAibIaZ7hixW0DvJYsM5tG7pOAO7VeAFOIjQq/63M+8HjavE13HXVJwJj/gcZTDFpoNtfKwlsKqMvqFg7RqXp5mDVNGfpTm62u77xzQHj+1m7NsvKVt6Vwsvk8aThWyk5njk8AvV/WJd8lxT0F4z8RzDHZk54RUljwbrSI8vCjW4i495su/XhQeElJjZicCTZygnBzREIOPqxWEAkHdJuVsDAo3Ohz8daN0u+ry08nU4PhuXeKzPpbQLN5X1BcCWGhfGBDhMptA==",
+            "locked": true,
+            "category": "观察"
+        },
         {
             "id": 92,
             "title": "七律 · 知音",
