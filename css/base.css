@@ -681,7 +681,7 @@ header.char-game-active {
     /* 整体上移：原3px -> 0px (配合外部-2px 共上移5px) */
     /* 用户需求：竖排观赏下再向上平移5px x 3 = 15px */
     position: relative;
-    top: -15px;
+    top: -11px;
     padding-top: 0;
 }
 
