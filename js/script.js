@@ -293,22 +293,12 @@ function restartBgInterval() {
     }
 }
 
-// 星星样式配置表 (全局配置)
-const STAR_STYLE_CONFIG = [
-    {
-        keywords: ['纠缠', '人生', '尤物', '分形', '光学'],
-        className: 'rainbow-stars',
-        color: null
-    },
-    {
-        keywords: ['逆风', '教员', '呐喊', '先锋', '求是'],
-        color: '#DE2910' // 中国红
-    },
-    {
-        keywords: ['灵犀', '白雪', '自讽', '独行', '落差'],
-        color: '#1E90FF' // 灵动蓝
-    }
-];
+// 星星样式映射表 (数据驱动，starStyle 字段在 poems.json 中)
+const STAR_STYLES = {
+    red: { color: '#DE2910' },
+    blue: { color: '#1E90FF' },
+    rainbow: { className: 'rainbow-stars' }
+};
 
 function isTouchDevice() {
     return ('ontouchstart' in window) ||
@@ -2174,25 +2164,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 五星装饰显示逻辑
         const fiveStars = card.querySelector('.five-stars-row');
         if (fiveStars) {
-            fiveStars.classList.add('show-stars'); // 默认始终显示
+            fiveStars.classList.add('show-stars');
             fiveStars.classList.remove('rainbow-stars');
             fiveStars.style.color = '';
-            // 星星样式配置表 (使用全局 STAR_STYLE_CONFIG)
+            fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
 
-            let starColor = '#CCCCCC'; // Default Gray
-            const matchedConfig = STAR_STYLE_CONFIG.find(config =>
-                config.keywords.some(keyword => poem.title.includes(keyword))
-            );
-
-            if (matchedConfig) {
-                if (matchedConfig.className) {
-                    fiveStars.classList.add(matchedConfig.className);
-                    fiveStars.style.color = '';
-                } else if (matchedConfig.color) {
-                    fiveStars.style.color = matchedConfig.color;
-                }
+            const wingStyle = STAR_STYLES[poem.starStyle];
+            if (wingStyle) {
+                if (wingStyle.className) fiveStars.classList.add(wingStyle.className);
+                if (wingStyle.color) fiveStars.style.color = wingStyle.color;
             } else {
-                fiveStars.style.color = starColor;
+                fiveStars.style.color = '#C0C0C0';
+                fiveStars.querySelectorAll('svg').forEach(svg => {
+                    svg.style.fill = 'url(#star-silver)';
+                });
             }
         }
     }
@@ -2445,30 +2430,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 fiveStars.classList.add('show-stars'); // 默认始终显示
                 fiveStars.classList.remove('rainbow-stars');
 
-                // 星星样式配置表 (使用全局 STAR_STYLE_CONFIG)
+                // 星星样式 (数据驱动，读取 poem.starStyle)
+                fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
 
-                // 默认颜色
-                let starColor = '#C0C0C0'; // Silver
-
-                // 查找匹配配置
-                const matchedConfig = STAR_STYLE_CONFIG.find(config =>
-                    config.keywords.some(keyword => poem.title.includes(keyword))
-                );
-
-                // 应用配置
-                if (matchedConfig) {
-                    if (matchedConfig.className) {
-                        fiveStars.classList.add(matchedConfig.className);
-                    }
-                    if (matchedConfig.color) {
-                        starColor = matchedConfig.color;
-                    }
-                    if (matchedConfig.fill) {
-                        fiveStars.style.fill = matchedConfig.fill;
-                    }
+                const mainStyle = STAR_STYLES[poem.starStyle];
+                if (mainStyle) {
+                    if (mainStyle.className) fiveStars.classList.add(mainStyle.className);
+                    if (mainStyle.color) fiveStars.style.color = mainStyle.color;
+                } else {
+                    fiveStars.style.color = '#C0C0C0';
+                    fiveStars.querySelectorAll('svg').forEach(svg => {
+                        svg.style.fill = 'url(#star-silver)';
+                    });
                 }
-
-                fiveStars.style.color = starColor;
             }
 
             // 智能注释提醒逻辑已移除
