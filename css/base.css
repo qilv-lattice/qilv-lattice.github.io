@@ -604,7 +604,7 @@ header.char-game-active {
     border-radius: 4px;
     padding: var(--card-vertical-padding) clamp(0.5rem, 2vw, 2rem);
     padding-top: calc(var(--card-vertical-padding) + 18px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1.8px solid #FFD700;
     position: relative;
     perspective: 1000px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
