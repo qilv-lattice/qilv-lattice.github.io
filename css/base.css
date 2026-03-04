@@ -2483,8 +2483,8 @@ header.char-game-active {
     transform: translateX(-50%);
     font-family: var(--font-body);
     font-size: 12px;
-    color: #999;
-    opacity: 0.7;
+    color: #C0C0C0;
+    opacity: 0.85;
     letter-spacing: 1px;
 }
 

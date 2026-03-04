@@ -2448,7 +2448,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // 星星样式配置表 (使用全局 STAR_STYLE_CONFIG)
 
                 // 默认颜色
-                let starColor = '#CCCCCC'; // Default Gray
+                let starColor = '#C0C0C0'; // Silver
 
                 // 查找匹配配置
                 const matchedConfig = STAR_STYLE_CONFIG.find(config =>
