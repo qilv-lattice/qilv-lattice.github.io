@@ -2164,17 +2164,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 五星装饰显示逻辑
         const fiveStars = card.querySelector('.five-stars-row');
         if (fiveStars) {
-            fiveStars.classList.add('show-stars');
-            fiveStars.classList.remove('rainbow-stars');
+            fiveStars.classList.remove('show-stars', 'rainbow-stars');
             fiveStars.style.color = '';
             fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
 
+            // 只有红蓝彩才显示
             const wingStyle = STAR_STYLES[poem.starStyle];
             if (wingStyle) {
+                fiveStars.classList.add('show-stars');
                 if (wingStyle.className) fiveStars.classList.add(wingStyle.className);
                 if (wingStyle.color) fiveStars.style.color = wingStyle.color;
-            } else {
-                fiveStars.style.color = '#C0C0C0';
             }
         }
     }
@@ -2424,19 +2423,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 五星装饰显示逻辑 - 配置化重构
             const fiveStars = mainCard.querySelector('.five-stars-row');
             if (fiveStars) {
-                fiveStars.classList.add('show-stars'); // 默认始终显示
-                fiveStars.classList.remove('rainbow-stars');
-
-                // 星星样式 (数据驱动，读取 poem.starStyle)
+                fiveStars.classList.remove('show-stars', 'rainbow-stars');
                 fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
                 fiveStars.style.color = '';
 
+                // 星星样式 (数据驱动，只有红蓝彩才显示)
                 const mainStyle = STAR_STYLES[poem.starStyle];
                 if (mainStyle) {
+                    fiveStars.classList.add('show-stars');
                     if (mainStyle.className) fiveStars.classList.add(mainStyle.className);
                     if (mainStyle.color) fiveStars.style.color = mainStyle.color;
-                } else {
-                    fiveStars.style.color = '#C0C0C0';
                 }
             }
 
