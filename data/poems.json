@@ -341,7 +341,8 @@
                 "意念嵯峨情别鹤，心潮澎湃字骑鲸。",
                 "地球仪上量山海，电子云端落凤鸣。",
                 "世界三千唯有我，摇摇晃晃也真诚。"
-            ]
+            ],
+            "starStyle": "rainbow"
         },
         {
             "title": "情感珍藏-3",
@@ -605,7 +606,8 @@
             "techRomance": false,
             "category": "心声",
             "locked": true,
-            "encryptedContent": "fEyAWf/eR9Rjyhsjr2OGGq2LXmK9jiRvsG6DfyEZq2OBAU8AyWSXEyRixbNkZEOCPXh7TiKg/HmshV7tG2Ciuh4cC5EeA/aD9C096q8x09VbIly1e2LkdOid3jzZ6Ff1p5Ue2MOrUgj4bTfLvfeUs8vx9FeSSIc6LjywZdZyEOuxPjiANUMTkvyMubMbRyebnEDQnfxC14Vn1Kqdanq05hAp2w0bAs0+0mujZrU1rkHDfc3OCUHrZgNGrDk6AWACfv+k3J1juzuvh3kceiGMBI/OPOdW3ECPrsgpYV769oYVKgvS/bvl9v4QwvFUQ8J2e+UhMP2wg8GwOyWXUZ5GYr9WXTqBfw=="
+            "encryptedContent": "fEyAWf/eR9Rjyhsjr2OGGq2LXmK9jiRvsG6DfyEZq2OBAU8AyWSXEyRixbNkZEOCPXh7TiKg/HmshV7tG2Ciuh4cC5EeA/aD9C096q8x09VbIly1e2LkdOid3jzZ6Ff1p5Ue2MOrUgj4bTfLvfeUs8vx9FeSSIc6LjywZdZyEOuxPjiANUMTkvyMubMbRyebnEDQnfxC14Vn1Kqdanq05hAp2w0bAs0+0mujZrU1rkHDfc3OCUHrZgNGrDk6AWACfv+k3J1juzuvh3kceiGMBI/OPOdW3ECPrsgpYV769oYVKgvS/bvl9v4QwvFUQ8J2e+UhMP2wg8GwOyWXUZ5GYr9WXTqBfw==",
+            "starStyle": "blue"
         },
         {
             "title": "七律·黑马",
@@ -629,7 +631,8 @@
             "techRomance": false,
             "category": "心声",
             "locked": true,
-            "encryptedContent": "z3cXZGaHo0S11J9IrPfr9rjA9viO05+35fF4FWZjtmBJv6iMr/VQQ5WdBx8f9HUzwqbeibqK55F2YCANHb5AEgEeCj4+zQaSVB40Om3sZ6mbkPjw2FU9WdO07OQKLajBVSbapSs61lAeup8bSruvCQfeEMRpQYNiFQsYL/PElAQZoSUhVmU53mmLwkSExvQjSwB+7wm2+xgWgnLhsXru6Ai6iPyUxZ6sv8om18PFlmP4fl/FXPEbVyZPdMHJUK1OY6Rkh4r+mxh3usRusGUMdhb3mm0gSGFUYUxgl+D/7iciHNlVJBBhGzk95guWKA1vWUFj76PfeHJ6L4MJO21uLs1vsygLmw=="
+            "encryptedContent": "z3cXZGaHo0S11J9IrPfr9rjA9viO05+35fF4FWZjtmBJv6iMr/VQQ5WdBx8f9HUzwqbeibqK55F2YCANHb5AEgEeCj4+zQaSVB40Om3sZ6mbkPjw2FU9WdO07OQKLajBVSbapSs61lAeup8bSruvCQfeEMRpQYNiFQsYL/PElAQZoSUhVmU53mmLwkSExvQjSwB+7wm2+xgWgnLhsXru6Ai6iPyUxZ6sv8om18PFlmP4fl/FXPEbVyZPdMHJUK1OY6Rkh4r+mxh3usRusGUMdhb3mm0gSGFUYUxgl+D/7iciHNlVJBBhGzk95guWKA1vWUFj76PfeHJ6L4MJO21uLs1vsygLmw==",
+            "starStyle": "red"
         },
         {
             "title": "七律·诗缘",
