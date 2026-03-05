@@ -1,10 +1,11 @@
 {
-    "lastUpdate": "2026-03-04 21:12",
+    "lastUpdate": "2026-03-05 17:20",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         "七律·奴性",
         "七律·知音",
-        "七律·军火"
+        "七律·军火",
+        "七律·时局"
     ],
     "modifiedWorks": [
         {
@@ -69,6 +70,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 94,
+            "title": "七律·时局",
+            "author": "启路",
+            "dynasty": "今",
+            "content": [
+                "旁敲欧陆现原形，对弈鹅毛未用兵。",
+                "战舰穿梭诸国惧，迅雷斩首众人惊。",
+                "伐谋割肉除翎羽，对抗攻城指远征。",
+                "壮士呜呼谁末法，无妨我有大乘赢。"
+            ],
+            "encryptedContent": "e7WtA4SsvLEvfeIRDTAcdr6VQUQ1Yagf/xrCrdRNkn/Eqte/gQdaqWXgo3/Rd7r7MivsCA1wgNbplXBs3bZ7jE1dII+etHwkwYBSIIm51KJ7QWHIKoYKgMEPSsBBvZRJ106l/wZR6J5zce7TgDoc0dG8wVp56xlruVwIdRnDdTsyB+KznO5ILVAKmmhcNr9IRtVtbpCutSqUNKj8igtJpbjhLoQutk2sG2HMM4M8KILKZpFvxhEXoUtmv837SddOqKLNw5qP95J4sNYfFDtFX9brUe7monZh0MnLiIEHpnEWaNtcP/PWHjlxXDJigh2ROtu4ST7o/vhYr4BYYmFwAA==",
+            "locked": true,
+            "category": "观察"
+        },
         {
             "id": 93,
             "title": "七律·军火",
