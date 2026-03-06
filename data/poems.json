@@ -1,7 +1,8 @@
 {
-    "lastUpdate": "2026-03-05 17:20",
+    "lastUpdate": "2026-03-06 21:17",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        "七律·彼岸",
         "七律·奴性",
         "七律·知音",
         "七律·军火",
@@ -70,6 +71,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 95,
+            "title": "七律·彼岸",
+            "author": "启路",
+            "dynasty": "今",
+            "content": [
+                "自古春风故事多，心花望月影婆娑。",
+                "深情镜面青鸾舞，梵字经书白马驮。",
+                "每遇大江思彼岸，时因灯火悯飞蛾。",
+                "铅华耗尽才华在，气质依然小酒窝。"
+            ],
+            "encryptedContent": "W8dQOXyTQvh/X3t6TK6GnZzvycq2nlvLH5yZvxbzukoX3SFL3rFkc+HSBdv0ObKuvRuFfdNlZ7JedPF+DzMm6CrP8SCnYeYwfJb0rvu7go3eH3G7fIq0ipbRl0sdCMsaCZ4eHeCAlQIfuFeN9ZK5BRCFnRUAiaCd/EXuXSo6cj6RqgjcVzkZdeVUNZgBjnDmsDM3L/msEMSwB/nZle6Vh4ujcN3QsQq+Na3wFCUNinhMYOXTjGBJZezn3Sl1di4IZ+4mFCA45sMbKd4usJWNMxcHeLSm+1mNKIGWk6tl1pKR/EqsBLi0s12rjXk5ojTh1Z7z9SiXV6/yGhZQlqU8+Q==",
+            "locked": true,
+            "category": "情思"
+        },
         {
             "id": 94,
             "title": "七律·时局",
