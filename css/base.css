@@ -2965,7 +2965,7 @@ header.char-game-active {
     position: static;
     top: auto;
     left: auto;
-    width: 58px;
+    width: 48px;
     opacity: 0.95;
     mix-blend-mode: multiply;
 }
