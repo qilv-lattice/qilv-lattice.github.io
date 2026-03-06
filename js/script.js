@@ -289,7 +289,7 @@ function restartBgInterval() {
         bgIntervalId = null;
     }
     if (bgMode === 'random') {
-        bgIntervalId = setInterval(changeBackground, 5 * 60 * 1000);
+        bgIntervalId = setInterval(changeBackground, 2 * 60 * 1000);
     }
 }
 
