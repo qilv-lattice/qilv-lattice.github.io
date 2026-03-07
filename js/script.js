@@ -2140,8 +2140,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             titleEl.innerText = displayTitle;
         }
-        const authorEl = card.querySelector('#poem-author');
-        if (authorEl) authorEl.innerText = poem.author || '';
         if (bodyDiv) {
             bodyDiv.innerHTML = '';
             // 加锁诗词：副卡显示锁定提示
@@ -2333,9 +2331,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const titleEl = mainCard.querySelector('#poem-title');
             if (titleEl) titleEl.innerText = displayTitle;
-
-            const authorEl = mainCard.querySelector('#poem-author');
-            if (authorEl) authorEl.innerText = poem.author || '';
 
             // 渲染正文（支持加锁诗词）
             bodyDiv.innerHTML = '';
