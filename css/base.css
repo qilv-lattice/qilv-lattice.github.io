@@ -744,6 +744,20 @@ header.char-game-active {
     letter-spacing: 2px;
 }
 
+/* 作者署名 */
+.poem-author {
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    color: #666;
+    margin: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.poem-content.horizontal-mode .poem-author {
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+}
+
 /* 诗词正文 - 响应式字体 */
 .body-text {
     /* 手机1.2rem → iPad1.35rem → 桌面1.5rem */
