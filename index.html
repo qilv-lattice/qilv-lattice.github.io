@@ -98,8 +98,39 @@
                 if (hex === SITE_HASH) {
                     localStorage.setItem('qilv_site_key_v2', 'y');
                     var overlay = document.getElementById('global-lock-overlay');
-                    overlay.classList.add('unlocking');
-                    setTimeout(function () { overlay.style.display = 'none'; }, 400);
+                    var gateLogo = overlay.querySelector('.global-lock-logo');
+                    var cardLogo = document.querySelector('.site-logo-icon');
+                    if (gateLogo && cardLogo && window.innerWidth > 768) {
+                        var from = gateLogo.getBoundingClientRect();
+                        var to = cardLogo.getBoundingClientRect();
+                        // 隐藏密码框等，只留logo
+                        var box = overlay.querySelector('.global-lock-box');
+                        box.style.background = 'none';
+                        box.style.border = 'none';
+                        var els = box.querySelectorAll(':not(.global-lock-logo)');
+                        for (var i = 0; i < els.length; i++) els[i].style.display = 'none';
+                        // 把logo改为fixed定位飞行
+                        gateLogo.style.position = 'fixed';
+                        gateLogo.style.left = from.left + 'px';
+                        gateLogo.style.top = from.top + 'px';
+                        gateLogo.style.width = from.width + 'px';
+                        gateLogo.style.margin = '0';
+                        gateLogo.style.transition = 'all 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                        gateLogo.style.zIndex = '999999';
+                        overlay.style.background = 'transparent';
+                        overlay.style.backdropFilter = 'none';
+                        overlay.style.webkitBackdropFilter = 'none';
+                        requestAnimationFrame(function () {
+                            gateLogo.style.left = to.left + 'px';
+                            gateLogo.style.top = to.top + 'px';
+                            gateLogo.style.width = to.width + 'px';
+                            gateLogo.style.opacity = '0.85';
+                        });
+                        setTimeout(function () { overlay.style.display = 'none'; }, 750);
+                    } else {
+                        overlay.classList.add('unlocking');
+                        setTimeout(function () { overlay.style.display = 'none'; }, 400);
+                    }
                 } else {
                     err.style.display = 'block';
                     input.value = '';
