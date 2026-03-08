@@ -84,11 +84,11 @@
     </div>
     <script>
         (function () {
-            if (localStorage.getItem('qilv_site_key_v2') !== 'y') {
+            if (localStorage.getItem('qilv_site_key_v3') !== 'y') {
                 document.getElementById('global-lock-overlay').style.display = 'flex';
             }
         })();
-        var SITE_HASH = 'ba1933dc105fcdbc654a83da91a86e82d9e3a564224248003b420868f4a628c3';
+        var SITE_HASH = '90c3cd5046c657d420d9fe961365a5fb30b9cba87bec5a496c005791903730ca';
         function siteUnlock() {
             var input = document.getElementById('site-pwd-input');
             var err = document.getElementById('site-lock-error');
@@ -96,7 +96,7 @@
             crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function (buf) {
                 var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
                 if (hex === SITE_HASH) {
-                    localStorage.setItem('qilv_site_key_v2', 'y');
+                    localStorage.setItem('qilv_site_key_v3', 'y');
                     var overlay = document.getElementById('global-lock-overlay');
                     overlay.classList.add('unlocking');
                     setTimeout(function () { overlay.style.display = 'none'; logoFlyToStamp(); }, 400);
@@ -146,7 +146,7 @@
         window.addEventListener('DOMContentLoaded', function () {
             // 给页面渲染一点时间，确保stamp位置就绪
             setTimeout(function () {
-                if (localStorage.getItem('qilv_site_key_v2') === 'y') {
+                if (localStorage.getItem('qilv_site_key_v3') === 'y') {
                     logoFlyToStamp();
                 }
             }, 500);
