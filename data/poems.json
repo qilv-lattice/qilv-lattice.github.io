@@ -1,5 +1,5 @@
 {
-    "lastUpdate": "2026-03-07 18:33",
+    "lastUpdate": "2026-03-08 23:41",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         "七律·彼岸",
@@ -71,6 +71,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 96,
+            "title": "七律·勇气",
+            "author": "启路",
+            "dynasty": "今",
+            "content": [
+                "三千弱水漫云台，万丈珠峰画玉腮。",
+                "鹿撞心弦神着相，鱼传尺素字结胎。",
+                "沉舟破釜谁同往，对酒交杯谁敢来？",
+                "我把灵魂留树洞，深藏影子独徘徊。"
+            ],
+            "locked": true,
+            "category": "情思",
+            "encryptedContent": "GFbCxHuP+Ws1z088KIZ4MWA5sm1wg/I3uxo5AfXDuef4yArqvafsjgHmG3UQaleX+7UC9MJh3kSGKgB19XnuA5clpWtEImEW1IfCz0c6+CcoNL2Rbgz62GnpfXO3W7MweByWopStBKcomVxCuKWjSEGp4pH1KDgFszgsI7/rlNPJ+KmJUuQ7K7mgbzI+r/UK0AvJiiz1Nezk1yjcbfMppWBn1HlTAIUYDzr5jWkqVix4wiH7LiyyfKXi/RePT09Zy8DdN5gpX85SbdaXNFeKhCaPvBJWney0Obx++xkwyLmni38ztgII64L87jgpgxrPlvYibInq1sz0+hF9gp+kOg=="
+        },
         {
             "id": 95,
             "title": "七律·彼岸",
@@ -948,5 +963,9 @@
             "locked": true,
             "encryptedContent": "UjJZBLebdX34rl/yMNMZOV+OFYwInPC/zQ41zIdWFi+9yHoozxA1fpca31XnBiro6RudRT4WlqLB3pfCBTg9TiyAVLD6KhOmpb7fUkPAXdEilkBAz3QtQaDH7IIJv+RmewkSWB5TZnA6S6qU/tFfdNM1oD+1BtqEvQF9islmCHgYiUPdc17nEnY8y5diwetzeaRiOnxQKB2WdCm3LrYRBQ556Z4ddQ6i6cpHxKGSBxBWfbHyCh00+dDOv2DCx69gNCTSM7ZpFzlSnAcT2ayzyrufZ2kXDS6oWMhSJveP0G/ylAE2PzT+4jYStHz6dsvgHRaQ9gWAOhkCIZH0dvVjvughVhXykg0JyMITdXTca6zlIuG5Cr0sjzVIPppgbDeOrILiIvpXlz+hV5Uvdf9b"
         }
-    ]
+    ],
+    "newWorks": {
+        "title": "《七律·勇气》",
+        "createdAt": "2026-03-08 23:41"
+    }
 }
