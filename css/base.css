@@ -2486,6 +2486,7 @@ header.char-game-active {
     color: #C0C0C0;
     opacity: 0.85;
     letter-spacing: 1px;
+    z-index: 5;
 }
 
 /* 玫瑰背景 - 移动端简化 */
