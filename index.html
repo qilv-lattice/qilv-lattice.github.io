@@ -98,44 +98,45 @@
                 if (hex === SITE_HASH) {
                     localStorage.setItem('qilv_site_key_v2', 'y');
                     var overlay = document.getElementById('global-lock-overlay');
-                    var gateLogo = overlay.querySelector('.global-lock-logo');
-                    var cardLogo = document.querySelector('.site-logo-icon');
-                    if (gateLogo && cardLogo && window.innerWidth > 768) {
-                        var from = gateLogo.getBoundingClientRect();
-                        var to = cardLogo.getBoundingClientRect();
-                        // 隐藏密码框等，只留logo
-                        var box = overlay.querySelector('.global-lock-box');
-                        box.style.background = 'none';
-                        box.style.border = 'none';
-                        var els = box.querySelectorAll(':not(.global-lock-logo)');
-                        for (var i = 0; i < els.length; i++) els[i].style.display = 'none';
-                        // 把logo改为fixed定位飞行
-                        gateLogo.style.position = 'fixed';
-                        gateLogo.style.left = from.left + 'px';
-                        gateLogo.style.top = from.top + 'px';
-                        gateLogo.style.width = from.width + 'px';
-                        gateLogo.style.margin = '0';
-                        gateLogo.style.transition = 'all 0.7s cubic-bezier(0.25, 0.1, 0.25, 1)';
-                        gateLogo.style.zIndex = '999999';
-                        overlay.style.background = 'transparent';
-                        overlay.style.backdropFilter = 'none';
-                        overlay.style.webkitBackdropFilter = 'none';
-                        requestAnimationFrame(function () {
-                            gateLogo.style.left = to.left + 'px';
-                            gateLogo.style.top = to.top + 'px';
-                            gateLogo.style.width = to.width + 'px';
-                            gateLogo.style.opacity = '0.85';
-                        });
-                        setTimeout(function () { overlay.style.display = 'none'; }, 750);
-                    } else {
-                        overlay.classList.add('unlocking');
-                        setTimeout(function () { overlay.style.display = 'none'; }, 400);
-                    }
+                    overlay.classList.add('unlocking');
+                    setTimeout(function () { overlay.style.display = 'none'; startLogoFlyIn(); }, 400);
                 } else {
                     err.style.display = 'block';
                     input.value = '';
                     input.focus();
                 }
+            });
+        }
+        function startLogoFlyIn() {
+            if (window.innerWidth <= 768) return;
+            var cardLogo = document.querySelector('.site-logo-icon');
+            if (!cardLogo) return;
+            // 隐藏卡片上的原logo
+            cardLogo.style.opacity = '0';
+            // 创建飞行logo
+            var flyLogo = document.createElement('img');
+            flyLogo.src = cardLogo.src;
+            flyLogo.style.cssText = 'position:fixed;z-index:99998;width:80px;height:auto;opacity:0.9;pointer-events:none;';
+            // 起点：屏幕中央
+            flyLogo.style.left = (window.innerWidth / 2 - 40) + 'px';
+            flyLogo.style.top = (window.innerHeight / 2 - 40) + 'px';
+            flyLogo.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            document.body.appendChild(flyLogo);
+            requestAnimationFrame(function () {
+                var to = cardLogo.getBoundingClientRect();
+                flyLogo.style.left = to.left + 'px';
+                flyLogo.style.top = to.top + 'px';
+                flyLogo.style.width = to.width + 'px';
+            });
+            setTimeout(function () {
+                cardLogo.style.opacity = '';
+                flyLogo.remove();
+            }, 850);
+        }
+        // 已登录用户：页面加载后直接飞入
+        if (localStorage.getItem('qilv_site_key_v2') === 'y') {
+            window.addEventListener('DOMContentLoaded', function () {
+                setTimeout(startLogoFlyIn, 300);
             });
         }
     </script>
