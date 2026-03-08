@@ -2155,6 +2155,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         }
+        // 更新侧翼卡片页码
+        const wingPageNum = card.querySelector('.poem-page-number');
+        if (wingPageNum && poem) {
+            const poemIdx = poems.indexOf(poem);
+            if (poemIdx >= 0) {
+                wingPageNum.textContent = `${poemIdx + 1} / ${poems.length}`;
+            }
+        }
+
         const techRomanceTag = card.querySelector('#tech-romance-tag');
         if (techRomanceTag) {
             // 统一修改为：在心成象，在纸成形
