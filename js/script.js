@@ -2447,8 +2447,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 智能注释提醒逻辑已移除
 
-            // 更新页码
-            const pageNumEl = document.getElementById('poem-page-number');
+            // 更新页码（在主卡内部查找，避免clone后id冲突）
+            const mainCardEl = document.querySelector('.poem-content.main-card') || document.querySelector('.poem-content:not(.wing)');
+            const pageNumEl = mainCardEl ? mainCardEl.querySelector('.poem-page-number') : document.getElementById('poem-page-number');
             if (pageNumEl) {
                 pageNumEl.textContent = `${index + 1} / ${poems.length}`;
             }
