@@ -121,19 +121,26 @@
             fly.style.cssText = 'position:fixed;z-index:99998;width:80px;height:80px;object-fit:contain;opacity:0.9;pointer-events:none;border-radius:8px;';
             fly.style.left = (window.innerWidth / 2 - 40) + 'px';
             fly.style.top = (window.innerHeight / 2 - 40) + 'px';
-            fly.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            // 先旋转两圈
+            fly.style.transition = 'transform 0.8s ease-in-out';
             document.body.appendChild(fly);
             requestAnimationFrame(function () {
+                fly.style.transform = 'rotate(720deg)';
+            });
+            // 旋转完再飞
+            setTimeout(function () {
+                fly.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
                 var to = stamp.getBoundingClientRect();
                 fly.style.left = to.left + 'px';
                 fly.style.top = to.top + 'px';
                 fly.style.width = to.width + 'px';
                 fly.style.height = to.height + 'px';
-            });
+                fly.style.transform = 'rotate(720deg)';
+            }, 850);
             setTimeout(function () {
                 stamp.style.opacity = '';
                 fly.remove();
-            }, 850);
+            }, 1700);
         }
         // 每次加载触发飞入
         window.addEventListener('DOMContentLoaded', function () {
