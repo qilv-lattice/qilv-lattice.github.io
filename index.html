@@ -71,22 +71,16 @@
 
 <body>
     <!-- 全站门禁 -->
-    <div id="global-lock-overlay" style="display:none">
-        <div class="global-lock-box">
-            <img src="assets/qilv-logo02-card.png" alt="七律空间" class="global-lock-logo">
-            <div class="lock-input-row">
-                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码" maxlength="20"
-                    autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
-                <button class="lock-unlock-btn" onclick="siteUnlock()">进入</button>
-            </div>
-            <p class="lock-error" id="site-lock-error" style="display:none">密码有误</p>
+    <div id="global-lock-overlay" style="display:flex">
+        <div class="global-lock-box" style="text-align:center;">
+            <h1 style="font-size:72px;font-weight:800;color:#1b1f2326;margin:0;letter-spacing:-2px;">404</h1>
+            <p style="color:#656d76;font-size:16px;margin:12px 0 0;">This is not the web page you are looking for.</p>
         </div>
     </div>
     <script>
         (function () {
-            if (localStorage.getItem('qilv_site_key_v3') !== 'y') {
-                document.getElementById('global-lock-overlay').style.display = 'flex';
-            }
+            // Site fully closed
+            document.getElementById('global-lock-overlay').style.display = 'flex';
         })();
         var SITE_HASH = '90c3cd5046c657d420d9fe961365a5fb30b9cba87bec5a496c005791903730ca';
         function siteUnlock() {
