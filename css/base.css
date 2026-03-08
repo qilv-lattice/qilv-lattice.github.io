@@ -3328,16 +3328,8 @@ header.char-game-active {
     text-align: center;
 }
 
-.global-lock-title {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.88);
-    letter-spacing: 0.25em;
-    font-family: 'Ma Shan Zheng', cursive, serif;
-}
-
-.global-lock-subtitle {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.12em;
-    margin: 0;
+.global-lock-logo {
+    width: 80px;
+    height: auto;
+    opacity: 0.85;
 }
