@@ -99,7 +99,7 @@
                     localStorage.setItem('qilv_site_key_v2', 'y');
                     var overlay = document.getElementById('global-lock-overlay');
                     overlay.classList.add('unlocking');
-                    setTimeout(function () { overlay.style.display = 'none'; }, 400);
+                    setTimeout(function () { overlay.style.display = 'none'; logoFlyToStamp(); }, 400);
                 } else {
                     err.style.display = 'block';
                     input.value = '';
@@ -107,6 +107,43 @@
                 }
             });
         }
+        function logoFlyToStamp() {
+            var stamp = document.querySelector('.logo-stamp');
+            if (!stamp) return;
+            // 等stamp可见（collapsed状态）
+            var rect = stamp.getBoundingClientRect();
+            if (rect.width === 0) return;
+            // 隐藏原印章logo
+            stamp.style.opacity = '0';
+            // 创建飞行logo
+            var fly = document.createElement('img');
+            fly.src = stamp.querySelector('.logo-stamp-img').src;
+            fly.style.cssText = 'position:fixed;z-index:99998;width:80px;height:80px;object-fit:contain;opacity:0.9;pointer-events:none;border-radius:8px;';
+            fly.style.left = (window.innerWidth / 2 - 40) + 'px';
+            fly.style.top = (window.innerHeight / 2 - 40) + 'px';
+            fly.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            document.body.appendChild(fly);
+            requestAnimationFrame(function () {
+                var to = stamp.getBoundingClientRect();
+                fly.style.left = to.left + 'px';
+                fly.style.top = to.top + 'px';
+                fly.style.width = to.width + 'px';
+                fly.style.height = to.height + 'px';
+            });
+            setTimeout(function () {
+                stamp.style.opacity = '';
+                fly.remove();
+            }, 850);
+        }
+        // 每次加载触发飞入
+        window.addEventListener('DOMContentLoaded', function () {
+            // 给页面渲染一点时间，确保stamp位置就绪
+            setTimeout(function () {
+                if (localStorage.getItem('qilv_site_key_v2') === 'y') {
+                    logoFlyToStamp();
+                }
+            }, 500);
+        });
     </script>
     <!-- 水墨渐显首屏 Hero 遮罩 -->
     <div id="hero-ink-overlay" class="hero-ink-overlay" aria-hidden="true">
