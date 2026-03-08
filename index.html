@@ -84,7 +84,7 @@
     </div>
     <script>
         (function () {
-            if (localStorage.getItem('qilv_site_key') !== 'y') {
+            if (localStorage.getItem('qilv_site_key_v2') !== 'y') {
                 document.getElementById('global-lock-overlay').style.display = 'flex';
             }
         })();
@@ -96,7 +96,7 @@
             crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function (buf) {
                 var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
                 if (hex === SITE_HASH) {
-                    localStorage.setItem('qilv_site_key', 'y');
+                    localStorage.setItem('qilv_site_key_v2', 'y');
                     var overlay = document.getElementById('global-lock-overlay');
                     overlay.classList.add('unlocking');
                     setTimeout(function () { overlay.style.display = 'none'; }, 400);
