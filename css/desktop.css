@@ -425,12 +425,12 @@ header {
     line-height: 1;
     background-color: rgba(255, 255, 255, 0.9); /* 略微提高背景亮度以反衬红色 */
     box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.2), inset 0 0 5px rgba(230, 0, 0, 0.1);
-    transition: all 0.3s ease;
 }
 
 .seal:hover {
     transform: scale(1.1);
     box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .seal:nth-child(1),
