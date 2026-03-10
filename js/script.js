@@ -1212,14 +1212,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             tabs.innerHTML = `
                 <div class="toc-tabs-row">
                     <button class="toc-tab active" data-filter="all">全部作品</button>
-                    <button class="toc-tab" data-filter="new">上线新作</button>
-                    <button class="toc-tab" data-filter="modified">修改旧作</button>
-                </div>
-                <div class="toc-tabs-row toc-category-tabs">
                     <button class="toc-tab toc-cat-tab" data-filter="心声">心声</button>
                     <button class="toc-tab toc-cat-tab" data-filter="诗道">诗道</button>
                     <button class="toc-tab toc-cat-tab" data-filter="情思">情思</button>
                     <button class="toc-tab toc-cat-tab" data-filter="观察">观察</button>
+                </div>
+                <div class="toc-search-row">
+                    <input type="text" id="toc-search-input" placeholder="搜索诗题或诗句..." autocomplete="off" />
                 </div>
             `;
             if (title) {
@@ -1235,19 +1234,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             style.textContent = `
                 .toc-tabs{display:flex;flex-direction:column;gap:6px;margin-bottom:.75rem;width:100%}
                 .toc-tabs-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-                .toc-category-tabs{margin-top:4px;padding-top:6px;border-top:1px dashed rgba(168,63,63,0.2)}
                 .toc-tab{border:2px solid var(--accent-color);background:rgba(255,255,255,.92);color:var(--accent-color);
                 padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;line-height:1.2}
                 .toc-tab.active{background:var(--accent-color);color:#fff}
                 .toc-cat-tab{font-size:.75rem;padding:3px 10px}
-                .toc-overlay.blue-mode .toc-category-tabs{border-top-color:rgba(18,104,204,0.2)}
+                .toc-search-row{display:flex;justify-content:center;margin-top:4px;padding-top:6px;border-top:1px dashed rgba(168,63,63,0.2)}
+                .toc-overlay.blue-mode .toc-search-row{border-top-color:rgba(18,104,204,0.2)}
+                #toc-search-input{width:100%;max-width:280px;padding:5px 10px;border:2px solid var(--accent-color);border-radius:6px;
+                font-size:.8rem;font-family:var(--font-body);outline:none;background:rgba(255,255,255,.92);color:var(--text-color)}
+                #toc-search-input::placeholder{color:rgba(168,63,63,0.4);font-size:.75rem}
+                .toc-overlay.blue-mode #toc-search-input{border-color:var(--accent-color)}
+                .toc-overlay.blue-mode #toc-search-input::placeholder{color:rgba(18,104,204,0.4)}
                 .bg-tabs,.music-tabs{flex-direction:row!important;justify-content:center;flex-wrap:wrap}
                 @media(max-width:480px){
                     .toc-tabs{gap:4px}
                     .toc-tabs-row{gap:4px}
                     .toc-tab{font-size:.72rem;padding:3px 6px;border-width:1.5px}
                     .toc-cat-tab{font-size:.68rem;padding:2px 8px}
-                    .toc-category-tabs{margin-top:3px;padding-top:5px}
+                    .toc-search-row{margin-top:3px;padding-top:5px}
+                    #toc-search-input{font-size:.72rem;padding:4px 8px}
                 }
             `;
             document.head.appendChild(style);
@@ -1262,9 +1267,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             tab.addEventListener('click', (e) => {
                 e.stopPropagation();
                 currentTocFilter = tab.dataset.filter || 'all';
+                currentTocSearchKeyword = '';
+                const searchInput = document.getElementById('toc-search-input');
+                if (searchInput) searchInput.value = '';
                 setActiveTocTab(currentTocFilter);
                 renderTOC(currentTocFilter);
             });
+        });
+    }
+
+    let currentTocSearchKeyword = '';
+
+    function bindTocSearch() {
+        const input = document.getElementById('toc-search-input');
+        if (!input || input.dataset.bound === 'true') return;
+        input.dataset.bound = 'true';
+        input.addEventListener('input', () => {
+            currentTocSearchKeyword = input.value.trim();
+            renderTOC(currentTocFilter);
         });
     }
 
@@ -1275,21 +1295,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         tabs.forEach(tab => {
             tab.classList.toggle('active', tab.dataset.filter === filter);
         });
-
-        // 点击"上线新作"或"修改旧作"时隐藏分类标签行
-        const categoryTabsRow = document.querySelector('.toc-category-tabs');
-        if (categoryTabsRow) {
-            if (filter === 'new' || filter === 'modified') {
-                categoryTabsRow.style.display = 'none';
-            } else {
-                categoryTabsRow.style.display = 'flex';
-            }
-        }
     }
 
     // 目录分类切换（兼容旧缓存页面）
     ensureTocTabs();
     bindTocTabs();
+    bindTocSearch();
 
     function renderTOC(filter = currentTocFilter) {
         const tocList = document.getElementById('toc-list');
@@ -1304,17 +1315,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const activeModifiedKeys = activeModified.map(entry => normalizeTitleText(entry.title));
 
         const filteredPoems = poems.filter(poem => {
-            if (filter === 'all') return true;
-            const cleanTitle = normalizeTitleText(poem.title);
-            if (filter === 'new') {
-                return activeLatestKeys.some(key => cleanTitle.includes(key));
+            // 分类筛选
+            if (filter !== 'all' && ['心声', '诗道', '情思', '观察'].includes(filter)) {
+                if (poem.category !== filter) return false;
             }
-            if (filter === 'modified') {
-                return activeModifiedKeys.some(key => cleanTitle.includes(key));
-            }
-            // 按 category 分类筛选
-            if (['心声', '诗道', '情思', '观察'].includes(filter)) {
-                return poem.category === filter;
+            // 搜索关键词过滤
+            if (currentTocSearchKeyword) {
+                const kw = currentTocSearchKeyword.toLowerCase();
+                const titleMatch = poem.title.toLowerCase().includes(kw);
+                const contentMatch = poem.content && poem.content.some(line => line.toLowerCase().includes(kw));
+                if (!titleMatch && !contentMatch) return false;
             }
             return true;
         });
@@ -1331,13 +1341,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (displayPoems.length === 0) {
             const li = document.createElement('li');
-            if (filter === 'new') {
-                li.innerText = '暂无新作';
-            } else if (filter === 'modified') {
-                li.innerText = '暂无修改';
-            } else {
-                li.innerText = '该分类暂无作品';
-            }
+            li.innerText = currentTocSearchKeyword ? '未找到匹配作品' : '该分类暂无作品';
             tocList.appendChild(li);
             return;
         }
@@ -1354,10 +1358,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const isNewWorkActive = !poem.__lockedGroup && activeLatestKeys.some(key => cleanTitle.includes(key));
             const isModifiedWorkActive = !poem.__lockedGroup && activeModifiedKeys.some(key => cleanTitle.includes(key));
 
-            if (filter === 'new' && isNewWorkActive) {
+            if (isNewWorkActive) {
                 li.classList.add('new-work-highlight');
             }
-            if (filter === 'modified' && isModifiedWorkActive) {
+            if (isModifiedWorkActive) {
                 li.classList.add('modified-work-highlight');
             }
 
