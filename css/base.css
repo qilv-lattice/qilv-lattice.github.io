@@ -2488,17 +2488,9 @@ header.char-game-active {
     grid-row: 2;
 }
 
-/* 页码 - 卡片底部居中 */
+/* 页码 - 隐藏 */
 .poem-page-number {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    color: #C0C0C0;
-    opacity: 0.85;
-    letter-spacing: 1px;
+    display: none;
 }
 
 /* 玫瑰背景 - 移动端简化 */
