@@ -72,6 +72,19 @@
     ],
     "poems": [
         {
+            "title": "七律·修仙",
+            "author": "当代 | 理工博士",
+            "category": "心声",
+            "content": [
+                "小床梦醒再难眠，几扇窗明城际边。",
+                "情景交融饶有趣，蛙虫唱和不劳弦。",
+                "传奇红叶传奇话，弄玉秦楼弄玉缘。",
+                "一角栖身当石洞，无拘无束学修仙。"
+            ],
+            "encryptedContent": "NqeAr+iK97t25Pygz+6qvtPMUC5TyNjWz4IKY51nz0cRKFFnjbA+764Uh5LOO3wmXuBaBT3YOFe7GgcprQnVERL3DEXXsmC3P26AT0IrYyU9D5YrVS6i8s1FHoTRv54APNMpqQWKGmACd6tDWlpkhhIEWQnbccocyp2NjpyOMYrjIyuVyKh8WOkbpcfa77Ci1aQpiXsWMyY9AmdXDEOmYyyhr9ed87F1Wc4LKYW+n+4Phyk8TdS0zaxuMTaULFWmHKjot9nz7BiNP9bDSh3YI6JVp1C2B+Tryyqne0s7uS+SAlfMTx4sIbTZlY0ttQ5Oou4d6hVHtRAaYOMrvs+ylw==",
+            "techRomance": false
+        },
+        {
             "title": "七律·树叶",
             "author": "当代 | 理工博士",
             "category": "诗道",
@@ -83,21 +96,6 @@
             ],
             "encryptedContent": "NkQIEsgOqK+td0GLa4Hg156ib/hL5I6v6/KqkaIVZdwpADt+J4C4yPhofIQnHEl/Bn1c1zJLWv51LT6Bsnl7XVCtfQ8feWVuqXn9RvsX9PFcmKWePYiWLjmuAUsL2/ycq9Cc7KfmY2lSLH7ZLXZxRtwDxFsEW/lh4dDhG/qeRmAZctcJYEfyREDu8eF8w32Vbmarv41y/NbFE9QFNd8zEKMKTbjPY1wr0ettL8G3t8lJk1PwuDBXIJZ4Ul8xMPKCDykofogpkPDKlxJ+mNhf6vs7y6sfeAekN+GR6PZHULf7Y8gMBKMU+d8ZYm8dZttICtta4N5f0Y2JxZCkYdWI/Q==",
             "techRomance": false
-        },
-        {
-            "id": 96,
-            "title": "七律·勇气",
-            "author": "启路",
-            "dynasty": "今",
-            "content": [
-                "三千弱水漫云台，万丈珠峰画玉腮。",
-                "鹿撞心弦神着相，鱼传尺素字怀胎。",
-                "沉舟破釜谁同往，对酒交杯谁敢来？",
-                "我把灵魂留树洞，深藏影子独徘徊。"
-            ],
-            "locked": true,
-            "category": "情思",
-            "encryptedContent": "5B2UpEUF7etwsaQ6ypAStoLztJfTfqorKZ/o6xYTU/EFe5KED5fHd+/2AIKjjE0zzmCuyTKxg2yr/QusWLfE/KFLa4QCQFupUcOGV3K3Lt3dxCjWrI3rRA251zhjjxuyVk1xv91a6wSz7Vjx+GMeCoKtHVRP7rfSfl+XMJkvg01zY12Mf/c8yUhb1yXI6jEL4T+FJqGGecshxUbPtYYg+2383tpO3mFNDE5OrbAB6Dsygg83JT8ikW5cfpU8HrUZpebv98maTGugVR+4aMFpDqmJGwDndvqbylCMtKEq59XIeafDAIRuTiLXRiiz3V9u9HwX9YVShY2F+i8YqllLYA=="
         },
         {
             "id": 92,
