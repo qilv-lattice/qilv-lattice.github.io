@@ -72,6 +72,19 @@
     ],
     "poems": [
         {
+            "title": "七律·树叶",
+            "author": "当代 | 理工博士",
+            "category": "诗道",
+            "content": [
+                "春夏栖身于树梢，知秋坠落若鸿毛。",
+                "传奇解约三宫梦，绚烂曾经二月刀。",
+                "有幸登临诗圣笔，还来唱和众文豪。",
+                "芳华渲染山河貌，生死皆为锦绣袍。"
+            ],
+            "encryptedContent": "NkQIEsgOqK+td0GLa4Hg156ib/hL5I6v6/KqkaIVZdwpADt+J4C4yPhofIQnHEl/Bn1c1zJLWv51LT6Bsnl7XVCtfQ8feWVuqXn9RvsX9PFcmKWePYiWLjmuAUsL2/ycq9Cc7KfmY2lSLH7ZLXZxRtwDxFsEW/lh4dDhG/qeRmAZctcJYEfyREDu8eF8w32Vbmarv41y/NbFE9QFNd8zEKMKTbjPY1wr0ettL8G3t8lJk1PwuDBXIJZ4Ul8xMPKCDykofogpkPDKlxJ+mNhf6vs7y6sfeAekN+GR6PZHULf7Y8gMBKMU+d8ZYm8dZttICtta4N5f0Y2JxZCkYdWI/Q==",
+            "techRomance": false
+        },
+        {
             "id": 96,
             "title": "七律·勇气",
             "author": "启路",
