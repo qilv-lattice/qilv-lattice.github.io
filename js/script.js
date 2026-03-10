@@ -1243,7 +1243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 #toc-search-input{width:100%;max-width:280px;padding:5px 10px;border:2px solid var(--accent-color);border-radius:6px;
                 font-size:.8rem;font-family:var(--font-body);outline:none;background:rgba(255,255,255,.92);color:var(--text-color)}
                 #toc-search-input::placeholder{color:rgba(168,63,63,0.4);font-size:.75rem}
-                .toc-overlay.blue-mode #toc-search-input{border-color:var(--accent-color)}
+                .toc-overlay.blue-mode #toc-search-input{border-color:var(--accent-blue)}
                 .toc-overlay.blue-mode #toc-search-input::placeholder{color:rgba(18,104,204,0.4)}
                 .bg-tabs,.music-tabs{flex-direction:row!important;justify-content:center;flex-wrap:wrap}
                 @media(max-width:480px){

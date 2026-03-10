@@ -1910,7 +1910,7 @@ header.char-game-active {
     overflow-y: auto;
     flex-grow: 1;
     scrollbar-width: thin;
-    scrollbar-color: rgba(201, 31, 55, 0.55) rgba(0, 0, 0, 0.05);
+    scrollbar-color: rgba(220, 20, 40, 0.85) rgba(0, 0, 0, 0.05);
 }
 
 .toc-list::-webkit-scrollbar {
@@ -1923,12 +1923,25 @@ header.char-game-active {
 }
 
 .toc-list::-webkit-scrollbar-thumb {
-    background: rgba(201, 31, 55, 0.55);
+    background: rgba(220, 20, 40, 0.85);
     border-radius: 999px;
 }
 
 .toc-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(201, 31, 55, 0.75);
+    background: rgba(220, 20, 40, 1);
+}
+
+/* 蓝色模式滚动条 */
+.toc-overlay.blue-mode .toc-list {
+    scrollbar-color: rgba(18, 104, 204, 0.85) rgba(0, 0, 0, 0.05);
+}
+
+.toc-overlay.blue-mode .toc-list::-webkit-scrollbar-thumb {
+    background: rgba(18, 104, 204, 0.85);
+}
+
+.toc-overlay.blue-mode .toc-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(18, 104, 204, 1);
 }
 
 @media (hover: hover) {
