@@ -1,15 +1,10 @@
 {
-    "lastUpdate": "2026-03-12 16:35",
+    "lastUpdate": "2026-03-14 22:45",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
-        "七律·彼岸",
-        "七律·奴性",
-        "七律·知音",
-        "七律·军火",
-        "七律·时局",
         {
-            "title": "七律·释然",
-            "receivedAt": "2026-03-12 16:35"
+            "title": "七律·遐想",
+            "receivedAt": "2026-03-14 22:45"
         }
     ],
     "modifiedWorks": [
@@ -75,6 +70,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 94,
+            "title": "七律·遐想",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "人间凝望几枚星，记忆深空复一程。",
+                "银汉千般浮妄想，世途万象裹逢迎。",
+                "稼轩心底李清照，宝玉梦中秦可卿。",
+                "脆弱尘埃虽不见，恒沙粒粒却多情。"
+            ],
+            "locked": false,
+            "category": "情思",
+            "encryptedContent": "Tv9hLMpTQ+MC0KXBj7pYXSx3xPuguOyTINLyGwSFOKlNSIPVFXtRg+sm4B+j7pIcPJL0enaWDwJ1zPQE1DaF1ULpfEE2QABIiypWjCzzoHmW9v97jCnq5lzhin2p1ENa9JVj9kiT5ggszjcpLKJu6C0/f5+dbseu/XZCyIuCfMYBF5shYsGrZZyxW1MCfGZnuS5Lt0KpfPPlQukZ422p8z/mxOHAHFW/cM/glCeM7XLeKoLSd6cxLC7b5dVbdUHhnILwTkjcAT1P1Dn0z+VQ2mS7Jco8BsslBEynD9oK+GX4JSr+u/WDgSlL6tETKUepphnIQqtZ/7r4skICgMW9sQ=="
+        },
         {
             "id": 93,
             "title": "七律·释然",
