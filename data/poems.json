@@ -1,10 +1,14 @@
 {
-    "lastUpdate": "2026-03-14 22:45",
+    "lastUpdate": "2026-03-14 23:25",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         {
             "title": "七律·遐想",
             "receivedAt": "2026-03-14 22:45"
+        },
+        {
+            "title": "七律·征程",
+            "receivedAt": "2026-03-14 23:25"
         }
     ],
     "modifiedWorks": [
@@ -70,6 +74,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 95,
+            "title": "七律·征程",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "证明证伪几周星，吾与非吾再结晶。",
+                "宁笑陈王迷洛水，勿同罗隐赠云英。",
+                "偶然巧遇三生幸，一诺相形五岳轻。",
+                "妩媚青山留不住，诗魂随我走征程。"
+            ],
+            "locked": false,
+            "category": "情思",
+            "encryptedContent": "Vk3XWjpwAax+aAOUG8hHEUJuXgN79Q+67keGWBUJwERameqKduBPeerlSDLRztU3vfl6aT/Dh9mmEHAEzlgcSfctT8y0XGtQYeed1njNQXePvzB5dqW8SPzTtuKO99nT9CW2MVsyd3msZ/ZwdXXX7JngMfAmzb0CJ9r9CGE/aBOE7FZQbarwMRDsz+jCzIxZTcRwGWyVm4olBgJOOlg+m/UsXTkQTIJlMKIo922Vc/VbcibBR0n9al0O3XmB6V970LzcVHm9UWd/yGEL5eSP/2u/OkPhBHI6hcjs3eH/t/YzZ11L/Ov5Px4ZfpfkO+32W83maS+WKIja6cF1b12VkQ=="
+        },
         {
             "id": 94,
             "title": "七律·遐想",
