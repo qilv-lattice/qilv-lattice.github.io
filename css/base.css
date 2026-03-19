@@ -2504,7 +2504,7 @@ header.char-game-active {
     width: 50px;
     /* 移动端缩小尺寸 */
     height: 50px;
-    background-image: url('../assets/Seal1.png');
+    background-image: url('../assets/Seal1.webp');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -2515,7 +2515,7 @@ header.char-game-active {
 
 /* 横排模式使用蓝色印章 Seal4 */
 .poem-content.horizontal-mode::before {
-    background-image: url('../assets/Seal4.png');
+    background-image: url('../assets/Seal4.webp');
 }
 
 /* ===== 云笺模式（花笺背景） - 移动端支持 ===== */
@@ -2526,7 +2526,7 @@ header.char-game-active {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: var(--yunjian-bg, url('../assets/card01.jpg'));
+    background-image: var(--yunjian-bg, url('../assets/card01.webp'));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

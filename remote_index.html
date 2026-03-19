@@ -41,7 +41,7 @@
     <meta property="og:title" content="七律空间">
     <meta property="og:description" content="原创七言律诗作品集，传承古典诗词之美">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://qilv-lattice.github.io/assets/background01.webp">
+    <meta property="og:image" content="https://qilv-lattice.github.io/assets/background01.jpg">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,8 +58,8 @@
     <link rel="preload" href="js/script.js?v=Rouge-Color" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="assets/Seal1.webp">
-    <link rel="apple-touch-icon" href="assets/Seal1.webp">
+    <link rel="icon" type="image/png" href="assets/Seal1.png">
+    <link rel="apple-touch-icon" href="assets/Seal1.png">
 
     <!-- 移动优先基础样式 -->
     <link rel="stylesheet" href="css/base.css?v=Rouge-Color">
@@ -67,37 +67,13 @@
     <!-- 桌面美学层 - 仅在大屏加载 -->
     <link rel="stylesheet" href="css/desktop.css?v=Rouge-Color"
         media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
-
-    <!-- JSON-LD 结构化数据 (SEO) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "七律空间",
-      "description": "原创七言律诗作品集，传承古典诗词之美，探索当代情感表达。",
-      "url": "https://qilv-lattice.github.io/",
-      "author": {
-        "@type": "Person",
-        "name": "七律空间"
-      },
-      "genre": "Poetry",
-      "publisher": {
-        "@type": "Organization",
-        "name": "七律空间",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://qilv-lattice.github.io/assets/Seal1.webp"
-        }
-      }
-    }
-    </script>
 </head>
 
 <body>
     <!-- 全站门禁 -->
     <div id="global-lock-overlay" style="display:none">
         <div class="global-lock-box">
-            <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
+            <img src="assets/qilv-logo02-card.png" alt="七律空间" class="global-lock-logo">
             <div class="lock-input-row">
                 <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码" maxlength="20"
                     autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
@@ -345,7 +321,7 @@
 
         <!-- 移动端折叠菜单：logo印章 + 设置按钮 -->
         <div class="logo-stamp">
-            <img src="assets/qilv-logo01.webp" alt="七律" class="logo-stamp-img">
+            <img src="assets/qilv-logo01.png" alt="七律" class="logo-stamp-img">
         </div>
         <div id="settings-btn" class="settings-btn" onclick="toggleSettingsMenu()">视听<br>设置</div>
 
@@ -371,7 +347,7 @@
 
     <div class="container">
         <header>
-            <h1 class="site-title">七律空间<img src="assets/七律情.webp" alt="石章" class="title-seal"></h1>
+            <h1 class="site-title">七律空间<img src="assets/七律情.png" alt="石章" class="title-seal"></h1>
             <p class="subtitle">唐宋诗歌抽七律，斯人肺腑建空间</p>
             <div id="char-game-nav" class="char-game-nav">
                 <div id="char-game-nav-cells" class="char-game-nav-cells"></div>
@@ -404,7 +380,7 @@
 
                 <!-- 梅花 + 五星：统一容器对齐 -->
                 <div class="card-header-group">
-                    <img src="assets/qilv-logo02-card.webp" class="site-logo-icon" alt="Qi Lv Lattice Logo">
+                    <img src="assets/qilv-logo02-card.png" class="site-logo-icon" alt="Qi Lv Lattice Logo">
 
                     <!-- 五星红旗装饰 (动态颜色) -->
                     <div id="five-stars-row" class="five-stars-row">
@@ -479,7 +455,7 @@
 
             <!-- 网站指南石章（已注释，未来可用更优雅的引导方式替代） -->
             <!--
-            <img src="assets/网站指南.webp" alt="网站指南" id="guide-seal" class="guide-seal"
+            <img src="assets/网站指南.png" alt="网站指南" id="guide-seal" class="guide-seal"
                 onclick="alert('网站指南：\n1、网页左边旋转装饰模型为四种典型晶体结构，观察模型可发生有趣现象；\n2、中间为作品展示区，分为三卡/单卡两种展示作品模式；\n3、三卡展示分为同步/随机展示两种，具体情况，读者不妨一试；\n4、视听设置按钮为折叠菜单设计，点击可见二级菜单按钮，各按钮具体功能顾名思义，读者设置完，离开按钮区域后可实现自动折叠；\n5、对于有疑问的作品可参见作品注释，如没有，可通过下方邮箱联系作品添加；\n6、新上线作品会有小喇叭公告，而且作品名录中会同步高亮；\n7、无论您是否观看网站指南，作者都希望七律空间能给您生活的轻松和心灵的愉悦，如果您有任何问题，欢迎随时通过网站下方邮箱和作者联系。\n\n您的喜关注、喜欢和支持是对作者付出的最大鼓励也是作者持续创作的动力。\n祝君身体健康，工作顺利，生活幸福！')">
             -->
             <!-- 桌面端箭头导航（贴在副卡外边缘，移动端隐藏） -->
@@ -649,16 +625,6 @@
         </div>
     </div>
 
-    <!-- PWA 注册脚本 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker 注册成功', reg))
-                    .catch(err => console.log('Service Worker 注册失败', err));
-            });
-        }
-    </script>
 </body>
 
 </html>

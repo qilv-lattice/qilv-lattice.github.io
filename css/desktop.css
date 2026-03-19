@@ -9,7 +9,7 @@ body::before {
     background-image:
         linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
         linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-        url('../assets/background01.jpg');
+        url('../assets/background01.webp');
     background-size: 30px 30px, 30px 30px, cover;
     background-position: center;
     background-repeat: repeat, repeat, no-repeat;
@@ -249,7 +249,7 @@ header {
     right: 20px;
     width: 66px;
     height: 66px;
-    background-image: url('../assets/Seal1.png');
+    background-image: url('../assets/Seal1.webp');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -297,7 +297,7 @@ header {
 /* ===== 横排模式装饰：Seal4（霁蓝） ===== */
 /* 默认状态：隐藏，等待 seal-landing 触发动画 */
 .poem-content.horizontal-mode::before {
-    background-image: url('../assets/Seal4.png');
+    background-image: url('../assets/Seal4.webp');
     bottom: 20px;
     right: 20px;
     width: 66px;
@@ -313,7 +313,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: var(--yunjian-bg, url('../assets/card01.jpg'));
+    background-image: var(--yunjian-bg, url('../assets/card01.webp'));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
