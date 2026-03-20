@@ -1,10 +1,10 @@
 {
-    "lastUpdate": "2026-03-15 23:28",
+    "lastUpdate": "2026-03-20 22:44",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         {
-            "title": "七律·写真",
-            "receivedAt": "2026-03-15 23:28"
+            "title": "七律·自负",
+            "receivedAt": "2026-03-20 22:44"
         }
     ],
     "modifiedWorks": [
@@ -70,6 +70,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 97,
+            "title": "七律·自负",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "格调天成完备基，孤标魏晋出风仪。",
+                "悬崖一朵灵芝草，花语三分向日葵。",
+                "诺许丹心全息照，情无核子半衰期。",
+                "请君辩证诗中我，若即红尘又若离。"
+            ],
+            "locked": false,
+            "category": "心声",
+            "encryptedContent": "pFx1XGYzZ7QDsJD86dU/9gdv1z7TYNONFBQO3tjZATFvysI/ExKf7gJxCovkLBF9Pge12mrEYdn63/MduYsV9HAxGj9xFTUT/UkwRbGZO7rMrzxqAdwsMFv2PqxNtxOhoK2tjlLJboHMOmKwboMRP/NpH77XIk37jPZd0FEec2gIVk1nINYB502oi7jJyc0nJG4GEzc5OyFwL92qFz47T30ThbD5XQML/NEl8KopLbl8jxstsCSz2WTytKWMd8JwAEYlE25W2AHAPcgTnnFggFdILrqNV5DDwRNdsUftd5ug7kZxWFECP1/sUsu7DZ+giSRh52dNckWWLNPzTJ7rUQ=="
+        },
         {
             "id": 96,
             "title": "七律·写真",
