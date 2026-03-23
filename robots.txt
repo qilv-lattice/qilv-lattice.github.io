@@ -4,5 +4,8 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
 User-agent: *
 Disallow: /
