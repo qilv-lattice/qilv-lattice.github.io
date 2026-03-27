@@ -1,10 +1,10 @@
 {
-    "lastUpdate": "2026-03-20 22:44",
+    "lastUpdate": "2026-03-27 09:35",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
         {
-            "title": "七律·自负",
-            "receivedAt": "2026-03-20 22:44"
+            "title": "七律·书童",
+            "receivedAt": "2026-03-27 09:35"
         }
     ],
     "modifiedWorks": [
@@ -70,6 +70,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 98,
+            "title": "七律·书童",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "才华揣度胜乾隆，器识齐驱陆放翁。",
+                "也托大儒称好汉，且容小我逞英雄。",
+                "抒怀情透江淹笔，刺世枪投鲁迅风。",
+                "无意沽名全栈美，固然身份一书童。"
+            ],
+            "locked": false,
+            "category": "心声",
+            "encryptedContent": "yZgxEt3Tt7KPpo7hUTOAy+oi27Huafu6yKxFt3Yjiu4Z5exq4yWmDTJtHwH5oCuLrGkfsvl73uwvSrci6Ds0PDbB1/eFTMlYWAlsq4074ad6fLJuiGxi/jbM4m9pkOSzVpZLe5uNV36+j6mguR2FvoSgVat15107nNr7yeYqCNGud4I5AsLwdWQwNQGs2jnOTUIWzAFlHdMasQ7raNwAu9bHBTg1rnzZ26zlGQk+LPH8WdifIW+lh26LDey3LZIVmCr/xT1svilFR/15XzF1Noryv8Ry6sQYgiYmod6ZcB+x9LJeRQwj6eDWdtAxn654J8W2VZsnehOmNHmcYAXcOQ=="
+        },
         {
             "id": 97,
             "title": "七律·自负",
