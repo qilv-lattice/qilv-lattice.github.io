@@ -5,6 +5,10 @@
         {
             "title": "七律·书童",
             "receivedAt": "2026-03-27 09:35"
+        },
+        {
+            "title": "七律·心弦",
+            "receivedAt": "2026-03-27 09:35"
         }
     ],
     "modifiedWorks": [
@@ -70,6 +74,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 99,
+            "title": "七律·心弦",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "去年明月送婵娟，今日孤星落心田。",
+                "巨浪乘风男子气，盈车掷果女人缘。",
+                "贝多芬谱英雄曲，舒伯特弹交响弦。",
+                "诊脉相思应怨我，无形无色却缠绵。"
+            ],
+            "locked": false,
+            "category": "情思",
+            "encryptedContent": "RVuUgIAlYKazG4ds1fkaIvVBAy9xfm+tR/1CRcoNR/Nqn1cWOgUJHqSO1+6EWaHtVLE7kQ7YMNPsjzf4YKGkBsyupFxK2JTYwC55ZJa9I22u16s+k0AFQ3RNvHdbYOtNf6n2QSKxQ6rOEPGdXK3nEj7yDkCQsxu+qzMWgv/U0qf1PatFneBjgmDX6U/eplyRC/EBWDXMYamuunQ+RcoJgPX5iQIfoB2nFlS2oGV54KaKHJm5zwVtsEqwchWmNmpb8ExmyEgNuL6UH3DUld//mm6m0NCdCMOVKxqncLkA+G/CoMKrhqvEk/x4HXkc9EZStdi+j5in7T9q9A9Q7h9H6g=="
+        },
         {
             "id": 98,
             "title": "七律·书童",
