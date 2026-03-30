@@ -196,3 +196,61 @@ function animate() {
 // 启动
 init();
 animate();
+
+// [新增] 狂欢喷泉粒子类
+class FountainParticle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 12;
+        this.vy = -Math.random() * 15 - 5;
+        this.gravity = 0.4;
+        this.radius = Math.random() * 4 + 2;
+        const colors = ['#ff3b3b', '#ffa200', '#ffe100', '#4cd964', '#3b82f6', '#8b5cf6', '#E8E8E8', '#d48888'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = 1;
+        this.life = 1;
+    }
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.restore();
+    }
+    update() {
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.opacity -= 0.01;
+        this.life -= 0.01;
+        this.draw();
+    }
+}
+
+let fountainParticles = [];
+function triggerFountain(x, y) {
+    for (let i = 0; i < 60; i++) {
+        fountainParticles.push(new FountainParticle(x, y));
+    }
+}
+
+// 劫持原有 animate 函数，加入喷泉粒子更新逻辑
+const originalAnimate = animate;
+animate = function() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+    }
+    for (let i = 0; i < fountainParticles.length; i++) {
+        fountainParticles[i].update();
+        if (fountainParticles[i].life <= 0) {
+            fountainParticles.splice(i, 1);
+            i--;
+        }
+    }
+    connect();
+};

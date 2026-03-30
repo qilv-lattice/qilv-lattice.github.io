@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <script data-cfasync="false">
+        try {
+            if (localStorage.getItem('qilv_admin')) { /* skip analytics */ } else {
+                // Google Analytics 4
+                var s = document.createElement('script');
+                s.async = true;
+                s.setAttribute('data-cfasync', 'false'); // 防止 Rocket Loader 干扰动态脚本
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JB5KT83L5R';
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-JB5KT83L5R');
+
+                // 百度统计 (Baidu Analytics) - 按域名区分站点
+                var _hmt = _hmt || [];
+                (function () {
+                    var hm = document.createElement("script");
+                    var hmId = window.location.hostname === 'qilv-lattice.github.io'
+                        ? '5a52c841b2a186228386c8c898228ec5'  // 七律晶格 (GitHub Pages)
+                        : 'afba77dcd1cd11042766a5edca1056e2'; // 七律空间 (Cloudflare)
+                    hm.src = "https://hm.baidu.com/hm.js?" + hmId;
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(hm, s);
+                })();
+            }
+        } catch (e) { /* localStorage 不可用时静默降级，不阻断页面 */ }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>七律空间</title>
+    <meta name="description" content="七律空间 - 原创七言律诗作品集，传承古典诗词之美，探索当代情感表达。">
+    <meta name="keywords" content="七律,律诗,古诗词,原创诗词,七言律诗">
+    <meta name="author" content="七律空间">
+
+    <!-- Open Graph 社交分享 -->
+    <meta property="og:title" content="七律空间">
+    <meta property="og:description" content="原创七言律诗作品集，传承古典诗词之美">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://qilv-lattice.github.io/assets/background01.webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;700&display=swap"
+        rel="stylesheet">
+
+    <!-- 引入霞鹜文楷 (CDN 切片版) -->
+    <link rel="stylesheet" href="css/fonts.css">
+
+    <!-- 关键资源预加载 -->
+    <link rel="preload" href="css/base.css?v=Rouge-Color" as="style">
+    <link rel="preload" href="js/script.js?v=Rouge-Color" as="script">
+    <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/Seal1.webp">
+    <link rel="apple-touch-icon" href="assets/Seal1.webp">
+
+    <!-- 移动优先基础样式 -->
+    <link rel="stylesheet" href="css/base.css?v=Rouge-Color">
+
+    <!-- 桌面美学层 - 仅在大屏加载 -->
+    <link rel="stylesheet" href="css/desktop.css?v=Rouge-Color"
+        media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
+
+    <!-- JSON-LD 结构化数据 (SEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "七律空间",
+      "description": "原创七言律诗作品集，传承古典诗词之美，探索当代情感表达。",
+      "url": "https://qilv-lattice.github.io/",
+      "author": {
+        "@type": "Person",
+        "name": "七律空间"
+      },
+      "genre": "Poetry",
+      "publisher": {
+        "@type": "Organization",
+        "name": "七律空间",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://qilv-lattice.github.io/assets/Seal1.webp"
+        }
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- 全站门禁 -->
+    <div id="global-lock-overlay" style="display:none">
+        <div class="global-lock-box">
+            <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
+            <div class="lock-input-row">
+                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码" maxlength="20"
+                    autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
+                <button class="lock-unlock-btn" onclick="siteUnlock()">进入</button>
+            </div>
+            <p class="lock-error" id="site-lock-error" style="display:none">密码有误</p>
+        </div>
+    </div>
+    <script>
+        (function () {
+            if (localStorage.getItem('qilv_site_key_v2') !== 'y') {
+                document.getElementById('global-lock-overlay').style.display = 'flex';
+            }
+        })();
+        var SITE_HASH = 'ba1933dc105fcdbc654a83da91a86e82d9e3a564224248003b420868f4a628c3';
+        function siteUnlock() {
+            var input = document.getElementById('site-pwd-input');
+            var err = document.getElementById('site-lock-error');
+            var val = input.value;
+            crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function (buf) {
+                var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+                if (hex === SITE_HASH) {
+                    localStorage.setItem('qilv_site_key_v2', 'y');
+                    var overlay = document.getElementById('global-lock-overlay');
+                    overlay.classList.add('unlocking');
+                    setTimeout(function () { overlay.style.display = 'none'; logoFlyToStamp(); }, 400);
+                } else {
+                    err.style.display = 'block';
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        }
+        function logoFlyToStamp() {
+            var stamp = document.querySelector('.logo-stamp');
+            if (!stamp) return;
+            // 等stamp可见（collapsed状态）
+            var rect = stamp.getBoundingClientRect();
+            if (rect.width === 0) return;
+            // 隐藏原印章logo
+            stamp.style.opacity = '0';
+            // 创建飞行logo
+            var fly = document.createElement('img');
+            fly.src = stamp.querySelector('.logo-stamp-img').src;
+            fly.style.cssText = 'position:fixed;z-index:99998;width:80px;height:80px;object-fit:contain;opacity:0.9;pointer-events:none;border-radius:8px;';
+            fly.style.left = (window.innerWidth / 2 - 40) + 'px';
+            fly.style.top = (window.innerHeight / 2 - 40) + 'px';
+            // 先旋转两圈
+            fly.style.transition = 'transform 0.8s ease-in-out';
+            document.body.appendChild(fly);
+            requestAnimationFrame(function () {
+                fly.style.transform = 'rotate(720deg)';
+            });
+            // 旋转完再飞
+            setTimeout(function () {
+                fly.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                var to = stamp.getBoundingClientRect();
+                fly.style.left = to.left + 'px';
+                fly.style.top = to.top + 'px';
+                fly.style.width = to.width + 'px';
+                fly.style.height = to.height + 'px';
+                fly.style.transform = 'rotate(720deg)';
+            }, 850);
+            setTimeout(function () {
+                stamp.style.opacity = '';
+                fly.remove();
+            }, 1700);
+        }
+        // 每次加载触发飞入
+        window.addEventListener('DOMContentLoaded', function () {
+            // 给页面渲染一点时间，确保stamp位置就绪
+            setTimeout(function () {
+                if (localStorage.getItem('qilv_site_key_v2') === 'y') {
+                    logoFlyToStamp();
+                }
+            }, 500);
+        });
+    </script>
+    <!-- 水墨渐显首屏 Hero 遮罩 -->
+    <div id="hero-ink-overlay" class="hero-ink-overlay" aria-hidden="true">
+        <div class="hero-ink-title">七律空间</div>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('hero-ink-overlay');
+            if (!overlay) return;
+            // 移动端不显示水墨渐显效果
+            if (window.innerWidth < 1024) {
+                overlay.classList.add('skip');
+                return;
+            }
+            // 同一会话内只播放一次
+            if (sessionStorage.getItem('heroPlayed')) {
+                overlay.classList.add('skip');
+                return;
+            }
+            sessionStorage.setItem('heroPlayed', '1');
+            // 动画结束后移除遮罩
+            overlay.addEventListener('animationend', function (e) {
+                if (e.animationName === 'ink-spread') {
+                    overlay.classList.add('done');
+                }
+            });
+        })();
+    </script>
+
+    <!-- 粒子画布 (仅桌面端显示) -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- 更新通知喇叭 -->
+    <div class="update-notice" id="update-notice" onclick="this.style.display='none'">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="notice-text">新作上线：逆风</span>
+    </div>
+
+    <!-- 修改通知喇叭 (蓝) -->
+    <div class="update-notice modification-notice" id="modification-notice" onclick="this.style.display='none'">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="mod-notice-text">旧作修订</span>
+    </div>
+
+    <!-- 作者祝福/其他内容喇叭 -->
+    <div class="update-notice blessing-notice" id="blessing-notice" onclick="this.style.display='none'"
+        style="display: flex;">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="blessing-notice-text">大修作品请在作品名录中查看，<br>小修作品不展示，就当是小惊喜吧</span>
+    </div>
+
+    <!-- 黄色小喇叭：公告通知 -->
+    <!-- 黄色小喇叭：公告通知 (已注释隐藏，未来启用时只需移除注释) -->
+    <!-- 黄色小喇叭：公告通知 -->
+    <div class="update-notice announcement-notice" id="announcement-notice" onclick="this.style.display='none'"
+        style="display: none;">
+        <span class="notice-icon">📢</span>
+        <span class="notice-text" id="announcement-text"></span>
+    </div>
+
+
+
+    <!-- 挂件控制组 -->
+    <div class="music-wrapper">
+        <!-- 益智娱乐按钮（含二级菜单） -->
+        <div class="music-btn-wrapper entertainment-btn-wrapper">
+            <button id="entertainment-btn" class="widget-btn" onclick="toggleEntertainmentMenu()">益智<br>娱乐</button>
+            <div id="entertainment-menu" class="entertainment-menu">
+                <h3 class="toc-title">益智娱乐</h3>
+                <ul id="entertainment-menu-list" class="toc-list entertainment-menu-list">
+                    <li data-action="char-game">填字挑战</li>
+                    <li data-action="fireworks">烟花表演</li>
+                    <li data-action="share-card"
+                        style="border-top: 1px dashed rgba(0,0,0,0.1); margin-top: 4px; padding-top: 8px; color: var(--accent-color);">
+                        生成雅帖</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 名录按钮（移到最前面） -->
+        <button id="toc-btn" class="widget-btn" onclick="toggleTOC()">作品<br>名录</button>
+
+        <!-- 背景控制按钮容器（TOC 风格下拉） -->
+        <div class="widget-group bg-btn-wrapper" style="position: relative;">
+            <button id="bg-btn" class="widget-btn">网页<br>背景</button>
+            <div id="bg-menu" class="bg-menu">
+                <h3 class="toc-title">背景名录</h3>
+                <div class="toc-tabs bg-tabs">
+                    <button class="toc-tab bg-tab active" data-filter="macro">自然</button>
+                    <button class="toc-tab bg-tab" data-filter="micro">艺术</button>
+                    <button class="toc-tab bg-tab" data-filter="human">人文</button>
+                </div>
+                <ul id="bg-list" class="toc-list bg-menu-list">
+                    <!-- 动态渲染内容 -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- 排版模式切换 -->
+        <button id="mode-btn" onclick="toggleMode()">竖排<br>观赏</button>
+
+        <!-- 展示样式（下拉列表） -->
+        <div class="widget-group viewmode-btn-wrapper" style="position: relative;">
+            <button id="viewmode-btn" class="widget-btn" onclick="toggleViewMode()">展示<br>样式</button>
+            <div id="viewmode-menu" class="viewmode-menu">
+                <h3 class="toc-title">展示样式</h3>
+                <ul id="viewmode-list" class="toc-list viewmode-menu-list">
+                    <li data-mode="single" onclick="selectViewModeOption('single')">单卡</li>
+                    <li data-mode="sync" onclick="selectViewModeOption('sync')">同步</li>
+                    <li data-mode="random" onclick="selectViewModeOption('random')">随机</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 深色/浅色模式切换 -->
+        <!-- 云笺模式选择（带下拉列表） -->
+        <div class="widget-group theme-btn-wrapper" style="position: relative;">
+            <button id="theme-btn" class="widget-btn">云笺<br>花样</button>
+            <div id="theme-menu" class="theme-menu">
+                <h3 class="toc-title">云笺花样</h3>
+                <ul id="theme-list" class="toc-list theme-menu-list">
+                    <li data-value="default" class="active">宣纸</li>
+                    <li data-value="card01">花笺一</li>
+                    <li data-value="card02">花笺二</li>
+                    <li data-value="card03">花笺三</li>
+                    <li data-value="card04">花笺四</li>
+                    <li data-value="card05">花笺五</li>
+                    <li data-value="card06">花笺六</li>
+                    <li data-value="mask">玻璃屏</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 作品注释按钮 -->
+        <button id="note-btn" class="widget-btn" onclick="toggleNotes()">作品<br>注释</button>
+
+        <!-- 填字游戏入口统一放到“益智娱乐”，此处移除移动端按钮 -->
+
+        <!-- 音乐控制图标容器 (包含按钮和子菜单) - 移到随机播放前面 -->
+        <div class="music-btn-wrapper music-control-wrapper">
+            <div id="music-control" class="music-control">
+                <svg class="music-icon" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"
+                        fill="currentColor" />
+                </svg>
+            </div>
+
+            <!-- 音乐名录下拉菜单（作品名录风格） -->
+            <div id="music-menu" class="music-menu">
+                <h3 class="toc-title">音乐名录</h3>
+                <div class="toc-tabs music-tabs">
+                    <button class="toc-tab music-tab active" data-filter="guqin">古琴</button>
+                    <button class="toc-tab music-tab" data-filter="guzheng">古筝</button>
+                    <button class="toc-tab music-tab" data-filter="piano">钢琴</button>
+                    <button class="toc-tab music-tab" data-filter="song">歌曲</button>
+                </div>
+                <ul id="music-catalog-list" class="toc-list music-catalog-list">
+                    <!-- 动态渲染内容 -->
+                </ul>
+            </div>
+        </div> <!-- 关闭 music-btn-wrapper -->
+
+        <!-- 音乐播放模式切换 -->
+        <button id="playmode-btn" class="widget-btn" onclick="togglePlayMode()">单曲<br>循环</button>
+
+        <!-- 印章特效开关（仅桌面端显示） -->
+        <button id="seal-btn" class="widget-btn desktop-only" onclick="toggleSealEffect()">印章<br>特效</button>
+
+        <!-- 移动端折叠菜单：logo印章 + 设置按钮 -->
+        <div class="logo-stamp">
+            <img src="assets/qilv-logo01.webp" alt="七律" class="logo-stamp-img">
+        </div>
+        <div id="settings-btn" class="settings-btn" onclick="toggleSettingsMenu()">视听<br>设置</div>
+
+        <!-- 隐藏歌单（保留用于兼容性） -->
+        <ul id="music-list" class="music-list" style="display: none;">
+            <li data-src="assets/music01-阳关三叠.mp3" class="active">阳关三叠</li>
+            <li data-src="assets/music02-梁祝.mp3">梁祝</li>
+            <li data-src="assets/music03-琵琶语.mp3">琵琶语</li>
+            <li data-src="assets/music04-渔歌唱晚.mp3">渔歌唱晚</li>
+            <li data-src="assets/music05-致爱丽丝.mp3">致艾丽丝</li>
+            <li data-src="assets/music06-悲怆奏鸣曲.mp3">悲怆奏鸣曲</li>
+            <li data-src="assets/music07-神话.mp3">神话</li>
+            <li data-src="assets/music08-克罗地亚狂想曲.mp3">克罗地亚狂想曲</li>
+            <li data-src="assets/music09-青城山下白素贞.mp3">青城山下白素贞</li>
+            <li data-src="assets/music10-半山听雨.mp3">半山听雨</li>
+            <li data-src="assets/music11-高山流水.mp3">高山流水</li>
+            <li data-src="assets/music12-烟雨唱扬州.mp3">烟雨唱扬州</li>
+        </ul>
+    </div>
+
+    <!-- 背景音乐元素（放在wrapper外面，避免折叠影响播放） -->
+    <audio id="bg-music" loop></audio>
+
+    <div class="container">
+        <header>
+            <h1 class="site-title">七律空间<img src="assets/七律情.webp" alt="石章" class="title-seal"></h1>
+            <p class="subtitle">唐宋诗歌抽七律，斯人肺腑建空间</p>
+            <div id="char-game-nav" class="char-game-nav">
+                <div id="char-game-nav-cells" class="char-game-nav-cells"></div>
+            </div>
+        </header>
+
+        <main id="poem-card" class="poem-card">
+            <div class="poem-content main-card">
+                <!-- 右上角装饰枝条 SVG -->
+                <svg class="decoration-branch" viewBox="0 0 100 100" width="100" height="100">
+                    <path d="M100,0 Q60,20 30,50" fill="none" stroke="#a8bba8" stroke-width="2"
+                        stroke-linecap="round" />
+                    <path d="M70,25 Q80,40 75,55" fill="none" stroke="#a8bba8" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <path d="M45,40 Q30,30 20,35" fill="none" stroke="#a8bba8" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <circle cx="30" cy="50" r="3" fill="#d48888" opacity="0.8" />
+                    <circle cx="75" cy="55" r="2.5" fill="#d48888" opacity="0.7" />
+                    <circle cx="20" cy="35" r="2" fill="#d48888" opacity="0.6" />
+                    <circle cx="60" cy="20" r="2" fill="#d48888" opacity="0.5" />
+                </svg>
+
+
+
+                <!-- 理工浪漫标签 -->
+                <div class="tech-romance-tag" id="tech-romance-tag">在心成象，在纸成形</div>
+
+                <!-- 水平红蓝装饰线 (贯穿卡片，位于"专"字头顶) -->
+                <div class="horizontal-decoration-lines"></div>
+
+                <!-- 梅花 + 五星：统一容器对齐 -->
+                <div class="card-header-group">
+                    <img src="assets/qilv-logo02-card.webp" class="site-logo-icon" alt="Qi Lv Lattice Logo">
+
+                    <!-- 五星红旗装饰 (动态颜色) -->
+                    <div id="five-stars-row" class="five-stars-row">
+                        <!-- 大星 -->
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <!-- 四小星 -->
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                    </div>
+                    <svg class="star-gradient-defs" width="0" height="0" aria-hidden="true" focusable="false">
+                        <defs>
+                            <linearGradient id="star-rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ff3b3b" />
+                                <stop offset="20%" stop-color="#ffa200" />
+                                <stop offset="40%" stop-color="#ffe100" />
+                                <stop offset="60%" stop-color="#4cd964" />
+                                <stop offset="80%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#8b5cf6" />
+                            </linearGradient>
+                            <linearGradient id="star-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#E8E8E8" />
+                                <stop offset="25%" stop-color="#A8A8A8" />
+                                <stop offset="50%" stop-color="#F0F0F0" />
+                                <stop offset="75%" stop-color="#B0B0B0" />
+                                <stop offset="100%" stop-color="#D8D8D8" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+
+                </div>
+
+                <div id="poem-text-container">
+                    <h2 id="poem-title">七律 · 自况</h2>
+
+                    <div id="poem-body" class="body-text">
+                        <p>硬语盘空字字真，诗词无羽拂纤尘。</p>
+                        <p>推崇奋发探原委，克制强行论果因。</p>
+                        <p>既恐他人期待己，还忧自己索求人。</p>
+                        <p>痴迷一件难平事，解放才情有限身。</p>
+                    </div>
+                </div>
+
+                <!-- 页码 -->
+                <div class="poem-page-number" id="poem-page-number"></div>
+                <!-- 印章容器 -->
+                <div class="stamps-container">
+                    <div class="seal">七律<br>先锋</div>
+                    <div class="seal">理工<br>直男</div>
+                    <div class="seal">当代<br>作品</div>
+                    <div class="seal">钢铁<br>曲男</div>
+                </div>
+            </div>
+
+            <!-- 填字游戏石章（左侧中间，对称位置） -->
+
+            <!-- 网站指南石章（已注释，未来可用更优雅的引导方式替代） -->
+            <!--
+            <img src="assets/网站指南.webp" alt="网站指南" id="guide-seal" class="guide-seal"
+                onclick="alert('网站指南：\n1、网页左边旋转装饰模型为四种典型晶体结构，观察模型可发生有趣现象；\n2、中间为作品展示区，分为三卡/单卡两种展示作品模式；\n3、三卡展示分为同步/随机展示两种，具体情况，读者不妨一试；\n4、视听设置按钮为折叠菜单设计，点击可见二级菜单按钮，各按钮具体功能顾名思义，读者设置完，离开按钮区域后可实现自动折叠；\n5、对于有疑问的作品可参见作品注释，如没有，可通过下方邮箱联系作品添加；\n6、新上线作品会有小喇叭公告，而且作品名录中会同步高亮；\n7、无论您是否观看网站指南，作者都希望七律空间能给您生活的轻松和心灵的愉悦，如果您有任何问题，欢迎随时通过网站下方邮箱和作者联系。\n\n您的喜关注、喜欢和支持是对作者付出的最大鼓励也是作者持续创作的动力。\n祝君身体健康，工作顺利，生活幸福！')">
+            -->
+            <!-- 桌面端箭头导航（贴在副卡外边缘，移动端隐藏） -->
+            <button class="nav-arrow nav-arrow-left" id="arrow-prev" onclick="prevPoem()" aria-label="上一首">
+                <svg viewBox="0 0 40 80" width="40" height="80">
+                    <path d="M36 4 L8 40 L36 76" fill="none" stroke="currentColor" stroke-width="6"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+            <button class="nav-arrow nav-arrow-right" id="arrow-next" onclick="nextPoem()" aria-label="下一首">
+                <svg viewBox="0 0 40 80" width="40" height="80">
+                    <path d="M4 4 L32 40 L4 76" fill="none" stroke="currentColor" stroke-width="6"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+            <!-- 控制按钮 -->
+            <div class="control-panel">
+                <button id="prev-btn" onclick="prevPoem()">上一首</button>
+                <button id="next-btn" onclick="nextPoem()">下一首</button>
+            </div>
+        </main>
+
+        <!-- 底部页脚信息 -->
+        <footer class="site-footer">
+            <p>感谢来到七律空间，一方斯人精神乌邦。</p>
+            <p style="font-size: 0.8em; opacity: 0.8;">邮箱：mymdphdcandidate@gmail.com</p>
+            <p style="font-size: 0.7em; opacity: 0.6; margin-top: 0.5rem;">© 2026 七律空间 | 所有诗词作品版权归作者所有，未经授权禁止转载</p>
+
+        </footer>
+    </div>
+
+    <!-- 名录弹窗 -->
+    <div id="toc-overlay" class="toc-overlay" onclick="toggleTOC()">
+        <div class="toc-card" onclick="event.stopPropagation()">
+            <h3 class="toc-title">作品名录</h3>
+            <ul id="toc-list" class="toc-list">
+                <!-- 动态渲染内容 -->
+            </ul>
+            <div class="toc-close" onclick="toggleTOC()">[ 关闭 ]</div>
+        </div>
+    </div>
+
+    <!-- 作品注释弹窗 -->
+    <div id="notes-overlay" class="toc-overlay" onclick="toggleNotes()">
+        <div class="toc-card" onclick="event.stopPropagation()">
+            <h3 class="toc-title">作品注释</h3>
+            <div id="notes-content" class="notes-content">
+                <!-- 动态渲染注释内容 -->
+            </div>
+            <div class="toc-close" onclick="toggleNotes()">[ 关闭 ]</div>
+        </div>
+    </div>
+
+    <!-- 文字游戏入口与面板 -->
+    <div id="char-game-overlay" class="char-game-overlay">
+        <div class="char-game-panel" onclick="event.stopPropagation()">
+            <div class="char-game-header">
+                <span>文字游戏</span>
+                <button class="char-game-close" onclick="toggleCharGame(false)">[ 关闭 ]</button>
+            </div>
+            <div id="char-game-grid" class="char-game-grid"></div>
+            <div class="char-game-hint">点击飘落文字，拼出任意一首完整作品</div>
+        </div>
+        <div id="char-fall-layer" class="char-fall-layer"></div>
+        <div id="char-game-dialog" class="char-game-dialog">
+            <div class="char-game-dialog-card">
+                <div class="char-game-dialog-title">再来一局？</div>
+                <div class="char-game-dialog-actions">
+                    <button type="button" class="char-game-dialog-btn" onclick="charGameRetry()">再来一局</button>
+                    <button type="button" class="char-game-dialog-btn secondary" onclick="charGameExit()">退出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 不蒜子统计 (隐藏) -->
+    <!-- 脚本移至 script.js 动态加载，以排除管理员访问 -->
+    <div id="busuanzi_stats"
+        style="display: none; text-align: center; font-size: 12px; color: #999; margin-top: 10px; opacity: 0.8;">
+        <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv"></span> 人</span>
+        <span style="margin: 0 5px;">|</span>
+        <span id="busuanzi_container_site_pv">访问 <span id="busuanzi_value_site_pv"></span> 次</span>
+    </div>
+
+    <!-- 核心逻辑 -->
+    <script src="js/fireworks.js?v=Audio-25810"></script>
+    <script src="js/script.js?v=BlueStars-5"></script>
+    <script src="js/share-card.js?v=1"></script>
+    <!-- <script src="js/snow.js?v=snow-force"></script> -->
+
+
+    <!-- 粒子效果 - 仅桌面端加载 -->
+    <script>
+        if (window.innerWidth >= 1024) {
+            const script = document.createElement('script');
+            script.src = 'js/particles.js';
+            document.body.appendChild(script);
+
+            // FCC 晶格动画（左下角）
+            const fccScript = document.createElement('script');
+            fccScript.src = 'js/fcc-lattice.js?v=20260114-interactive-final';
+            document.body.appendChild(fccScript);
+
+            // [新增] BCC 晶格动画（左侧中上）
+            const bccScript = document.createElement('script');
+            bccScript.src = 'js/bcc-lattice.js?v=20260114-interactive-final';
+            document.body.appendChild(bccScript);
+
+            // [新增] HCP 晶格动画（左侧中下）
+            const hcpScript = document.createElement('script');
+            hcpScript.src = 'js/hcp-lattice.js?v=20260114-interactive-final';
+            document.body.appendChild(hcpScript);
+
+            // [新增] SC 简单立方晶格动画（左上角）
+            const scScript = document.createElement('script');
+            scScript.src = 'js/sc-lattice.js?v=20260114-interactive-final';
+            document.body.appendChild(scScript);
+
+            // ===== 右列：对应位错滑移面 (暂时关闭) =====
+            // SC 位错滑移面（与SC晶格对                              const scDislocScript = document.createElement('script'               scDislocScript.src = 'js/sc-dislocation.js               document.body.appendChild(scDislocScript);               // BCC 位错滑移面（与BCC晶格对               const bccDislocScript = document.createElement('script'               bccDislocScript.src = 'js/bcc-dislocation.js               document.body.appendChild(bccDislocScript);               // HCP 位错滑移面（与HCP晶格对               const hcpDislocScript = document.createElement('script'               hcpDislocScript.src = 'js/hcp-dislocation.js               document.body.appendChild(hcpDislocScript);               // FCC 位错滑移面（与FCC晶格对               const fccDislocScript = document.createElement('script'               fccDislocScript.src = 'js/dislocation.js               document.body.appendChild(fccDislocScript               */
+
+            // GSAP 诗句工业装配动画
+            const poemAnimScript = document.createElement('script');
+            poemAnimScript.src = 'js/poem-animation.js';
+            document.body.appendChild(poemAnimScript);
+        }
+    </script>
+
+    <!-- Cloudflare Web Analytics (根据域名动态加载) -->
+    <script>
+        (function () {
+            try { if (localStorage.getItem('qilv_admin')) return; } catch (e) { /* 静默降级 */ }
+            var host = window.location.hostname;
+            var token = '';
+            if (host.indexOf('pages.dev') !== -1) {
+                token = 'a57e3df1e80d42bb9314f924b3f9dcc3'; // CF Pages
+            } else if (host.indexOf('github.io') !== -1) {
+                token = '13846cd9f465497e8ec6ea5d7f251308'; // GitHub Pages
+            }
+            if (token) {
+                var s = document.createElement('script');
+                s.defer = true;
+                s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+                s.setAttribute('data-cf-beacon', '{"token":"' + token + '"}');
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <!-- End Cloudflare Web Analytics -->
+    <!-- 雅帖生成预览弹窗 -->
+    <div id="share-card-overlay" class="share-card-overlay" onclick="closeShareCard()">
+        <div class="share-card-panel" onclick="event.stopPropagation()">
+            <div class="share-card-header">
+                <h3>诗词雅帖</h3>
+                <button class="share-card-close" onclick="closeShareCard()">[ 关闭 ]</button>
+            </div>
+            <div class="share-card-preview-container" id="share-card-preview-container">
+                <!-- 生成的图片将显示在这里 -->
+                <div class="share-loading">正在绘制雅帖...</div>
+            </div>
+            <div class="share-card-actions">
+                <p class="share-tip">长按图片可保存，或点击下载</p>
+                <div class="share-btn-group">
+                    <button id="download-share-btn" class="share-action-btn primary">下载保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA 注册脚本 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker 注册成功', reg))
+                    .catch(err => console.log('Service Worker 注册失败', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

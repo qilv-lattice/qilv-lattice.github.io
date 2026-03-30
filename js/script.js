@@ -3222,3 +3222,29 @@ window.addEventListener('resize', () => {
         initCollapseMenu();
     }
 });
+
+// [新增] Logo 彩蛋监听 - 步步为营版
+(function() {
+    let logoClickCount = 0;
+    let logoClickTimer;
+    const logoStamp = document.querySelector('.logo-stamp');
+    if (logoStamp) {
+        logoStamp.style.cursor = 'pointer';
+        logoStamp.addEventListener('click', (e) => {
+            logoClickCount++;
+            clearTimeout(logoClickTimer);
+            logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 2000);
+
+            if (logoClickCount >= 5) {
+                const rect = logoStamp.getBoundingClientRect();
+                if (typeof triggerFountain === 'function') {
+                    triggerFountain(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                    setTimeout(() => triggerFountain(rect.left + rect.width / 2, rect.top + rect.height / 2), 200);
+                    setTimeout(() => triggerFountain(rect.left + rect.width / 2, rect.top + rect.height / 2), 400);
+                }
+                logoClickCount = 0;
+            }
+        });
+    }
+})();
+
