@@ -97,13 +97,18 @@
     <!-- 全站门禁 -->
     <div id="global-lock-overlay" style="display:none">
         <div class="global-lock-box">
-            <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
-            <div class="lock-input-row">
-                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码" maxlength="20"
-                    autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
-                <button class="lock-unlock-btn" onclick="siteUnlock()">进入</button>
+            <div class="global-lock-logo-wrap">
+                <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
             </div>
-            <p class="lock-error" id="site-lock-error" style="display:none">密码有误</p>
+            <h1 class="global-lock-title">七 律 空 间</h1>
+            <p class="global-lock-subtitle">QILV · LATTICE</p>
+            <p class="global-lock-motto">非请勿入 &nbsp;·&nbsp; 凭暗号入</p>
+            <div class="lock-input-row">
+                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="· · · · · ·" maxlength="20"
+                    autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
+                <button class="lock-unlock-btn" onclick="siteUnlock()" aria-label="进入">→</button>
+            </div>
+            <p class="lock-error" id="site-lock-error" style="display:none">暗号有误</p>
         </div>
     </div>
     <script>
