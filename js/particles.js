@@ -62,64 +62,70 @@ class Particle {
         this.baseSize = size;
         this.color = color;
         this.angle = Math.random() * Math.PI * 2;
-    }
+        }
 
-    draw() {
+        draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
         ctx.fillStyle = this.color;
         ctx.fill();
-    }
+        }
 
-    update() {
-        // 呼吸效果：让晶格点显得有一点生命力
+        update() {
+
+        // 呼吸效果
         this.angle += 0.03;
         this.size = this.baseSize + Math.sin(this.angle) * 0.5;
 
         // --- 物理计算模型 ---
-
-        // 1. 计算鼠标排斥力 (反比于距离的力)
         let dxMouse = mouse.x - this.x;
         let dyMouse = mouse.y - this.y;
         let distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
         if (mouse.x != null && distanceMouse < mouse.radius) {
-            // 计算排斥力系数 (距离越近，力越大)
             let forceDirectionX = dxMouse / distanceMouse;
             let forceDirectionY = dyMouse / distanceMouse;
             let force = (mouse.radius - distanceMouse) / mouse.radius;
-            // 节点加速度
-            let maxSpeed = 10;
-            let ax = forceDirectionX * force * maxSpeed;
-            let ay = forceDirectionY * force * maxSpeed;
+            
+            // [新增] 混乱模式下排斥力翻倍，且带有随机性
+            let maxSpeed = this.isChaos ? 25 : 10;
+            let ax = forceDirectionX * force * maxSpeed * (this.isChaos ? Math.random() * 2 : 1);
+            let ay = forceDirectionY * force * maxSpeed * (this.isChaos ? Math.random() * 2 : 1);
 
-            // 施加相反方向的加速度 (排斥)
             this.vx -= ax;
             this.vy -= ay;
         }
 
-        // 2. 弹簧恢复力 (Hooke's Law: F = -k * x)
-        // 计算节点偏离初始位置的距离
         let dxBase = this.baseX - this.x;
         let dyBase = this.baseY - this.y;
 
-        // 弹簧弹性系数 (控制拉回的紧实度，0.1 左右比较适合弹性)
-        let springFactor = 0.08;
+        // [新增] 混乱模式下，弹簧弹性系数极大降低（甚至变为负值或随机），且摩擦力几乎消失
+        let springFactor = this.isChaos ? 0.005 * (Math.random() - 0.5) : 0.08;
+        let friction = this.isChaos ? 0.98 : 0.85;
 
-        // 3. 阻尼/摩擦力 (让节点最终能平稳停下来，不会永远振荡下去)
-        let friction = 0.85;
-
-        // 综合速度： 弹簧拉回的加速度 + 历史速度的阻尼衰减
         this.vx = (this.vx + dxBase * springFactor) * friction;
         this.vy = (this.vy + dyBase * springFactor) * friction;
 
-        // 应用速度更新位置
+        // [新增] 混乱模式下加入高频微弱抖动 (Jitter)
+        if (this.isChaos) {
+            this.vx += (Math.random() - 0.5) * 2;
+            this.vy += (Math.random() - 0.5) * 2;
+        }
+
         this.x += this.vx;
         this.y += this.vy;
 
         this.draw();
     }
 }
+
+// [新增] 全局混乱模式控制函数
+function setLatticeChaos(enable) {
+    if (Array.isArray(particlesArray)) {
+        particlesArray.forEach(p => p.isChaos = !!enable);
+    }
+}
+
 
 // 初始化晶格点阵
 function init() {

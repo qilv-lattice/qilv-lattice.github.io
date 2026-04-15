@@ -2345,7 +2345,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const titleEl = mainCard.querySelector('#poem-title');
             if (titleEl) titleEl.innerText = displayTitle;
 
-            // 渲染正文（支持加锁诗词）
+            // 渲染正文 (支持加锁诗词)
             bodyDiv.innerHTML = '';
             if (isContentLocked(poem)) {
                 // 加锁状态：显示锁定 UI
