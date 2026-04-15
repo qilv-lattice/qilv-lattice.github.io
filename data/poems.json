@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-03-27 09:35",
+    "lastUpdate": "2026-03-31 22:41",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "七律·碎片",
+            "receivedAt": "2026-03-31 22:41"
+        },
         {
             "title": "七律·书童",
             "receivedAt": "2026-03-29 22:55"
@@ -78,6 +82,21 @@
         }
     ],
     "poems": [
+        {
+            "id": 101,
+            "title": "七律·碎片",
+            "author": "柒律",
+            "dynasty": "现代",
+            "content": [
+                "检索三春点点心，时光碎片补分襟。",
+                "前言散落青瓷盏，汉字轻弹昆玉音。",
+                "七窍玲珑涵大度，一腔傲气淬真金。",
+                "星河两岸拼图影，今夜龙吟送子衿。"
+            ],
+            "locked": true,
+            "category": "情思",
+            "encryptedContent": "4x77tkBnJTemrgo/vZLhvp0BKb334xJ1uyKa/2FUmlQuCQ8gw3jOlwoCTyQWvK3KYhAZkkrZr9hTp7KCI21dA2lfoh/NhvEyXyYx452s4rVZYbhfLNH/dpdftljSIXnJzTpVoYyUp2n9qhuGU8Elo7qe7702R84RJv0JUUi8J+C8xKTJFk4tg7QbD50KiZ/czYIuUB+VBo3jvkrpH6ShcLWoHYgHMfZcwrl2UlagoWd7pgTGhp70gwq1eng2S9NXpmlmfuI2SZXkkKleMm9zapGBppFLFHaOmix+b27v5ogexR/ELjZLO81YJSZhZDo2dfTBskSsYnaCdKkNtjz7kA=="
+        },
         {
             "id": 100,
             "title": "七律·A股",
