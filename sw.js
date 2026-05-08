@@ -9,23 +9,24 @@ const ASSETS = [
   '/assets/Seal1.webp'
 ];
 
-// 安装阶段：预缓存核心资源
+// 安装阶段：预缓存核心资源，安装完立刻激活不等 tab 关闭
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(ASSETS);
     })
   );
+  self.skipWaiting();
 });
 
-// 激活阶段：清理旧缓存
+// 激活阶段：清理旧缓存，立刻接管所有 tab
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
         keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
