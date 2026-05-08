@@ -2472,19 +2472,24 @@ header.char-game-active {
     box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.2), inset 0 0 5px rgba(230, 0, 0, 0.1);
 }
 
-/* Grid 定位 */
-.seal:nth-child(2) {
+/* Grid 定位 - 古代印章读序：右上→右下→左上→左下 */
+.seal:nth-child(1) { /* 七律先锋 → 右上 */
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.seal:nth-child(2) { /* 理工直男 → 右下 */
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.seal:nth-child(3) { /* 当代作品 → 左上 */
     grid-column: 1;
     grid-row: 1;
 }
 
-.seal:nth-child(3) {
+.seal:nth-child(4) { /* 钢铁曲男 → 左下 */
     grid-column: 1;
-    grid-row: 2;
-}
-
-.seal:nth-child(1) {
-    grid-column: 2;
     grid-row: 2;
 }
 
