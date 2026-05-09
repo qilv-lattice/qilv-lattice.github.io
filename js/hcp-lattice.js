@@ -20,7 +20,7 @@
         cellSize: 35,       // 六边形边长
         heightScale: 1.633, // c/a 轴比，理想比值 1.633
         atomRadius: 6,
-        rotationSpeed: 0.007,
+        rotationSpeed: 0.022,
         opacity: 0.8,
         atomColor: '#FFD700', // 默认金色 (深色模式)
         secondaryColor: '#FFFFFF', // 默认白色 (深色模式)
@@ -29,29 +29,88 @@
         glowColor: 'rgba(68, 220, 220, 0.4)'
     };
 
+    // [新增] 目标配置，用于平滑过渡
+    let TARGET_CONFIG = JSON.parse(JSON.stringify(CONFIG));
+    const BASE_ROTATION_SPEED = CONFIG.rotationSpeed;
+
     // 辅助函数：颜色插值
     function lerpColor(a, b, amount) {
-        const ah = parseInt(a.replace(/#/g, ''), 16),
-            ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
-            bh = parseInt(b.replace(/#/g, ''), 16),
-            br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
-            rr = ar + amount * (br - ar),
-            rg = ag + amount * (bg - ag),
-            rb = ab + amount * (bb - ab);
-        return `rgb(${Math.round(rr)}, ${Math.round(rg)}, ${Math.round(rb)})`;
+        const parseColor = (s) => {
+            if (s.startsWith('#')) {
+                const h = parseInt(s.replace(/#/g, ''), 16);
+                return [h >> 16, h >> 8 & 0xff, h & 0xff, 1];
+            }
+            const m = s.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+            return m ? [parseInt(m[1]), parseInt(m[2]), parseInt(m[3]), m[4] ? parseFloat(m[4]) : 1] : [0, 0, 0, 1];
+        };
+        const [r1, g1, b1, a1] = parseColor(a);
+        const [r2, g2, b2, a2] = parseColor(b);
+        const r = Math.round(r1 + (r2 - r1) * amount);
+        const g = Math.round(g1 + (g2 - g1) * amount);
+        const b_ = Math.round(b1 + (b2 - b1) * amount);
+        const alpha = a1 + (a2 - a1) * amount;
+        return `rgba(${r}, ${g}, ${b_}, ${alpha})`;
     }
+
+    // [新增] 记录当前星级颜色
+    let CURRENT_STAR_COLOR = null;
+
+    // [更新] 监听诗词情感变化 (加速版 + 星级联动)
+    window.addEventListener('poem-emotion-change', (e) => {
+        const emotion = e.detail.emotion;
+        const starColor = e.detail.starColor; // [新增]
+        const isDark = !document.body.classList.contains('light-theme');
+        
+        // 1. 设置目标颜色
+        if (starColor) {
+            CURRENT_STAR_COLOR = starColor;
+            TARGET_CONFIG.atomColor = starColor;
+            const sc = parseColor(starColor);
+            TARGET_CONFIG.glowColor = `rgba(${sc.r}, ${sc.g}, ${sc.b}, 0.55)`;
+        }
+
+        // 2. 根据情感设置转速
+        switch(emotion) {
+            case 'heroic':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 3.0;
+                break;
+            case 'vitality':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 1.6;
+                break;
+            case 'ethereal':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 0.75;
+                break;
+            case 'nostalgic':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 1.0;
+                break;
+            case 'romantic':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 0.85;
+                break;
+            case 'reflective':
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED * 1.4;
+                break;
+            default:
+                TARGET_CONFIG.rotationSpeed = BASE_ROTATION_SPEED;
+        }
+    });
 
     // 监听背景主题变化 (反向变色龙)
     window.addEventListener('lattice-theme-change', (e) => {
         const isDark = e.detail.isDark;
+        // 更新键的可见度
+        CONFIG.bondColor = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.15)';
+
+        // 核心修复：星级锁定判断
+        if (CURRENT_STAR_COLOR) {
+            return;
+        }
+
         if (isDark) {
-            CONFIG.atomColor = '#FFD700';
-            CONFIG.secondaryColor = '#FFFFFF';
-            CONFIG.bondColor = 'rgba(255, 255, 255, 0.2)';
+            TARGET_CONFIG.atomColor = '#FFD700';
+            TARGET_CONFIG.secondaryColor = '#FFFFFF';
         } else {
-            CONFIG.atomColor = '#00008B';
-            CONFIG.secondaryColor = '#333333';
-            CONFIG.bondColor = 'rgba(0, 0, 0, 0.15)';
+            TARGET_CONFIG.atomColor = '#00008B';
+            TARGET_CONFIG.secondaryColor = '#333333';
         }
     });
 
@@ -234,6 +293,11 @@
     }
 
     function draw() {
+        // [新增] 平滑过渡配置参数
+        CONFIG.rotationSpeed += (TARGET_CONFIG.rotationSpeed - CONFIG.rotationSpeed) * 0.05;
+        CONFIG.atomColor = lerpColor(CONFIG.atomColor, TARGET_CONFIG.atomColor, 0.05);
+        CONFIG.glowColor = lerpColor(CONFIG.glowColor, TARGET_CONFIG.glowColor, 0.05);
+
         ctx.clearRect(0, 0, CONFIG.size, CONFIG.size);
 
         const transformedAtoms = atomPositions.map(pos => {
