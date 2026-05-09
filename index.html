@@ -16,14 +16,11 @@
                 gtag('js', new Date());
                 gtag('config', 'G-JB5KT83L5R');
 
-                // 百度统计 (Baidu Analytics) - 按域名区分站点
+                // 百度统计 (Baidu Analytics)
                 var _hmt = _hmt || [];
                 (function () {
                     var hm = document.createElement("script");
-                    var hmId = window.location.hostname === 'qilv-lattice.github.io'
-                        ? '5a52c841b2a186228386c8c898228ec5'  // 七律晶格 (GitHub Pages)
-                        : 'afba77dcd1cd11042766a5edca1056e2'; // 七律空间 (Cloudflare)
-                    hm.src = "https://hm.baidu.com/hm.js?" + hmId;
+                    hm.src = "https://hm.baidu.com/hm.js?7be64648bacb23e7feac566b06bd1a39";
                     var s = document.getElementsByTagName("script")[0];
                     s.parentNode.insertBefore(hm, s);
                 })();
@@ -41,7 +38,7 @@
     <meta property="og:title" content="七律空间">
     <meta property="og:description" content="原创七言律诗作品集，传承古典诗词之美">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://qilv-lattice.github.io/assets/background01.webp">
+    <meta property="og:image" content="https://qilv-lattices.pages.dev/assets/background01.webp">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,13 +58,6 @@
     <link rel="icon" type="image/png" href="assets/Seal1.webp">
     <link rel="apple-touch-icon" href="assets/Seal1.webp">
 
-    <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=Rouge-Color">
-
-    <!-- 桌面美学层 - 仅在大屏加载 -->
-    <link rel="stylesheet" href="css/desktop.css?v=Rouge-Color"
-        media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
-
     <!-- JSON-LD 结构化数据 (SEO) -->
     <script type="application/ld+json">
     {
@@ -75,7 +65,7 @@
       "@type": "CollectionPage",
       "name": "七律空间",
       "description": "原创七言律诗作品集，传承古典诗词之美，探索当代情感表达。",
-      "url": "https://qilv-lattice.github.io/",
+      "url": "https://qilv-lattices.pages.dev/",
       "author": {
         "@type": "Person",
         "name": "七律空间"
@@ -86,14 +76,103 @@
         "name": "七律空间",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://qilv-lattice.github.io/assets/Seal1.webp"
+          "url": "https://qilv-lattices.pages.dev/assets/Seal1.webp"
         }
       }
     }
     </script>
+
+    <!-- 移动优先基础样式 -->
+    <link rel="stylesheet" href="css/base.css?v=Rouge-Color">
+
+    <!-- 桌面美学层 - 仅在大屏加载 -->
+    <link rel="stylesheet" href="css/desktop.css?v=Rouge-Color"
+        media="(min-width: 1024px) and (hover: hover) and (pointer: fine)">
 </head>
 
 <body>
+    <!-- 全站门禁 -->
+    <div id="global-lock-overlay" style="display:none">
+        <div class="global-lock-box">
+            <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
+            <div class="lock-input-row">
+                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码" maxlength="20"
+                    autocomplete="off" onkeydown="if(event.key==='Enter')siteUnlock()">
+                <button class="lock-unlock-btn" onclick="siteUnlock()">进入</button>
+            </div>
+            <p class="lock-error" id="site-lock-error" style="display:none">密码有误</p>
+        </div>
+    </div>
+    <script>
+        (function () {
+            if (localStorage.getItem('qilv_site_key_v2') !== 'y') {
+                document.getElementById('global-lock-overlay').style.display = 'flex';
+            }
+        })();
+        var SITE_HASH = '90c3cd5046c657d420d9fe961365a5fb30b9cba87bec5a496c005791903730ca';
+        function siteUnlock() {
+            var input = document.getElementById('site-pwd-input');
+            var err = document.getElementById('site-lock-error');
+            var val = input.value;
+            crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function (buf) {
+                var hex = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+                if (hex === SITE_HASH) {
+                    localStorage.setItem('qilv_site_key_v2', 'y');
+                    var overlay = document.getElementById('global-lock-overlay');
+                    overlay.classList.add('unlocking');
+                    setTimeout(function () { overlay.style.display = 'none'; logoFlyToStamp(); }, 400);
+                } else {
+                    err.style.display = 'block';
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        }
+        function logoFlyToStamp() {
+            var stamp = document.querySelector('.logo-stamp');
+            if (!stamp) return;
+            // 等stamp可见（collapsed状态）
+            var rect = stamp.getBoundingClientRect();
+            if (rect.width === 0) return;
+            // 隐藏原印章logo
+            stamp.style.opacity = '0';
+            // 创建飞行logo
+            var fly = document.createElement('img');
+            fly.src = stamp.querySelector('.logo-stamp-img').src;
+            fly.style.cssText = 'position:fixed;z-index:99998;width:80px;height:80px;object-fit:contain;opacity:0.9;pointer-events:none;border-radius:8px;';
+            fly.style.left = (window.innerWidth / 2 - 40) + 'px';
+            fly.style.top = (window.innerHeight / 2 - 40) + 'px';
+            // 先旋转两圈
+            fly.style.transition = 'transform 0.8s ease-in-out';
+            document.body.appendChild(fly);
+            requestAnimationFrame(function () {
+                fly.style.transform = 'rotate(720deg)';
+            });
+            // 旋转完再飞
+            setTimeout(function () {
+                fly.style.transition = 'all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                var to = stamp.getBoundingClientRect();
+                fly.style.left = to.left + 'px';
+                fly.style.top = to.top + 'px';
+                fly.style.width = to.width + 'px';
+                fly.style.height = to.height + 'px';
+                fly.style.transform = 'rotate(720deg)';
+            }, 850);
+            setTimeout(function () {
+                stamp.style.opacity = '';
+                fly.remove();
+            }, 1700);
+        }
+        // 每次加载触发飞入
+        window.addEventListener('DOMContentLoaded', function () {
+            // 给页面渲染一点时间，确保stamp位置就绪
+            setTimeout(function () {
+                if (localStorage.getItem('qilv_site_key_v2') === 'y') {
+                    logoFlyToStamp();
+                }
+            }, 500);
+        });
+    </script>
     <!-- 水墨渐显首屏 Hero 遮罩 -->
     <div id="hero-ink-overlay" class="hero-ink-overlay" aria-hidden="true">
         <div class="hero-ink-title">七律空间</div>
@@ -303,7 +382,7 @@
                     <span>PHYSICS PARAMETERS</span>
                     <span class="monitor-status">LIVE REACTION</span>
                 </div>
-
+                
                 <div class="monitor-waveform-box">
                     <canvas id="monitor-waveform-canvas"></canvas>
                 </div>
@@ -431,7 +510,7 @@
 
             <!-- 网站指南石章（已注释，未来可用更优雅的引导方式替代） -->
             <!--
-            <img src="assets/网站指南.webp" alt="网站指南" id="guide-seal" class="guide-seal"
+            <img src="assets/网站指南.png" alt="网站指南" id="guide-seal" class="guide-seal"
                 onclick="alert('网站指南：\n1、网页左边旋转装饰模型为四种典型晶体结构，观察模型可发生有趣现象；\n2、中间为作品展示区，分为三卡/单卡两种展示作品模式；\n3、三卡展示分为同步/随机展示两种，具体情况，读者不妨一试；\n4、视听设置按钮为折叠菜单设计，点击可见二级菜单按钮，各按钮具体功能顾名思义，读者设置完，离开按钮区域后可实现自动折叠；\n5、对于有疑问的作品可参见作品注释，如没有，可通过下方邮箱联系作品添加；\n6、新上线作品会有小喇叭公告，而且作品名录中会同步高亮；\n7、无论您是否观看网站指南，作者都希望七律空间能给您生活的轻松和心灵的愉悦，如果您有任何问题，欢迎随时通过网站下方邮箱和作者联系。\n\n您的喜关注、喜欢和支持是对作者付出的最大鼓励也是作者持续创作的动力。\n祝君身体健康，工作顺利，生活幸福！')">
             -->
             <!-- 桌面端箭头导航（贴在副卡外边缘，移动端隐藏） -->
@@ -447,11 +526,6 @@
                         stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </button>
-            <!-- 控制按钮 -->
-            <div class="control-panel">
-                <button id="prev-btn" onclick="prevPoem()">上一首</button>
-                <button id="next-btn" onclick="nextPoem()">下一首</button>
-            </div>
         </main>
 
         <!-- 底部页脚信息 -->
@@ -567,7 +641,7 @@
             var host = window.location.hostname;
             var token = '';
             if (host.indexOf('pages.dev') !== -1) {
-                token = 'a57e3df1e80d42bb9314f924b3f9dcc3'; // CF Pages
+                token = '7dd71073f836499598af762cd178c457'; // CF Pages (qilv-lattices)
             } else if (host.indexOf('github.io') !== -1) {
                 token = '13846cd9f465497e8ec6ea5d7f251308'; // GitHub Pages
             }
@@ -581,6 +655,13 @@
         })();
     </script>
     <!-- End Cloudflare Web Analytics -->
+    <!-- [任务 1] 诗歌星云雷达容器 (固定挂件) -->
+    <div class="nebula-radar-container" id="nebula-radar-container" style="display: none;">
+        <div class="radar-header">RECIPROCAL SPACE RADAR</div>
+        <canvas id="nebula-radar-canvas"></canvas>
+        <div class="radar-tag" id="radar-tag">INITIALIZING...</div>
+    </div>
+
     <!-- 雅帖生成预览弹窗 -->
     <div id="share-card-overlay" class="share-card-overlay" onclick="closeShareCard()">
         <div class="share-card-panel" onclick="event.stopPropagation()">
@@ -601,16 +682,6 @@
         </div>
     </div>
 
-    <!-- PWA 注册脚本 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker 注册成功', reg))
-                    .catch(err => console.log('Service Worker 注册失败', err));
-            });
-        }
-    </script>
 </body>
 
 </html>

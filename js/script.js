@@ -333,13 +333,17 @@ function swapMobileEntertainmentAndModeButtons() {
 
 // 应用指定索引的背景
 function applyBackground(index) {
-    const currentBg = backgrounds[index];
     let styleEl = document.getElementById('dynamic-bg');
     if (!styleEl) {
         styleEl = document.createElement('style');
         styleEl.id = 'dynamic-bg';
         document.head.appendChild(styleEl);
     }
+    if (bgMode === 'none') {
+        styleEl.textContent = `body::before { background-image: none !important; }`;
+        return;
+    }
+    const currentBg = backgrounds[index];
     styleEl.textContent = `
         body::before {
             background-image:
@@ -462,7 +466,7 @@ function renderBgMenu(filter = currentBgFilter) {
     list.innerHTML = '';
     const items = bgCatalog[filter] || [];
 
-    // 添加“恢复随机”选项
+    // 添加”恢复随机”选项
     const randomLi = document.createElement('li');
     randomLi.innerHTML = '🔀 恢复随机';
     randomLi.classList.add('special-option');
@@ -478,6 +482,23 @@ function renderBgMenu(filter = currentBgFilter) {
         if (menu) menu.classList.remove('show');
     });
     list.appendChild(randomLi);
+
+    // 添加”无壁纸”选项
+    const noneLi = document.createElement('li');
+    noneLi.innerHTML = '🚫 无壁纸';
+    noneLi.classList.add('special-option');
+    if (bgMode === 'none') noneLi.classList.add('active');
+    noneLi.addEventListener('click', (e) => {
+        e.stopPropagation();
+        bgMode = 'none';
+        applyBackground(bgIndex);
+        updateBgButtonState();
+        restartBgInterval();
+        persistBgState();
+        const menu = document.getElementById('bg-menu');
+        if (menu) menu.classList.remove('show');
+    });
+    list.appendChild(noneLi);
 
     if (!items.length) {
         const li = document.createElement('li');
@@ -616,13 +637,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const config = await configResp.json();
         backgrounds = config.backgrounds || [];
 
-        // 2. 初始背景：随机
+        // 2. 初始背景
         if (backgrounds.length > 0) {
-            bgMode = 'random';
-            bgIndex = Math.floor(Math.random() * backgrounds.length);
-            applyBackground(bgIndex);
+            const savedMode = localStorage.getItem(BG_MODE_STORAGE_KEY);
+            if (savedMode === 'none') {
+                bgMode = 'none';
+                applyBackground(bgIndex);
+            } else {
+                bgMode = 'random';
+                bgIndex = Math.floor(Math.random() * backgrounds.length);
+                applyBackground(bgIndex);
+                restartBgInterval();
+            }
             updateBgButtonState();
-            restartBgInterval();
             persistBgState();
         }
 
@@ -2345,7 +2372,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const titleEl = mainCard.querySelector('#poem-title');
             if (titleEl) titleEl.innerText = displayTitle;
 
-            // 渲染正文 (支持加锁诗词)
+            // 渲染正文（支持加锁诗词）
             bodyDiv.innerHTML = '';
             if (isContentLocked(poem)) {
                 // 加锁状态：显示锁定 UI
@@ -2458,9 +2485,217 @@ document.addEventListener('DOMContentLoaded', async () => {
                 pageNumEl.textContent = `${index + 1} / ${poems.length}`;
             }
 
-            // 更新物理参数监测面板
-            updatePhysicsMonitor(poem);
+            // [更新] 晶格动画情感联动：派发情感变更事件 (增强版色彩)
+            let emotion = 'default';
+            const title = poem.title || '';
+            const category = poem.category || '';
+            const contentStr = (poem.content || []).join('');
+            
+            // 优先级判断逻辑
+            if (title.includes('逆风') || title.includes('先锋') || title.includes('战') || title.includes('铁') || title.includes('刚')) {
+                emotion = 'heroic';
+            } else if (title.includes('春') || title.includes('绿') || title.includes('花') || title.includes('生') || contentStr.includes('春') || contentStr.includes('柳')) {
+                emotion = 'vitality'; // 生机
+            } else if (title.includes('雪') || title.includes('月') || title.includes('冰') || title.includes('空') || title.includes('寒') || contentStr.includes('月') || contentStr.includes('雪')) {
+                emotion = 'ethereal'; // 空灵
+            } else if (title.includes('古') || title.includes('旧') || title.includes('忆') || title.includes('史') || contentStr.includes('往事') || contentStr.includes('昔')) {
+                emotion = 'nostalgic'; // 怀古
+            } else if (category.includes('情') || title.includes('灵犀') || title.includes('朱伊') || title.includes('梦')) {
+                emotion = 'romantic';
+            } else if (category.includes('观察') || category.includes('诗道') || title.includes('赢学') || title.includes('思') || title.includes('理')) {
+                emotion = 'reflective';
+            }
+            
+            // [更新] 晶格动画联动：根据星星样式映射高级质感颜色
+            const starStyle = poem.starStyle || 'none';
+            let starColor = '#FFD700'; // 默认金
+            // 经过调优的专业色盘 (低饱和高通透)
+            const premiumPalette = [
+                '#FF85A1', // 樱落粉 (柔美)
+                '#06D6A0', // 翠晶绿 (生机)
+                '#FF9F1C', // 核能橙 (活力)
+                '#FFD166', // 琥珀黄 (典雅)
+                '#118AB2'  // 电磁青 (深邃)
+            ];
+
+            if (starStyle === 'red') {
+                starColor = '#DE2910'; // 纯正朱砂红
+            } else if (starStyle === 'blue') {
+                starColor = '#1E90FF'; // 科技蓝
+            } else if (starStyle === 'rainbow') {
+                starColor = '#9D50BB'; // 量子紫
+            } else {
+                // 无星作品：从高级色盘中随机
+                starColor = premiumPalette[Math.floor(Math.random() * premiumPalette.length)];
+            }
+            
+            // 同步更新 CSS 变量 --accent-color，让所有用强调色的组件
+            // （物理监视面板右边粗线、扫描线渐变、value-pulse 闪光等）
+            // 自动跟随星级颜色变化
+            document.documentElement.style.setProperty('--accent-color', starColor);
+
+            window.dispatchEvent(new CustomEvent('poem-emotion-change', {
+                detail: {
+                    emotion: emotion,
+                    starStyle: starStyle,
+                    starColor: starColor,
+                    title: title,
+                    category: category
+                }
+            }));
+
+            // [新增] 更新物理参数监测面板与星云雷达
+            updatePhysicsMonitor(poem, emotion);
+            if (window.updateRadarFocus) window.updateRadarFocus(index);
         };
+
+        // ===== 诗歌星云雷达引擎 =====
+        let nebulaPoints = [];
+        let radarCanvas, radarCtx;
+        let radarAngleY = 0;
+        let radarFocusIndex = 0;
+
+        function initNebulaRadar() {
+            const container = document.getElementById('nebula-radar-container');
+            radarCanvas = document.getElementById('nebula-radar-canvas');
+            if (!radarCanvas || !container) return;
+            radarCtx = radarCanvas.getContext('2d');
+            
+            container.style.display = 'flex'; // 激活容器显示
+            radarCanvas.width = 160;
+            radarCanvas.height = 160;
+
+            nebulaPoints = poems.map((p, i) => {
+                const contentStr = (p.content || []).join('');
+                const uniqueChars = new Set(contentStr.replace(/[，。？！、\s]/g, '')).size;
+                const totalChars = contentStr.replace(/[，。？！、\s]/g, '').length;
+                
+                const rho = (contentStr.match(/[，。？！]/g) || []).length * 2;
+                const eb = (1 - uniqueChars / (totalChars || 1)) * 50;
+                const s = Math.log2(uniqueChars || 1) * 20;
+
+                return {
+                    x: (rho - 10) * 5, 
+                    y: (eb - 15) * 3,
+                    z: (s - 25) * 4,
+                    starStyle: p.starStyle || 'none'
+                };
+            });
+
+            window.updateRadarFocus = (index) => {
+                radarFocusIndex = index;
+                const tag = document.getElementById('radar-tag');
+                if (tag && poems[index]) {
+                    const cleanTitle = poems[index].title.replace('七律·', '').replace(/[《》]/g,'');
+                    tag.textContent = `LOCKED: ${cleanTitle}`;
+                    tag.style.color = 'var(--accent-color)';
+                }
+            };
+
+            function animateRadar() {
+                radarCtx.clearRect(0, 0, radarCanvas.width, radarCanvas.height);
+                radarAngleY += 0.008;
+                const cx = radarCanvas.width / 2;
+                const cy = radarCanvas.height / 2;
+                const perspective = 150;
+
+                nebulaPoints.forEach((p, i) => {
+                    const cos = Math.cos(radarAngleY);
+                    const sin = Math.sin(radarAngleY);
+                    const rx = p.x * cos - p.z * sin;
+                    const rz = p.x * sin + p.z * cos;
+                    
+                    const scale = perspective / (perspective + rz + 60);
+                    const x = cx + rx * scale;
+                    const y = cy + p.y * scale;
+
+                    const isFocused = i === radarFocusIndex;
+                    const size = isFocused ? 3 : 1 * scale;
+                    const alpha = isFocused ? 1 : 0.2 + (1 - (rz + 60) / 120) * 0.4;
+
+                    let color = '#ffffff';
+                    if (p.starStyle === 'red') color = '#DE2910';
+                    else if (p.starStyle === 'blue') color = '#1E90FF';
+                    else if (p.starStyle === 'rainbow') color = '#9D50BB';
+
+                    if (isFocused) {
+                        radarCtx.beginPath();
+                        radarCtx.arc(x, y, size * 2.5, 0, Math.PI * 2);
+                        radarCtx.strokeStyle = color;
+                        radarCtx.lineWidth = 1;
+                        radarCtx.globalAlpha = 0.4 * (Math.sin(Date.now() * 0.008) + 1);
+                        radarCtx.stroke();
+                    }
+
+                    radarCtx.beginPath();
+                    radarCtx.arc(x, y, Math.max(0.5, size), 0, Math.PI * 2);
+                    radarCtx.fillStyle = color;
+                    radarCtx.globalAlpha = Math.max(0, Math.min(1, alpha));
+                    radarCtx.fill();
+                });
+                radarCtx.globalAlpha = 1;
+                requestAnimationFrame(animateRadar);
+            }
+            animateRadar();
+        }
+        window.initNebulaRadar = initNebulaRadar;
+
+        // ===== 诗词物理参数计算引擎 =====
+        function updatePhysicsMonitor(poem, emotion) {
+            const monitor = document.getElementById('physics-monitor');
+            if (!monitor) return;
+
+            const contentStr = (poem.content || []).join('');
+            const totalChars = contentStr.replace(/[，。？！、\s]/g, '').length;
+            if (totalChars === 0) return;
+
+            // 1. 位错密度 (rho): 转折与标点密度
+            const transitions = (contentStr.match(/[，。？！]/g) || []).length;
+            const turnWords = (contentStr.match(/[但却虽犹空复]/g) || []).length;
+            const rho = (transitions * 0.15 + turnWords * 0.8).toFixed(2);
+
+            // 2. 绑定能 (Eb): 字符重复度与押韵感模拟
+            const uniqueChars = new Set(contentStr.replace(/[，。？！、\s]/g, '')).size;
+            const cohesion = (1 - uniqueChars / totalChars) * 5 + 2.0;
+            const eb = cohesion.toFixed(2);
+
+            // 3. 信息熵 (S): 字符丰富度
+            const s = (Math.log2(uniqueChars) * 1.2).toFixed(2);
+
+            // 4. 等效温度 (T): 情感联动
+            let t = 298; // 默认室温
+            switch(emotion) {
+                case 'heroic': t = 1200 + Math.random() * 300; break;   // 高温熔化
+                case 'vitality': t = 310 + Math.random() * 20; break;  // 体温/生机
+                case 'ethereal': t = 77 + Math.random() * 20; break;   // 液氮低温
+                case 'nostalgic': t = 450 + Math.random() * 50; break; // 暖意
+                case 'romantic': t = 340 + Math.random() * 30; break;  // 温热
+                case 'reflective': t = 200 + Math.random() * 40; break;// 冷却
+            }
+            t = Math.round(t);
+
+            // 动态跳变效果
+            animateValue('val-rho', rho);
+            animateValue('val-eb', eb);
+            animateValue('val-s', s);
+            animateValue('val-t', t);
+        }
+
+        function animateValue(id, target) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const start = parseFloat(el.innerText) || 0;
+            const duration = 800;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const current = start + (target - start) * progress;
+                el.innerText = id === 'val-t' ? Math.round(current) : current.toFixed(2);
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
 
         // 如果跳过动画，直接渲染；否则延迟执行以配合动画
         if (skipAnimation) {
@@ -2501,7 +2736,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!card) return;
         const btn = document.getElementById('mode-btn');
         const tocBtn = document.getElementById('toc-btn');
-        const prevBtn = document.getElementById('prev-btn');
+        const prevBtn = document.getElementById('prev-btn');  // 已移除，保留兼容
         const nextBtn = document.getElementById('next-btn');
         const musicLabel = document.querySelector('.music-label');
         const themeBtn = document.getElementById('theme-btn');
@@ -2517,8 +2752,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 联动颜色切换：所有按钮一起变色
         btn.classList.toggle('blue-mode');
         tocBtn.classList.toggle('blue-mode');
-        prevBtn.classList.toggle('blue-mode');
-        nextBtn.classList.toggle('blue-mode');
+        if (prevBtn) prevBtn.classList.toggle('blue-mode');
+        if (nextBtn) nextBtn.classList.toggle('blue-mode');
         if (musicLabel) musicLabel.classList.toggle('blue-mode');
         if (themeBtn) themeBtn.classList.toggle('blue-mode');
         if (playmodeBtn) playmodeBtn.classList.toggle('blue-mode');
@@ -3186,6 +3421,7 @@ function resetCollapseTimer() {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     initCollapseMenu();
+    // 启动物理监测面板波形
     if (typeof startMonitorWaveform === 'function') startMonitorWaveform();
     // 强制隐藏公告小喇叭 (Fix: 确保缓存更新前也能隐藏)
     const notice = document.getElementById('announcement-notice');
@@ -3227,7 +3463,7 @@ window.addEventListener('resize', () => {
     }
 });
 
-// [新增] Logo 彩蛋监听 - 步步为营版
+// Logo 彩蛋监听 - 连点 5 次触发五彩粒子喷泉
 (function() {
     let logoClickCount = 0;
     let logoClickTimer;
@@ -3252,58 +3488,22 @@ window.addEventListener('resize', () => {
     }
 })();
 
-// ===== 诗词物理参数计算引擎 =====
-function updatePhysicsMonitor(poem) {
-    const monitor = document.getElementById('physics-monitor');
-    if (!monitor) return;
-
-    const contentStr = (poem.content || []).join('');
-    const totalChars = contentStr.replace(/[，。？！、\s]/g, '').length;
-    if (totalChars === 0) return;
-
-    const transitions = (contentStr.match(/[，。？！]/g) || []).length;
-    const turnWords = (contentStr.match(/[但却虽犹空复]/g) || []).length;
-    const rho = (transitions * 0.15 + turnWords * 0.8).toFixed(2);
-
-    const uniqueChars = new Set(contentStr.replace(/[，。？！、\s]/g, '')).size;
-    const cohesion = (1 - uniqueChars / totalChars) * 5 + 2.0;
-    const eb = cohesion.toFixed(2);
-
-    const s = (Math.log2(uniqueChars) * 1.2).toFixed(2);
-
-    animateMonitorValue('val-rho', rho);
-    animateMonitorValue('val-eb', eb);
-    animateMonitorValue('val-s', s);
-    animateMonitorValue('val-t', 298);
-}
-
-function animateMonitorValue(id, target) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const start = parseFloat(el.innerText) || 0;
-    const duration = 800;
-    const startTime = performance.now();
-
-    function update(now) {
-        const progress = Math.min((now - startTime) / duration, 1);
-        const current = start + (target - start) * progress;
-        el.innerText = id === 'val-t' ? Math.round(current) : current.toFixed(2);
-        if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-}
-
+/**
+ * [新增] 物理参数监测面板 - 量子波形示波器 (Quantum Monitor Waveform)
+ * 实现动态波形绘制，并根据鼠标交互产生“场强感应”
+ */
 function startMonitorWaveform() {
     const canvas = document.getElementById('monitor-waveform-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let width = canvas.width = canvas.offsetWidth;
     let height = canvas.height = canvas.offsetHeight;
-
+    
     let phase = 0;
     let mouseIntensity = 0;
     let targetIntensity = 0;
 
+    // 监听全局鼠标移动，计算对面板的“场强”感应
     document.addEventListener('mousemove', (e) => {
         const monitor = document.getElementById('physics-monitor');
         if (!monitor) return;
@@ -3311,15 +3511,19 @@ function startMonitorWaveform() {
         const dx = e.clientX - (rect.left + rect.width / 2);
         const dy = e.clientY - (rect.top + rect.height / 2);
         const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        // 500px 范围内产生感应
         targetIntensity = Math.max(0, (500 - dist) / 500);
     });
 
     function drawWave() {
         if (!ctx) return;
         ctx.clearRect(0, 0, width, height);
-
+        
+        // 简单的平滑插值
         mouseIntensity += (targetIntensity - mouseIntensity) * 0.1;
-
+        
+        // 绘制量子扰动波形
         ctx.beginPath();
         ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#d48888';
         ctx.lineWidth = 1.5;
@@ -3330,17 +3534,19 @@ function startMonitorWaveform() {
         const frequency = 0.05 + (mouseIntensity * 0.1);
 
         for (let x = 0; x < width; x++) {
-            const y = baseLine +
-                Math.sin(x * frequency + phase) * amplitude +
+            // 三重正弦波叠加模拟“量子不确定性”
+            const y = baseLine + 
+                Math.sin(x * frequency + phase) * amplitude + 
                 Math.sin(x * frequency * 1.5 + phase * 1.2) * (amplitude / 2) +
                 Math.sin(x * frequency * 0.8 + phase * 0.7) * (amplitude / 3);
-
+            
             if (x === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
         }
-
+        
         ctx.stroke();
-
+        
+        // 绘制扫描光点
         const scanX = (phase * 50) % width;
         ctx.beginPath();
         ctx.arc(scanX, baseLine + Math.sin(scanX * frequency + phase) * amplitude, 2, 0, Math.PI * 2);
@@ -3351,11 +3557,14 @@ function startMonitorWaveform() {
         requestAnimationFrame(drawWave);
     }
 
+    // 处理 Resize
     window.addEventListener('resize', () => {
         width = canvas.width = canvas.offsetWidth;
         height = canvas.height = canvas.offsetHeight;
     });
 
     drawWave();
+    
+    // [增强] 初始化星云雷达
+    if (typeof window.initNebulaRadar === 'function') window.initNebulaRadar();
 }
-

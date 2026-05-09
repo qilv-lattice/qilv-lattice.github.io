@@ -49,6 +49,208 @@ body::-webkit-scrollbar {
     position: relative;
 }
 
+/* ===== 诗歌星云雷达 (Nebula Radar) ===== */
+.nebula-radar-container {
+    position: fixed;
+    left: 25px; 
+    bottom: 210px; /* 位于 FCC 晶格 (25+180=205) 上方 */
+    width: 180px;
+    height: 220px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 3px solid var(--accent-color, #d48888);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+body.light-theme .nebula-radar-container {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.radar-header {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9px;
+    font-weight: bold;
+    color: var(--accent-color, #d48888);
+    margin-bottom: 5px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+#nebula-radar-canvas {
+    width: 100%;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+}
+
+.radar-tag {
+    margin-top: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 8px;
+    text-align: center;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+@media (max-width: 1200px) {
+    .nebula-radar-container { display: none; }
+}
+
+/* ===== 物理参数监测面板 (Physics Monitor) ===== */
+.physics-monitor {
+    display: block; /* 覆盖 base.css 的兜底隐藏，桌面端启用 */
+    position: fixed;
+    right: 5px; /* 紧贴 right，留出极小间隙以防滚动条完全遮挡 */
+    bottom: 5px; /* 紧贴底部 */
+    width: 190px; /* 略微收窄 */
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 3px solid var(--accent-color, #d48888); /* 改为右侧粗线，呼应右边缘 */
+    border-radius: 4px 0 0 4px; /* 仅左侧圆角 */
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+    font-family: 'Courier New', Courier, monospace;
+    color: #e0e0e0;
+    z-index: 1000; /* 确保在最上层 */
+    overflow: hidden;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* 深色模式下的适配 */
+body.light-theme .physics-monitor {
+    background: rgba(0, 0, 0, 0.03);
+    color: #333;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.monitor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+    color: var(--accent-color, #d48888);
+    border-bottom: 1px solid rgba(212, 136, 136, 0.2);
+    padding-bottom: 2px;
+}
+
+.monitor-status {
+    font-size: 7px;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    animation: monitor-blink 1.5s infinite;
+}
+
+@keyframes monitor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.monitor-waveform-box {
+    width: 100%;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.15);
+    margin-bottom: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    position: relative;
+    border-radius: 1px;
+}
+
+#monitor-waveform-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.monitor-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+    margin-bottom: 10px;
+}
+
+.monitor-row .label {
+    font-size: 9px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.monitor-row .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    animation: value-pulse 3s linear infinite;
+}
+
+/* 数值闪光与扫描线同步：scan 3s 内从顶到底，4 行均分相位 */
+.monitor-row:nth-child(2) .value { animation-delay: 0.6s; }
+.monitor-row:nth-child(3) .value { animation-delay: 1.2s; }
+.monitor-row:nth-child(4) .value { animation-delay: 1.8s; }
+.monitor-row:nth-child(5) .value { animation-delay: 2.4s; }
+
+@keyframes value-pulse {
+    0% {
+        filter: brightness(1.6);
+        text-shadow: 0 0 20px var(--accent-color, #d48888);
+    }
+    10%, 100% {
+        filter: brightness(1);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+}
+
+body.light-theme .monitor-row .value {
+    color: #000;
+}
+
+.monitor-row .unit {
+    font-size: 9px;
+    align-self: flex-end;
+    margin-top: -5px;
+    opacity: 0.5;
+}
+
+/* 扫描线动画 */
+.monitor-scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent-color, #d48888), transparent);
+    opacity: 0.5;
+    animation: monitor-scan 3s linear infinite;
+}
+
+@keyframes monitor-scan {
+    0% { top: -2%; }
+    100% { top: 102%; }
+}
+
+/* 移动端隐藏面板 */
+@media (max-width: 1200px) {
+    .physics-monitor {
+        display: none;
+    }
+}
+
 :root {
     --card-width: 480px;
 }
@@ -156,15 +358,6 @@ body.view-mode-single .poem-content.wing {
     left: auto;
 }
 
-/* 单卡模式：隐藏箭头 */
-body.view-mode-single .nav-arrow {
-    display: none;
-}
-
-/* 三卡模式：隐藏底部文字按钮（箭头替代） */
-body:not(.view-mode-single) .control-panel {
-    display: none;
-}
 
 /* SVG 尺寸 */
 .nav-arrow svg {
@@ -364,146 +557,6 @@ header {
 
 .body-text p {
     margin: 0 0.5rem;
-}
-
-/* ===== 物理参数监测面板 (Physics Monitor) ===== */
-.physics-monitor {
-    display: block;
-    position: fixed;
-    right: 5px;
-    bottom: 5px;
-    width: 190px;
-    padding: 8px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-right: 3px solid var(--accent-color, #d48888);
-    border-radius: 4px 0 0 4px;
-    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
-    font-family: 'Courier New', Courier, monospace;
-    color: #e0e0e0;
-    z-index: 1000;
-    overflow: hidden;
-    pointer-events: none;
-    transition: all 0.5s ease;
-}
-
-body.light-theme .physics-monitor {
-    background: rgba(0, 0, 0, 0.03);
-    color: #333;
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-.monitor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 9px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    margin-bottom: 5px;
-    color: var(--accent-color, #d48888);
-    border-bottom: 1px solid rgba(212, 136, 136, 0.2);
-    padding-bottom: 2px;
-}
-
-.monitor-status {
-    font-size: 7px;
-    color: #00ff00;
-    text-shadow: 0 0 5px #00ff00;
-    animation: monitor-blink 1.5s infinite;
-}
-
-@keyframes monitor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-.monitor-waveform-box {
-    width: 100%;
-    height: 22px;
-    background: rgba(0, 0, 0, 0.15);
-    margin-bottom: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    position: relative;
-    border-radius: 1px;
-}
-
-#monitor-waveform-canvas {
-    width: 100%;
-    height: 100%;
-}
-
-.monitor-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 2px;
-}
-
-.monitor-row .label {
-    font-size: 9px;
-    opacity: 0.7;
-    margin-bottom: 2px;
-    text-transform: uppercase;
-}
-
-.monitor-row .value {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    animation: value-pulse 3s linear infinite;
-}
-
-.monitor-row:nth-child(3) .value { animation-delay: 0.6s; }
-.monitor-row:nth-child(4) .value { animation-delay: 1.2s; }
-.monitor-row:nth-child(5) .value { animation-delay: 1.8s; }
-.monitor-row:nth-child(6) .value { animation-delay: 2.4s; }
-
-@keyframes value-pulse {
-    0% {
-        filter: brightness(1.6);
-        text-shadow: 0 0 20px var(--accent-color, #d48888);
-    }
-    10%, 100% {
-        filter: brightness(1);
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-}
-
-body.light-theme .monitor-row .value {
-    color: #000;
-}
-
-.monitor-row .unit {
-    font-size: 9px;
-    align-self: flex-end;
-    margin-top: -5px;
-    opacity: 0.5;
-}
-
-.monitor-scan-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--accent-color, #d48888), transparent);
-    opacity: 0.5;
-    animation: monitor-scan 3s linear infinite;
-}
-
-@keyframes monitor-scan {
-    0% { top: -2%; }
-    100% { top: 102%; }
-}
-
-@media (max-width: 1200px) {
-    .physics-monitor {
-        display: none;
-    }
 }
 
 /* ===== 装饰枝条 ===== */

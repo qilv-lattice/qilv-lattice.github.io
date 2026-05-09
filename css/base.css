@@ -2456,7 +2456,6 @@ header.char-game-active {
     grid-template-rows: 26px 26px;
     gap: 4px;
     pointer-events: none;
-    writing-mode: horizontal-tb;
 }
 
 /* 移动端印章样式 */
@@ -2479,9 +2478,18 @@ header.char-game-active {
     box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.2), inset 0 0 5px rgba(230, 0, 0, 0.1);
 }
 
-/* 页码 - 隐藏 */
+/* 页码 - 卡片底部居中 */
 .poem-page-number {
-    display: none;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #C0C0C0;
+    opacity: 0.85;
+    letter-spacing: 1px;
+    z-index: 2;
 }
 
 /* 玫瑰背景 - 移动端简化 */
@@ -2542,6 +2550,7 @@ header.char-game-active {
 .poem-content.yunjian-mode .stamps-container {
     z-index: 2;
 }
+
 
 /* ===== iPad 断点 (768px+) ===== */
 @media (min-width: 768px) {
@@ -3074,72 +3083,49 @@ header.char-game-active {
 
 .lock-input-row {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
-    margin-top: 0.4rem;
 }
 
 .lock-password-input {
-    padding: 10px 16px;
-    border: none;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 0;
-    font-size: 1.1rem;
-    font-family: 'Courier New', monospace;
-    width: 180px;
+    padding: 8px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    width: 140px;
     outline: none;
-    background: transparent;
-    color: #f0e4c8;
-    letter-spacing: 0.3em;
-    text-align: center;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.lock-password-input::placeholder {
-    color: rgba(212, 175, 55, 0.25);
-    letter-spacing: 0.2em;
+    transition: border-color 0.2s;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .lock-password-input:focus {
-    border-bottom-color: rgba(212, 175, 55, 0.9);
-    box-shadow: 0 2px 20px -8px rgba(212, 175, 55, 0.6);
+    border-color: var(--accent-color);
 }
 
 .lock-unlock-btn {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    border-radius: 50%;
-    background: transparent;
-    color: rgba(212, 175, 55, 0.9);
-    font-size: 1.1rem;
-    font-family: inherit;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: opacity 0.2s;
 }
 
 .lock-unlock-btn:hover {
-    background: rgba(212, 175, 55, 0.15);
-    border-color: rgba(212, 175, 55, 0.9);
-    color: #f0e4c8;
-    box-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
-    transform: translateX(2px);
+    opacity: 0.85;
 }
 
 .lock-unlock-btn:active {
-    transform: scale(0.92);
+    transform: scale(0.95);
 }
 
 .lock-error {
-    color: #c91f37;
-    font-size: 0.78rem;
-    letter-spacing: 0.25em;
-    margin-top: 0.6rem;
-    text-shadow: 0 0 8px rgba(201, 31, 55, 0.5);
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
     animation: shake 0.3s ease-in-out;
 }
 
@@ -3321,33 +3307,13 @@ header.char-game-active {
     position: fixed;
     inset: 0;
     z-index: 99999;
-    background:
-        radial-gradient(ellipse at center, #1a1a1a 0%, #050505 70%, #000 100%);
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.6s ease;
-    overflow: hidden;
-}
-
-/* 背景暗纹扫光 */
-#global-lock-overlay::before {
-    content: "";
-    position: absolute;
-    inset: -50%;
-    background:
-        repeating-linear-gradient(45deg,
-            transparent 0,
-            transparent 80px,
-            rgba(201, 31, 55, 0.025) 80px,
-            rgba(201, 31, 55, 0.025) 81px);
-    pointer-events: none;
-    animation: lockBgDrift 30s linear infinite;
-}
-
-@keyframes lockBgDrift {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(80px, 80px); }
+    transition: opacity 0.4s ease;
 }
 
 #global-lock-overlay.unlocking {
@@ -3356,110 +3322,19 @@ header.char-game-active {
 }
 
 .global-lock-box {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.4rem;
-    padding: 3rem 3.2rem;
+    gap: 1.2rem;
+    padding: 2.8rem 2.4rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
     text-align: center;
-    animation: lockBoxFadeIn 1.2s ease-out;
-}
-
-@keyframes lockBoxFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.global-lock-logo-wrap {
-    position: relative;
-    width: 128px;
-    height: 128px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.4rem;
-}
-
-.global-lock-logo-wrap::before,
-.global-lock-logo-wrap::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-/* 外层缓慢呼吸光晕 */
-.global-lock-logo-wrap::before {
-    box-shadow:
-        0 0 60px rgba(201, 31, 55, 0.35),
-        0 0 120px rgba(201, 31, 55, 0.15),
-        inset 0 0 30px rgba(201, 31, 55, 0.2);
-    animation: lockLogoBreath 3.5s ease-in-out infinite;
-}
-
-/* 内层旋转描边环 */
-.global-lock-logo-wrap::after {
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    border-top-color: rgba(212, 175, 55, 0.9);
-    border-right-color: rgba(201, 31, 55, 0.7);
-    animation: lockLogoSpin 8s linear infinite;
-}
-
-@keyframes lockLogoBreath {
-    0%, 100% {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-}
-
-@keyframes lockLogoSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 .global-lock-logo {
-    width: 96px;
-    height: 96px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(201, 31, 55, 0.6));
-    border-radius: 50%;
-}
-
-.global-lock-title {
-    margin: 0;
-    font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
-    font-size: 2rem;
-    font-weight: 400;
-    color: #f0e4c8;
-    letter-spacing: 0.35em;
-    text-shadow:
-        0 0 12px rgba(212, 175, 55, 0.4),
-        0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.global-lock-subtitle {
-    margin: -0.4rem 0 0 0;
-    font-family: 'Courier New', monospace;
-    font-size: 0.72rem;
-    color: rgba(212, 175, 55, 0.55);
-    letter-spacing: 0.4em;
-    font-weight: 300;
-}
-
-.global-lock-motto {
-    margin: 0.3rem 0 0.6rem 0;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 0.82rem;
-    color: rgba(240, 228, 200, 0.5);
-    letter-spacing: 0.2em;
-    font-weight: 300;
-    padding: 0.5rem 1.2rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.25);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    width: 80px;
+    height: auto;
+    opacity: 0.85;
 }
