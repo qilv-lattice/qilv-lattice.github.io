@@ -2457,6 +2457,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (pageNumEl) {
                 pageNumEl.textContent = `${index + 1} / ${poems.length}`;
             }
+
+            // 更新物理参数监测面板
+            updatePhysicsMonitor(poem);
         };
 
         // 如果跳过动画，直接渲染；否则延迟执行以配合动画
@@ -3183,6 +3186,7 @@ function resetCollapseTimer() {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     initCollapseMenu();
+    if (typeof startMonitorWaveform === 'function') startMonitorWaveform();
     // 强制隐藏公告小喇叭 (Fix: 确保缓存更新前也能隐藏)
     const notice = document.getElementById('announcement-notice');
     if (notice) notice.style.display = 'none';
@@ -3247,4 +3251,111 @@ window.addEventListener('resize', () => {
         });
     }
 })();
+
+// ===== 诗词物理参数计算引擎 =====
+function updatePhysicsMonitor(poem) {
+    const monitor = document.getElementById('physics-monitor');
+    if (!monitor) return;
+
+    const contentStr = (poem.content || []).join('');
+    const totalChars = contentStr.replace(/[，。？！、\s]/g, '').length;
+    if (totalChars === 0) return;
+
+    const transitions = (contentStr.match(/[，。？！]/g) || []).length;
+    const turnWords = (contentStr.match(/[但却虽犹空复]/g) || []).length;
+    const rho = (transitions * 0.15 + turnWords * 0.8).toFixed(2);
+
+    const uniqueChars = new Set(contentStr.replace(/[，。？！、\s]/g, '')).size;
+    const cohesion = (1 - uniqueChars / totalChars) * 5 + 2.0;
+    const eb = cohesion.toFixed(2);
+
+    const s = (Math.log2(uniqueChars) * 1.2).toFixed(2);
+
+    animateMonitorValue('val-rho', rho);
+    animateMonitorValue('val-eb', eb);
+    animateMonitorValue('val-s', s);
+    animateMonitorValue('val-t', 298);
+}
+
+function animateMonitorValue(id, target) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const start = parseFloat(el.innerText) || 0;
+    const duration = 800;
+    const startTime = performance.now();
+
+    function update(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const current = start + (target - start) * progress;
+        el.innerText = id === 'val-t' ? Math.round(current) : current.toFixed(2);
+        if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+}
+
+function startMonitorWaveform() {
+    const canvas = document.getElementById('monitor-waveform-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = canvas.offsetWidth;
+    let height = canvas.height = canvas.offsetHeight;
+
+    let phase = 0;
+    let mouseIntensity = 0;
+    let targetIntensity = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        const monitor = document.getElementById('physics-monitor');
+        if (!monitor) return;
+        const rect = monitor.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        targetIntensity = Math.max(0, (500 - dist) / 500);
+    });
+
+    function drawWave() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+
+        mouseIntensity += (targetIntensity - mouseIntensity) * 0.1;
+
+        ctx.beginPath();
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#d48888';
+        ctx.lineWidth = 1.5;
+        ctx.globalAlpha = 0.6;
+
+        const baseLine = height / 2;
+        const amplitude = 5 + (mouseIntensity * 12);
+        const frequency = 0.05 + (mouseIntensity * 0.1);
+
+        for (let x = 0; x < width; x++) {
+            const y = baseLine +
+                Math.sin(x * frequency + phase) * amplitude +
+                Math.sin(x * frequency * 1.5 + phase * 1.2) * (amplitude / 2) +
+                Math.sin(x * frequency * 0.8 + phase * 0.7) * (amplitude / 3);
+
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+
+        const scanX = (phase * 50) % width;
+        ctx.beginPath();
+        ctx.arc(scanX, baseLine + Math.sin(scanX * frequency + phase) * amplitude, 2, 0, Math.PI * 2);
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.fill();
+
+        phase += 0.05 + (mouseIntensity * 0.05);
+        requestAnimationFrame(drawWave);
+    }
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    });
+
+    drawWave();
+}
 

@@ -4,6 +4,12 @@
  * 无 position:fixed、无复杂动画
  */
 
+/* ===== 桌面专属组件 移动端强制隐藏 ===== */
+/* 物理参数监视面板：DOM 始终存在，但小屏死活不显示 */
+.physics-monitor {
+    display: none;
+}
+
 /* ===== 水墨渐显首屏 Hero ===== */
 @property --ink-spread {
     syntax: '<percentage>';
