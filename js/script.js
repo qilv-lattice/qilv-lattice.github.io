@@ -3165,11 +3165,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 滑动距离超过50px才触发
             if (Math.abs(diff) > 50) {
                 if (diff > 0) {
-                    // 左滑：下一首
-                    nextPoem();
-                } else {
-                    // 右滑：上一首
+                    // 左滑：上一首
                     prevPoem();
+                } else {
+                    // 右滑：下一首
+                    nextPoem();
                 }
             }
         }, { passive: true });
