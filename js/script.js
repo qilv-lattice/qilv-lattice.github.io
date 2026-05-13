@@ -54,14 +54,13 @@ function isPoemUnlocked(title) {
     return !!map[token] || !!map[title];
 }
 
-// 仅 情感珍藏 系列诗词：在目录中整体隐藏（聚合显示）
+// 老站公开展示：不再隐藏加锁诗词，不再要求单篇密码。
 function isLockedPoemHidden(poem) {
-    return !!(poem && poem.locked && !isPoemUnlocked(poem.title) && poem.title && poem.title.includes('情感珍藏'));
+    return false;
 }
 
-// 所有加锁诗词：内容需要密码才能查看
 function isContentLocked(poem) {
-    return !!(poem && poem.locked && !isPoemUnlocked(poem.title));
+    return false;
 }
 
 function markPoemUnlocked(title) {
@@ -2165,16 +2164,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (tongYunRegex.test(displayTitle)) {
                 displayTitle = displayTitle.replace(tongYunRegex, "");
             }
-            // 加锁诗词：隐藏标题
-            if (poem.locked && !isPoemUnlocked(poem.title)) {
+            if (isContentLocked(poem)) {
                 displayTitle = '情感珍藏';
             }
             titleEl.innerText = displayTitle;
         }
         if (bodyDiv) {
             bodyDiv.innerHTML = '';
-            // 加锁诗词：副卡显示锁定提示
-            if (poem.locked && !isPoemUnlocked(poem.title)) {
+            if (isContentLocked(poem)) {
                 bodyDiv.innerHTML = '<div class="poem-locked-overlay"><div class="lock-icon">🔒</div><p class="lock-hint">情感珍藏，待您开启</p></div>';
             } else {
                 poem.content.forEach((line, index) => {
