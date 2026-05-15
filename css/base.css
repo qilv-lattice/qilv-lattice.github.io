@@ -3363,3 +3363,30 @@ header.char-game-active {
     height: auto;
     opacity: 0.85;
 }
+
+@media (max-width: 768px) {
+    .poem-content {
+        padding-top: calc(var(--card-vertical-padding) + 42px);
+    }
+
+    .tech-romance-tag {
+        top: 6px;
+        left: 0;
+        right: 0;
+        padding-right: 0;
+        writing-mode: horizontal-tb;
+        text-align: center;
+        letter-spacing: 2px;
+        line-height: 1;
+    }
+
+    .tech-romance-tag::before,
+    .tech-romance-tag::after {
+        content: none;
+        display: none;
+    }
+
+    .horizontal-decoration-lines {
+        top: 22px;
+    }
+}
