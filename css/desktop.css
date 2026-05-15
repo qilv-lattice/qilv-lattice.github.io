@@ -273,10 +273,56 @@ body.light-theme .monitor-row .value {
     max-width: none;
 }
 
-/* 桌面端三卡：上边缘向上延展15px，底部保持不动 */
+/* 桌面端三卡：上边缘向上延展24px，底部保持不动 */
 body:not(.view-mode-single) .screen-grid .poem-content {
-    margin-top: -15px;
-    padding-top: calc(var(--card-vertical-padding) + 33px);
+    margin-top: -24px;
+    padding-top: calc(var(--card-vertical-padding) + 42px);
+}
+
+body:not(.view-mode-single) .screen-grid .horizontal-decoration-lines {
+    top: 22px;
+}
+
+body:not(.view-mode-single) .screen-grid .tech-romance-tag {
+    top: 6px;
+    left: 0;
+    right: 0;
+    padding-right: 0;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+body:not(.view-mode-single) .screen-grid .tech-romance-tag::before,
+body:not(.view-mode-single) .screen-grid .tech-romance-tag::after {
+    content: none;
+    display: none;
+}
+
+body.view-mode-single .poem-content {
+    padding-top: calc(var(--card-vertical-padding) + 42px);
+}
+
+body.view-mode-single .horizontal-decoration-lines {
+    top: 22px;
+}
+
+body.view-mode-single .tech-romance-tag {
+    top: 6px;
+    left: 0;
+    right: 0;
+    padding-right: 0;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+body.view-mode-single .tech-romance-tag::before,
+body.view-mode-single .tech-romance-tag::after {
+    content: none;
+    display: none;
 }
 
 /* 允许箭头相对于 grid 定位 */
