@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-03-31 22:41",
+    "lastUpdate": "2026-05-14 18:50",
     "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
     "latestWorks": [
+        {
+            "title": "七律·股海",
+            "receivedAt": "2026-05-14 18:50"
+        },
         {
             "title": "七律·碎片",
             "receivedAt": "2026-03-31 22:41"
@@ -12,10 +16,6 @@
         },
         {
             "title": "七律·心弦",
-            "receivedAt": "2026-03-27 09:35"
-        },
-        {
-            "title": "七律·A股",
             "receivedAt": "2026-03-27 09:35"
         }
     ],
@@ -82,6 +82,22 @@
         }
     ],
     "poems": [
+        {
+            "id": 102,
+            "title": "七律·股海",
+            "author": "七律",
+            "dynasty": "contemporary",
+            "content": [
+                "烟火琉璃方孔银，渔翁鹬蚌盗铃人。",
+                "丛林争利谁成鹿，渭水抛竿孰是鳞。",
+                "大话慢牛驮散户，小心主力画天真。",
+                "虚高指数请君瓮，泡沫佯装座上宾。"
+            ],
+            "locked": false,
+            "category": "观察",
+            "notes": [],
+            "encryptedContent": "gFLSjnARQVslKqxLY4dqpvn9WkOdFEygbV/iV2JBstzXKkqWhgY6DjfCXEUfmClH8dQA/YNdFayt/W9j3Z5gIsjPNyOk+wxIrxYEcmzOdjX6xR2gk9QDikeV02NioonYl4pwR48Qh2Asc2RP7bI4qeQU6juB2EcJ10gcIOsgqzX3b32hWnjvhIM8WdaedX9Gjaee/7pGJy7FCsDideN5XsYN0z0sL+y4CTn5DcY9EJPXpk7QeNl7zri44CrTJ3QBO08MY6RFR2NBUagtQfEDBQ17Z4BMvEAzPV4n7LsPtgjQ9h5KbAJpRqWzPOkgcxdVhLe+VDmpI2/wSyUmHl2GjQ=="
+        },
         {
             "id": 101,
             "title": "七律·碎片",
