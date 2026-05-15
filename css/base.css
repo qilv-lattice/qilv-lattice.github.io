@@ -2994,7 +2994,7 @@ header.char-game-active {
 /* ?? + ??????????/???????? */
 .card-header-group {
     position: absolute;
-    top: 4px;
+    top: 16px;
     left: -4px;
     display: flex;
     align-items: center;
