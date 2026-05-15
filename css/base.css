@@ -458,6 +458,18 @@ body::before {
 }
 
 @media (max-width: 768px) {
+    .container {
+        gap: 0.65rem;
+    }
+
+    header {
+        margin-bottom: 0.2rem;
+    }
+
+    .site-footer {
+        margin-top: 0.2rem;
+    }
+
     .poem-content {
         padding-top: calc(var(--card-vertical-padding) + 42px);
     }
