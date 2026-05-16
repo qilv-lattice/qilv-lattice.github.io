@@ -3402,3 +3402,7 @@ header.char-game-active {
         top: 22px;
     }
 }
+
+.tech-romance-tag {
+    display: none !important;
+}
