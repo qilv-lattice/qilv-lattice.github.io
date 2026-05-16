@@ -470,31 +470,6 @@ body::before {
         margin-top: 0.2rem;
     }
 
-    .poem-content {
-        padding-top: calc(var(--card-vertical-padding) + 42px);
-    }
-
-    .tech-romance-tag {
-        top: 6px;
-        left: 0;
-        right: 0;
-        padding-right: 0;
-        writing-mode: horizontal-tb;
-        text-align: center;
-        letter-spacing: 2px;
-        line-height: 1;
-    }
-
-    .tech-romance-tag::before,
-    .tech-romance-tag::after {
-        content: none;
-        display: none;
-    }
-
-    .horizontal-decoration-lines {
-        top: 22px;
-    }
-
     :root {
         --char-cell-size: 21px;
     }
@@ -2329,6 +2304,11 @@ header.char-game-active {
 }
 
 /* 网站 Logo 图标 (原梅花位置) */
+
+.tech-romance-tag {
+    display: none !important;
+}
+
 .site-logo-icon {
     position: absolute;
     top: 20px;
@@ -2441,6 +2421,33 @@ header.char-game-active {
 
 
 /* 梅花装饰 - 悬挂在红线末端 */
+@media (max-width: 768px) {
+    .poem-content {
+        padding-top: calc(var(--card-vertical-padding) + 42px);
+    }
+
+    .tech-romance-tag {
+        top: 6px;
+        left: 0;
+        right: 0;
+        padding-right: 0;
+        writing-mode: horizontal-tb;
+        text-align: center;
+        letter-spacing: 2px;
+        line-height: 1;
+    }
+
+    .tech-romance-tag::before,
+    .tech-romance-tag::after {
+        content: none;
+        display: none;
+    }
+
+    .horizontal-decoration-lines {
+        top: 22px;
+    }
+}
+
 .decoration-plum {
     position: absolute;
     top: 125px;
@@ -3374,35 +3381,4 @@ header.char-game-active {
     width: 80px;
     height: auto;
     opacity: 0.85;
-}
-
-@media (max-width: 768px) {
-    .poem-content {
-        padding-top: calc(var(--card-vertical-padding) + 42px);
-    }
-
-    .tech-romance-tag {
-        top: 6px;
-        left: 0;
-        right: 0;
-        padding-right: 0;
-        writing-mode: horizontal-tb;
-        text-align: center;
-        letter-spacing: 2px;
-        line-height: 1;
-    }
-
-    .tech-romance-tag::before,
-    .tech-romance-tag::after {
-        content: none;
-        display: none;
-    }
-
-    .horizontal-decoration-lines {
-        top: 22px;
-    }
-}
-
-.tech-romance-tag {
-    display: none !important;
 }
