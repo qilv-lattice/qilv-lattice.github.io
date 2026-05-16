@@ -466,10 +466,6 @@ body::before {
         margin-bottom: 0.2rem;
     }
 
-    .site-footer {
-        margin-top: 0.2rem;
-    }
-
     :root {
         --char-cell-size: 21px;
     }
@@ -2087,6 +2083,12 @@ header.char-game-active {
 }
 
 /* ===== 更新通知喇叭 ===== */
+@media (max-width: 768px) {
+    .site-footer {
+        margin-top: 0.2rem;
+    }
+}
+
 .update-notice {
     display: none;
     position: fixed;
