@@ -294,6 +294,7 @@ function restartBgInterval() {
 
 // 星星样式映射表 (数据驱动，starStyle 字段在 poems.json 中)
 const STAR_STYLES = {
+    gray: { color: 'rgba(120, 120, 120, 0.45)' },
     red: { color: '#DE2910' },
     blue: { color: '#1E90FF' },
     rainbow: { className: 'rainbow-stars' }
@@ -2205,8 +2206,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             fiveStars.style.color = '';
             fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
 
-            // 只有红蓝彩才显示
-            const wingStyle = STAR_STYLES[poem.starStyle];
+            // 没有指定 starStyle 时显示灰色占位星
+            const wingStyle = STAR_STYLES[poem.starStyle || 'gray'];
             if (wingStyle) {
                 fiveStars.classList.add('show-stars');
                 if (wingStyle.className) fiveStars.classList.add(wingStyle.className);
@@ -2464,8 +2465,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 fiveStars.querySelectorAll('svg').forEach(svg => svg.style.fill = '');
                 fiveStars.style.color = '';
 
-                // 星星样式 (数据驱动，只有红蓝彩才显示)
-                const mainStyle = STAR_STYLES[poem.starStyle];
+                // 星星样式：未指定 starStyle 时显示灰色占位星
+                const mainStyle = STAR_STYLES[poem.starStyle || 'gray'];
                 if (mainStyle) {
                     fiveStars.classList.add('show-stars');
                     if (mainStyle.className) fiveStars.classList.add(mainStyle.className);
