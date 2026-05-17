@@ -3005,6 +3005,7 @@ header.char-game-active {
     position: absolute;
     top: 16px;
     left: -4px;
+    right: -4px;
     display: flex;
     align-items: center;
     gap: 3px;
@@ -3022,10 +3023,11 @@ header.char-game-active {
 }
 
 .card-header-group .five-stars-row {
-    position: static;
-    top: auto;
+    position: absolute;
+    top: 0;
     left: auto;
-    transform: translateY(-4px);
+    right: 18px;
+    transform: none;
 }
 
 @media (max-width: 1023px) {
