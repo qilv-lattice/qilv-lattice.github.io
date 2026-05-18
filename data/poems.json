@@ -21,6 +21,10 @@
     ],
     "modifiedWorks": [
         {
+            "title": "七律·写真",
+            "modifiedAt": "2026-05-18 02:22"
+        },
+        {
             "title": "《七律·奴性》",
             "modifiedAt": "2026-03-07 18:33"
         },
@@ -181,14 +185,15 @@
             "dynasty": "contemporary",
             "content": [
                 "峰擎群玉拔千寻，字挟殷雷咆哮音。",
-                "爱恨情仇争共振，宫商角徵互相侵。",
+                "爱恨情仇缘共振，宫商角徵羽相侵。",
                 "风吹絮果真身贱，人困周南大景深。",
                 "纸上运筹扛鼎力，温柔穿透石头心。"
             ],
             "locked": true,
             "category": "心声",
-            "encryptedContent": "55jrbDUxpa8ReJydbHqmUgXMowf9T/ydH7d1BmBSCjnuMRgxD87pzzp4eMljlMlIgoLKiqmNUmWBUkUdDei/PV7Y3ptHu1Eu6T6eky7bRzLONI5y6Xnmq9K7QndSFa/H6nIRtkNKy7dqPTcycmNTO+yV7PBrzP63CpUH/Z4VbthgtlMv4qbkTzKTPqd4dwFiwViQvvKYwpPClbkLEnyxdzAFlY80+x20945WeMH0U3iZvVEIgSkTnOnT+lWJRl5ibWCYTHDGyw6uoMFSx2bs7/u2obSRGPEdBsf6GlEo7idVRfXJ7cL6H83ESjHN6/OfOwtiVjKWkjpX1OhoWd/2cg==",
-            "starStyle": "red"
+            "encryptedContent": "M8kXqZQzt5KqTQDex85wWMDr7FQmEAtl5Z3AVHZbXSiA0wVhx3vTOheqzFEuijk0/RO/kAxHZfs0unjn57LpUWkJ1j+GunG7HLh/DIGgmUQeduzRPTvBwmN9XOLH9o4s4XEql37k1nzukin5qF5jbPDaq4YVcZCIc9b+H5wag+9iNczMzZk5Y7JE7P8Eg2pxnnXRKkesRAFwYBx/KFjAb2DE3+7gcdic0wrTMSY6zcV9QboLJvAwlcKnAmz2wk4t8k7hN9p/AmWCRoTtRq3MpE8PYlwEXAtt8EampJ6pQ4ZonAjUySjkkrF7tXBu1WyO+6gDW51UuwJEoAJBnj/j6g==",
+            "starStyle": "red",
+            "notes": []
         },
         {
             "id": 95,
