@@ -21,6 +21,10 @@
     ],
     "modifiedWorks": [
         {
+            "title": "七律·嬗变",
+            "modifiedAt": "2026-05-18 17:39"
+        },
+        {
             "title": "七律·写真",
             "modifiedAt": "2026-05-18 02:22"
         },
@@ -291,13 +295,14 @@
             "techRomance": false,
             "category": "情思",
             "locked": true,
-            "encryptedContent": "sykzTeXaG52EoA/R4vfx9cH3wlywLGWflqIJn8FBy2nGxGETWYCG5ctZCP7RezJfn01qLD743YOhsAZoVmYWwrZHjM0udFE0HIXqtQKpNQ7/CgyWpRE3E0wFfz43d0Bo9nkJexpue0dwF5cRYCXPwRwGg174pInPV7GnTsJbUFqniKbAH6es7lSQndmktMRpgMdc7/88OwjWk56B7GlYgj3AG5ZYhh6WBGNi3h0SVyReMBRZiNwBdciebqUP0KJmzzRxs1FaZiC4HhGvsakN+hl6CGuaggdf0k29G3c83OZ02c8V91t5ziLI/YHr5DyKX0WoEKk=",
+            "encryptedContent": "W7aR/Wo+pxb6O8Yg8jdQj9liQiE9pZgK6BI4jVd3uFxat4o0fWbekraGmpmWUuxgsmpWtW4PbE1QxxyFtSwZqmBlUDPuSXvlLl6L+MaKXN1HfwgnHPCJDNB4EEB5h4haiLPEKOBzg1/W7f/5SYWP5ilrxVYEpLqhaCml2AUnDiJ9MNYJbSfO0lSeIrgJJ4mnwJlt1tNahtlIYb9UngNP2NnJ5arwf22kaEpjqbQj6esE6d+tCoDOt2cM+S36/ARNlFKjvhtyLmuDJRAtC0cF6P0+FOi+I43NHagDEK5p3yl5+ScqIhlWGRwvVdBtSRGyja2TgTAHLhwwPSSWhTI8vw==",
             "content": [
-                "月是多情小太阳，我拿月相刻沧桑。",
-                "时空间隙填真意，汉字精灵绣锦囊。",
+                "月是撩人小太阳，我拿月相刻沧桑。",
+                "真空世界填真意，锦瑟情丝绣锦囊。",
                 "恰似桃溪迷阮肇，浑如神女逗襄王。",
                 "厘清缥缈关雎曲，一岁思量已可商。"
-            ]
+            ],
+            "notes": []
         },
         {
             "title": "七律·自题",
