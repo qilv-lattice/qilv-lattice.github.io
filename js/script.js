@@ -2121,6 +2121,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                         alert("烟花组件尚未加载完成，请稍后再试。");
                     }
                 }
+                if (action === 'dislocation') {
+                    const page = 'Dislocation.html';
+                    const opened = window.open(page, '_blank', 'noopener');
+                    if (!opened) {
+                        window.location.href = page;
+                    }
+                }
                 if (action === 'share-card') {
                     console.log('点击生成雅帖');
                     if (window.generateShareCard) {

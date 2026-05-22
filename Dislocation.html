@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCC 晶胞与 Thompson 四面体空间推演</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; color: #333; background-color: #f4f6f8; max-width: 1100px; margin: 0 auto; padding: 20px;
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; font-size: 2.5em; margin-bottom: 10px; }
+        .header p { color: #7f8c8d; font-size: 1.1em; }
+        .card { background: #fff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-bottom: 30px; }
+        #plot { width: 100%; height: 650px; background: #fafafa; border-radius: 8px; overflow: hidden; border: 1px solid #eee; position: relative;}
+        h2 { color: #2980b9; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; }
+        .formula-group { background: #f8f9fa; border-left: 4px solid #3498db; padding: 15px 20px; margin-bottom: 20px; border-radius: 0 5px 5px 0; overflow-x: auto; }
+        .formula-group h3 { margin-top: 0; color: #34495e; font-size: 1.2em; }
+        /* 保险2：加载动画 */
+        #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #3498db; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>汤普森四面体 (Thompson Tetrahedron)</h1>
+        <p>FCC 晶体结构中的空间几何与位错矢量推演</p>
+    </div>
+
+    <div class="card">
+        <h2>1. 经典空间结构模型</h2>
+        <p>视角已锁定为晶体学标准等轴测视角，Z轴向上，原点位于后方，确保 A、B、C 面心一目了然。</p>
+        <div id="plot">
+            <div id="loading">正在向显卡输送算力... (绘图引擎加载中)</div>
+        </div>
+    </div>
+
+    <div class="card" id="math-section">
+        <h2>2. 柏氏矢量计算全集</h2>
+        
+        <div class="formula-group">
+            <h3>I. 基础坐标设定</h3>
+            <p>基于单位晶胞边长 $a = 1$，建立如下基准坐标：</p>
+            $$D(0, 0, 0) \quad \text{(原点)}$$
+            $$A(1/2, 1/2, 0) \quad \text{(底面面心, z=0)}$$
+            $$B(1/2, 0, 1/2) \quad \text{(侧面面心, y=0)}$$
+            $$C(0, 1/2, 1/2) \quad \text{(侧面面心, x=0)}$$
+        </div>
+
+        <div class="formula-group">
+            <h3>II. 四面体各面中心坐标</h3>
+            <p>对面法则：几何中心为面上三顶点的算术平均 $(x,y,z) = (P_1+P_2+P_3)/3$：</p>
+            $$\delta \, (\triangle ABC\text{中心}) = \left(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\right)$$
+            $$\alpha \, (\triangle BCD\text{中心}) = \left(\frac{1}{6}, \frac{1}{6}, \frac{1}{3}\right)$$
+            $$\beta \, (\triangle ACD\text{中心}) = \left(\frac{1}{6}, \frac{1}{3}, \frac{1}{6}\right)$$
+            $$\gamma \, (\triangle ABD\text{中心}) = \left(\frac{1}{3}, \frac{1}{6}, \frac{1}{6}\right)$$
+        </div>
+
+        <div class="formula-group">
+            <h3>III. 全位错 (Perfect Dislocations)</h3>
+            <p>矢量形式 $\frac{a}{2}\langle 110 \rangle$：</p>
+            $$DB = \frac{1}{2}[1, 0, 1], \quad DC = \frac{1}{2}[0, 1, 1], \quad DA = \frac{1}{2}[1, 1, 0]$$
+            $$BC = \frac{1}{2}[-1, 1, 0], \quad AB = \frac{1}{2}[0, -1, 1], \quad AC = \frac{1}{2}[-1, 0, 1]$$
+        </div>
+
+        <div class="formula-group">
+            <h3>IV. Shockley 不全位错 (Partial Dislocations)</h3>
+            <p>矢量形式 $\frac{a}{6}\langle 112 \rangle$：</p>
+            $$B\alpha = \frac{1}{6}[-2, 1, -1], \quad C\alpha = \frac{1}{6}[1, -2, -1], \quad D\alpha = \frac{1}{6}[1, 1, 2]$$
+            $$A\beta = \frac{1}{6}[-2, -1, 1], \quad C\beta = \frac{1}{6}[1, -1, -2], \quad D\beta = \frac{1}{6}[1, 2, 1]$$
+            $$A\gamma = \frac{1}{6}[-1, -2, 1], \quad B\gamma = \frac{1}{6}[-1, 1, -2], \quad D\gamma = \frac{1}{6}[2, 1, 1]$$
+            $$\delta A = \frac{1}{6}[1, 1, -2], \quad \delta B = \frac{1}{6}[1, -2, 1], \quad \delta C = \frac{1}{6}[-2, 1, 1]$$
+        </div>
+
+        <div class="formula-group">
+            <h3>V. 弗兰克位错 (Frank Partials)</h3>
+            <p>矢量形式 $\frac{a}{3}\langle 111 \rangle$：</p>
+            $$A\alpha = \frac{1}{3}[-1, -1, 1], \quad B\beta = \frac{1}{3}[-1, 1, -1]$$
+            $$C\gamma = \frac{1}{3}[1, -1, -1], \quad D\delta = \frac{1}{3}[1, 1, 1]$$
+        </div>
+
+        <div class="formula-group">
+            <h3>VI. 压杆位错 (Stair-rod Dislocations)</h3>
+            <p>矢量形式 $\frac{a}{6}\langle 110 \rangle$：</p>
+            $$\alpha\beta = \frac{1}{6}[0, 1, -1], \quad \alpha\gamma = \frac{1}{6}[1, 0, -1], \quad \alpha\delta = \frac{1}{6}[1, 1, 0]$$
+            $$\beta\gamma = \frac{1}{6}[1, -1, 0], \quad \beta\delta = \frac{1}{6}[1, 0, 1], \quad \gamma\delta = \frac{1}{6}[0, 1, 1]$$
+        </div>
+    </div>
+
+    <script>
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            document.getElementById('plot').innerHTML =
+                '<div style="color:#e74c3c; padding:30px; text-align:center;">' +
+                '<h3>❌ 绘图引擎加载失败</h3>' +
+                '<p>原因：' + msg + '</p>' +
+                '<p>提示：这通常是因为网络波动导致画图库下载超时。请按 <b>F5</b> 刷新页面重试一次。</p></div>';
+            return false;
+        };
+
+        const plotlySources = [
+            'https://cdn.plot.ly/plotly-2.32.0.min.js',
+            'https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.32.0/plotly.min.js',
+            'https://cdn.bootcdn.net/ajax/libs/plotly.js/2.32.0/plotly.min.js'
+        ];
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = true;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error(src));
+                document.head.appendChild(script);
+            });
+        }
+
+        async function ensurePlotly() {
+            if (typeof Plotly !== 'undefined') return;
+
+            let lastError = null;
+            for (const src of plotlySources) {
+                try {
+                    await loadScript(src);
+                    if (typeof Plotly !== 'undefined') return;
+                } catch (error) {
+                    lastError = error;
+                }
+            }
+
+            throw lastError || new Error('Plotly.js 未能成功加载');
+        }
+
+        function renderThompsonTetrahedron() {
+            const D = [0, 0, 0];
+            const A = [0.5, 0.5, 0];
+            const B = [0.5, 0, 0.5];
+            const C = [0, 0.5, 0.5];
+
+            const data = [];
+
+            // 1. 四面体的半透明面
+            data.push({
+                type: 'mesh3d',
+                x: [A[0], B[0], C[0], D[0]], y: [A[1], B[1], C[1], D[1]], z: [A[2], B[2], C[2], D[2]],
+                i: [0, 0, 0, 1], j: [1, 2, 3, 2], k: [2, 3, 1, 3],
+                opacity: 0.35, color: '#e67e22', hoverinfo: 'skip'
+            });
+
+            // 2. 四面体的实线边框
+            const edges = [[A,B], [B,C], [C,A], [D,A], [D,B], [D,C]];
+            edges.forEach(edge => {
+                data.push({
+                    type: 'scatter3d', mode: 'lines',
+                    x: [edge[0][0], edge[1][0]], y: [edge[0][1], edge[1][1]], z: [edge[0][2], edge[1][2]],
+                    line: {color: '#d35400', width: 5}, hoverinfo: 'skip'
+                });
+            });
+
+            // 3. ABCD 顶点及单字母标签
+            data.push({
+                type: 'scatter3d', mode: 'markers+text',
+                x: [A[0], B[0], C[0], D[0]], y: [A[1], B[1], C[1], D[1]], z: [A[2], B[2], C[2], D[2]],
+                marker: {size: 8, color: '#2c3e50'},
+                text: ['<b>A</b>', '<b>B</b>', '<b>C</b>', '<b>D</b>'], textposition: 'top center',
+                textfont: {size: 18, color: '#2c3e50'}, hoverinfo: 'none'
+            });
+
+            // 4. 单位立方体灰色线框
+            const cubeEdges = [
+                [[0,1],[0,0],[0,0]], [[1,1],[0,1],[0,0]], [[1,0],[1,1],[0,0]], [[0,0],[1,0],[0,0]],
+                [[0,1],[0,0],[1,1]], [[1,1],[0,1],[1,1]], [[1,0],[1,1],[1,1]], [[0,0],[1,0],[1,1]],
+                [[0,0],[0,0],[0,1]], [[1,1],[0,0],[0,1]], [[1,1],[1,1],[0,1]], [[0,0],[1,1],[0,1]]
+            ];
+            cubeEdges.forEach(edge => {
+                data.push({
+                    type: 'scatter3d', mode: 'lines',
+                    x: edge[0], y: edge[1], z: edge[2],
+                    line: {color: '#7f8c8d', width: 4, dash: 'solid'}, hoverinfo: 'skip'
+                });
+            });
+
+            const layout = {
+                scene: {
+                    xaxis: {title: 'X轴', range: [-0.1, 1.1], showgrid: false, zeroline: false, showline: false, showticklabels: false},
+                    yaxis: {title: 'Y轴', range: [-0.1, 1.1], showgrid: false, zeroline: false, showline: false, showticklabels: false},
+                    zaxis: {title: 'Z轴', range: [-0.1, 1.1], showgrid: false, zeroline: false, showline: false, showticklabels: false},
+                    aspectmode: 'cube',
+                    camera: { up: {x: 0, y: 0, z: 1}, center: {x: 0.5, y: 0.5, z: 0.5}, eye: {x: 1.6, y: 1.6, z: 1.2} }
+                },
+                margin: {l: 0, r: 0, b: 0, t: 0}, paper_bgcolor: '#fafafa', showlegend: false
+            };
+
+            // 移除加载提示并绘图
+            document.getElementById('loading').style.display = 'none';
+            Plotly.newPlot('plot', data, layout, {displayModeBar: true, responsive: true});
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await ensurePlotly();
+                renderThompsonTetrahedron();
+            } catch (error) {
+                document.getElementById('plot').innerHTML = '<div style="color:#e74c3c; padding:30px; text-align:center;"><h3>❌ 网络拦截</h3><p>Plotly.js 未能成功加载，已尝试多个 CDN。请检查网络环境或刷新页面。</p></div>';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
