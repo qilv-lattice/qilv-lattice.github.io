@@ -95,6 +95,22 @@
     ],
     "poems": [
         {
+            "title": "七律·矛盾",
+            "author": "当代 | 理工博士",
+            "techRomance": false,
+            "category": "情思",
+            "locked": true,
+            "starStyle": "gray",
+            "content": [
+                "非是牡丹花下臣，反差个性反迷人。",
+                "穿行闹市遮颜者，博弈南冠困兽身。",
+                "叹惋风悲前赤壁，蹉跎浪老小金鳞。",
+                "难担谬赞俱优品，不畏平庸畏效颦。"
+            ],
+            "notes": [],
+            "encryptedContent": "QqjE5WtWvXpVmBmOaaZTiQcjBNj/1JsDiFMKkt76yQ9d66k9iTVM9v79eaIYS2SGzGsTtx9jsmERu6g6aeH15a/eny4FO3CL5CdqGN0aPxhpEWXcaq9lgVqONIuKBf+SKMIFvERDxI361Ub71f4OVZ4ESs0mJS4EWYwQ/p3lHrH19JQ83Fi7S3AHdiGD8q75wBuQjbMGF3vX9yR5RbQ4QMfk+mi/iDcEmdJ5wMENZIwECUDTQ4bpN1xRzT5E0+fisca8cNyKfAGHE/SBd6IP+aLfpxK7C/XpMYOgUEZjP6AJxxiAImti9aXZloj6u4vs44IhBH0SUY29k76a94RHCg=="
+        },
+        {
             "id": 102,
             "title": "七律·股海",
             "author": "七律",
@@ -1487,22 +1503,6 @@
                 "二象即物理学中的波粒二象性"
             ],
             "encryptedContent": "AH85Xk1//HVKWg3432vCxdoL1mlxJSnpzwBlJxDTiYQi41miETNCnkVrANaJE56LKM1RuO5haoRFWR/DhIBWnKjJUZPtGoks8B0gbnxHgFl5LfxpsdG0jVqblErJbbb5oU90PgmEQCV7pQAf5crVlAEKPJctvZzg2p5oY9HtwwWHgOqAM9c/KK8I/B0AT7xP8nhspUzsLhZBP8LrNDqdBuJOO6fDCQFjZEqk1XnJqdPxD8e++B7rnFnq4fZi9LrmZW9lbHZhjjhT/PD3IhffOsu8mp6UWauDLAQA4e/OI4YMpfev5RCpf+OOli4gz2qw1B9eFhHFlGKW52ZckaUsGLTKViKUnpPjLvW9RWzl8VzINJMJS25pxGtJzEa72eAbeR94v2j0njvj"
-        },
-        {
-            "title": "七律·矛盾",
-            "author": "当代 | 理工博士",
-            "techRomance": false,
-            "category": "情思",
-            "locked": true,
-            "starStyle": "gray",
-            "content": [
-                "非是牡丹花下臣，反差个性反迷人。",
-                "穿行闹市遮颜者，博弈南冠困兽身。",
-                "叹惋风悲前赤壁，蹉跎浪老小金鳞。",
-                "难担谬赞俱优品，不畏平庸畏效颦。"
-            ],
-            "notes": [],
-            "encryptedContent": "QqjE5WtWvXpVmBmOaaZTiQcjBNj/1JsDiFMKkt76yQ9d66k9iTVM9v79eaIYS2SGzGsTtx9jsmERu6g6aeH15a/eny4FO3CL5CdqGN0aPxhpEWXcaq9lgVqONIuKBf+SKMIFvERDxI361Ub71f4OVZ4ESs0mJS4EWYwQ/p3lHrH19JQ83Fi7S3AHdiGD8q75wBuQjbMGF3vX9yR5RbQ4QMfk+mi/iDcEmdJ5wMENZIwECUDTQ4bpN1xRzT5E0+fisca8cNyKfAGHE/SBd6IP+aLfpxK7C/XpMYOgUEZjP6AJxxiAImti9aXZloj6u4vs44IhBH0SUY29k76a94RHCg=="
         }
     ],
     "newWorks": {
