@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-05-14 18:50",
-    "announcement": "《先锋》作者最喜欢系列作品之一，希望自己能成长为某一领域之先锋！",
+    "lastUpdate": "2026-05-23 06:52",
+    "announcement": "?????????",
     "latestWorks": [
+        {
+            "title": "?????",
+            "receivedAt": "2026-05-23 06:52"
+        },
         {
             "title": "七律·股海",
             "receivedAt": "2026-05-14 18:50"
@@ -1483,10 +1487,26 @@
                 "二象即物理学中的波粒二象性"
             ],
             "encryptedContent": "AH85Xk1//HVKWg3432vCxdoL1mlxJSnpzwBlJxDTiYQi41miETNCnkVrANaJE56LKM1RuO5haoRFWR/DhIBWnKjJUZPtGoks8B0gbnxHgFl5LfxpsdG0jVqblErJbbb5oU90PgmEQCV7pQAf5crVlAEKPJctvZzg2p5oY9HtwwWHgOqAM9c/KK8I/B0AT7xP8nhspUzsLhZBP8LrNDqdBuJOO6fDCQFjZEqk1XnJqdPxD8e++B7rnFnq4fZi9LrmZW9lbHZhjjhT/PD3IhffOsu8mp6UWauDLAQA4e/OI4YMpfev5RCpf+OOli4gz2qw1B9eFhHFlGKW52ZckaUsGLTKViKUnpPjLvW9RWzl8VzINJMJS25pxGtJzEa72eAbeR94v2j0njvj"
+        },
+        {
+            "title": "?????",
+            "author": "?? | ????",
+            "techRomance": false,
+            "category": "??",
+            "locked": true,
+            "starStyle": "gray",
+            "content": [
+                "????????????????",
+                "????????????????",
+                "????????????????",
+                "????????????????"
+            ],
+            "notes": [],
+            "encryptedContent": "qk7HqmtrK50XKZu2aR1ci40nY9y3cgaoQNrbAyz+DbNVKRIql9NwjEvEUjugwxbENww4FuXQRogyhXO+AjyZ+1KKXitE30geKJxRdQ8OUnOZFSziAVYZyX0UaQJjM9Qq6SvwHJqXIpjsCgHgnOURGASBqXyi5Qx1yjR/wcUrvbo="
         }
     ],
     "newWorks": {
-        "title": "《七律·勇气》",
-        "createdAt": "2026-03-08 23:41"
+        "title": "???????",
+        "createdAt": "2026-05-23 06:52"
     }
 }
