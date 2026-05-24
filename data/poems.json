@@ -1,5 +1,5 @@
 {
-    "lastUpdate": "2026-05-23 06:52",
+    "lastUpdate": "2026-05-24 16:20",
     "announcement": "新作上线：《矛盾》",
     "latestWorks": [
         {
@@ -24,6 +24,10 @@
         }
     ],
     "modifiedWorks": [
+        {
+            "title": "七律·A股",
+            "modifiedAt": "2026-05-24 16:20"
+        },
         {
             "title": "七律·嬗变",
             "modifiedAt": "2026-05-18 17:39"
@@ -150,11 +154,11 @@
                 "行情震荡慎登临，诡谲千般主力心。",
                 "传说慢牛耕指数，惊闻散户捡黄金。",
                 "悟空莫辨阴阳线，大禹难疏股海深。",
-                "博弈赌场囚困境，零和法则是丛林。"
+                "博弈赌场囚困境，零和法则似丛林。"
             ],
             "locked": false,
             "category": "观察",
-            "encryptedContent": "vaphgQAhY2xGfHFWez65cEErpzJfQL9cM7xwlUQpKf+Ffh1iJcQv8elG5x47Pxmgler2TpOE0s1J4g/i0zVg0sQU+8hnbOzzJ6ajGhTz7a1jUZyrTiJMk1oficVH+CiZWittb42yYC4vnLTsy4aRPsOyzPmEkxYELiLwAymKSEipvKFyzCpHJOzOvbBNAga1nzTaaNaB0l8uR21do6OcKqvEXx1MqYk0q/vNzf7NlboY3Hb4JGSPPJM4vy5eg6m8lGW63cDkN4DssXusT4xn4Bejh08saDUBhrp5udbhFTmVpbSe3QvjEMPouyjOSwtalQSV/HgEoNwc8U+lAInMUA=="
+            "encryptedContent": "6CEjXvuEb1bYz5QqAzwGUI/pVhvBxSuwDjlFXzoM3tMKOXJQJv3+mXmS7t8T1JIUzypEe1thaF727uuESR2tQqTNn7o/BaJ40ZhHWz/Qg/cn23/HdSzQJbwHfgeueAULPZ2DPZFa4Z5p0T0iT/jplKrQCE/mb7pezKfv2KKgYbFuEihSODe+LixX40QrKsJKEut4d4geh7vbCkSTw8bXYwnKNGwms0+/NFOTWIG6rSHJRJLcFm0TZDcvYkv6XfMqZ116ruNTPQicZU1B+YAU6Ql2f3EmDS65QrsyobX+hhnXKGjDYyUypM6hK6yAk0hePGYQMN1/80mWFt01wHGD/Q=="
         },
         {
             "id": 99,
