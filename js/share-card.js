@@ -1,23 +1,92 @@
 /* ===== 雅帖生成逻辑 ===== */
 
-const _H2C_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+const _H2C_CDNS = [
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
+];
 
-function _loadHtml2Canvas() {
+let _html2canvasLoadPromise = null;
+
+function _loadScript(src, index) {
     return new Promise((resolve, reject) => {
-        if (typeof html2canvas !== 'undefined') { resolve(); return; }
-        if (document.getElementById('html2canvas-script')) {
-            const t = setInterval(() => {
-                if (typeof html2canvas !== 'undefined') { clearInterval(t); resolve(); }
-            }, 100);
-            return;
-        }
-        const s = document.createElement('script');
-        s.id = 'html2canvas-script';
-        s.src = _H2C_CDN;
-        s.onload = resolve;
-        s.onerror = () => reject(new Error('html2canvas 加载失败'));
-        document.head.appendChild(s);
+        const existing = document.getElementById(`html2canvas-script-${index}`);
+        if (existing) existing.remove();
+
+        const script = document.createElement('script');
+        const timer = setTimeout(() => {
+            script.remove();
+            reject(new Error('html2canvas 加载超时'));
+        }, 12000);
+
+        script.id = `html2canvas-script-${index}`;
+        script.src = src;
+        script.async = true;
+        script.onload = () => {
+            clearTimeout(timer);
+            if (typeof window.html2canvas === 'function') {
+                resolve();
+            } else {
+                script.remove();
+                reject(new Error('html2canvas 加载异常'));
+            }
+        };
+        script.onerror = () => {
+            clearTimeout(timer);
+            script.remove();
+            reject(new Error('html2canvas 加载失败'));
+        };
+        document.head.appendChild(script);
     });
+}
+
+async function _loadHtml2Canvas() {
+    if (typeof window.html2canvas === 'function') return;
+    if (_html2canvasLoadPromise) return _html2canvasLoadPromise;
+
+    _html2canvasLoadPromise = (async () => {
+        let lastError = null;
+        for (let i = 0; i < _H2C_CDNS.length; i += 1) {
+            try {
+                await _loadScript(_H2C_CDNS[i], i);
+                return;
+            } catch (err) {
+                lastError = err;
+                console.warn('[ShareCard] 绘图组件加载源不可用:', _H2C_CDNS[i], err);
+            }
+        }
+        throw lastError || new Error('html2canvas 加载失败');
+    })();
+
+    try {
+        await _html2canvasLoadPromise;
+    } catch (err) {
+        _html2canvasLoadPromise = null;
+        throw err;
+    }
+}
+
+function _sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function _waitForShareAssets(root) {
+    if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready.catch(() => {});
+    }
+
+    const images = Array.from(root.querySelectorAll('img'));
+    await Promise.all(images.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+            const done = () => resolve();
+            img.addEventListener('load', done, { once: true });
+            img.addEventListener('error', done, { once: true });
+            setTimeout(done, 3000);
+        });
+    }));
+
+    await _sleep(150);
 }
 
 // 接收 poems 和 currentIndex 作为参数
@@ -51,7 +120,8 @@ window.generateShareCard = async function (poems, currentIndex) {
 
     try {
         await _loadHtml2Canvas();
-    } catch {
+    } catch (err) {
+        console.error('[ShareCard] 绘图组件加载失败:', err);
         previewContainer.innerHTML = '<div class="share-loading" style="color:#e74c3c">绘图组件加载失败，请检查网络后重试</div>';
         return;
     }
@@ -64,15 +134,28 @@ window.generateShareCard = async function (poems, currentIndex) {
         return;
     }
 
-    // 获取原始卡片的实际渲染尺寸（而非硬编码）
-    const cardWidth = originalCard.offsetWidth;
-    // 获取用户实际视口宽度（desktop.css 的媒体查询需要 1024px+）
+    const rect = originalCard.getBoundingClientRect();
+    const cardWidth = Math.ceil(rect.width || originalCard.offsetWidth);
+    const cardHeight = Math.ceil(rect.height || originalCard.offsetHeight);
     const viewportWidth = window.innerWidth;
 
-    // 创建离屏容器，宽度与原始卡片一致
+    if (!cardWidth || !cardHeight) {
+        previewContainer.innerHTML = '<div class="share-loading" style="color:#e74c3c">卡片尺寸异常，请切换作品后重试</div>';
+        return;
+    }
+
     const cloneContainer = document.createElement('div');
     cloneContainer.id = 'share-card-clone-container';
-    cloneContainer.style.cssText = `position:fixed; top:0; left:0; width:${cardWidth}px; z-index:-9999; visibility:visible;`;
+    cloneContainer.style.cssText = [
+        'position:fixed',
+        'top:0',
+        'left:-10000px',
+        `width:${cardWidth}px`,
+        'z-index:2147483647',
+        'visibility:visible',
+        'opacity:1',
+        'pointer-events:none'
+    ].join(';');
     document.body.appendChild(cloneContainer);
 
     const clone = originalCard.cloneNode(true);
@@ -89,75 +172,71 @@ window.generateShareCard = async function (poems, currentIndex) {
     clone.style.border = 'none';
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
-    // 宽度保持与原始卡片一致（不再强制覆盖）
     clone.style.width = cardWidth + 'px';
     clone.style.maxWidth = cardWidth + 'px';
+    clone.style.minWidth = cardWidth + 'px';
 
     cloneContainer.appendChild(clone);
 
-    // 延时确保渲染完成
-    setTimeout(() => {
-        html2canvas(clone, {
+    try {
+        await _waitForShareAssets(clone);
+
+        const canvas = await window.html2canvas(clone, {
             scale: 2.5,
             useCORS: true,
+            allowTaint: false,
             backgroundColor: null,
             logging: false,
-            // 关键修复：使用原始卡片宽度，而非硬编码 480px
             width: cardWidth,
-            // 关键修复：使用真实视口宽度，确保 desktop.css 媒体查询生效
-            // 这样 @media (min-width: 1024px) 中的 ::before 章印样式才会被应用
+            height: cardHeight,
             windowWidth: viewportWidth,
             x: 0,
             y: 0
-        }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-
-            const img = new Image();
-            img.src = imgData;
-            img.style.maxWidth = '100%';
-            img.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
-            img.style.borderRadius = '8px';
-
-            previewContainer.innerHTML = '';
-            previewContainer.appendChild(img);
-
-            // 判断是否为移动端
-            const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-
-            const downloadBtn = document.getElementById('download-share-btn');
-            if (downloadBtn) {
-                if (isMobile) {
-                    // 移动端：隐藏下载按钮，长按图片即可保存
-                    downloadBtn.style.display = 'none';
-                    const tip = document.createElement('div');
-                    tip.style.cssText = 'text-align:center; padding:0.8rem 0 0.2rem; color:#888; font-size:0.85rem;';
-                    tip.textContent = '长按上方图片即可保存到相册';
-                    previewContainer.appendChild(tip);
-                } else {
-                    // 桌面端：直接使用 data URL 下载
-                    downloadBtn.style.display = '';
-                    const newBtn = downloadBtn.cloneNode(true);
-                    downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
-                    newBtn.onclick = () => {
-                        const link = document.createElement('a');
-                        link.download = `七律空间_${currentPoem.title}_雅帖.png`;
-                        link.href = imgData;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    };
-                }
-            }
-
-            document.body.removeChild(cloneContainer);
-        }).catch(err => {
-            console.error('[ShareCard] 生成出错:', err);
-            previewContainer.innerHTML = '<div class="share-loading" style="color:#e74c3c">生成失败，请重试</div>';
-            if (document.body.contains(cloneContainer)) {
-                document.body.removeChild(cloneContainer);
-            }
         });
-    }, 500);
+
+        const imgData = canvas.toDataURL('image/png');
+
+        const img = new Image();
+        img.src = imgData;
+        img.style.maxWidth = '100%';
+        img.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        img.style.borderRadius = '8px';
+
+        previewContainer.innerHTML = '';
+        previewContainer.appendChild(img);
+
+        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+        const downloadBtn = document.getElementById('download-share-btn');
+        if (downloadBtn) {
+            if (isMobile) {
+                downloadBtn.style.display = 'none';
+                const tip = document.createElement('div');
+                tip.style.cssText = 'text-align:center; padding:0.8rem 0 0.2rem; color:#888; font-size:0.85rem;';
+                tip.textContent = '长按上方图片即可保存到相册';
+                previewContainer.appendChild(tip);
+            } else {
+                downloadBtn.style.display = '';
+                const newBtn = downloadBtn.cloneNode(true);
+                downloadBtn.parentNode.replaceChild(newBtn, downloadBtn);
+                newBtn.onclick = () => {
+                    const link = document.createElement('a');
+                    link.download = `七律空间_${currentPoem.title}_雅帖.png`;
+                    link.href = imgData;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+            }
+        }
+    } catch (err) {
+        console.error('[ShareCard] 生成出错:', err);
+        previewContainer.innerHTML = '<div class="share-loading" style="color:#e74c3c">生成失败，请重试</div>';
+    } finally {
+        if (document.body.contains(cloneContainer)) {
+            document.body.removeChild(cloneContainer);
+        }
+    }
 };
 
 window.closeShareCard = function () {
