@@ -1397,7 +1397,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const targetPoem = poem.__lockedGroup ? poem.__lockedPoems[0] : poem;
                 const realIndex = poems.findIndex(p => p === targetPoem);
                 currentIndex = realIndex >= 0 ? realIndex : index;
-                renderPoem(currentIndex);
+                renderPoem(currentIndex, false, true);
                 toggleTOC();
             };
             tocList.appendChild(li);
@@ -2342,7 +2342,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         parent.insertBefore(wrapper, nextSibling);
     }
 
-    function renderPoem(index, skipAnimation = false) {
+    function getPoemVirtualPath(poem, index) {
+        const rawTitle = poem && poem.title ? normalizeTitleText(poem.title) : '';
+        const currentPoemId = `${index + 1}-${rawTitle || 'poem'}`;
+        return '/virtual/poem/' + encodeURIComponent(currentPoemId);
+    }
+
+    function trackPoemVirtualPageview(index) {
+        if (!window._hmt || typeof window._hmt.push !== 'function') return;
+        const poem = poems[index];
+        if (!poem) return;
+        window._hmt.push(['_trackPageview', getPoemVirtualPath(poem, index)]);
+    }
+
+    function renderPoem(index, skipAnimation = false, trackPageview = false) {
         if (poems.length === 0) return;
         const poem = poems[index];
         const mainCard = getMainCard();
@@ -2709,6 +2722,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 首次加载也需要同步侧翼卡片
             wingRandomizeOnNextSync = true;
             syncWingCards();
+            if (trackPageview) trackPoemVirtualPageview(index);
         } else {
             setTimeout(() => {
                 renderContent();
@@ -2720,19 +2734,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 lockMobileCardHeight();
                 wingRandomizeOnNextSync = true;
                 syncWingCards();
+                if (trackPageview) trackPoemVirtualPageview(index);
             }, 400);
         }
     }
 
     function nextPoem() {
         currentIndex = (currentIndex + 1) % poems.length;
-        renderPoem(currentIndex);
+        renderPoem(currentIndex, false, true);
     }
 
     function prevPoem() {
         // 逻辑：(当前索引 - 1 + 总长度) % 总长度，确保处理负数
         currentIndex = (currentIndex - 1 + poems.length) % poems.length;
-        renderPoem(currentIndex);
+        renderPoem(currentIndex, false, true);
     }
 
     // 切换横竖排版
