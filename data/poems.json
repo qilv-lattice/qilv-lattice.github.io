@@ -1,7 +1,11 @@
 {
-    "lastUpdate": "2026-06-15 00:00",
-    "announcement": "新作上线：《赠人》",
+    "lastUpdate": "2026-06-22 00:00",
+    "announcement": "新作上线：《扶贫》",
     "latestWorks": [
+        {
+            "title": "七律·扶贫",
+            "receivedAt": "2026-06-22 00:00"
+        },
         {
             "title": "七律·赠人",
             "receivedAt": "2026-06-15 00:00"
@@ -17,10 +21,6 @@
         {
             "title": "七律·碎片",
             "receivedAt": "2026-03-31 22:41"
-        },
-        {
-            "title": "七律·书童",
-            "receivedAt": "2026-03-29 22:55"
         }
     ],
     "modifiedWorks": [
@@ -98,6 +98,20 @@
         }
     ],
     "poems": [
+        {
+            "title": "七律·扶贫",
+            "category": "情思",
+            "content": [
+                "高山流水结朱陈，离合悲欢事有因。",
+                "两指拈花迦叶契，三生刻石玉环嗔。",
+                "行藏并蒂傅红雪，理想同胚周杰伦。",
+                "缘分纵然怀好意，爱情终究不扶贫。"
+            ],
+            "notes": [],
+            "locked": false,
+            "starStyle": "gray",
+            "encryptedContent": "7h6hJFAvLzsuiNKCqSEdKQAdXq9T/ajObJ2wIKwjmpeThvarNVJtdmDUp1LGHDv7tFx8zLiwwzxFS1qsIw44ZWVZMi7wrrBZ5PxiMvZW3HwoZzJWrOIsVmVbPcHMQwRTGSZlG0+d9kd2/+VevrupBBgdrvE/0Th6nlgKN5lPxi82yOYjnOPcFnhy1apRt7bsPkDOlNUGifL5uuoJxNy5aCYmjpqKyrImaGLpZFy2LjyoE7Xpk+Izd87Pom0BoFD0CjKvBFoOmGaRzA3TINGMXiYwDysOittl6kLe/OGBG7orQ71fnvEb8Ai81ziKUMjZYg78Umt6P1YJ/0G+7UyGaQ=="
+        },
         {
             "title": "七律·赠人",
             "category": "情思",
