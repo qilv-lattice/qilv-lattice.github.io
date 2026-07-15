@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qilv-space-v6';
+const CACHE_NAME = 'qilv-space-v7-encrypted';
 const ASSETS = [
   '/',
   '/index.html',

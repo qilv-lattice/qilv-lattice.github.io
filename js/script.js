@@ -96,6 +96,7 @@ function getGlobalUnlockKey() {
 function clearGlobalUnlockData() {
     localStorage.removeItem(GLOBAL_UNLOCK_KEY);
     localStorage.removeItem(UNLOCKED_POEMS_KEY);
+    localStorage.removeItem('qilv_site_access_v3');
 }
 
 function applyPoemContentFixes(poem) {
@@ -209,6 +210,9 @@ async function autoDecryptPoems() {
     // 但若部分成功部分失败（混合加密），保留密钥，仅失败的诗词需手动输入
     if (failedCount > 0 && successCount === 0) {
         clearGlobalUnlockData();
+        if (typeof window.showSiteLock === 'function') {
+            window.showSiteLock();
+        }
     }
 }
 

@@ -3360,7 +3360,9 @@ header.char-game-active {
     position: fixed;
     inset: 0;
     z-index: 99999;
-    background: #ffffff;
+    background:
+        radial-gradient(circle at 50% 38%, rgba(138, 43, 43, 0.12), transparent 34%),
+        linear-gradient(145deg, #14100f 0%, #211817 52%, #0d0b0a 100%);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     display: flex;
@@ -3380,8 +3382,9 @@ header.char-game-active {
     align-items: center;
     gap: 1.2rem;
     padding: 2.8rem 2.4rem;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: min(82vw, 360px);
+    background: rgba(255, 250, 242, 0.06);
+    border: 1px solid rgba(214, 178, 112, 0.24);
     border-radius: 16px;
     text-align: center;
 }
@@ -3390,4 +3393,50 @@ header.char-game-active {
     width: 80px;
     height: auto;
     opacity: 0.85;
+}
+
+.global-lock-title {
+    color: #ead8b8;
+    font-family: "Ma Shan Zheng", "Noto Serif SC", serif;
+    font-size: 2rem;
+    letter-spacing: 0.18em;
+}
+
+.global-lock-subtitle {
+    margin: -0.5rem 0 0;
+    color: rgba(234, 216, 184, 0.68);
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+}
+
+.global-lock-box .lock-input-row {
+    width: 100%;
+}
+
+.global-lock-box .lock-password-input {
+    min-width: 0;
+    flex: 1;
+    color: #f4ead8;
+    background: rgba(0, 0, 0, 0.28);
+    border-color: rgba(214, 178, 112, 0.32);
+}
+
+.global-lock-box .lock-password-input::placeholder {
+    color: rgba(234, 216, 184, 0.42);
+}
+
+.global-lock-box .lock-unlock-btn {
+    color: #211817;
+    background: #d6b270;
+    border-color: #d6b270;
+}
+
+.global-lock-box .lock-error {
+    margin: -0.45rem 0 0;
+    color: #e59a8f;
+}
+
+.global-lock-box .lock-unlock-btn:disabled {
+    cursor: wait;
+    opacity: 0.62;
 }
