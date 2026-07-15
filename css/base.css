@@ -3359,6 +3359,9 @@ header.char-game-active {
 #global-lock-overlay {
     position: fixed;
     inset: 0;
+    width: 100vw;
+    min-height: 100vh;
+    min-height: 100dvh;
     z-index: 99999;
     background:
         radial-gradient(circle at 50% 38%, rgba(138, 43, 43, 0.12), transparent 34%),
@@ -3383,6 +3386,8 @@ header.char-game-active {
     gap: 1.2rem;
     padding: 2.8rem 2.4rem;
     width: min(82vw, 360px);
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
     background: rgba(255, 250, 242, 0.06);
     border: 1px solid rgba(214, 178, 112, 0.24);
     border-radius: 16px;
@@ -3419,6 +3424,7 @@ header.char-game-active {
     color: #f4ead8;
     background: rgba(0, 0, 0, 0.28);
     border-color: rgba(214, 178, 112, 0.32);
+    font-size: 1rem;
 }
 
 .global-lock-box .lock-password-input::placeholder {
@@ -3439,4 +3445,36 @@ header.char-game-active {
 .global-lock-box .lock-unlock-btn:disabled {
     cursor: wait;
     opacity: 0.62;
+}
+
+html.site-locked,
+body.site-locked {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+}
+
+.global-lock-box .lock-password-input:focus-visible,
+.global-lock-box .lock-unlock-btn:focus-visible {
+    outline: 2px solid #f0cf8a;
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .global-lock-box {
+        width: calc(100vw - 2rem);
+        padding: 2.1rem 1.15rem;
+        gap: 1rem;
+    }
+
+    .global-lock-logo {
+        width: 68px;
+    }
+
+    .global-lock-title {
+        font-size: 1.8rem;
+    }
+
+    .global-lock-box .lock-password-input {
+        width: auto;
+    }
 }

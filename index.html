@@ -112,8 +112,14 @@
             var poemKey = 'lockedPoemsKeyV1';
             var overlay = document.getElementById('global-lock-overlay');
 
+            function setSiteLockScroll(locked) {
+                document.documentElement.classList.toggle('site-locked', locked);
+                if (document.body) document.body.classList.toggle('site-locked', locked);
+            }
+
             window.showSiteLock = function () {
                 localStorage.removeItem(accessKey);
+                setSiteLockScroll(true);
                 overlay.classList.remove('unlocking');
                 overlay.style.display = 'flex';
                 setTimeout(function () {
@@ -123,6 +129,7 @@
             };
 
             if (localStorage.getItem(accessKey) === 'y' && localStorage.getItem(poemKey)) {
+                setSiteLockScroll(false);
                 overlay.style.display = 'none';
             } else {
                 window.showSiteLock();
@@ -139,6 +146,7 @@
 
             if (!password || button.disabled) return;
             button.disabled = true;
+            button.setAttribute('aria-busy', 'true');
             error.style.display = 'none';
 
             try {
@@ -173,6 +181,7 @@
                 input.value = '';
                 input.focus();
                 button.disabled = false;
+                button.removeAttribute('aria-busy');
             }
         }
     </script>

@@ -3327,10 +3327,10 @@ function initCollapseMenu() {
     wrapper.classList.add('collapsed');
 
     // 为整个容器添加鼠标交互监听（针对桌面端犹豫操作）
-    // 鼠标移入：清除倒计时，保持展开
+    // 鼠标移入：重新计时，确保无操作时仍会自动收起
     wrapper.addEventListener('mouseenter', () => {
         if (!menuCollapsed) {
-            clearTimeout(collapseTimer);
+            resetCollapseTimer();
         }
     });
 
@@ -3344,6 +3344,8 @@ function initCollapseMenu() {
     // 所有子按钮和下拉列表交互后重置计时器（针对移动端及点击操作）
     wrapper.querySelectorAll('.widget-btn, #mode-btn, .music-control, #theme-menu, #theme-list, #music-list, #bg-menu, #bg-list, #theme-list li, #music-list li, #bg-list li, .bg-tab, #music-menu, #music-catalog-list, #music-catalog-list li, .music-tab, #entertainment-menu, #entertainment-menu-list, #entertainment-menu-list li, #viewmode-menu, #viewmode-list, #viewmode-list li').forEach(el => {
         el.addEventListener('click', resetCollapseTimer);
+        el.addEventListener('pointerdown', resetCollapseTimer);
+        el.addEventListener('keydown', resetCollapseTimer);
         // 触屏设备的长按/滑动也重置计时器
         el.addEventListener('touchstart', resetCollapseTimer);
     });
@@ -3427,10 +3429,6 @@ function resetCollapseTimer() {
                 return;
             }
             // 双重检查：如果鼠标此时还在 wrapper 内（防止边缘case），则不收起 (仅限桌面端)
-            if (window.matchMedia('(hover: hover)').matches && wrapper.matches(':hover')) {
-                return;
-            }
-
             menuCollapsed = true;
             wrapper.classList.remove('expanded');
             wrapper.classList.add('collapsed');
