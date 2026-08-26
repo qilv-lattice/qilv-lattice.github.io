@@ -2,7 +2,7 @@
 const UNLOCKED_POEMS_KEY = 'unlockedPoemsPersistent';
 const LEGACY_UNLOCKED_POEMS_KEY = 'unlockedPoems';
 const LEGACY_SESSION_UNLOCKED_POEMS_KEY = 'unlockedPoemsSession';
-const GLOBAL_UNLOCK_KEY = 'lockedPoemsKeyV1';
+const GLOBAL_UNLOCK_KEY = 'lockedPoemsKeyV2';
 
 function getUnlockToken(title) {
     const source = String(title || '');
@@ -96,7 +96,7 @@ function getGlobalUnlockKey() {
 function clearGlobalUnlockData() {
     localStorage.removeItem(GLOBAL_UNLOCK_KEY);
     localStorage.removeItem(UNLOCKED_POEMS_KEY);
-    localStorage.removeItem('qilv_site_access_v3');
+    localStorage.removeItem('qilv_site_access_v4');
 }
 
 function applyPoemContentFixes(poem) {

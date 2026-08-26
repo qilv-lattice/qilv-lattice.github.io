@@ -110,9 +110,13 @@
     </div>
     <script>
         (function () {
-            var accessKey = 'qilv_site_access_v3';
-            var poemKey = 'lockedPoemsKeyV1';
+            var accessKey = 'qilv_site_access_v4';
+            var poemKey = 'lockedPoemsKeyV2';
             var overlay = document.getElementById('global-lock-overlay');
+
+            // 口令轮换后，主动废弃旧登录状态和旧解密钥匙。
+            localStorage.removeItem('qilv_site_access_v3');
+            localStorage.removeItem('lockedPoemsKeyV1');
 
             function setSiteLockScroll(locked) {
                 document.documentElement.classList.toggle('site-locked', locked);
@@ -138,7 +142,7 @@
             }
         })();
 
-        var SITE_DERIVED_KEY_HASH = '102940376caf17fcd5c4f254bc617cbd06abb7a0978c3916f55f20b6a9bafcc8';
+        var SITE_DERIVED_KEY_HASH = 'b8c510323c70736f011b43c96ada96038f8f4cc64afc6d3e10531a943d297a2f';
 
         async function siteUnlock() {
             var input = document.getElementById('site-pwd-input');
@@ -172,8 +176,8 @@
                 var binary = '';
                 new Uint8Array(bits).forEach(function (b) { binary += String.fromCharCode(b); });
 
-                localStorage.setItem('lockedPoemsKeyV1', btoa(binary));
-                localStorage.setItem('qilv_site_access_v3', 'y');
+                localStorage.setItem('lockedPoemsKeyV2', btoa(binary));
+                localStorage.setItem('qilv_site_access_v4', 'y');
 
                 var overlay = document.getElementById('global-lock-overlay');
                 overlay.classList.add('unlocking');
