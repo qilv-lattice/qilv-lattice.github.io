@@ -3355,3 +3355,164 @@ header.char-game-active {
     border-color: var(--accent-color);
 }
 
+/* ===== 全站临时访问锁 ===== */
+#global-lock-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    z-index: 99999;
+    background-color: #e9ece8;
+    background-image:
+        linear-gradient(rgba(33, 67, 87, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(33, 67, 87, 0.026) 1px, transparent 1px);
+    background-size: 28px 28px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+#global-lock-overlay.unlocking {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.global-lock-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 3.1rem 3rem 2.7rem;
+    width: min(86vw, 430px);
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
+    background: rgba(255, 255, 253, 0.88);
+    border: 1px solid rgba(32, 67, 87, 0.32);
+    border-radius: 0;
+    box-shadow: 0 16px 40px rgba(24, 42, 50, 0.17);
+    text-align: center;
+}
+
+.global-lock-logo {
+    width: 76px;
+    height: auto;
+    margin-bottom: 0.75rem;
+    opacity: 0.92;
+}
+
+.global-lock-title {
+    color: #20292d;
+    font-family: "Ma Shan Zheng", "Noto Serif SC", serif;
+    font-size: 2.15rem;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+}
+
+.global-lock-subtitle {
+    margin: 0.75rem 0 0;
+    color: #50626a;
+    font-family: "Noto Serif SC", serif;
+    font-size: 0.86rem;
+    letter-spacing: 0.12em;
+}
+
+.global-lock-rules {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    margin: 1.6rem 0 1.3rem;
+}
+
+.global-lock-rules i,
+.global-lock-rules b {
+    display: block;
+    width: 100%;
+    height: 1px;
+}
+
+.global-lock-rules i { background: #bd4a3d; }
+.global-lock-rules b { background: #2f6d88; }
+
+.global-lock-prompt {
+    margin: 0 0 0.65rem;
+    color: #59676d;
+    font-size: 0.84rem;
+    letter-spacing: 0.1em;
+}
+
+.global-lock-box .lock-input-row {
+    width: 100%;
+    display: flex;
+    gap: 0.55rem;
+}
+
+.global-lock-box .lock-password-input {
+    min-width: 0;
+    flex: 1;
+    height: 2.8rem;
+    padding: 0 0.8rem;
+    color: #28353a;
+    background: rgba(255, 255, 255, 0.64);
+    border-color: rgba(47, 109, 136, 0.42);
+    border-radius: 2px;
+    font-size: 1rem;
+}
+
+.global-lock-box .lock-password-input::placeholder {
+    color: rgba(66, 82, 88, 0.5);
+}
+
+.global-lock-box .lock-unlock-btn {
+    min-width: 4.7rem;
+    height: 2.8rem;
+    color: #fff;
+    background: #a53d34;
+    border-color: #a53d34;
+    border-radius: 2px;
+    letter-spacing: 0.12em;
+}
+
+.global-lock-box .lock-error {
+    margin: 0.7rem 0 0;
+    color: #af3d34;
+}
+
+.global-lock-box .lock-unlock-btn:disabled {
+    cursor: wait;
+    opacity: 0.62;
+}
+
+html.site-locked,
+body.site-locked {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+}
+
+.global-lock-box .lock-password-input:focus-visible,
+.global-lock-box .lock-unlock-btn:focus-visible {
+    outline: 2px solid #2f6d88;
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .global-lock-box {
+        width: calc(100vw - 2rem);
+        padding: 2.55rem 1.35rem 2.2rem;
+    }
+
+    .global-lock-logo {
+        width: 68px;
+    }
+
+    .global-lock-title {
+        font-size: 1.95rem;
+    }
+
+    .global-lock-box .lock-password-input {
+        width: auto;
+    }
+}

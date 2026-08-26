@@ -51,8 +51,8 @@
     <link rel="stylesheet" href="css/fonts.css">
 
     <!-- 关键资源预加载 -->
-    <link rel="preload" href="css/base.css?v=Public-1" as="style">
-    <link rel="preload" href="js/script.js?v=Public-1" as="script">
+    <link rel="preload" href="css/base.css?v=Encrypted-1" as="style">
+    <link rel="preload" href="js/script.js?v=Encrypted-1" as="script">
     <link rel="preload" href="data/poems.json" as="fetch" crossorigin>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="assets/Seal1.webp">
@@ -83,7 +83,7 @@
     </script>
 
     <!-- 移动优先基础样式 -->
-    <link rel="stylesheet" href="css/base.css?v=Public-1">
+    <link rel="stylesheet" href="css/base.css?v=Encrypted-1">
 
     <!-- 桌面美学层 - 仅在大屏加载 -->
     <link rel="stylesheet" href="css/desktop.css?v=Rouge-Color"
@@ -91,6 +91,102 @@
 </head>
 
 <body>
+    <!-- 全站访问锁：密码仅用于本地派生解密密钥，页面中不保存明文密码 -->
+    <div id="global-lock-overlay" role="dialog" aria-modal="true" aria-labelledby="site-lock-title">
+        <div class="global-lock-box">
+            <img src="assets/qilv-logo02-card.webp" alt="七律空间" class="global-lock-logo">
+            <div id="site-lock-title" class="global-lock-title">七律空间</div>
+            <p class="global-lock-subtitle">在心成象，在纸成形</p>
+            <div class="global-lock-rules" aria-hidden="true"><i></i><b></b></div>
+            <p class="global-lock-prompt">请输入访问密码</p>
+            <div class="lock-input-row">
+                <input type="password" id="site-pwd-input" class="lock-password-input" placeholder="密码"
+                    maxlength="20" autocomplete="current-password" aria-describedby="site-lock-error"
+                    onkeydown="if(event.key==='Enter')siteUnlock()">
+                <button type="button" id="site-unlock-btn" class="lock-unlock-btn" onclick="siteUnlock()">进入</button>
+            </div>
+            <p class="lock-error" id="site-lock-error" role="alert" style="display:none">密码错误</p>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var accessKey = 'qilv_site_access_v3';
+            var poemKey = 'lockedPoemsKeyV1';
+            var overlay = document.getElementById('global-lock-overlay');
+
+            function setSiteLockScroll(locked) {
+                document.documentElement.classList.toggle('site-locked', locked);
+                if (document.body) document.body.classList.toggle('site-locked', locked);
+            }
+
+            window.showSiteLock = function () {
+                localStorage.removeItem(accessKey);
+                setSiteLockScroll(true);
+                overlay.classList.remove('unlocking');
+                overlay.style.display = 'flex';
+                setTimeout(function () {
+                    var input = document.getElementById('site-pwd-input');
+                    if (input) input.focus();
+                }, 50);
+            };
+
+            if (localStorage.getItem(accessKey) === 'y' && localStorage.getItem(poemKey)) {
+                setSiteLockScroll(false);
+                overlay.style.display = 'none';
+            } else {
+                window.showSiteLock();
+            }
+        })();
+
+        var SITE_DERIVED_KEY_HASH = '102940376caf17fcd5c4f254bc617cbd06abb7a0978c3916f55f20b6a9bafcc8';
+
+        async function siteUnlock() {
+            var input = document.getElementById('site-pwd-input');
+            var button = document.getElementById('site-unlock-btn');
+            var error = document.getElementById('site-lock-error');
+            var password = input.value;
+
+            if (!password || button.disabled) return;
+            button.disabled = true;
+            button.setAttribute('aria-busy', 'true');
+            error.style.display = 'none';
+
+            try {
+                var encoder = new TextEncoder();
+                var material = await crypto.subtle.importKey(
+                    'raw', encoder.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
+                );
+                var bits = await crypto.subtle.deriveBits({
+                    name: 'PBKDF2',
+                    salt: new Uint8Array([113, 105, 108, 118, 45, 108, 97, 116, 116, 105, 99, 101, 45, 107, 100, 102]),
+                    iterations: 250000,
+                    hash: 'SHA-256'
+                }, material, 256);
+                var digest = await crypto.subtle.digest('SHA-256', bits);
+                var hash = Array.from(new Uint8Array(digest), function (b) {
+                    return b.toString(16).padStart(2, '0');
+                }).join('');
+
+                if (hash !== SITE_DERIVED_KEY_HASH) throw new Error('wrong password');
+
+                var binary = '';
+                new Uint8Array(bits).forEach(function (b) { binary += String.fromCharCode(b); });
+
+                localStorage.setItem('lockedPoemsKeyV1', btoa(binary));
+                localStorage.setItem('qilv_site_access_v3', 'y');
+
+                var overlay = document.getElementById('global-lock-overlay');
+                overlay.classList.add('unlocking');
+                setTimeout(function () { window.location.reload(); }, 350);
+            } catch (e) {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+                button.disabled = false;
+                button.removeAttribute('aria-busy');
+            }
+        }
+    </script>
     <script>
         function logoFlyToStamp() {
             var stamp = document.querySelector('.logo-stamp');
@@ -553,7 +649,7 @@
 
     <!-- 核心逻辑 -->
     <script src="js/fireworks.js?v=Audio-25810"></script>
-    <script src="js/script.js?v=Public-1"></script>
+    <script src="js/script.js?v=Encrypted-1"></script>
     <script src="js/share-card.js?v=2"></script>
     <!-- <script src="js/snow.js?v=snow-force"></script> -->
 
