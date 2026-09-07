@@ -1,102 +1,10 @@
-// ===== 诗词加锁/解锁系统 =====
-const UNLOCKED_POEMS_KEY = 'unlockedPoemsPersistent';
-const LEGACY_UNLOCKED_POEMS_KEY = 'unlockedPoems';
-const LEGACY_SESSION_UNLOCKED_POEMS_KEY = 'unlockedPoemsSession';
-const GLOBAL_UNLOCK_KEY = 'lockedPoemsKeyV2';
-
-function getUnlockToken(title) {
-    const source = String(title || '');
-    let h1 = 0x811c9dc5;
-    let h2 = 0x9e3779b9;
-    for (let i = 0; i < source.length; i++) {
-        const code = source.charCodeAt(i);
-        h1 ^= code;
-        h1 = Math.imul(h1, 16777619);
-        h2 ^= (code + i) & 0xffff;
-        h2 = Math.imul(h2, 2246822519);
-    }
-    const a = (h1 >>> 0).toString(16).padStart(8, '0');
-    const b = (h2 >>> 0).toString(16).padStart(8, '0');
-    return `u_${a}${b}`;
-}
-
-function getUnlockedMap() {
-    try {
-        return JSON.parse(localStorage.getItem(UNLOCKED_POEMS_KEY) || '{}');
-    } catch { return {}; }
-}
-
-function migrateLegacyUnlockMap() {
-    const map = getUnlockedMap();
-    const keys = Object.keys(map);
-    if (!keys.length) return;
-
-    let changed = false;
-    const nextMap = {};
-    keys.forEach(key => {
-        if (!map[key]) return;
-        if (key.startsWith('u_')) {
-            nextMap[key] = true;
-            return;
-        }
-        nextMap[getUnlockToken(key)] = true;
-        changed = true;
-    });
-
-    if (changed) {
-        localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(nextMap));
-    }
-}
-
-function isPoemUnlocked(title) {
-    const map = getUnlockedMap();
-    const token = getUnlockToken(title);
-    return !!map[token] || !!map[title];
-}
-
-// 老站公开展示：不再隐藏加锁诗词，不再要求单篇密码。
-function isLockedPoemHidden(poem) {
+// 老站作品全部公开展示，保留兼容判断以兼容现有渲染流程。
+function isLockedPoemHidden() {
     return false;
 }
 
-function isContentLocked(poem) {
+function isContentLocked() {
     return false;
-}
-
-function markPoemUnlocked(title) {
-    const map = getUnlockedMap();
-    map[getUnlockToken(title)] = true;
-    localStorage.setItem(UNLOCKED_POEMS_KEY, JSON.stringify(map));
-}
-
-function bytesToBase64(bytes) {
-    let binary = '';
-    bytes.forEach(b => { binary += String.fromCharCode(b); });
-    return btoa(binary);
-}
-
-function base64ToBytes(base64) {
-    try {
-        return Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-    } catch {
-        return null;
-    }
-}
-
-function storeGlobalUnlockKey(keyBytes) {
-    localStorage.setItem(GLOBAL_UNLOCK_KEY, bytesToBase64(keyBytes));
-}
-
-function getGlobalUnlockKey() {
-    const base64 = localStorage.getItem(GLOBAL_UNLOCK_KEY);
-    if (!base64) return null;
-    return base64ToBytes(base64);
-}
-
-function clearGlobalUnlockData() {
-    localStorage.removeItem(GLOBAL_UNLOCK_KEY);
-    localStorage.removeItem(UNLOCKED_POEMS_KEY);
-    localStorage.removeItem('qilv_site_access_v4');
 }
 
 function applyPoemContentFixes(poem) {
@@ -113,106 +21,6 @@ function applyPoemContentFixes(poem) {
             }
             return fixed;
         });
-    }
-}
-
-// PBKDF2 密钥派生（安全）：25万次迭代 + 固定盐
-const PBKDF2_SALT = new Uint8Array([113, 105, 108, 118, 45, 108, 97, 116, 116, 105, 99, 101, 45, 107, 100, 102]);
-const PBKDF2_ITERATIONS = 250000;
-
-async function derivePasswordKey(password) {
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', encoder.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
-    );
-    const derived = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: PBKDF2_SALT, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-        keyMaterial, 256
-    );
-    return new Uint8Array(derived);
-}
-
-// Legacy SHA-256 派生（仅用于兼容现有加密数据，待全部诗词重新加密后移除）
-async function derivePasswordKeyLegacy(password) {
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.digest('SHA-256', encoder.encode(password));
-    return new Uint8Array(keyMaterial);
-}
-
-async function decryptPoemContentWithKey(encryptedBase64, keyBytes) {
-    const raw = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0));
-    const nonce = raw.slice(0, 12);
-    const ciphertext = raw.slice(12);
-    const key = await crypto.subtle.importKey('raw', keyBytes, 'AES-GCM', false, ['decrypt']);
-    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: nonce }, key, ciphertext);
-    return JSON.parse(new TextDecoder().decode(decrypted));
-}
-
-async function decryptPoemContent(encryptedBase64, password) {
-    // 先尝试 legacy SHA-256（兼容现有加密数据），再尝试 PBKDF2（未来新数据）
-    // 返回 { payload, keyBytes }，让调用方知道实际使用的密钥
-    try {
-        const legacyKey = await derivePasswordKeyLegacy(password);
-        const payload = await decryptPoemContentWithKey(encryptedBase64, legacyKey);
-        return { payload, keyBytes: legacyKey };
-    } catch {
-        const pbkdf2Key = await derivePasswordKey(password);
-        const payload = await decryptPoemContentWithKey(encryptedBase64, pbkdf2Key);
-        return { payload, keyBytes: pbkdf2Key };
-    }
-}
-
-// 自动解密已解锁诗词：支持同浏览器持久免二次输入
-async function autoDecryptPoems() {
-    // 清理历史版本的解锁数据格式
-    if (localStorage.getItem(LEGACY_UNLOCKED_POEMS_KEY)) {
-        localStorage.removeItem(LEGACY_UNLOCKED_POEMS_KEY);
-    }
-    if (sessionStorage.getItem(LEGACY_SESSION_UNLOCKED_POEMS_KEY)) {
-        sessionStorage.removeItem(LEGACY_SESSION_UNLOCKED_POEMS_KEY);
-    }
-    migrateLegacyUnlockMap();
-
-    const keyBytes = getGlobalUnlockKey();
-    if (!keyBytes) return;
-
-    let successCount = 0;
-    let failedCount = 0;
-    for (const poem of poems) {
-        if (!(poem.locked && poem.encryptedContent)) continue;
-        try {
-            // 先用存储的密钥尝试，若失败则尝试另一种派生方式
-            let payload;
-            try {
-                payload = await decryptPoemContentWithKey(poem.encryptedContent, keyBytes);
-            } catch {
-                // 存储密钥失败，可能是混合加密（部分 legacy/部分 PBKDF2）
-                // 此时无法自动解锁该诗词，标记跳过
-                failedCount++;
-                continue;
-            }
-            const originalTitle = poem.title;
-            if (payload.realTitle) {
-                poem.title = payload.realTitle;
-                markPoemUnlocked(payload.realTitle);
-            }
-            markPoemUnlocked(originalTitle);
-            poem.content = payload.content || payload;
-            poem.notes = payload.notes || [];
-            applyPoemContentFixes(poem);
-            successCount++;
-        } catch {
-            failedCount++;
-        }
-    }
-
-    // 若存储密钥已失效（如你更换了锁密码），自动清空并回退到手动输入
-    // 但若部分成功部分失败（混合加密），保留密钥，仅失败的诗词需手动输入
-    if (failedCount > 0 && successCount === 0) {
-        clearGlobalUnlockData();
-        if (typeof window.showSiteLock === 'function') {
-            window.showSiteLock();
-        }
     }
 }
 
@@ -1163,8 +971,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             poems = data.poems || data;
             poems.forEach(applyPoemContentFixes);
 
-            // 自动解密已解锁的加锁诗词
-            await autoDecryptPoems();
             // 防止加锁作品通过新作/修改列表意外暴露标题
             sanitizeUpdateInfoForLockedPoems();
 
@@ -2434,8 +2240,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         poem.content = payload.content || payload;
                         poem.notes = payload.notes || [];
                         applyPoemContentFixes(poem);
-                        // 一次成功解锁后，自动解密全部锁作，避免重复输入
-                        await autoDecryptPoems();
                         // 重新渲染 + 刷新目录
                         renderPoem(currentIndex, true);
                         renderTOC();
@@ -2464,7 +2268,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 检测是否有备注，高亮注释按钮
             const noteBtn = document.getElementById('note-btn');
-            const hasNotes = !isContentLocked(poem) && poem.notes && poem.notes.length > 0;
+            const hasNotes = poem.notes && poem.notes.length > 0;
 
             if (noteBtn) {
                 if (hasNotes) {
